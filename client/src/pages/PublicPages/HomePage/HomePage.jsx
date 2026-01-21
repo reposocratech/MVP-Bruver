@@ -1,6 +1,6 @@
 const HomePage = () => {
   return (
-    <h1>Proyecto Brüver </h1>
+    <h1>Holaholahola </h1>
   )
 }
 
