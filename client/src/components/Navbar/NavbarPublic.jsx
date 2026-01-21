@@ -1,28 +1,28 @@
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap'
+import { Link } from 'react-router'
 
 export const NavbarPublic = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Brüver</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+            <Nav.Link as={Link} to="/about">Sobre nosotras</Nav.Link>
+            <NavDropdown title="Servicios" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/grooming">Grooming & Spa</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/pharmacy">
+                Farmacia y Veterinaria
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/nutrition">Nutrición y accesorios</NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link as={Link} to="/contact">Contacto</Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <Button>Iniciar sesión</Button>
+        <Button>Pedir cita</Button>
       </Container>
     </Navbar>
   )
