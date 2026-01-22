@@ -5,6 +5,7 @@ import './navbar.css'
 export const NavbarPublic = () => {
 
   const navigate = useNavigate();
+  
   return (
     <Navbar expand="lg" className="navbar-custom">
       <Container fluid>
@@ -39,8 +40,8 @@ export const NavbarPublic = () => {
 
          
           <div className="navbar-actions">
-            <Button className="nav-btn">INICIAR SESIÓN</Button>
-            <Button onClick={()=>navigate("/register")} className="nav-btn">PEDIR CITA</Button>
+            <Button onClick={()=> navigate("/login")} className="nav-btn">INICIAR SESIÓN</Button>
+            <Button onClick={()=> navigate("/register")} className="nav-btn">PEDIR CITA</Button>
           </div>
         </Navbar.Collapse>
       </Container>
