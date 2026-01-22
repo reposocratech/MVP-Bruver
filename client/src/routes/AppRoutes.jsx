@@ -12,6 +12,8 @@ const Contact = lazy(() => import("../pages/PublicPages/Contact/Contact"))
 const Pharmacy = lazy(() => import("../pages/PublicPages/Pharmacy/Pharmacy"))
 const Nutrition = lazy(() => import("../pages/PublicPages/Nutrition/Nutrition"))
 const Grooming = lazy(() => import("../pages/PublicPages/Grooming/Grooming"))
+const RegisterPage = lazy(() => import("../pages/AuthPages/RegisterPage/RegisterPage"))
+const LoginPage = lazy(() => import("../pages/AuthPages/LoginPage/LoginPage"))
 const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 
@@ -29,6 +31,8 @@ export const AppRoutes = () => {
             <Route path="/nutrition" element={<Nutrition/>} />
             <Route path="/grooming" element={<Grooming />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Route>
         </Route>
         
