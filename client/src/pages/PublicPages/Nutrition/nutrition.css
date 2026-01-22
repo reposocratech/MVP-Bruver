@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
+.nutritionPage {
+  min-height: 100vh;
+  background: #f4efe8;
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+  font-family: "Raleway", sans-serif;
+}
+
+.nutritionContent {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+.nutritionTitle {
+  font-family: "Lora", serif;
+  color: #6bb3a7;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+.nutritionText {
+  color: #4a3b2f;
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Responsive simple */
+@media (max-width: 520px) {
+  .nutritionTitle {
+    font-size: 28px;
+  }
+
+  .nutritionText {
+    font-size: 15px;
+  }
+}
