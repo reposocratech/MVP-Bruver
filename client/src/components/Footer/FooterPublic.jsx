@@ -1,4 +1,5 @@
 import "./footer.css";
+import logoFooter from "../../assets/images/logo-footer.png"
 import {
   FaMapMarkerAlt,
   FaPhoneAlt,
@@ -7,17 +8,16 @@ import {
   FaWhatsapp,
   FaEnvelope,
 } from "react-icons/fa";
-
+ 
 export const FooterPublic = () => {
   return (
     <footer className="footer">
       <div className="footer__content">
-        {/* Logo */}
+       
         <div className="footer__logo">
-          <img src="/logo-bruver.png" alt="Brüver - Fieles a tu mascota" />
+          <img src={logoFooter} alt="Brüver - Fieles a tu mascota" />
         </div>
-
-        {/* Información */}
+ 
         <div className="footer__info">
           <h4>Dónde estamos</h4>
           <p>
@@ -36,10 +36,14 @@ export const FooterPublic = () => {
             </span>
           </p>
         </div>
-
-        {/* Acciones */}
+ 
         <div className="footer__actions">
-          <button className="footer__button">Reservar una cita</button>
+         
+          <button className="footer__button">
+            Reservar una cita
+            <span className="footer__arrow">➜</span>
+          </button>
+ 
           <div className="footer__social">
             <a href="#" aria-label="Instagram">
               <FaInstagram />
@@ -53,11 +57,11 @@ export const FooterPublic = () => {
           </div>
         </div>
       </div>
-
-      {/* Copyright */}
+ 
       <div className="footer__bottom">
         © 2026 Brüver. Reservados todos los derechos
       </div>
     </footer>
   );
 };
+ 
