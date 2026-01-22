@@ -1,0 +1,69 @@
+.contactPage {
+  background: #F4EFE8;
+  padding: 50px;
+  text-align: center;
+}
+.contactTitle {
+  color: #6BB3A7;
+  font-size: 26px;
+  margin-bottom: 30px;
+}
+/* FORMULARIO */
+.contactForm {
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+.contactForm input,
+.contactForm textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #FFFFFF;
+  font-size: 14px;
+}
+.contactForm textarea {
+  height: 110px;
+  resize: none;
+}
+.contactForm button {
+  background: #6BB3A7;
+  border: none;
+  color: white;
+  padding: 8px 26px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+}
+/* OPCIONES DE CONTACTO */
+.contactOptions i {
+  margin-right: 8px;
+  color: #000000;
+  font-size: 18px;
+}
+.contactOptions h3 {
+  color: #3B2A1E;
+  margin-bottom: 10px;
+}
+.contactOptions p {
+  margin: 6px 0;
+  font-size: 14px;
+}
+/* UBICACIÓN */
+.contactLocation h3 {
+  color: #3B2A1E;
+  margin-bottom: 8px;
+}
+.contactLocation p {
+  font-size: 13px;
+  margin: 4px 0;
+}
+.contactLocation iframe {
+  width: 100%;
+  max-width: 700px;
+  height: 250px;
+  border: 0;
+  margin-top: 15px;
+  border-radius: 10px;
+}

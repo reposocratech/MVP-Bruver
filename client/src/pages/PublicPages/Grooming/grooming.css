@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
+.groomingPage {
+  background: #F4EFE8;
+  padding: 40px;
+  text-align: center;
+    font-family: "Raleway", sans-serif;
+}
+.groomingTitle {
+  color: #6BB3A7;
+  font-size: 32px;
+  margin-bottom: 35px;
+  font-family: "Lora", serif;
+
+
+}
+.groomingGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 80px;
+  max-width: 1000px;
+  margin: 0 auto 50px;
+}
+.groomingCard {
+  background: #E6D3C2;           
+  border: 2px solid #B79C81;       
+  border-radius: 14px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.groomingCard img {
+  width: calc(109% - 1px);
+  height: 200px;
+  object-fit: cover;
+  
+  margin-bottom: 10px;
+}
+.groomingCard h3 {
+  margin: px 0 6px;
+  font-size: 20px;
+  color: #3B2A1E;
+}
+.groomingCard p {
+  font-size: 15px;
+  padding: 0 14px 16px;
+  color: #5A4636;
+}
+.groomingIncludes h4 {
+  color: #6BB3A7;
+  font-size: 35px;
+  margin-bottom: 10px;
+    font-family: "Lora", serif;
+}
+.groomingIncludes ul {
+  list-style: none;
+  padding: 0;
+  font-size: 23px;
+}
+
+/* =========================
+   RESPONSIVE: 1 COLUMNA
+   ========================= */
+@media (max-width: 768px) {
+  .groomingPage {
+    padding: 22px;
+  }
+
+  .groomingTitle {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
+
+  .groomingGrid {
+    grid-template-columns: 1fr; /* ✅ columna */
+    gap: 22px;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  .groomingCard img {
+    height: 180px;
+  }
+
+  .groomingCard h3 {
+    font-size: 18px;
+  }
+
+  .groomingCard p {
+    font-size: 14px;
+  }
+
+  .groomingIncludes h4 {
+    font-size: 26px;
+  }
+
+  .groomingIncludes ul {
+    font-size: 18px;
+  }
+}

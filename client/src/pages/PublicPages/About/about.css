@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+/*
+font-family: "Raleway", sans-serif;
+  font-family: "Lora", serif; */
+  h2 {
+ 
+    font-family: "Lora", serif;
+  }
+ 
+  p {
+    font-family: "Raleway", sans-serif;
+  }
+ 
+.aboutPage {
+  background: #F4EFE8;
+  padding: 60px 200px;
+ 
+}
+ 
+.aboutTop {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+ 
+}
+ 
+.aboutTop .aboutText {
+  flex: 1;
+  padding-left: 40px;
+ 
+}
+ 
+.aboutTitle {
+  color: #6BB3A7;
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+ 
+.aboutText h3 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+ 
+.aboutText p {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+ 
+.aboutLogo {
+  margin-top: 70px;
+  margin-left: 250px;  
+}
+ 
+ 
+.logoText {
+  margin-top: 20px;
+  font-weight: bold;
+}
+ 
+.logoText span {
+  font-size: 12px;
+  font-weight: normal;
+}
+ 
+.aboutImageBig {
+  position: relative;
+  margin-left: auto;
+  margin-right: -200px;
+}
+ 
+.aboutImageBig img {
+  width: 680px;
+  height: 420px;
+  object-fit: cover;
+  border-top-left-radius: 220px;
+  border-bottom-left-radius: 220px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+ 
+ 
+.aboutBottom {
+  margin-top: 80px;
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  justify-content: flex-start;
+}
+ 
+.aboutImages {
+  position: relative;
+  width: 460px;
+  height: 460px;
+  margin-left: 60px;
+}
+ 
+.circleImg {
+  width: 370px;
+  height: 370px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+ 
+.circleImg.small {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  bottom: -16px;
+  right: -32px;
+  border: 6px solid #F4EFE8;
+}
+ 
+ 
+.aboutBottom .aboutText {
+  margin-left: auto;
+  padding-left: 300px;
+}
+ 
+.aboutSubtitle {
+  color: #000000;
+  margin-bottom: 12px;
+}
+ 
+ 
+@media (max-width: 768px) {
+ 
+ 
+  .aboutPage {
+    padding: 40px 20px;
+  }
+ 
+  .aboutTop {
+    flex-direction: column;
+    gap: 32px;
+  }
+ 
+  .aboutTop .aboutText {
+    padding-left: 0;
+    text-align: center;
+  }
+ 
+  .aboutTitle {
+    font-size: 34px;
+  }
+ 
+  .aboutText h3 {
+    font-size: 22px;
+  }
+ 
+  .aboutText p {
+    font-size: 16px;
+  }
+ 
+ 
+  .aboutLogo {
+    margin: 32px auto 0;
+    text-align: center;
+  }
+ 
+ 
+  .aboutImageBig {
+    margin: 0;
+  }
+ 
+  .aboutImageBig img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 50%;
+  }
+ 
+  .aboutBottom {
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 60px;
+  }
+ 
+  .aboutImages {
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+  }
+ 
+  .circleImg {
+    width: 260px;
+    height: 260px;
+  }
+ 
+  .circleImg.small {
+    width: 180px;
+    height: 180px;
+    bottom: -20px;
+    right: -20px;
+  }
+ 
+ 
+  .aboutBottom .aboutText {
+    margin-left: 0;
+    padding-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+ 
+  .aboutSubtitle {
+    font-size: 22px;
+  }
+}
