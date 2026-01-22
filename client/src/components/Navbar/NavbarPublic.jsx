@@ -1,8 +1,10 @@
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import './navbar.css'
 
 export const NavbarPublic = () => {
+
+  const navigate = useNavigate();
   return (
     <Navbar expand="lg" className="navbar-custom">
       <Container fluid>
@@ -38,7 +40,7 @@ export const NavbarPublic = () => {
          
           <div className="navbar-actions">
             <Button className="nav-btn">INICIAR SESIÓN</Button>
-            <Button className="nav-btn">PEDIR CITA</Button>
+            <Button onClick={()=>navigate("/register")} className="nav-btn">PEDIR CITA</Button>
           </div>
         </Navbar.Collapse>
       </Container>
