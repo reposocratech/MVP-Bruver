@@ -1,132 +1,118 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
+.selectPetPage {
+  background: #f4efe8;
+ padding: 50px 40px 180px;
+  min-height: auto;  
+  text-align: center;
+  font-family: "Raleway", sans-serif;
 
-h2{
-  color: #6BB3A7;
-  font-size: 32px;
+}
+
+.selectPetTitle {
+  color: #6bb3a7;
+  font-size: 33px;
   margin-bottom: 35px;
   font-family: "Lora", serif;
-  text-align: center;
-  margin-top: 3rem;
 }
 
- 
-.pets {
-  position: relative;
-  padding: 100px 32px 95px;
-  display: flex;
-  gap: 120px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.petGrid {
+.selectPetGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 80px;
+  gap: 70px;
   max-width: 1000px;
-  margin: 0 auto 50px;
+  margin: 1px auto 60px;
 }
- 
-.petCard {
-  position: relative;
-  height: 270px;
-  background: #E6D3C2;           
-  border: 2px solid #B79C81;       
+
+.selectPetCard {
+  background: #e6d3c2;
+  border: 2px solid #b79c81;
   border-radius: 14px;
+  overflow: hidden;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  img {
-  width: 100%;
-  height: 200px;
-  border-radius: 15px 15px 0 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding-bottom: 18px;
+}
+
+/* imagen estilo grooming */
+.selectPetCard img {
+  width: calc(109% - 1px);
+  height: 230px;
   object-fit: cover;
   margin-bottom: 10px;
 }
-}
- 
-h3 {
-  margin: px 0 6px;
+
+.selectPetCard h3 {
+  margin: 0 0 12px;
   font-size: 20px;
-  color: #3B2A1E;
+  color: #3b2a1e;
 }
 
-.select-btn {
-  position: absolute;
-  bottom: -30px;
-  transform: translateX(-60%);
-  background-color: #b79c81;
+.selectPetActions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Botones base */
+.selectPetBtn,
+.selectPetBackBtn {
   border: none;
-  color: #FFFFFF;
-  padding: 5px 18px;
-  margin: 1rem;
+  color: #fff;
+  padding: 8px 18px;
   font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+/* Botón seleccionar */
+.selectPetBtn {
+  background: #b79c81;
   border-radius: 10px;
-  transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
-.select-btn:hover {
-  background-color: #b79c81;
-  transform: translateX(-60%) translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  font-size: bold;
+.selectPetBtn:hover {
+  background: #a98d73;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
 }
 
-.select-btn:active {
-  background-color: #b79c81 !important;
-}
-
-.back-btn {
-  background-color: #E6D3C2;
-  border: none;
-  color: #FFFFFF;
-  padding: 5px 18px;
-  font-size: 13px;
+/* Botón volver */
+.selectPetBackBtn {
+  background: #e6d3c2;
   border-radius: 18px;
-  transition: background-color 0.2s ease, transform 0.15s ease;
-  margin: 2rem;
 }
 
-.back-btn:hover {
-  background-color: #5a9f96;
+.selectPetBackBtn:hover {
+  background: #5a9f96;
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
- 
-.back-btn:active {
-  background-color: #246B64 !important;
-  transform: translateY(0);
-}
- 
 
-/* responsive */
-/* =========================
-   RESPONSIVE SIMPLE
-   ========================= */
-
-@media (max-width: 520px) {
- body {
+/* Responsive */
+@media (max-width: 768px) {
+  .selectPetPage {
     padding: 22px;
   }
 
-  h2 {
+  .selectPetTitle {
     font-size: 26px;
     margin-bottom: 22px;
   }
 
-  .petGrid {
-    grid-template-columns: 1fr; /* ✅ columna */
+  .selectPetGrid {
+    grid-template-columns: 1fr;
     gap: 22px;
     max-width: 520px;
     margin: 0 auto 32px;
   }
 
-  .petCard img {
+  .selectPetCard img {
     height: 180px;
   }
 
-  .petCard h3 {
+  .selectPetCard h3 {
     font-size: 18px;
   }
 }
