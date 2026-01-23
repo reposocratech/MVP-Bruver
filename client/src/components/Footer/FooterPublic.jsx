@@ -47,11 +47,14 @@ export const FooterPublic = () => {
           <div className="footer__social">
             <a href="#" aria-label="Instagram">
               <FaInstagram />
+              <FaInstagram />
             </a>
             <a href="#" aria-label="WhatsApp">
               <FaWhatsapp />
+              <FaWhatsapp />
             </a>
             <a href="#" aria-label="Email">
+              <FaEnvelope />
               <FaEnvelope />
             </a>
           </div>
@@ -64,4 +67,3 @@ export const FooterPublic = () => {
     </footer>
   );
 };
- 

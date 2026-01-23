@@ -14,6 +14,24 @@ class UserController {
         res.status(500).json(error);
       }
     }
+
+    getProfile = async (req, res) => {
+      try {
+        let userId = req.user_id;
+        let result = await userDal.getProfileById(userId);
+        
+        if (!result || result.length === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+        res.status(200).json({
+          ok: true,
+          user: result[0],
+        });
+        } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+      }
+    }
   }
 export default new UserController();
         

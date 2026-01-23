@@ -9,8 +9,6 @@ export const PublicLayout = () => {
     <>
       <header>
         <NavbarPublic />
-        <br /><br />
-        <NavbarLogin />
       </header>
       <main>
          <Outlet />
