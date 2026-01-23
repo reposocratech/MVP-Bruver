@@ -1,37 +1,62 @@
-import './SelectPet.css';
-import { useNavigate } from 'react-router'
-import { Button } from 'react-bootstrap'
+import "./SelectPet.css";
+import { useNavigate } from "react-router";
 
 const SelectPet = () => {
-
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    <>
-      <h2>Selecciona tu mascota</h2>
+    <div className="selectPetPage">
+      <h2 className="selectPetTitle">Selecciona tu mascota</h2>
 
-      <section className="pets">
-         <div className="petGrid">
-        <div className="petCard">
-          <img src="/img/appointment/perro1.jpg" alt="Mascota" />
+      <div className="selectPetGrid">
+        <div className="selectPetCard">
+          <img src="/img/appointment/perro1.jpg" alt="Toby" />
           <h3>Toby</h3>
-          <Button onClick={()=> navigate("/selectservices")} className="select-btn">SELECCIONAR</Button>
+          <button
+            type="button"
+            onClick={() => navigate("/selectservices")}
+            className="selectPetBtn"
+          >
+            SELECCIONAR
+          </button>
         </div>
-        <div className="petCard">
-          <img src="/img/appointment/perro2.jpg" alt="Mascota" />
-          <h3>Lucas</h3>
-          <Button onClick={()=> navigate("/selectservices")} className="select-btn">SELECCIONAR</Button>
-        </div>
-        <div className="petCard">
-          <img src="/img/appointment/gato1.jpg" alt="Mascota" />
-          <h3>Frod</h3>
-          <Button onClick={()=> navigate("/selectservices")} className="select-btn">SELECCIONAR</Button>
-        </div>
-        </div>
-      </section>
 
-    <Button onClick={()=> navigate("/")} className="back-btn">VOLVER</Button>
-    </>
+        <div className="selectPetCard">
+          <img src="/img/appointment/perro2.jpg" alt="Lucas" />
+          <h3>Lucas</h3>
+          <button
+            type="button"
+            onClick={() => navigate("/selectservices")}
+            className="selectPetBtn"
+          >
+            SELECCIONAR
+          </button>
+        </div>
+
+        <div className="selectPetCard">
+          <img src="/img/appointment/gato1.jpg" alt="Frod" />
+          <h3>Frod</h3>
+          <button
+            type="button"
+            onClick={() => navigate("/selectservices")}
+            className="selectPetBtn"
+          >
+            SELECCIONAR
+          </button>
+        </div>
+        
+      </div>
+
+      <div className="selectPetActions">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="selectPetBackBtn"
+        >
+          VOLVER
+        </button>
+      </div>
+    </div>
   );
 };
 
