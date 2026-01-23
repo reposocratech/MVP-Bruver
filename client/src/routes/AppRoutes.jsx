@@ -1,11 +1,12 @@
 import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route } from "react-router"
 import { PublicRoutes } from "./PublicRoutes"
+import { PrivateRoutes } from "./PrivateRoutes"
+
+
 
 //rutas públicas
 import {PublicLayout} from "../layouts/PublicLayout.jsx"
-
-
 const HomePage = lazy(() => import("../pages/PublicPages/HomePage/HomePage"))
 const About = lazy(() => import("../pages/PublicPages/About/About"))
 const Contact = lazy(() => import("../pages/PublicPages/Contact/Contact"))
@@ -16,7 +17,9 @@ const RegisterPage = lazy(() => import("../pages/AuthPages/RegisterPage/Register
 const LoginPage = lazy(() => import("../pages/AuthPages/LoginPage/LoginPage"))
 const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
-/* PRUEBAS RUTAS PRIVADAS */
+/* RUTAS PRIVADAS */
+import { ClientLayout } from "../layouts/ClientLayout.jsx"
+const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ClientProfilePage.jsx"))
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
@@ -38,11 +41,19 @@ export const AppRoutes = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/selectpet" element={<SelectPet />} />
-            <Route path="/selectcat" element={<SelectCat />} />
-            <Route path="/selectservices" element={<SelectServices />} />
           </Route>
         </Route>
+
+          {/* Rutas privadas usuario */}
+          <Route element={<PrivateRoutes />}>
+            <Route element={<ClientLayout />}>
+               <Route path="/profile" element={<ClientProfile />} />
+               <Route path="/selectpet" element={<SelectPet />} />
+               <Route path="/selectcat" element={<SelectCat />} />
+               <Route path="/selectservices" element={<SelectServices />} /> 
+            </Route>
+          </Route>
+
         
             <Route path="*" element={<ErrorPage />} />
       </Routes>
