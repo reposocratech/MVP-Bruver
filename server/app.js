@@ -1,3 +1,7 @@
+import userTestRouter from "./modules/user/user.comprobar.routes.js";
+
+
+
 import createError from 'http-errors';
 import express from'express';
 import path from 'path';
@@ -5,8 +9,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from "cors";
 import { fileURLToPath } from 'url';
+import dotenv from "dotenv";
 
+import appointmentRouter from "./modules/appointment/appointment.routes.js";
+import petRouter from "./modules/pet/pet.routes.js";
 import userRouter from './modules/user/user.routes.js';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +30,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', userRouter);
+app.use("/pet", petRouter);
+app.use("/appointment", appointmentRouter);
+
+app.use("/user", userTestRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

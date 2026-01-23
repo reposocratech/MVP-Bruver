@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
+
+h2{
+  color: #6BB3A7;
+  font-size: 32px;
+  margin-bottom: 35px;
+  font-family: "Lora", serif;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+ 
+.pets {
+  position: relative;
+  padding: 100px 32px 95px;
+  display: flex;
+  gap: 120px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.petGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px;
+  max-width: 1000px;
+  margin: 0 auto 50px;
+}
+ 
+.petCard {
+  position: relative;
+  height: 270px;
+  background: #E6D3C2;           
+  border: 2px solid #B79C81;       
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  img {
+  width: 100%;
+  height: 200px;
+  border-radius: 15px 15px 0 0;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+}
+ 
+h3 {
+  margin: px 0 6px;
+  font-size: 20px;
+  color: #3B2A1E;
+}
+
+.select-btn {
+  position: absolute;
+  bottom: -30px;
+  transform: translateX(-60%);
+  background-color: #b79c81;
+  border: none;
+  color: #FFFFFF;
+  padding: 5px 18px;
+  margin: 1rem;
+  font-size: 13px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.select-btn:hover {
+  background-color: #b79c81;
+  transform: translateX(-60%) translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  font-size: bold;
+}
+
+.select-btn:active {
+  background-color: #b79c81 !important;
+}
+
+.back-btn {
+  background-color: #E6D3C2;
+  border: none;
+  color: #FFFFFF;
+  padding: 5px 18px;
+  font-size: 13px;
+  border-radius: 18px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  margin: 2rem;
+}
+
+.back-btn:hover {
+  background-color: #5a9f96;
+  transform: translateY(-1px);
+}
+ 
+.back-btn:active {
+  background-color: #246B64 !important;
+  transform: translateY(0);
+}
+ 
+
+/* responsive */
+/* =========================
+   RESPONSIVE SIMPLE
+   ========================= */
+
+@media (max-width: 520px) {
+ body {
+    padding: 22px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
+
+  .petGrid {
+    grid-template-columns: 1fr; /* ✅ columna */
+    gap: 22px;
+    max-width: 520px;
+    margin: 0 auto 32px;
+  }
+
+  .petCard img {
+    height: 180px;
+  }
+
+  .petCard h3 {
+    font-size: 18px;
+  }
+}
