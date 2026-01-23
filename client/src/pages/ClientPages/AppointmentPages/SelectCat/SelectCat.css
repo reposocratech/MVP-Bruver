@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+ 
+body{
+  background: #f4efe8;
+}
+
+h2{
+  color: #6BB3A7;
+  font-size: 32px;
+  margin-bottom: 35px;
+  font-family: "Lora", serif;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+ 
+.cats {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+ 
+.catCard {
+  background: #E6D3C2;           
+  border: 2px solid #B79C81;       
+  border-radius: 14px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  img {
+  width: calc(109% - 1px);
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+}
+ 
+h3 {
+  margin: px 0 6px;
+  font-size: 20px;
+  color: #3B2A1E;
+}
+
+.more-cat {
+  background-color: #6AAFA5;
+  border: none;
+  color: #FFFFFF;
+  padding: 5px 18px;
+  margin: 1rem;
+  font-size: 13px;
+  border-radius: 18px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.more-cat:hover {
+  background-color: #5a9f96;
+  transform: translateY(-1px);
+}
+
+.more-cat:active {
+  background-color: #246B64 !important;
+  transform: translateY(0);
+}
+
+/* responsive */
+/* =========================
+   RESPONSIVE SIMPLE
+   ========================= */
+
+@media (max-width: 520px) {
+ body {
+    padding: 22px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
+
+  .catCard img {
+    height: 180px;
+  }
+
+  .catCard h3 {
+    font-size: 18px;
+  }
+}

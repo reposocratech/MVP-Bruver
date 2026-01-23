@@ -16,6 +16,11 @@ const RegisterPage = lazy(() => import("../pages/AuthPages/RegisterPage/Register
 const LoginPage = lazy(() => import("../pages/AuthPages/LoginPage/LoginPage"))
 const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
+/* PRUEBAS RUTAS PRIVADAS */
+const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
+const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
+const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
+
 
 export const AppRoutes = () => {
   return (
@@ -33,6 +38,9 @@ export const AppRoutes = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/selectpet" element={<SelectPet />} />
+            <Route path="/selectcat" element={<SelectCat />} />
+            <Route path="/selectservices" element={<SelectServices />} />
           </Route>
         </Route>
         
