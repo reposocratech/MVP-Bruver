@@ -8,4 +8,6 @@ router.post("/register", userController.register);
 
 router.get("/profile", verifyToken, userController.getProfile);
 
+router.post("/login", userController.login);
+
 export default router;

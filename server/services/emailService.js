@@ -17,7 +17,9 @@ transporter.verify()
                .then(() => console.log("Listo para enviar correos"))
                .catch((err) => console.error("Error al verificar transporter:", err));
 
-export const sendEmail = async (email, html) => {
+export const sendEmail = async (email, html, token) => {
+  console.log(email, html, token);
+  
   try {
     const result = await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -26,7 +28,7 @@ export const sendEmail = async (email, html) => {
       text: "Su registro ha sido completado exitosamente.",
       html: html
     });
-    console.log("Email enviado:");
+    console.log("Email enviado:", result);
     return result;
   } catch (error) {
     console.error("Error al enviar email:", error);
