@@ -7,9 +7,36 @@ const Contact = () => {
       <ContactForm />
       <div className="contactOptions">
         <h3>Elige cómo prefieres contactarnos:</h3>
-        <p><i className="bi bi-telephone"></i> Llamada Telefónica</p>
-        <p><i className="bi bi-whatsapp"></i> WhatsApp</p>
-        <p><i className="bi bi-envelope"></i> Correo Electrónico</p>
+        {/* añadir datos reales de las clientas */}
+        <a
+          href="tel:+34600111222"
+          className="btn"
+          aria-label="Llamar al +34 600 111 222"
+        >
+          <i className="bi bi-telephone"></i>
+          Llamar
+        </a>
+        {/* añadir datos de whatsapp de la clienta */}
+         <a
+          href="https://wa.me/34600111222?text=Hola%20%F0%9F%91%8B%20Quiero%20informaci%C3%B3n"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn"
+          aria-label="Abrir WhatsApp"
+        >
+          <i className="bi bi-whatsapp"></i>
+          WhatsApp
+        </a>
+        {/* configurar los correos de las clientas */}
+        <a
+          href="mailto:clientas@tudominio.com?subject=Consulta&body=Hola%2C%20quiero%20informaci%C3%B3n..."
+          className="btn "
+          aria-label="Enviar correo"
+        >
+          <i className="bi bi-envelope"></i>
+          Correo electrónico
+        </a>
+        {/* api google  */}
       </div>
       <div className="contactLocation">
         <h3>¿Dónde estamos?</h3>
