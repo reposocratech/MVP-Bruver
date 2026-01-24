@@ -3,6 +3,23 @@
 /*
 font-family: "Raleway", sans-serif;
   font-family: "Lora", serif; */
+
+  html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutPage {
+  flex: 1;
+}
+
+
   h2 {
  
     font-family: "Lora", serif;

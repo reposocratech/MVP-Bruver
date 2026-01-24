@@ -31,8 +31,8 @@ export const FooterPublic = () => {
           <p>
             <FaClock />
             <span>
-              Lunes a Sábado de 10h a 20h <br />
-              Domingo Cerrado
+              Lunes a Viernes de 9h a 21h <br />
+              Sábado de 10h a 14h
             </span>
           </p>
         </div>
@@ -45,18 +45,44 @@ export const FooterPublic = () => {
           </button>
  
           <div className="footer__social">
-            <a href="#" aria-label="Instagram">
-              <FaInstagram />
-              <FaInstagram />
-            </a>
-            <a href="#" aria-label="WhatsApp">
-              <FaWhatsapp />
-              <FaWhatsapp />
-            </a>
-            <a href="#" aria-label="Email">
-              <FaEnvelope />
-              <FaEnvelope />
-            </a>
+            {/* redes sociales */}
+            {/* insta */}
+          <a
+            href="https://www.instagram.com/bruver_oficial/"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FaInstagram />
+            <FaInstagram />
+          </a>
+
+            {/* whatsapp */}
+            {/* añadir whatsapp de las clientas */}
+                <a
+                  href="https://wa.me/3434534345"
+                  aria-label="WhatsApp"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <FaWhatsapp />
+                  <FaWhatsapp />
+                </a>
+                {/* añadir correo y texto que soliciten */}
+               <a
+                  href="mailto:prueba@correo.com"
+                  aria-label="Email"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = "mailto:prueba@correo.com?subject=Consulta%20BR%C3%9CVER&body=Hola,%20quiero%20informaci%C3%B3n.";
+                  }}
+                >
+                  <FaEnvelope />
+                  <FaEnvelope />
+                </a>
+
+
+
           </div>
         </div>
       </div>
