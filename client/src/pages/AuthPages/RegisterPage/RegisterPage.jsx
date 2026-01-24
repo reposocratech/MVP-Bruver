@@ -5,6 +5,7 @@ import { useNavigate } from "react-router"
 import { registerSchema } from "../../../schemas/RegisterSchema"
 import {ZodError} from "zod"
 import { fetchData } from "../../../helpers/axiosHelper"
+import "./RegisterPage.css"
 
 const initialValue = {
   name_user:"",
@@ -147,5 +148,4 @@ const RegisterPage = () => {
   )
 }
 export default RegisterPage;
-
 

@@ -9,7 +9,11 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from "cors";
 import { fileURLToPath } from 'url';
+
+//Cambiar
+import { sendContactEmail } from "./services/emailService.js";
 import dotenv from "dotenv";
+
 
 import appointmentRouter from "./modules/appointment/appointment.routes.js";
 import petRouter from "./modules/pet/pet.routes.js";
@@ -36,6 +40,16 @@ app.use("/appointment", appointmentRouter);
 app.use("/user", userTestRouter);
 
 
+app.post("/contact", async (req, res) => {
+  try {
+    const { nombre, telefono, email, mensaje } = req.body;
+    await sendContactEmail({ nombre, telefono, email, mensaje });
+    res.json({ ok: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ ok: false });
+  }
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
