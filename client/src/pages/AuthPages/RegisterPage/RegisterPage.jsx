@@ -1,3 +1,4 @@
+import "./RegisterPage.css"
 import { useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useNavigate } from "react-router"
@@ -36,6 +37,7 @@ const RegisterPage = () => {
         registerSchema.parse(register);
         const res = await fetchData("user/register", "POST", register);
         console.log("^^^^^^^^^^^^", res);
+        navigate("/login");
         
       } catch (error) {
         if(error instanceof ZodError){
@@ -139,11 +141,11 @@ const RegisterPage = () => {
       </Button>
       <Button className="button_register cancel" onClick={()=>navigate("/")} >
         Cancelar
-      </Button>
+      </Button >
       <p className="text-danger">{fecthError}</p>
     </Form>
 
   )
 }
+export default RegisterPage;
 
-export default RegisterPage

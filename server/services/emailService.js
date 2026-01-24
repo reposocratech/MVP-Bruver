@@ -48,3 +48,21 @@ export const sendContactEmail = async ({ nombre, telefono, email, mensaje }) => 
     throw error;
   }
 };
+export const sendEmail = async (email, html, token) => {
+  console.log(email, html, token);
+  
+  try {
+    const result = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Registro completado",
+      text: "Su registro ha sido completado exitosamente.",
+      html: html
+    });
+    console.log("Email enviado:", result);
+    return result;
+  } catch (error) {
+    console.error("Error al enviar email:", error);
+    throw error;
+  }
+}
