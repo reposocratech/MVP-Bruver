@@ -1,7 +1,9 @@
 import React from 'react'
+import { useNavigate } from "react-router";
 import "./pharmacy.css";
  
 const Pharmacy = () => {
+  const navigate = useNavigate();
   return (
     <section className="farmaciaPage">
       <section className="farmaciaContent">
@@ -25,6 +27,7 @@ const Pharmacy = () => {
           className="farmaciaImg"
           src="/img/pharmacy/pharmacy.png"
           alt="Farmacia Veterinaria"
+          onClick={() => navigate("/contact")}
         />
 
         

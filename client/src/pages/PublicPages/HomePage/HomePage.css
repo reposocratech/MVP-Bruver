@@ -9,7 +9,6 @@
 }
  
 .hero {
-  margin-bottom: 190px;
   width: 100%;
   height: 290px;
   display: grid;
@@ -38,7 +37,7 @@
  
 .services {
   position: relative;
-  padding: 100px 32px 250px;
+  padding: 300px 32px 250px;
   display: flex;
   gap: 120px;
   justify-content: center;
@@ -56,6 +55,7 @@
   position: relative;
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
+
  
  .serviceCard::before {
   content: "";
@@ -125,6 +125,17 @@
   line-height: 1.3;
   margin-top: 12px;
 }
+.serviceText {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+.serviceText:hover,
+.serviceText:focus,
+.serviceText:active {
+  background: transparent !important;
+}
+
  
 .dogCorner {
   position: absolute;
@@ -134,42 +145,37 @@
   pointer-events: none;
   z-index: 10;
 }
-/* responsive */
-@media (max-width: 900px) {
-  .hero {
-    height: 120px;
-  } 
+ 
+ 
+ @keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
 }
+ 
 @media (max-width: 520px) {
-
   .services {
     flex-direction: column;
-    align-items: center;
-    gap: 110px; /* más separación vertical */
-    padding: 120px 14px 200px;
+    gap: 140px;
+    padding: 140px 14px 220px;
   }
-
+ 
   .serviceCard {
-    width: 80%;
-    max-width: 320px;
-    padding: 130px 20px 1px;
+    width: 90%;
+    max-width: 360px;
+    padding: 150px 20px 28px;
   }
-
+ 
   .serviceImgWrap {
-    width: 210px;
-    height: 210px;
-    top: -90px;
+    width: 220px;
+    height: 220px;
+    top: -110px;
   }
-
+ 
   .serviceText {
     font-size: 22px;
-  }
-
-  .dogCorner {
-    width: 150px;
-  }
-
-  .heroQuote {
-    font-size: 20px;
   }
 }

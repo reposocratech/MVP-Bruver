@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
 
+
 .farmaciaPage {
   min-height: 100vh;
   background: #f4efe8;
@@ -55,6 +56,7 @@
 .farmaciaImg {
   width: 380px;
   max-width: 100%;
+  cursor: pointer;
   border-radius: 16px;
   display: block;
   margin: 0 auto;

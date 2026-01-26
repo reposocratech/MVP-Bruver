@@ -3,7 +3,7 @@ import "./about.css";
 const About = () => {
   return (
     <div className="aboutPage">
-      {/* BLOQUE SUPERIOR */}
+
       <section className="aboutTop">
         <div className="aboutText">
           <h2 className="aboutTitle">Sobre Nosotras</h2>
@@ -23,7 +23,7 @@ const About = () => {
           <img src="/img/about/about.jpg" alt="Equipo Brüber" />
         </div>
       </section>
-      {/* BLOQUE INFERIOR */}
+
       <section className="aboutBottom">
         <div className="aboutImages">
           <img className="circleImg" src="/img/about/service-nutrition.png" alt="Tienda" />
