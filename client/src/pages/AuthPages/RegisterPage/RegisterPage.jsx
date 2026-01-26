@@ -3,33 +3,30 @@ import { useState } from "react"
 import { Button, Form } from "react-bootstrap"
 import { useNavigate } from "react-router"
 import { registerSchema } from "../../../schemas/RegisterSchema"
-import {ZodError} from "zod"
+import { ZodError } from "zod"
 import { fetchData } from "../../../helpers/axiosHelper"
-import "./RegisterPage.css"
 
 const initialValue = {
-  name_user:"",
-  last_name:"",
-  phone:"",
-  email:"",
-  province:"",
-  city:"",
-  password:"",
-  rep_password:""
+  name_user: "",
+  last_name: "",
+  phone: "",
+  email: "",
+  province: "",
+  city: "",
+  password: "",
+  rep_password: ""
 }
-  
 
 const RegisterPage = () => {
-
   const navigate = useNavigate()
-  
-  const [register, setRegister] = useState(initialValue);
-  const [valErrors, setValErrors] = useState();
-  const [fecthError, setFetchError] = useState("");
-  
+
+  const [register, setRegister] = useState(initialValue)
+  const [valErrors, setValErrors] = useState({})
+  const [fetchError, setFetchError] = useState("")
+
   const handleChange = (e) => {
-    const {name, value} = e.target;
-      setRegister({...register, [name]: value})
+    const { name, value } = e.target
+    setRegister({ ...register, [name]: value })
   }
 
   const onSubmit = async () => {
@@ -57,98 +54,129 @@ const RegisterPage = () => {
           }
         }
       }
-  }
+    }
+ 
 
   return (
-     <Form>
-      <Form.Group className="mb-3">
-        <Form.Label>Nombre</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.name_user}
-            name="name_user"
-            type="text" 
-            placeholder="Introduce tu nombre" />
-            {valErrors?.name_user&& <p className="text-danger">{valErrors.name_user}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Apellidos</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.last_name}
-            name="last_name"
-            type="text" 
-            placeholder="Introduce tus apellidos" />
-         
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Teléfono</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.phone}
-            name="phone"
-            type="tel" 
-            placeholder="Introduce tu número de teléfono" />
-            {valErrors?.phone&& <p className="text-danger">{valErrors.phone}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Correo Electrónico</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.email}
-            name="email"
-            type="email" 
-            placeholder="Introduce correo electrónico" />
-            {valErrors?.email&& <p className="text-danger">{valErrors.email}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Provincia</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.province}
-            name="province"
-            type="text" 
-            placeholder="Introduce tu provincia" />
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Ciudad</Form.Label>
-        <Form.Control 
-            name="city"
-            onChange={handleChange}
-            value={register.city}
-            type="text" 
-            placeholder="Introduce tu ciudad" />
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Contraseña</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.password}
-            name="password"
-            type="password" 
-            placeholder="Crea una nueva contraseña" />
-            {valErrors?.password&& <p className="text-danger">{valErrors.password}</p>}
-      </Form.Group>
-      <Form.Group className="mb-3" >
-        <Form.Label>Repetir contraseña</Form.Label>
-        <Form.Control 
-            onChange={handleChange}
-            value={register.rep_password}
-            name="rep_password"
-            type="password" 
-            placeholder="Repite tu contraseña" />
-            {valErrors?.rep_password&& <p className="text-danger">{valErrors.rep_password}</p>}
-      </Form.Group>
-      <Button className="button_register acept" onClick={onSubmit} >
-        Aceptar
-      </Button>
-      <Button className="button_register cancel" onClick={()=>navigate("/")} >
-        Cancelar
-      </Button >
-      <p className="text-danger">{fecthError}</p>
-    </Form>
+    <div className="register-page">
+      <h2>Pedir cita</h2>
+      <h3>Patitas limpias, corazones felices</h3>
 
+      <Form onSubmit={onSubmit}>
+        <Form.Group className="mb-3">
+          <Form.Label>Nombre</Form.Label>
+          <Form.Control
+            name="name_user"
+            value={register.name_user}
+            onChange={handleChange}
+          />
+          {valErrors.name_user && (
+            <p className="text-danger">{valErrors.name_user}</p>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Apellidos</Form.Label>
+          <Form.Control
+            name="last_name"
+            value={register.last_name}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Teléfono</Form.Label>
+          <Form.Control
+            name="phone"
+            value={register.phone}
+            onChange={handleChange}
+          />
+          {valErrors.phone && (
+            <p className="text-danger">{valErrors.phone}</p>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            name="email"
+            value={register.email}
+            onChange={handleChange}
+          />
+          {valErrors.email && (
+            <p className="text-danger">{valErrors.email}</p>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Provincia</Form.Label>
+          <Form.Control
+            name="province"
+            value={register.province}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Ciudad</Form.Label>
+          <Form.Control
+            name="city"
+            value={register.city}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={register.password}
+            onChange={handleChange}
+          />
+          {valErrors.password && (
+            <p className="text-danger">{valErrors.password}</p>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Repetir contraseña</Form.Label>
+          <Form.Control
+            type="password"
+            name="rep_password"
+            value={register.rep_password}
+            onChange={handleChange}
+          />
+          {valErrors.rep_password && (
+            <p className="text-danger">{valErrors.rep_password}</p>
+          )}
+        </Form.Group>
+
+        <div className="buttons">
+          <Button type="submit" className="button_register acept">
+            Aceptar
+          </Button>
+          <Button
+            type="button"
+            className="button_register cancel"
+            onClick={() => navigate("/")}
+          >
+            Cancelar
+          </Button>
+        </div>
+
+        {fetchError && (
+          <p className="text-danger text-center">{fetchError}</p>
+        )}
+      </Form>
+
+      <img
+        src="/img/home/dog-corner.png"
+        alt="Perrito decorativo"
+        className="dogCorner"
+      />
+    </div>
   )
 }
-export default RegisterPage;
 
+export default RegisterPage
