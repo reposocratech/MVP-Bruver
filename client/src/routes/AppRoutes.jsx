@@ -19,11 +19,12 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
+import { AdminLayout } from "../layouts/AdminLayout.jsx"
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ClientProfilePage.jsx"))
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
-
+const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"))
 
 export const AppRoutes = () => {
   return (
@@ -54,7 +55,13 @@ export const AppRoutes = () => {
             </Route>
           </Route>
 
-        
+          {/* Rutas privadas de admin */}
+          <Route element={<PrivateRoutes />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/admin" element={<AdminProfile />} />
+            </Route>
+          </Route>
+
             <Route path="*" element={<ErrorPage />} />
       </Routes>
       </Suspense>
