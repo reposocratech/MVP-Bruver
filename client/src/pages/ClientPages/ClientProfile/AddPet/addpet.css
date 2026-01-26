@@ -1,0 +1,175 @@
+.addPetPage {
+  min-height: calc(100vh - 160px);
+  background: #f4efe8;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.addPetTitle {
+  font-family: "Lora", serif;
+  color: #6bb3a7;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.addPetForm {
+  width: 100%;
+  max-width: 820px;
+}
+
+.addPetGroup {
+  margin-bottom: 20px;
+}
+
+.addPetLabel {
+  font-family: "Raleway", sans-serif;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1f1f1f;
+}
+
+.addPetInput {
+  border-radius: 10px;
+  border: 1px solid #e2d6ca;
+  padding: 12px 14px;
+}
+
+.addPetTextarea {
+  border-radius: 12px;
+  border: 1px solid #e2d6ca;
+  padding: 14px;
+  resize: vertical;
+  min-height: 160px;
+}
+
+/* Categorías */
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.categoryCard {
+  background: #e8d6c7;
+  border: 2px solid rgba(31, 31, 31, 0.18);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  text-align: left;
+}
+
+.categoryCard:hover {
+  transform: translateY(-1px);
+}
+
+.categoryCard.selected {
+  border-color: #6bb3a7;
+  box-shadow: 0 0 0 3px rgba(107, 179, 167, 0.25);
+}
+
+.categoryText h4 {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: #1f1f1f;
+}
+
+.categoryText p {
+  margin: 6px 0 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(31, 31, 31, 0.75);
+}
+
+/* Cuadradito tipo checkbox */
+.categoryCheck {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid rgba(31, 31, 31, 0.35);
+  background: transparent;
+}
+
+.categoryCheck.on {
+  border-color: #6bb3a7;
+  background: #6bb3a7;
+}
+
+/* Botones */
+.addPetButtons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+  
+}
+
+.btnConfirm {
+  background-color: #6bb3a7;
+  border: none;
+  border-radius: 18px;
+  padding: 10px 26px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.btnCancel {
+  background-color: #e8d6c7;
+  color: #1f1f1f;
+  border: none;
+  border-radius: 18px;
+  padding: 10px 26px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 800;
+}
+
+.btnConfirm:hover,
+.btnCancel:hover {
+  opacity: 0.92;
+  background-color: #6bb3a7;
+}
+
+/* Disabled más claro */
+.btnConfirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #a2b2af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .addPetPage {
+    padding: 28px 16px;
+  }
+
+  .addPetForm {
+    max-width: 520px;
+  }
+
+  .categoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .addPetButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btnConfirm,
+  .btnCancel {
+    width: 100%;
+    max-width: 340px;
+  }
+}

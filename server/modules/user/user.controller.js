@@ -7,6 +7,7 @@ import { sendContactEmail } from "../../services/emailService.js";
 
 import jwt from 'jsonwebtoken';
 import { compareString } from '../../utils/bcryptUtils.js';
+import { generarContrasena } from '../../utils/generarPassAle.js';
 
 
 class UserController {
@@ -81,7 +82,7 @@ class UserController {
         }
     } 
     }catch (error) {
-      console.log("**********", error);
+      console.log("****", error);
       res.status(500).json(error);
     }
   };
@@ -97,25 +98,64 @@ class UserController {
       res.status(500).json(error);
     }
   }
+
     
 
-  //  getProfile = async (req, res) => {
-  //   try {
-  //     let userId = req.user_id;
-  //     let result = await userDal.getProfileById(userId);
+   forgotPassword = async (req, res) => {
+     const {email} = req.body;
+     try {
+       const result = await userDal.findUserByEmail(email);
+      if(result.length === 0){
+        res.status(404).json({message:"Email no registrado"});
+      }else{
+        let passGenerada = generarContrasena()
+        let hashedPass = await bcrypt.hash(passGenerada, 10);
+        const result = await userDal.updatePassword(hashedPass, email)
+        const html = `<h1>Correo de recuperación de contraseña</h1>
+        <p>Tu nueva contraseña es: ${passGenerada} </p>
+        <p>Este enlace expira en 24 horas.</p>`;
+        await sendEmail(email, html);
+      }
+      res.status(200).json({message: "Correo enviado correctamente"});
+    
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({message: "Error al enviar el correo"});
+    }
+  }  
+        
 
-  //     if (!result || result.length === 0) {
-  //       return res.status(404).json({ message: 'Usuario no encontrado' });
-  //     }
-  //     res.status(200).json({
-  //       ok: true,
-  //       user: result[0],
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.status(500).json(error);
-  //   }
-  // }
+
+
+
+        
+
+       
+      
+      
+   
+     
+  
+  
+    
+
+// getProfile = async (req, res) => {
+//     try {
+//       let userId = req.user_id;
+//       let result = await userDal.getProfileById(userId);
+
+//       if (!result || result.length === 0) {
+//         return res.status(404).json({ message: 'Usuario no encontrado' });
+//       }
+//       res.status(200).json({
+//         ok: true,
+//         user: result[0],
+//       });
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).json(error);
+//     }
+//   }
 
     sendContact = async (req, res) => {
       try {
@@ -134,7 +174,6 @@ class UserController {
 
 
 
+
+
 export default new UserController();
-
-
-

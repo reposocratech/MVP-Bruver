@@ -12,6 +12,7 @@ router.get("/verifyEmail/:token",userController.verifyEmail);
 router.post("/login", userController.login);
 router.get("/userByToken", verifyToken, userController.userByToken);
 
+router.post("/forgotPassword", userController.forgotPassword);
 
 router.post("/contact", userController.sendContact);
 

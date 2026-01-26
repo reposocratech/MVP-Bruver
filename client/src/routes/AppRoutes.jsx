@@ -15,16 +15,19 @@ const Nutrition = lazy(() => import("../pages/PublicPages/Nutrition/Nutrition"))
 const Grooming = lazy(() => import("../pages/PublicPages/Grooming/Grooming"))
 const RegisterPage = lazy(() => import("../pages/AuthPages/RegisterPage/RegisterPage"))
 const LoginPage = lazy(() => import("../pages/AuthPages/LoginPage/LoginPage"))
+const ForgotPassPage = lazy(() => import("../pages/AuthPages/ForgotPassPage/ForgotPassPage"))
 const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
-const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ClientProfilePage.jsx"))
+const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
 const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/EditPet.jsx"))
 
+const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
+const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
 
 
 export const AppRoutes = () => {
@@ -43,6 +46,7 @@ export const AppRoutes = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/recoveryPass" element={<ForgotPassPage />} />
           </Route>
         </Route>
 
@@ -52,8 +56,10 @@ export const AppRoutes = () => {
                <Route path="/profile" element={<ClientProfile />} />
                <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} />
-               <Route path="/selectservices" element={<SelectServices />} />
                <Route path="/profile/edit-pet" element={<EditPet />} /> 
+               <Route path="/addpet" element={<AddPet />} />
+               <Route path="/selectservices" element={<SelectServices />} /> 
+               <Route path="/selectdate" element={<SelectDate />} /> 
             </Route>
           </Route>
 

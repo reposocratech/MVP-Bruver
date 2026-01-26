@@ -1,6 +1,5 @@
 
 
-
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
@@ -27,12 +26,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/user', userRouter);
-app.use('/', userRouter);
 app.use("/pet", petRouter);
 app.use("/appointment", appointmentRouter);
 
-// app.use("/user", userTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
