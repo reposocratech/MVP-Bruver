@@ -1,0 +1,131 @@
+.editPetPage {
+  background: #f4efe8;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.pageTitle {
+  text-align: center;
+  color: #6bb3a7;
+  margin-bottom: 30px;
+  font-size: 26px;
+}
+
+/* ----- BLOQUE INFO MASCOTA ----- */
+.petInfoBox {
+  background: #e8d6c7;
+  border-radius: 16px;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+
+.petInfoLeft h3 {
+  margin-bottom: 10px;
+  color: #3b2a1e;
+}
+
+.infoRow {
+  background: #dccbb7;
+  padding: 6px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  width: 180px;
+  font-size: 14px;
+}
+
+.petInfoRight img {
+  width: 350px;
+}
+
+/* ----- FORMULARIO ----- */
+.editTitle {
+  text-align: center;
+  color: #6bb3a7;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.editPetForm {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.editPetForm label {
+  display: block;
+  font-size: 13px;
+  margin: 12px 0 4px;
+  color: #3b2a1e;
+}
+
+.editPetForm input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+/* Foto */
+.photoSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.photoSection img {
+  width: 90px;
+}
+
+.changePhotoBtn {
+  background: #6bb3a7;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+/* Botones */
+.formActions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.backBtn {
+  background: #e0cbb6;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.confirmBtn {
+  background: #6bb3a7;
+  color: white;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .petInfoBox {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .infoRow {
+    width: 100%;
+  }
+}
