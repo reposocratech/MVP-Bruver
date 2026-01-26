@@ -2,6 +2,7 @@ import { sendEmail } from '../../services/emailService.js';
 import userDal from './user.dal.js';
 import bcrypt from "bcrypt";
 import { generateToken } from '../../utils/jwtUtils.js';
+import { sendContactEmail } from "../../services/emailService.js";
 
 class UserController {
     register = async (req, res) => {
@@ -57,6 +58,20 @@ class UserController {
         res.status(500).json(error);
       }
     }
+
+    sendContact = async (req, res) => {
+      try {
+        const { nombre, telefono, email, mensaje } = req.body;
+
+        await sendContactEmail({ nombre, telefono, email, mensaje });
+
+        res.json({ ok: true });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ ok: false });
+      }
+    };
+
   }
 
 export default new UserController();

@@ -10,4 +10,6 @@ router.get("/profile", verifyToken, userController.getProfile);
 
 router.post("/login", userController.login);
 
+router.post("/contact", userController.sendContact);
+
 export default router;
