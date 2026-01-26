@@ -19,7 +19,7 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
-const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ClientProfilePage.jsx"))
+const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))

@@ -12,7 +12,7 @@ export const ClientLayout = () => {
           <Outlet/>
       </main>
       <footer>
-           <FooterPublic/>
+           <FooterPublic />
       </footer>
     </>  
 )

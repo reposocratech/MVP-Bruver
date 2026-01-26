@@ -1,3 +1,4 @@
+
 import createError from 'http-errors';
 import express from 'express';
 import path from 'path';
@@ -5,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from "cors";
 import { fileURLToPath } from 'url';
+
 
 
 import appointmentRouter from "./modules/appointment/appointment.routes.js";
@@ -29,7 +31,6 @@ app.use('/user', userRouter);
 app.use("/pet", petRouter);
 app.use("/appointment", appointmentRouter);
 
-// app.use("/user", userTestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
