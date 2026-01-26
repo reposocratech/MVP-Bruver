@@ -22,7 +22,7 @@ const SelectPet = () => {
             </Button>
             <h3>51,00€</h3>
             <Button
-              onClick={() => navigate('/selectservices')}
+              onClick={() => navigate('/selectDate')}
               className="select-btn"
             >
               SELECCIONAR
@@ -91,7 +91,7 @@ const SelectPet = () => {
         </div>
       </section>
       
-      <Button onClick={() => navigate('/')} className="back-btn">
+      <Button onClick={() => navigate('/selectpet')} className="back-btn">
         VOLVER
       </Button>
     </>

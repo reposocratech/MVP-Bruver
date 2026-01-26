@@ -24,6 +24,8 @@ const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/Selec
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
+const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
+
 
 export const AppRoutes = () => {
   return (
@@ -51,8 +53,9 @@ export const AppRoutes = () => {
                <Route path="/profile" element={<ClientProfile />} />
                <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} />
-               <Route path="/selectservices" element={<SelectServices />} />
                <Route path="/addpet" element={<AddPet />} />
+               <Route path="/selectservices" element={<SelectServices />} /> 
+               <Route path="/selectdate" element={<SelectDate />} /> 
             </Route>
           </Route>
 
