@@ -158,23 +158,67 @@
 @media (max-width: 520px) {
   .services {
     flex-direction: column;
-    gap: 140px;
-    padding: 140px 14px 220px;
+    gap: 160px;
+    padding: 160px 16px 70px;
   }
- 
+
+.dogCorner {
+    display: none !important;
+  }
+
   .serviceCard {
-    width: 90%;
-    max-width: 360px;
-    padding: 150px 20px 28px;
+    width: 100%;
+    max-width: 370x;
+    height: auto;
+    min-height: 240px;
+    padding: 110px 18px 28px;
   }
- 
+
   .serviceImgWrap {
-    width: 220px;
-    height: 220px;
-    top: -110px;
+    width: 200px;
+    height: 200px;
+    top: -100px;
   }
- 
+
   .serviceText {
     font-size: 22px;
+    line-height: 1.25;
+    margin-top: 0;
   }
 }
+
+
+@media (min-width: 521px) and (max-width: 900px) {
+  .services {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 100px;
+    padding: 220px 24px 220px;
+  }
+
+  .heroQuote {
+    margin-left: 40%;
+  }
+
+  .serviceCard:nth-child(3) {
+    margin-top: 80px;
+  }
+
+
+  .serviceCard {
+    width: 300px;
+    height: 280px; 
+    padding: 140px 20px 32px;
+  }
+
+  .serviceImgWrap {
+    width: 240px;
+    height: 240px;
+    top: -120px;
+  }
+
+  .serviceText {
+    font-size: 24px;
+  }
+}
+
