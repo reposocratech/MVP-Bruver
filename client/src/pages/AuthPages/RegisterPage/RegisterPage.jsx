@@ -29,31 +29,33 @@ const RegisterPage = () => {
     setRegister({ ...register, [name]: value })
   }
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-
-    try {
-      registerSchema.parse(register)
-      await fetchData("user/register", "POST", register)
-      navigate("/login")
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const fieldsErrors = {}
-        error.issues.forEach((elem) => {
-          fieldsErrors[elem.path[0]] = elem.message
-        })
-        setValErrors(fieldsErrors)
-        setFetchError("")
-      } else {
-        setValErrors({})
-        setFetchError(
-          error.response?.data?.errno === 1062
-            ? "Email ya existe"
-            : "Error al crear usuario"
-        )
+  const onSubmit = async () => {
+      try {
+        registerSchema.parse(register);
+        const res = await fetchData("user/register", "POST", register);
+        console.log("^^^^^^^^^^^^", res);
+        navigate("/login");
+        
+      } catch (error) {
+        if(error instanceof ZodError){
+          const fieldsErrors = {};
+          error.issues.forEach((elem)=>{
+            fieldsErrors[elem.path[0]] = elem.message;
+          })
+          setValErrors(fieldsErrors)
+          setFetchError("")
+        }else{
+          setValErrors({})
+          if(error.response?.data?.errno === 1062){
+            setFetchError("Email ya existe")
+          }else{
+            setFetchError("Error al crear usuario")
+            console.error("Error al crear usuario:", error)
+          }
+        }
       }
     }
-  }
+ 
 
   return (
     <div className="register-page">

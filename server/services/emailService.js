@@ -48,8 +48,11 @@ export const sendContactEmail = async ({ nombre, telefono, email, mensaje }) => 
     throw error;
   }
 };
-export const sendEmail = async (email, html, token) => {
-  console.log(email, html, token);
+
+
+
+export const sendEmail = async (email, html) => {
+
   
   try {
     const result = await transporter.sendMail({

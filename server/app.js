@@ -1,25 +1,20 @@
-import userTestRouter from "./modules/user/user.comprobar.routes.js";
-
-
 
 import createError from 'http-errors';
-import express from'express';
+import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from "cors";
 import { fileURLToPath } from 'url';
 
-//Cambiar
-import { sendContactEmail } from "./services/emailService.js";
-import dotenv from "dotenv";
+
+
 
 
 import appointmentRouter from "./modules/appointment/appointment.routes.js";
 import petRouter from "./modules/pet/pet.routes.js";
 import userRouter from './modules/user/user.routes.js';
 
-dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,23 +28,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/user', userRouter);
 app.use("/pet", petRouter);
 app.use("/appointment", appointmentRouter);
 
-app.use("/user", userTestRouter);
+// app.use("/user", userTestRouter);
 
-
-app.post("/contact", async (req, res) => {
-  try {
-    const { nombre, telefono, email, mensaje } = req.body;
-    await sendContactEmail({ nombre, telefono, email, mensaje });
-    res.json({ ok: true });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ ok: false });
-  }
-});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
