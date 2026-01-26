@@ -23,6 +23,7 @@ const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/Clie
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
+const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
 
 
 export const AppRoutes = () => {
@@ -51,6 +52,7 @@ export const AppRoutes = () => {
                <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} />
                <Route path="/selectservices" element={<SelectServices />} /> 
+               <Route path="/selectdate" element={<SelectDate />} /> 
             </Route>
           </Route>
 
