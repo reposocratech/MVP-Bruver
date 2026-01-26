@@ -81,7 +81,7 @@ class UserController {
         }
     } 
     }catch (error) {
-      console.log("**********", error);
+      console.log("****", error);
       res.status(500).json(error);
     }
   };
@@ -99,23 +99,23 @@ class UserController {
   }
     
 
-  /* getProfile = async (req, res) => {
-    try {
-      let userId = req.user_id;
-      let result = await userDal.getProfileById(userId);
+// getProfile = async (req, res) => {
+//     try {
+//       let userId = req.user_id;
+//       let result = await userDal.getProfileById(userId);
 
-      if (!result || result.length === 0) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }
-      res.status(200).json({
-        ok: true,
-        user: result[0],
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json(error);
-    }
-
+//       if (!result || result.length === 0) {
+//         return res.status(404).json({ message: 'Usuario no encontrado' });
+//       }
+//       res.status(200).json({
+//         ok: true,
+//         user: result[0],
+//       });
+//     } catch (error) {
+//       console.log(error);
+//       res.status(500).json(error);
+//     }
+//   }
 
     sendContact = async (req, res) => {
       try {
@@ -132,11 +132,7 @@ class UserController {
 
   }
 
-  }; */
-}
+
 
 
 export default new UserController();
-
-
-
