@@ -142,86 +142,139 @@ font-family: "Raleway", sans-serif;
 }
  
  
-@media (max-width: 768px) {
- 
- 
+@media (max-width: 520px) {
   .aboutPage {
     padding: 40px 20px;
   }
- 
+
   .aboutTop {
     flex-direction: column;
     gap: 32px;
   }
- 
+
   .aboutTop .aboutText {
     padding-left: 0;
     text-align: center;
   }
- 
+
   .aboutTitle {
     font-size: 34px;
   }
- 
+
   .aboutText h3 {
     font-size: 22px;
   }
- 
+
   .aboutText p {
     font-size: 16px;
   }
- 
- 
+
   .aboutLogo {
     margin: 32px auto 0;
     text-align: center;
   }
- 
- 
+
   .aboutImageBig {
     margin: 0;
   }
- 
+
   .aboutImageBig img {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
     height: auto;
     border-radius: 50%;
   }
- 
+
   .aboutBottom {
     flex-direction: column;
     gap: 40px;
     margin-top: 60px;
   }
- 
+
   .aboutImages {
-    width: 320px;
-    height: 320px;
+    width: 300px;
+    height: 300px;
     margin: 0 auto;
   }
- 
+
   .circleImg {
-    width: 260px;
-    height: 260px;
+    width: 240px;
+    height: 240px;
   }
- 
+
   .circleImg.small {
-    width: 180px;
-    height: 180px;
-    bottom: -20px;
-    right: -20px;
+    width: 160px;
+    height: 160px;
+    bottom: -16px;
+    right: -16px;
   }
- 
- 
+
   .aboutBottom .aboutText {
     margin-left: 0;
     padding-left: 0;
-    width: 100%;
     text-align: center;
   }
- 
-  .aboutSubtitle {
-    font-size: 22px;
+}
+
+
+
+@media (min-width: 521px) and (max-width: 1024px) {
+  .aboutPage {
+    padding: 60px 60px;
+  }
+
+  .aboutTop {
+    gap: 40px;
+  }
+
+  .aboutTop .aboutText {
+    padding-left: 0;
+  }
+
+  .aboutTitle {
+    font-size: 42px;
+  }
+
+  .aboutImageBig {
+    margin-right: -80px;
+  }
+
+  .aboutImageBig img {
+    width: 520px;
+    height: 340px;
+    border-top-left-radius: 180px;
+    border-bottom-left-radius: 180px;
+  }
+
+  .aboutLogo {
+    margin-left: 0;
+    margin-top: 40px;
+  }
+
+  .aboutBottom {
+    gap: 40px;
+  }
+
+  .aboutImages {
+    width: 380px;
+    height: 380px;
+    margin-left: 0;
+  }
+
+  .circleImg {
+    width: 300px;
+    height: 300px;
+  }
+
+  .circleImg.small {
+    width: 200px;
+    height: 200px;
+    right: -24px;
+    bottom: -24px;
+  }
+
+  .aboutBottom .aboutText {
+    padding-left: 0; 
+    margin-left: 0;
   }
 }
