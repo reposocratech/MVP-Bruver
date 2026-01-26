@@ -23,6 +23,8 @@ const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/Clie
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
+const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/EditPet.jsx"))
+
 
 
 export const AppRoutes = () => {
@@ -50,7 +52,8 @@ export const AppRoutes = () => {
                <Route path="/profile" element={<ClientProfile />} />
                <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} />
-               <Route path="/selectservices" element={<SelectServices />} /> 
+               <Route path="/selectservices" element={<SelectServices />} />
+               <Route path="/profile/edit-pet" element={<EditPet />} /> 
             </Route>
           </Route>
 
