@@ -30,6 +30,7 @@ const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/Ed
 
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
 const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
+const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
 
 
 export const AppRoutes = () => {
@@ -62,6 +63,7 @@ export const AppRoutes = () => {
                <Route path="/addpet" element={<AddPet />} />
                <Route path="/selectservices" element={<SelectServices />} /> 
                <Route path="/selectdate" element={<SelectDate />} /> 
+               <Route path="/worker" element={<Worker />} /> 
             </Route>
           </Route>
 
