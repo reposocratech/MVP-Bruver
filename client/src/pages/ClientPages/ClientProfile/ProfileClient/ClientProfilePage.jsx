@@ -1,131 +1,151 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { fetchData } from "../../../../helpers/axiosHelper";
-import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
-import { Button } from "react-bootstrap";
-import "./ClientProfile.css"
+import { Button, Table } from "react-bootstrap";
+import "./clientprofilepage.css";
+import { Link } from 'react-router'
+import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
+import { useState } from "react";
 
 const ClientProfilePage = () => {
-  const [user, setUser] = useState();
-  const [pets, setPets] = useState([]);
-  const [appointments, setAppointments] = useState([]);
-
-  const { token } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const res = await fetchData("user/profile", "GET", null, token);
-      setUser(res.data.user);
-    };
-
-    const fetchPets = async () => {
-      const res = await fetchData("pet/mine", "GET", null, token);
-      setPets(res.data.pets);
-    };
-
-    const fetchAppointments = async () => {
-      const res = await fetchData("appointment/mine", "GET", null, token);
-      setAppointments(res.data.appointments);
-    };
-
-    fetchProfile();
-    fetchPets();
-    fetchAppointments();
-  }, []);
+  const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div className="cp-page">
-      <div className="cp-info-card">
-        <div className="cp-info-left">
-          <h2>Información</h2>
-          <div className="cp-info-box">
-            <p>{user?.name_user} {user?.last_name}</p>
-            <p>{user?.email}</p>
-            <p>{user?.phone}</p>
+    <div className="clientProfilePage">
+      <h1 className="profileTitle">PERFIL USUARIO</h1>
+
+      {/* INFO */}
+      <section className="infoCard">
+        <div className="infoLeft">
+          <div className="infoHeader">
+            <h2 className="infoTitle">Información</h2>
+
+            <Button onClick={() => setOpenModal(true)} className="editBtn" type="button">
+              ✎ Editar
+            </Button>
+
+            
           </div>
 
-          <Button className="cp-btn" onClick={() => navigate("/profile/edit")}>
-            Editar
+          <div className="infoTableWrap">
+            <Table className="infoTable" borderless>
+              <tbody>
+                <tr>
+                  <td className="infoKey">Nombre</td>
+                  <td className="infoValue">Clara Rodríguez</td>
+                </tr>
+                <tr>
+                  <td className="infoKey">Correo</td>
+                  <td className="infoValue">clarard@gmail.com</td>
+                </tr>
+                <tr>
+                  <td className="infoKey">Teléfono</td>
+                  <td className="infoValue">638493234</td>
+                </tr>
+              </tbody>
+            </Table>
+          </div>
+        </div>
+
+        <div className="infoRight">
+          <div className="userPhoto">
+            <span>FOTO</span>
+          </div>
+        </div>
+      </section>
+
+      {/* MASCOTAS */}
+      <section className="petsSection">
+        <div className="sectionHeader">
+          <h1 className="sectionTitle">Mis mascotas</h1>
+
+          <Button as={Link} to="/addpet" className="addLinkBtn">
+            🐾 Añadir
           </Button>
         </div>
 
-        <div className="cp-info-right">
-          <img
-            className="cp-user-img"
-            src={`${import.meta.env.VITE_SERVER_IMAGES}/users/${user?.picture_user}`}
-            alt=""
-          />
-        </div>
-      </div>
+        <div className="petsGrid">
+          {/* Mascota 1 */}
+          <article className="petCard">
+            <div className="petImage">
+              <span>IMG</span>
+            </div>
+            <div className="petBody">
+              <h3 className="petName">Toy</h3>
 
-
-
-      <h1 className="cp-title">Mis mascotas</h1>
-
-      <Button className="cp-btn" onClick={() => navigate("/pets/new")}>
-        Añadir
-      </Button>
-
-      <div className="cp-pets-grid">
-        {pets?.map((pet) => {
-          return (
-            <div className="cp-pet-card" key={pet.pet_id}>
-              <img
-                className="cp-pet-img"
-                src={`${import.meta.env.VITE_SERVER_IMAGES}/pets/${pet.picture_pet}`}
-                alt=""
-              />
-
-              <div className="cp-pet-footer">
-                <p className="cp-pet-name">{pet.name_pet}</p>
-
-                <div className="cp-pet-actions">
-                  <Button
-                    className="cp-btn"
-                    onClick={() => navigate(`/pets/edit/${pet.pet_id}`)}
-                  >
-                    Editar
-                  </Button>
-
-                  <Button
-                    className="cp-btn"
-                    onClick={() => navigate(`/pets/delete/${pet.pet_id}`)}
-                  >
-                    Eliminar
-                  </Button>
-                </div>
+              <div className="petActions">
+                <button className="petBtn" type="button">
+                  EDITAR
+                </button>
+                {/* ✅ AQUÍ VA TU MODAL DE EDITAR MASCOTA */}
+                <button
+                  className="petBtn danger"
+                  type="button"
+                  onClick={() => window.confirm("¿Estás seguro de borrar a Toy?")}
+                >
+                  ELIMINAR
+                </button>
               </div>
             </div>
-          );
-        })}
-      </div>
+          </article>
 
-      <h1 className="cp-title">Mis citas</h1>
+          {/* Mascota 2 */}
+          <article className="petCard">
+            <div className="petImage">
+              <span>IMG</span>
+            </div>
+            <div className="petBody">
+              <h3 className="petName">Sam</h3>
 
-      <div className="cp-table-wrap">
-        <table className="cp-table">
-          <thead>
-            <tr>
-              <th>HORA</th>
-              <th>DÍA DE RESERVA</th>
-              <th>TOTAL</th>
-            </tr>
-          </thead>
+              <div className="petActions">
+                <button className="petBtn" type="button">
+                  EDITAR
+                </button>
+                {/* ✅ AQUÍ VA TU MODAL DE EDITAR MASCOTA */}
+                <button
+                  className="petBtn danger"
+                  type="button"
+                  onClick={() => window.confirm("¿Estás seguro de borrar a Sam?")}
+                >
+                  ELIMINAR
+                </button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
 
-          <tbody>
-            {appointments?.map((a) => {
-              return (
-                <tr key={a.appointment_id}>
-                  <td>{a.start_time?.slice(0, 5)}</td>
-                  <td>{a.appointment_date?.slice(0, 10)}</td>
-                  <td>{a.total_price}€</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      {/* CITAS */}
+      <section className="appointmentsSection">
+        <h1 className="sectionTitle center">Mis citas</h1>
+
+        <div className="appointmentsTableWrap">
+          <Table className="appointmentsTable" bordered>
+            <thead>
+              <tr>
+                <th>HORA</th>
+                <th>DÍA DE RESERVA</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>10:00</td>
+                <td>18/01/2026</td>
+                <td>56,00€</td>
+              </tr>
+              <tr>
+                <td>11:00</td>
+                <td>18/01/2026</td>
+                <td>56,00€</td>
+              </tr>
+              <tr>
+                <td>12:00</td>
+                <td>18/01/2026</td>
+                <td>56,00€</td>
+              </tr>
+            </tbody>
+          </Table>
+        </div>
+      </section>
+      {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </div>
   );
 };

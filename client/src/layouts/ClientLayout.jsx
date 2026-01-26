@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router'
 import { NavbarLogin } from '../components/NavbarLogin/NavbarLogin'
-import { FooterPublic } from '../components/Footer/FooterPublic'
+import { FooterPublic } from "../components/Footer/FooterPublic";
 
 export const ClientLayout = () => {
   return (
