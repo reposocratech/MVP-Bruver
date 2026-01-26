@@ -38,6 +38,7 @@ const LoginPage = () => {
       localStorage.setItem("token", token);
       setUser(resUser.data.user);
       setToken(token);
+      navigate("/profile")
     } catch (error) {
       console.log("Error en login:", error);
 

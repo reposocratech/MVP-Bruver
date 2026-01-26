@@ -1,77 +1,141 @@
-body{
-background-color: #f4efe8;
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
+body {
+  background-color: #f4efe8;
+  font-family: "Raleway", sans-serif;
 }
 
-h2{
+.register-page {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 200px;
+}
+
+h2 {
   text-align: center;
-  padding: 2rem;
+  padding: 2rem 2rem 0.5rem;
   color: #6aafa5;
-  font-family: 'Lora', serif;
+  font-family: "Lora", serif;
   font-weight: bold;
 }
 
-.mb-3{
-  font-family: 'Raleway', sans-serif;
-  width: 70%;
-  padding-left: 30%;
-  padding-top: .5rem;
+
+h3 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2.5rem;
+  color: #4a2e24;
+  font-family: "Lora", serif;
+  font-weight: bold;
+}
+
+
+.mb-3 {
+  width: 42%;
+  margin: 0 auto; 
+  padding-top: 0.6rem;
   display: flex;
   flex-direction: column;
   font-weight: bold;
 }
 
-.buttons{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-}
 
-.button_register {
-  background-color: #FFFFFF;
-  color: #1F1F1F;
+.mb-3 input {
+  width: 100%;
+  padding: 9px 12px;
+  margin-top: 6px;
   border: none;
-  width: 150px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
-  transition: background-color 0.2s ease, transform 0.15s ease;
-  font-family: inherit;
+  border-radius: 10px;
+  background: #ffffff;
+  font-size: 14px;
+  font-family: "Raleway", sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
 }
 
-.button_register:hover {
-  background-color: #467971d6;
+
+.mb-3 input:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(107, 179, 167, 0.25);
   transform: translateY(-1px);
 }
 
-.button_register:active {
-  transform: translateY(0);
+
+.text-danger {
+  font-size: 0.85rem;
+  margin-top: 4px;
 }
 
-.acept{
-  background-color: rgb(107, 176, 166);
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.8rem;
+}
+
+
+.button_register {
+  border: none;
+  padding: 12px 36px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  font-family: "Raleway", sans-serif;
+}
+
+
+.button_register.acept {
+  background: #6bb3a7;
   color: white;
+  box-shadow: 0 6px 16px rgba(107, 179, 167, 0.35);
 }
 
-h3{
-  text-align: center;
-  margin: 4rem;
-  color: #4a2e24;
-  font-family: 'Lora', serif;
-  font-weight: bold;
+.button_register.acept:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.45);
 }
+
+
+.button_register.cancel {
+  background: #ffffff;
+  color: #6bb3a7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.button_register.cancel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
 
 .dogCorner {
   position: absolute;
   left: 0;
   bottom: 0;
   width: 250px;
-  margin: 0;
-  padding: 0;
   pointer-events: none;
   user-select: none;
-  z-index: 10;
-  display: block;
+  z-index: 1;
+}
+
+
+@media (max-width: 1024px) {
+  .mb-3 {
+    width: 55%;
+  }
+}
+
+@media (max-width: 768px) {
+  .mb-3 {
+    width: 90%;
+  }
+
+  .dogCorner {
+    display: none;
+  }
 }

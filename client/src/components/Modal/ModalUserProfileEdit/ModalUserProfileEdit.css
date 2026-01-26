@@ -1,0 +1,77 @@
+.userProfileModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.userProfileModalContent {
+  background: #F4E6D7;
+  padding: 30px 40px;
+  border-radius: 18px;
+  width: 680px;
+}
+.modalTitle {
+  text-align: center;
+  color: #6BB3A7;
+  margin-bottom: 20px;
+}
+.userProfileForm label {
+  font-size: 13px;
+  margin-top: 10px;
+  display: block;
+}
+.userProfileForm input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  margin-top: 4px;
+}
+.photoSection {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+.photoSection img {
+  width: 90px;
+  border-radius: 8px;
+}
+.changePhotoBtn {
+  background: #6BB3A7;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.modalButtons {
+  display: flex ;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  margin-top: 25px;
+}
+.confirmBtn {
+  background: #6BB3A7;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+.cancelBtn {
+  background: #E0CBB6;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+.deleteBtn {
+  background: #E58A8A;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
