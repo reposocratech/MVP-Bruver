@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const generateToken = (userId) => {
-  let payload = {user_id: userId};
-  return jwt.sign(payload, process.env.SECRET_TOKEN_KEY, {expiresIn:"2d"})
+//lo hacemos dinamico para poder usar diferentes payloads como email o id
+
+export const generateToken = (payload, secret = process.env.SECRET_TOKEN_KEY, options = {expiresIn: "2d"}) => {
+  return jwt.sign(payload, secret, options);
 }

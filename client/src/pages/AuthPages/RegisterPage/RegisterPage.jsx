@@ -46,12 +46,15 @@ const RegisterPage = () => {
             fieldsErrors[elem.path[0]] = elem.message;
           })
           setValErrors(fieldsErrors)
+          setFetchError("")
         }else{
           setValErrors({})
-        }if(error.response.data.errno === 1062){
-          setFetchError("Email ya existe")
-        }else{
-          setFetchError("Error al crear usuario", error)
+          if(error.response?.data?.errno === 1062){
+            setFetchError("Email ya existe")
+          }else{
+            setFetchError("Error al crear usuario")
+            console.error("Error al crear usuario:", error)
+          }
         }
       }
   }
