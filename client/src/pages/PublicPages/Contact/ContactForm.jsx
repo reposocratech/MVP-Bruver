@@ -8,6 +8,11 @@ const ContactForm = () => {
     mensaje: "",
   });
 
+  const [status, setStatus] = useState({
+    ok: null,   // true | false | null
+    msg: ""
+  });
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -17,9 +22,10 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus({ ok: null, msg: "" });
 
     try {
-      await fetch("http://localhost:4000/contact", {
+      const res = await fetch("http://localhost:4000/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -27,11 +33,20 @@ const ContactForm = () => {
         body: JSON.stringify(form)
       });
 
-      alert("Mensaje enviado correctamente");
+      if (!res.ok) throw new Error();
+
+      setStatus({
+        ok: true,
+        msg: "Mensaje enviado correctamente"
+      });
+
       setForm({ nombre: "", telefono: "", email: "", mensaje: "" });
     } catch (error) {
-       console.error(error);
-      alert("Error al enviar el mensaje");
+      console.log(error)
+      setStatus({
+        ok: false,
+        msg: "Error al enviar el mensaje"
+      });
     }
   };
 
@@ -69,6 +84,18 @@ const ContactForm = () => {
       />
 
       <button type="submit">ENVIAR</button>
+
+      {status.msg && (
+        <p
+          style={{
+            marginTop: "10px",
+            color: status.ok ? "green" : "red",
+            fontWeight: "600"
+          }}
+        >
+          {status.msg}
+        </p>
+      )}
     </form>
   );
 };

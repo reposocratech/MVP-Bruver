@@ -99,6 +99,8 @@ class UserController {
     }
   }
 
+    
+
    forgotPassword = async (req, res) => {
      const {email} = req.body;
      try {
@@ -122,6 +124,7 @@ class UserController {
     }
   }  
         
+
 
 
 
@@ -166,8 +169,9 @@ class UserController {
         res.status(500).json({ ok: false });
       }
     };
+  
+  };
 
-  }
 
 
 

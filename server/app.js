@@ -9,7 +9,6 @@ import cors from "cors";
 import { fileURLToPath } from 'url';
 
 
-
 import appointmentRouter from "./modules/appointment/appointment.routes.js";
 import petRouter from "./modules/pet/pet.routes.js";
 import userRouter from './modules/user/user.routes.js';
