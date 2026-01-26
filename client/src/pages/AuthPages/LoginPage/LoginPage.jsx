@@ -97,8 +97,17 @@ const LoginPage = () => {
           <a onClick={() => navigate("/register")} className="register-link">
             Regístrate
           </a>
+
+          {/* Restablecer contraseña */}
         </p>
+          <p className="not-registered">
+            ¿Olvidaste tu contraseña? {" "}
+          <a onClick={() => navigate("/recoveryPass")} className="register-link">
+            Pincha aquí
+          </a>
+          </p>
       </Form>
+
     </>
   )
 }

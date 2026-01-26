@@ -42,6 +42,18 @@ class UserDal{
     }
   }
 
+  updatePassword = async(hashedPass, email ) =>{
+    try {
+      let sql = "UPDATE user SET password = ? WHERE email = ?"
+      let result = await executeQuery(sql, [hashedPass, email ])
+      return result
+    } catch (error) {
+      throw error;
+    }
+  }
+      
+      
+
 
 
   // getProfileById = async (userId) => {
