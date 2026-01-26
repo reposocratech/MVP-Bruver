@@ -15,6 +15,7 @@ const Nutrition = lazy(() => import("../pages/PublicPages/Nutrition/Nutrition"))
 const Grooming = lazy(() => import("../pages/PublicPages/Grooming/Grooming"))
 const RegisterPage = lazy(() => import("../pages/AuthPages/RegisterPage/RegisterPage"))
 const LoginPage = lazy(() => import("../pages/AuthPages/LoginPage/LoginPage"))
+const ForgotPassPage = lazy(() => import("../pages/AuthPages/ForgotPassPage/ForgotPassPage"))
 const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS */
@@ -43,7 +44,7 @@ export const AppRoutes = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
-            
+            <Route path="/recoveryPass" element={<ForgotPassPage />} />
           </Route>
         </Route>
 
