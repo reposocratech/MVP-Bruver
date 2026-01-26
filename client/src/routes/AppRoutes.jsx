@@ -20,9 +20,11 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
-const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
+import { AdminLayout } from "../layouts/AdminLayout.jsx"
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
+const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"))
+const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
 const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/EditPet.jsx"))
 
@@ -63,7 +65,13 @@ export const AppRoutes = () => {
             </Route>
           </Route>
 
-        
+          {/* Rutas privadas de admin */}
+          <Route element={<PrivateRoutes />}>
+            <Route element={<AdminLayout />}>
+              <Route path="/admin" element={<AdminProfile />} />
+            </Route>
+          </Route>
+
             <Route path="*" element={<ErrorPage />} />
       </Routes>
       </Suspense>
