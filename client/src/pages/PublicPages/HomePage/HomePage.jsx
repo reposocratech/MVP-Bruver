@@ -5,7 +5,7 @@ import { Link } from 'react-router'
 const HomePage = () => {
   return (
     <section className="home">
-      {/* HERO */}
+     
       <section className="hero">
         <div className="heroLeft"></div>
 
@@ -19,7 +19,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* SERVICIOS */}
+      
       <section className="services">
         <article className="serviceCard">
           <div className="serviceImgWrap">
@@ -69,7 +69,7 @@ const HomePage = () => {
         </article>
       </section>
 
-      {/* Perrito abajo a la izquierda (FUERA de services) */}
+      
       <img className="dogCorner" src="/img/home/dog-corner.png" alt="Perro" />
     </section>
   );
