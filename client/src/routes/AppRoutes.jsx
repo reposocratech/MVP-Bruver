@@ -27,6 +27,10 @@ const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminPro
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
 const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/EditPet.jsx"))
+const AdminManage = lazy(() =>
+  import("../pages/AdminPages/AdminManage/AdminManage.jsx")
+);
+
 
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
 const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
@@ -62,6 +66,7 @@ export const AppRoutes = () => {
                <Route path="/addpet" element={<AddPet />} />
                <Route path="/selectservices" element={<SelectServices />} /> 
                <Route path="/selectdate" element={<SelectDate />} /> 
+               
             </Route>
           </Route>
 
@@ -69,6 +74,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminProfile />} />
+              <Route path="/admin/manage" element={<AdminManage />}/>
             </Route>
           </Route>
 
