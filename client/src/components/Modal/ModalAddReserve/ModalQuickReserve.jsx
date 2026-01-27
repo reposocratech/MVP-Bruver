@@ -8,7 +8,7 @@ const ModalQuickReserve = ({ toBack }) => {
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <h3>Añadir una reserva rápida</h3>
-         <form className="userProfileForm">
+         <form className="quickReserveForm">
           <label>Seleccionar cliente</label>
           <input name="client" />
           <label>Hora de inicio</label>

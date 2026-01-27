@@ -1,18 +1,13 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router';
 import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx'
-import './AdminProfile.css'
-import { useNavigate } from 'react-router';
+import "./WorkerProfile.css"
 
+const WorkerProfile = () => {
 
-const AdminProfile = () => {
-  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
 
-  const navigate = useNavigate();
-
   return (
-    <section className="admin-section">
+    <section className="worker-section">
 
       <h2 className="title">Mi perfil</h2>
 
@@ -45,44 +40,29 @@ const AdminProfile = () => {
 
 
         <div className="options-row row-top">
-
-          <div className="option-card" onClick={()=>navigate('/admin/general')}>
-            <div className="option-header"  >AGENDA</div>
-            <i class="bi bi-journal-richtext"></i>
-          </div>
-          <div className="option-card">
-            <div className="option-header">MIS CITAS</div>
-            <i class="bi bi-pencil-square"></i>
-          </div>
+          
           <div className="option-card">
             <div className="option-header">HORARIO LABORAL</div>
             <i class="bi bi-calendar3"></i>
           </div>
 
-        </div>
-
-        <div className="options-row row-bottom">
+          <div className="option-card">
+            <div className="option-header">MIS CITAS</div>
+            <i class="bi bi-pencil-square"></i>
+          </div>
 
           <div className="option-card">
-            <div className="option-header">MODIFICAR EMPLEADOS</div>
-            <i class="bi bi-people"></i>
+            <div className="option-header">AGENDA</div>
+            <i class="bi bi-journal-richtext"></i>
           </div>
-          <div className="option-card" onClick={() => navigate('/admin/manage')} style={{ cursor: 'pointer' }}>
-            <div className="option-header">ADMINISTRAR</div>
-            <i className="bi bi-gear"></i>
-          </div>
-
         </div>
-
       </div>
 
-      <button className="back-btn" onClick={() => navigate(-1)}><span className="arrow">←</span>ATRAS</button>
-
-
+      <button className="back-btn"><span className="arrow">←</span>ATRAS</button>
 
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </section>
   )
 }
 
-export default AdminProfile;
+export default WorkerProfile;

@@ -14,6 +14,15 @@ const ClientProfilePage = () => {
 
 
 
+  /* Función para que haya scroll en la página o en el modal, según donde estés */
+  useEffect(() => {
+    document.body.style.overflow = openModal ? 'hidden' : 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [openModal]);
+
   return (
     <div className="clientProfilePage">
       <h1 className="profileTitle">Perfil usuario</h1>
@@ -24,7 +33,11 @@ const ClientProfilePage = () => {
           <div className="infoHeader">
             <h2 className="infoTitle">Información</h2>
 
-            <Button onClick={() => setOpenModal(true)} className="editBtn" type="button">
+            <Button
+              onClick={() => setOpenModal(true)}
+              className="editBtn"
+              type="button"
+            >
               ✎ Editar
             </Button>
           </div>

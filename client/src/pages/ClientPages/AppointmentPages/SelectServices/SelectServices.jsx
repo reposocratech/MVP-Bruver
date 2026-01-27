@@ -10,9 +10,10 @@ const SelectPet = () => {
 
   return (
     <>
+    <section className='servicesPage'>
       <h2>Selecciona tu servicio</h2>
-
       <section className="services">
+
         <div className="servicesGrid">
           <div className="servicesCard">
             <img src="/img/appointment/servicio1.jpg" alt="Servicio" />
@@ -94,6 +95,7 @@ const SelectPet = () => {
       <Button onClick={() => navigate('/selectpet')} className="back-btn">
         VOLVER
       </Button>
+      </section>
     </>
   );
 };

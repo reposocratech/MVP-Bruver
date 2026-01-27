@@ -8,36 +8,36 @@ const ModalSearchClient = ({ toBack }) => {
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <h3>Busca al cliente</h3>
-         <Form className="d-flex">
+         <Form className="d-flex searchClient">
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
             />
-            <Button variant="outline-success">Buscar cliente</Button>
+            <Button className='close'>Buscar cliente</Button>
           </Form>
-            <Table striped bordered hover>
+            <Table className='tableClients' striped bordered hover>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th></th>
+                  <th>Nombre</th>
+                  <th>E-mail</th>
+                  <th>Teléfono</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                  <td>Susana Ruíz</td>
+                  <td>susir10@gmail.com</td>
+                  <td>352 263 415</td>
                 </tr>
                 <tr>
                   <td>2</td>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
+                  <td>Susana Pérez</td>
+                  <td>susanpe3@gmail.com</td>
+                  <td>663 215 441</td>
                 </tr>
               </tbody>
             </Table>

@@ -15,5 +15,5 @@ export const WorkerLayout = () => {
            <FooterPublic />
       </footer>
     </>  
-)
+  )
 }
