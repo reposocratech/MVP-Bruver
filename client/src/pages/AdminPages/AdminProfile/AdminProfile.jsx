@@ -21,6 +21,8 @@ const AdminProfile = () => {
     fetchAdmin();
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <section className="admin-section">
       <h2 className="title">Mi perfil</h2>
@@ -52,9 +54,10 @@ const AdminProfile = () => {
 
       <div className="options-wrapper">
         <div className="options-row row-top">
-          <div className="option-card">
-            <div className="option-header">AGENDA</div>
-            <i className="bi bi-journal-richtext"></i>
+
+          <div className="option-card" onClick={()=>navigate('/admin/general')}>
+            <div className="option-header"  >AGENDA</div>
+            <i class="bi bi-journal-richtext"></i>
           </div>
 
           <div className="option-card">
@@ -73,21 +76,16 @@ const AdminProfile = () => {
             <div className="option-header">MODIFICAR EMPLEADOS</div>
             <i className="bi bi-people"></i>
           </div>
-
-          <div
-            className="option-card"
-            onClick={() => navigate("/admin/manage")}
-            style={{ cursor: "pointer" }}
-          >
+          <div className="option-card" onClick={() => navigate('/admin/manage')} style={{ cursor: 'pointer' }}>
             <div className="option-header">ADMINISTRAR</div>
             <i className="bi bi-gear"></i>
           </div>
         </div>
       </div>
 
-      <button className="back-btn" onClick={() => navigate(-1)}>
-        <span className="arrow">←</span>ATRAS
-      </button>
+      <button className="back-btn" onClick={() => navigate(-1)}><span className="arrow">←</span>ATRAS</button>
+
+
 
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </section>

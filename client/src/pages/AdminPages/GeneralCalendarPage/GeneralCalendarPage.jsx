@@ -1,0 +1,85 @@
+
+import { useContext, useEffect, useState } from 'react'
+import { fetchData } from '../../../helpers/axiosHelper'
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
+import { CalendarGeneral } from '../../../components/CalendarGeneral/CalendarGeneral'
+
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+
+dayjs.extend(customParseFormat)
+
+const GeneralCalendarPage = () => {
+  const [view, setView] = useState('day') //calendario que se muestra (month, week, day) 
+  const [date, setDate] = useState(new Date())
+  const [appoiment, setAppoiment] = useState([])
+
+   const { token } = useContext(AuthContext) 
+
+  useEffect(() => {
+    const fetcTest = async () => {
+      try {
+        const res = await fetchData("appointment/getGeneralAppoiment", "get")
+        setAppoiment(res.data.result)
+
+
+        /* console.log("datos guardados en res", res.data.result); */
+      } catch (error) {
+        console.log(error);
+
+      }
+    }
+    fetcTest();
+  }, [])
+
+  /* console.log("token que llega", token); */
+
+
+  //funcion invalidate date
+  const buildDate = (date, time) => {
+    const [h, m, s] = time.split(':')
+    const d = new Date(date)
+    d.setHours(h, m, s || 0)
+    return d
+  }
+
+
+  //eventos en el calendario mapeados
+  const eventsMap = appoiment.map((elem) => ({
+    id: elem.appointment_id,
+    title: elem.employee_name,
+    start: buildDate(elem.appointment_date, elem.start_time),
+    end: buildDate(elem.appointment_date, elem.end_time),
+    resourceId: elem.employee_user_id,
+    data: { x: 10 }
+  }));
+
+  const allEvents = [...eventsMap]
+
+   //trabajadores que aparecen en la tabla 
+  const workers = [
+    { id: 2, title: 'Juan' },
+    { id: 3, title: 'Maria' },
+  ]
+
+  console.log("datos guardados en appoiment2", appoiment);
+  console.log("Fecha calendario:", date)
+  console.log("Primer evento:", allEvents[0])
+
+  return (
+    <>
+      <section>
+        <CalendarGeneral
+          events={allEvents}
+          workers={workers}
+          view={view}
+          date={date}
+          onViewChange={setView}
+          onDateChange={setDate}
+        />
+      </section>
+    </>
+  )
+}
+
+export default GeneralCalendarPage
