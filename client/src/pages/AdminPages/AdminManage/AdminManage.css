@@ -1,16 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
 .agr-page {
-  min-height: 100vh;
-  background: #f6efe7;
-  padding: 28px 18px 60px;
+  background: #F4EFE8;
+  padding: 40px;
+  text-align: center;
+  font-family: "Raleway", sans-serif;
 }
 
 .agr-title {
-  text-align: center;
-  color: #6AAFA5;
-  font-size: 44px;
-  font-weight: 700;
-  margin: 10px 0 26px;
-  font-family: Georgia, "Times New Roman", serif;
+  color: #6BB3A7;
+  font-size: 32px;
+  margin-bottom: 35px;
+  font-family: "Lora", serif;
 }
 
 .agr-section {
@@ -27,23 +29,9 @@
 }
 
 .agr-subtitle {
-  text-align: center;
-  color: #6AAFA5;
-  font-size: 30px;
-  font-weight: 700;
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-}
-
-.agr-add {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #4A2E24;
-  font-size: 15px;
-  display: flex;
-  gap: 6px;
-  align-items: center;
+  margin: px 0 6px;
+  font-size: 20px;
+  color: #3B2A1E;
 }
 
 .agr-table-wrap {
@@ -166,6 +154,7 @@
   color: #fff;
   width: 160px;
   padding: 12px 0;
+  margin: 1rem;
   border-radius: 18px;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
   font-size: 13px;
