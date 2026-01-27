@@ -1,11 +1,20 @@
-import { Button, Table } from "react-bootstrap";
-import "./clientprofilepage.css";
-import { Link } from 'react-router'
+import { Button, Modal, Table } from 'react-bootstrap';
+import './clientprofilepage.css';
+import { Link } from 'react-router';
 import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 
 const ClientProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);
+
+  /* Función para que haya scroll en la página o en el modal, según donde estés */
+  useEffect(() => {
+    document.body.style.overflow = openModal ? 'hidden' : 'auto';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [openModal]);
 
   return (
     <div className="clientProfilePage">
@@ -17,11 +26,13 @@ const ClientProfilePage = () => {
           <div className="infoHeader">
             <h2 className="infoTitle">Información</h2>
 
-            <Button onClick={() => setOpenModal(true)} className="editBtn" type="button">
+            <Button
+              onClick={() => setOpenModal(true)}
+              className="editBtn"
+              type="button"
+            >
               ✎ Editar
             </Button>
-
-            
           </div>
 
           <div className="infoTableWrap">
@@ -78,7 +89,9 @@ const ClientProfilePage = () => {
                 <button
                   className="petBtn danger"
                   type="button"
-                  onClick={() => window.confirm("¿Estás seguro de borrar a Toy?")}
+                  onClick={() =>
+                    window.confirm('¿Estás seguro de borrar a Toy?')
+                  }
                 >
                   ELIMINAR
                 </button>
@@ -102,7 +115,9 @@ const ClientProfilePage = () => {
                 <button
                   className="petBtn danger"
                   type="button"
-                  onClick={() => window.confirm("¿Estás seguro de borrar a Sam?")}
+                  onClick={() =>
+                    window.confirm('¿Estás seguro de borrar a Sam?')
+                  }
                 >
                   ELIMINAR
                 </button>
@@ -145,7 +160,9 @@ const ClientProfilePage = () => {
           </Table>
         </div>
       </section>
-      {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
+      {openModal && (
+        <ModalUserProfileEdit onClose={() => setOpenModal(false)} />
+      )}
     </div>
   );
 };
