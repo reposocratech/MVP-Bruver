@@ -1,7 +1,7 @@
 import "./RegisterPage.css";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { registerSchema } from "../../../schemas/RegisterSchema";
 import { ZodError } from "zod";
 import { fetchData } from "../../../helpers/axiosHelper";
