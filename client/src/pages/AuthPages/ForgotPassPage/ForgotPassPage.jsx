@@ -20,23 +20,32 @@ const ForgotPassPage = () => {
   } 
 
   const onSubmit = async () => {
-      try {
-        recoverySchema.parse(recovery);
-        const res = await fetchData("user/forgotPassword", "POST", recovery)
-      } catch (error) {
-        if(error instanceof ZodError){
-          const fieldsErrors = {};
-          error.issues.forEach((elem)=>{
-            fieldsErrors[elem.path[0]] = elem.message
-          })
-          setValErr(fieldsErrors);
-          setErrorMsg("");
-        }else{
-          setErrorMsg(error.response?.data?.message);
-          setValErr({})
+    try {
+      recoverySchema.parse(recovery);
+      await fetchData("user/forgotPassword", "POST", recovery);
+      setRecovery(initialValue);
+      setErrorMsg("Email enviado correctamente");
+      setValErr({});
+    } catch (error) {
+      if(error instanceof ZodError){
+        const fieldsErrors = {};
+        error.issues.forEach((elem) => {
+          fieldsErrors[elem.path[0]] = elem.message;
+        });
+        setValErr(fieldsErrors);
+        setErrorMsg("");
+      } else {
+        if(error.response && error.response.data && error.response.data.message){
+          setErrorMsg(error.response.data.message);
+        } else {
+          setErrorMsg("Algo ha ido mal");
         }
+        setValErr({});
       }
-    } 
+    }
+  } 
+
+
   
 
 
