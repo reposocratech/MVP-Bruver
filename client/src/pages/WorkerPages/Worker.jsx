@@ -2,6 +2,7 @@ import { useState } from 'react'
 import ModalAddReserve from '../../components/Modal/ModalAddReserve/ModalAddReserve';
 import ModalQuickReserve from '../../components/Modal/ModalAddReserve/ModalQuickReserve';
 import ModalSearchClient from '../../components/Modal/ModalAddReserve/ModalSearchClient';
+import ModalSeeAppointment from '../../components/Modal/ModalSeeAppointment/ModalSeeAppointment';
 import { Button } from 'react-bootstrap';
 
 
@@ -10,6 +11,9 @@ const Worker = () => {
   const [openModal, setOpenModal] = useState(false);
   const [openSearchClient, setOpenSearchClient] = useState(false);
   const [openQuickReserve, setOpenQuickReserve] = useState(false);
+  const [openCita, setOpenCita] = useState(false);
+
+
 
     const handleChange = (option) => {
     setOpenModal(false);
@@ -47,6 +51,10 @@ const Worker = () => {
        toBack={backModalAddReserve}/>}
       {openQuickReserve && <ModalQuickReserve 
        toBack={backModalAddReserve}/>}
+
+
+      <Button onClick={() => setOpenCita(true)}>Consultar</Button>
+      {openCita && <ModalSeeAppointment onClose={() => setOpenCita(false)} />}
     </>
   )
 }

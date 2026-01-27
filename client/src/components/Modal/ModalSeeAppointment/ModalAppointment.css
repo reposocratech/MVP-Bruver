@@ -1,0 +1,128 @@
+.appointment-price-cell {
+	display: flex;
+	align-items: center;
+	gap: 0.3em;
+}
+
+.appointment-input-price {
+	width: 80px;
+	margin-bottom: 0;
+}
+
+.appointment-euro {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+.appointment-modal-form {
+	width: 100%;
+}
+
+.appointment-input {
+	width: 100%;
+	padding: 0.4rem 0.7rem;
+	border-radius: 8px;
+	border: 1px solid #d1bfae;
+	font-size: 1em;
+	background: #f6ece2;
+	margin-bottom: 0.2rem;
+}
+
+.appointment-modal-note {
+	font-size: 0.85em;
+	color: #6d5c4a;
+	margin-top: 0.2rem;
+}
+
+.edit-btn-green {
+	background: #82b7a1;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	padding: 0.5rem 1.5rem;
+	font-weight: 500;
+	font-size: 0.95em;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.edit-btn-green:hover {
+	background: #5e8c7a;
+}
+.appointment-modal-actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 2.5rem;
+	margin-top: 2rem;
+}
+
+.cancel-btn-brown {
+	background: #4d2c1c;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	padding: 0.5rem 1.5rem;
+	font-weight: 500;
+	font-size: 0.95em;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.cancel-btn-brown:hover {
+	background: #2d1a10;
+}
+
+.cancel-btn-red {
+	background: #e88b8b;
+	color: #fff;
+	border: none;
+	border-radius: 10px;
+	padding: 0.5rem 1.5rem;
+	font-weight: 500;
+	font-size: 0.95em;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.cancel-btn-red:hover {
+	background: #c75a5a;
+}
+
+.appointment-modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.appointment-modal-bid {
+	font-weight: bold;
+	font-size: 1.1em;
+	flex: 1;
+	text-align: center;
+}
+
+.appointment-modal-bid {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.appointment-modal-edit {
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.appointment-modal-delete {
+	cursor: pointer;
+	color: red;
+	margin-right: 10px;
+}
+
+.appointment-modal-close {
+	cursor: pointer;
+}
+
+.appointment-modal-table {
+	margin-top: 1em;
+	width: 100%;
+	font-size: 1em;
+}
