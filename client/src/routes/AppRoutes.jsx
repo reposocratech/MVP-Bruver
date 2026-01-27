@@ -1,8 +1,7 @@
-import { lazy, Suspense } from "react"
 import { BrowserRouter, Routes, Route } from "react-router"
+import { lazy, Suspense } from "react"
 import { PublicRoutes } from "./PublicRoutes"
 import { PrivateRoutes } from "./PrivateRoutes"
-
 
 
 //rutas públicas
@@ -18,23 +17,27 @@ const LoginPage = lazy(() => import("../pages/AuthPages/LoginPage/LoginPage"))
 const ForgotPassPage = lazy(() => import("../pages/AuthPages/ForgotPassPage/ForgotPassPage"))
 const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
-/* RUTAS PRIVADAS */
+
+/* RUTAS PRIVADAS USUARIO */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
-import { AdminLayout } from "../layouts/AdminLayout.jsx"
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
-const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"))
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
 const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/EditPet.jsx"))
-const AdminManage = lazy(() =>
-  import("../pages/AdminPages/AdminManage/AdminManage.jsx")
-);
-
-
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
 const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
+
+
+/* RUTAS PRIVADAS WORKER */
+import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
 const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
+
+/* RUTAS PRIVADAS ADMIN */
+import { AdminLayout } from "../layouts/AdminLayout.jsx"
+const AdminManage = lazy(() =>import("../pages/AdminPages/AdminManage/AdminManage.jsx"));
+const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"))
+
 
 
 
@@ -68,9 +71,16 @@ export const AppRoutes = () => {
                <Route path="/addpet" element={<AddPet />} />
                <Route path="/selectservices" element={<SelectServices />} /> 
                <Route path="/selectdate" element={<SelectDate />} /> 
-               <Route path="/worker" element={<Worker />} /> 
             </Route>
           </Route>
+
+          {/* Rutas privadas trabajador */}
+          <Route element={<PrivateRoutes/>}>
+                <Route element={<WorkerLayout/>}>
+                   <Route path="/worker" element={<Worker />} /> 
+                </Route>    
+          </Route>
+
 
           {/* Rutas privadas de admin */}
           <Route element={<PrivateRoutes />}>
