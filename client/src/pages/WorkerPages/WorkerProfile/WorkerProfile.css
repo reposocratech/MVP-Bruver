@@ -1,0 +1,147 @@
+.worker-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  background: #f6ece2;
+}
+
+.title {
+  font-size: 2rem;
+  color: #82b7a1;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.profile-card {
+  background: #EEDCCC;
+  width: 80%;
+  max-width: 900px;
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-block {
+  width: 50%;
+  position: relative;
+}
+
+.info-block h3 {
+  margin-bottom: 1rem;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+table {
+  width: 100%;
+  background: #E6D3C2;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid #b08f79;
+  border-collapse: separate; 
+}
+
+table td {
+  font-size: 1.1rem;
+  border-bottom: 1px solid #b08f79;
+  padding: 1rem;
+}
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+.profile-img img {
+  width: 120px;
+  height: 120px;
+}
+
+.options-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.row-top {
+  display: grid;
+  grid-template-columns: repeat(3, 200px);
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.row-bottom {
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.option-card {
+  background: white;
+  border-radius: 10px;
+  width: 200px;
+  /* padding: 1rem; */
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.option-header {
+  background: #82b7a1;
+  color: white;
+  padding: 0.2rem;
+  border-radius: 8px;
+  /* margin-bottom: 0.8rem; */
+}
+
+.option-card i {
+  font-size: 120px;
+  font-weight: bold;
+  /* margin-bottom: 1rem; */
+}
+
+.back-btn {
+  margin-top: 2rem;
+  background: #E6D3C2;
+  color: #333;
+  padding: 0.7rem 2.2rem 0.7rem 1.6rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 16px rgba(130, 183, 161, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+.back-btn:hover {
+  background: #d1bfae;
+  box-shadow: 0 6px 24px rgba(130, 183, 161, 0.25);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.back-btn .arrow {
+  font-size: 1.3em;
+  margin-right: 0.2em;
+  transition: transform 0.2s;
+}
+
+.back-btn:hover .arrow {
+  transform: translateX(-4px);
+}
