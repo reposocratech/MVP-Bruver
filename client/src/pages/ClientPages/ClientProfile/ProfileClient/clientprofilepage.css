@@ -4,7 +4,7 @@
 .clientProfilePage {
   background: #f4efe8;
   min-height: calc(100vh - 160px);
-  padding: 28px 18px 60px;
+  padding: 40px 20px 80px;
   font-family: "Raleway", sans-serif;
   display: flex;
   flex-direction: column;
@@ -15,235 +15,349 @@
   font-family: "Lora", serif;
   color: #6bb3a7;
   font-weight: 700;
-  letter-spacing: 1px;
-  margin: 10px 0 24px;
-  text-align: center;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
 }
 
 .sectionTitle {
   font-family: "Lora", serif;
   color: #6bb3a7;
-  font-weight: 700;
-  margin: 26px 0 12px;
-}
-
-.center {
+  font-weight: 600;
+  margin: 48px 0 20px;
   text-align: center;
 }
 
-/* INFO CARD */
 .infoCard {
   width: 100%;
-  max-width: 980px;
-  background: #f8eadf;
-  border-radius: 10px;
-  padding: 18px;
+  max-width: 900px;
+  background: #f3e5d6;
+  border-radius: 18px;
+  padding: 32px;
   display: flex;
-  gap: 18px;
-  justify-content: space-between;
+  gap: 40px;
+  align-items: center;
+}
+
+.infoLeft {
+  flex: 1;
 }
 
 .infoHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
 }
 
 .infoTitle {
   font-family: "Lora", serif;
-  margin: 0;
+  font-size: 22px;
   color: #3a2f2a;
+  margin: 0;
 }
 
 .editBtn {
-  background: transparent;
+  background: none;
   border: none;
-  font-weight: 700;
-  color: #3a2f2a;
-  padding: 6px 10px;
-  border-radius: 10px;
+  color: #6bb3a7;
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.editBtn:hover {
-  background: rgba(107, 179, 167, 0.18);
+.editBtn:hover,
+.editBtn:focus {
+  background: rgba(166, 200, 183, 0.35);
+  color: #4A2E24;
+  outline: none;
 }
 
-/* Tabla info sin blanco (beige) */
 .infoTableWrap {
-  margin-top: 12px;
-  background: #e8d6c7;
-  border-radius: 8px;
-  padding: 10px 12px;
-  max-width: 420px;
+  background: #ecd9c8;
+  border-radius: 20px;
+  padding: 18px 20px;
 }
 
 .infoTable {
-  margin: 0;
-  background: transparent;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .infoTable td {
   background: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.infoTable tr:last-child td {
+  border-bottom: none;
 }
 
 .infoKey {
-  font-weight: 800;
-  width: 120px;
-  color: rgba(31, 31, 31, 0.8);
+  font-weight: 600;
+  color: #6a5a50;
 }
 
 .infoValue {
-  font-weight: 600;
-  color: rgba(31, 31, 31, 0.9);
+  text-align: right;
+  font-weight: 500;
 }
 
 .userPhoto {
   width: 260px;
-  height: 200px;
-  border-radius: 8px;
-  background: #dfe7e5;
+  height: 260px;
+  border-radius: 18px;
+  background: #dedede;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  color: rgba(31, 31, 31, 0.6);
+  font-weight: 600;
+  color: #777;
 }
 
-/* MASCOTAS */
 .petsSection,
 .appointmentsSection {
   width: 100%;
-  max-width: 980px;
+  max-width: 900px;
 }
 
 .sectionHeader {
   display: flex;
-  gap: 12px;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .addLinkBtn {
-  background: transparent;
+  background: none;
   border: none;
-  color: rgba(31, 31, 31, 0.75);
-  font-weight: 700;
-  padding: 6px 10px;
-  border-radius: 10px;
+  color: #6bb3a7;
+  font-weight: 600;
+  cursor: pointer;
   text-decoration: none;
 }
 
-.addLinkBtn:hover {
-  background: rgba(107, 179, 167, 0.18);
+.addLinkBtn:hover,
+.addLinkBtn:focus {
+  background: rgba(166, 200, 183, 0.35);
+  color: #4A2E24;
+  outline: none;
 }
 
 .petsGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(240px, 1fr));
-  gap: 22px;
-  margin-top: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+  margin-top: 20px;
+}
+
+.petCard {
+  width: 280px;
+  height: 320px;
+  background: #f8eadf;
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: rgba(58, 47, 42, 0.18) 0px 30px 30px -20px;
 }
 
 .petImage {
-  height: 150px;
-  background: #2f3d35;
-  border-radius: 10px 10px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 800;
+  position: absolute;
+  inset: 4px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #1f5953;
+  z-index: 1;
+}
+
+.petImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .petBody {
-  background: #e8d6c7;
-  border-radius: 0 0 10px 10px;
-  padding: 12px;
-  border: 1px solid rgba(31, 31, 31, 0.18);
-  border-top: none;
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  height: 76px;
+  background: #6bb3a7;
+  border-radius: 22px;
+  padding: 14px;
+  color: white;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.45s ease, transform 0.45s ease;
 }
+
 
 .petName {
   margin: 0;
-  text-align: center;
+  font-size: 22px;
   font-weight: 800;
+  letter-spacing: 0.5px;
 }
+
 
 .petActions {
   display: flex;
-  gap: 10px;
-  justify-content: center;
+  gap: 14px;
   margin-top: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.35s ease;
 }
 
 .petBtn {
-  background: #bda892;
-  border: none;
-  border-radius: 10px;
-  padding: 6px 14px;
-  font-size: 12px;
+  background: #ffffff;
+  color: #246B64;
+  border: 1px solid #246B64;
+  border-radius: 999px;
+  padding: 10px 26px;
+  font-size: 14px;
   font-weight: 800;
-  color: #fff;
   cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 .petBtn:hover {
-  opacity: 0.92;
+  background: #246B64;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.petBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 .petBtn.danger {
-  background: #a9937d;
+  background: #ffffff;
+  color: #8a6b52;
+  border-color: #8a6b52;
 }
 
-/* CITAS */
+.petBtn.danger:hover {
+  background: #8a6b52;
+  color: #ffffff;
+}
+
+
+
+.petCard:hover .petBody {
+  height: 140px;
+  transform: translateY(-10px);
+}
+
+.petCard:hover .petActions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .appointmentsTableWrap {
   width: 100%;
-  overflow-x: auto;
-  border-radius: 10px;
+  margin-top: 24px;
+  background: transparent;
 }
 
 .appointmentsTable {
   width: 100%;
-  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
   background: #ffffff;
+  border-radius: 20px;
+  outline: 2px solid #246B64;
+  outline-offset: -2px;
+  overflow: hidden;
 }
 
 .appointmentsTable thead th {
-  background: rgba(107, 179, 167, 0.45);
-  font-weight: 800;
+  background: #A6C8B7;
+  color: #4A2E24;
+  font-weight: 700;
   text-align: center;
+  padding: 14px;
+  border-bottom: 1px solid #246B64;
 }
 
 .appointmentsTable td {
   text-align: center;
   font-weight: 600;
+  color: #4A2E24;
+  padding: 12px;
+  border-top: 1px solid #246B64;
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+.appointmentsTable td + td,
+.appointmentsTable th + th {
+  border-left: 1px solid #246B64;
+}
+
+.appointmentsTable tbody tr:hover {
+  background: rgba(166, 200, 183, 0.25);
+}
+
+
+@media (max-width: 768px) {
   .infoCard {
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px;
+    gap: 18px;
+  }
+
+  .userPhoto {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+
+  .infoHeader {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .infoTitle {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .editBtn {
+    font-size: 14px;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .infoLeft {
+    width: 100%;
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
 
   .infoTableWrap {
-    max-width: 520px;
     width: 100%;
+    max-width: 320px;
+    padding: 14px;
   }
 
-  .userPhoto {
-    width: 100%;
-    max-width: 340px;
+  .infoTable td {
+    padding: 10px 0;
+    font-size: 14px;
+  }
+
+  .infoKey {
+    font-weight: 700;
+  }
+
+  .infoValue {
+    font-weight: 500;
   }
 }
 
-@media (max-width: 768px) {
-  .petsGrid {
-    grid-template-columns: 1fr;
-  }
 
-  .sectionHeader {
-    flex-direction: column;
-    gap: 6px;
-  }
-}
