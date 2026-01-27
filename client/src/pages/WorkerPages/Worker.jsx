@@ -4,6 +4,7 @@ import ModalQuickReserve from '../../components/Modal/ModalAddReserve/ModalQuick
 import ModalSearchClient from '../../components/Modal/ModalAddReserve/ModalSearchClient';
 import { Button } from 'react-bootstrap';
 
+
 const Worker = () => {
 
   const [openModal, setOpenModal] = useState(false);
@@ -51,3 +52,4 @@ const Worker = () => {
 }
 
 export default Worker
+

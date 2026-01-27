@@ -7,60 +7,54 @@ body {
 }
 
 .register-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 140px;
+  padding-bottom: 140px;
   position: relative;
-  min-height: 100vh;
-  padding-bottom: 200px;
 }
 
-h2 {
+.register-card {
+  background-color: #E6D3C2;
+  width: 600px;
+  padding: 3rem 3rem 2.6rem;
+  border-radius: 32px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.16);
+}
+
+.register-card h2 {
   text-align: center;
-  padding: 2rem 2rem 0.5rem;
+  margin-bottom: 2.2rem;
   color: #6aafa5;
   font-family: "Lora", serif;
   font-weight: bold;
+  font-size: 2.4rem;
 }
-
-
-h3 {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 2.5rem;
-  color: #4a2e24;
-  font-family: "Lora", serif;
-  font-weight: bold;
-}
-
 
 .mb-3 {
-  width: 42%;
-  margin: 0 auto; 
-  padding-top: 0.6rem;
   display: flex;
   flex-direction: column;
   font-weight: bold;
+  margin-bottom: 1.1rem;
 }
-
 
 .mb-3 input {
   width: 100%;
-  padding: 9px 12px;
-  margin-top: 6px;
+  padding: 10px 14px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #ffffff;
   font-size: 14px;
-  font-family: "Raleway", sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
   transition: all 0.25s ease;
 }
-
 
 .mb-3 input:focus {
   outline: none;
   box-shadow: 0 6px 18px rgba(107, 179, 167, 0.25);
   transform: translateY(-1px);
 }
-
 
 .text-danger {
   font-size: 0.85rem;
@@ -70,24 +64,19 @@ h3 {
 .buttons {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 1.8rem;
+  gap: 1.4rem;
+  margin: 2.2rem 0 1.2rem;
 }
-
 
 .button_register {
   border: none;
-  padding: 12px 36px;
+  padding: 12px 34px;
   border-radius: 30px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.5px;
   transition: all 0.3s ease;
-  font-family: "Raleway", sans-serif;
 }
-
 
 .button_register.acept {
   background: #6bb3a7;
@@ -97,21 +86,26 @@ h3 {
 
 .button_register.acept:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.45);
 }
-
 
 .button_register.cancel {
   background: #ffffff;
   color: #6bb3a7;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .button_register.cancel:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
+.register-phrase {
+  text-align: center;
+  margin-top: 0.8rem;
+  color: #4a2e24;
+  font-family: "Lora", serif;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
 
 .dogCorner {
   position: absolute;
@@ -119,20 +113,21 @@ h3 {
   bottom: 0;
   width: 250px;
   pointer-events: none;
-  user-select: none;
-  z-index: 1;
-}
-
-
-@media (max-width: 1024px) {
-  .mb-3 {
-    width: 55%;
-  }
 }
 
 @media (max-width: 768px) {
-  .mb-3 {
+  .register-page {
+    padding-top: 80px;
+    padding-bottom: 60px;
+  }
+
+  .register-card {
     width: 90%;
+    padding: 2.4rem 2.2rem;
+  }
+
+  .register-phrase {
+    font-size: 1.1rem;
   }
 
   .dogCorner {

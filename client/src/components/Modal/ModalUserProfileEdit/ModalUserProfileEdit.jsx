@@ -5,6 +5,9 @@ const ModalUserProfileEdit = ({ onClose }) => {
     nombre: "",
     apellidos: "",
     telefono: "",
+    provincia: "",
+    ciudad:"",
+    direccion: "",
     email: "",
     password: "",
     repeatPassword: "",
@@ -26,6 +29,12 @@ const ModalUserProfileEdit = ({ onClose }) => {
           <input name="apellidos" value={form.apellidos} onChange={handleChange} />
           <label>Teléfono</label>
           <input name="telefono" value={form.telefono} onChange={handleChange} />
+          <label> Provincia</label>
+          <input name="provincia" value={form.provincia} onChange={handleChange}/>
+          <label> Ciudad</label>
+          <input name="ciudad" value={form.provincia} onChange={handleChange}/>
+          <label> Dirección</label>
+          <input name="direccion" value={form.provincia} onChange={handleChange}/>
           <label>Email</label>
           <input name="email" value={form.email} onChange={handleChange} />
           <label>Contraseña</label>
