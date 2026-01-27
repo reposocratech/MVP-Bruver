@@ -20,11 +20,13 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS USUARIO */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
+
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
 const EditPet = lazy(() => import("../pages/ClientPages/ClientProfile/EditPet/EditPet.jsx"))
+
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
 const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
 
@@ -32,6 +34,7 @@ const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/Sele
 /* RUTAS PRIVADAS WORKER */
 import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
 const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
+const WorkerProfile = lazy(() => import("../pages/WorkerPages/WorkerProfile/WorkerProfile.jsx"))
 
 /* RUTAS PRIVADAS ADMIN */
 import { AdminLayout } from "../layouts/AdminLayout.jsx"
@@ -39,6 +42,9 @@ const AdminManage = lazy(() =>import("../pages/AdminPages/AdminManage/AdminManag
 const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"))
 
 
+
+//RUTA PRIVADA Admin
+const GeneralCalendarPage = lazy(()=>import("../pages/AdminPages/GeneralCalendarPage/GeneralCalendarPage.jsx") )
 
 
 export const AppRoutes = () => {
@@ -78,6 +84,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes/>}>
                 <Route element={<WorkerLayout/>}>
                    <Route path="/worker" element={<Worker />} /> 
+                   <Route path="worker/profile" element={<WorkerProfile />} />
                 </Route>    
           </Route>
 
@@ -87,6 +94,7 @@ export const AppRoutes = () => {
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminProfile />} />
               <Route path="/admin/manage" element={<AdminManage />}/>
+              <Route path="/admin/general" element={<GeneralCalendarPage/>} />
             </Route>
           </Route>
 

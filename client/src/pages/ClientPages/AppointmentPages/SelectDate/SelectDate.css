@@ -1,6 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
+.selectDatePage{
+    background: #f4efe8;
+}
 .selectEmployeePage {
   background: #f4efe8;
   padding: 50px 40px 180px;
@@ -17,7 +20,7 @@
   margin-bottom: 35px;
   font-family: "Lora", serif;
   text-align: center;
-  margin: 3rem;
+  padding: 2rem;
 }
 
 .selectEmployeeGrid {
@@ -88,6 +91,7 @@
 .selectEmployeeBackBtn {
   background: #e6d3c2;
   border-radius: 18px;
+  margin: 2rem;
 }
 
 .selectEmployeeBackBtn:hover {
@@ -232,18 +236,16 @@
   border: none;
   font-family: "Raleway", sans-serif;
   width: 100%;
-  height: calc(100% - 40px);
   max-width: 50%;
+  height: fit-content;
   flex: 0 0 30%;
-  min-height: 650px;
-  background: #e9d9c8;
   border-radius: 16px;
   padding: 20px;
 }
 
 .selectHourBtn{
   font-family: "Raleway", sans-serif;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 500;
   background: #5fae9c;
   border-radius: 35px;
@@ -259,4 +261,71 @@
 
 
 
+/* RESPONSIVE CALEDARIO */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .calendarAndHours {
+    gap: 20px;
+  }
+
+  .calendar-container {
+    flex: 0 0 80%;
+  }
+
+  .react-calendar {
+    width: 90%;
+    max-width: 80%;
+    padding: 8px;
+  }
+
+  .react-calendar__navigation button {
+    font-size: 20px;
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-size: 12px;
+  }
+
+  .react-calendar__tile {
+    font-size: 20px;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  .calendarAndHours {
+    gap: 15px;
+    margin: 1rem;
+  }
+
+  .calendar-container {
+    flex: 0 0 95%;
+    gap: 1rem;
+    flex-direction: column;
+  }
+
+  .react-calendar {
+    width: 95%;
+    max-width: 100%;
+    padding: 5px;
+    margin: 10px 0;
+  }
+
+  .react-calendar__navigation button {
+    font-size: 18px;
+  }
+
+  .react-calendar__month-view__weekdays {
+    font-size: 11px;
+  }
+
+  .react-calendar__tile {
+    font-size: 18px;
+    width: 30px;
+    height: 30px;
+  }
+}
 

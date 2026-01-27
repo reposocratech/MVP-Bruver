@@ -16,6 +16,19 @@ class AppointmentController {
       res.status(500).json(error);
     }
   };
+
+  getGeneralAppoiment = async(req, res)=>{
+    try {
+      let result = await appointmentDal.getGenaralAppoiment()
+      res.status(200).json({
+        message:"datos recibidos",
+        result
+      })
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error)
+    }
+  }
 }
 
 export default new AppointmentController();

@@ -43,7 +43,7 @@ export const NavbarLogin = () => {
          
           <div className="botones d-flex align-items-center gap-2">
             <div className="navbar-actions">
-              <Button className="nav-btn">INICIAR SESIÓN</Button>
+              <Button className="nav-btn">PEDIR CITA</Button>
             </div>
  
            

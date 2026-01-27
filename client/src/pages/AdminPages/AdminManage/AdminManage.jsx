@@ -1,63 +1,89 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import { Modal, Form, Button } from "react-bootstrap";
-import "./AdminManage.css";
+import{ useState } from 'react';
+import { useNavigate } from 'react-router';
+import './AdminManage.css';
+import { RiUserAddLine } from 'react-icons/ri';
+import ModalCreateProfile from '../../../components/Modal/ModalCreateProfile/ModalCreateProfile';
 
 const AdminManage = () => {
   const navigate = useNavigate();
 
-  const [workers] = useState([
-    { id: 1, name: "Carol Rodriguez Lopez", hireDate: "", contact: "" },
-    { id: 2, name: "Javi Sanchez Torres", hireDate: "", contact: "" },
-    { id: 3, name: "Ricardo Jimenez Martin", hireDate: "", contact: "" },
+  const [workers, setWorkers] = useState([
+    { id: 1, name: 'Carol Rodriguez Lopez', hireDate: '', contact: '' },
+    { id: 2, name: 'Javi Sanchez Torres', hireDate: '', contact: '' },
+    { id: 3, name: 'Ricardo Jimenez Martin', hireDate: '', contact: '' },
   ]);
 
-  const [clients] = useState([
-    { id: 1, name: "Soledad Ortega", phone: "+34526859614", email: "sole_og66@gmail.com" },
-    { id: 2, name: "Óscar Torres", phone: "+34845254132", email: "oscartorres@gmail.com" },
+  const [clients, setClients] = useState([
+    {
+      id: 1,
+      name: 'Soledad Ortega',
+      phone: '+34526859614',
+      email: 'sole_og66@gmail.com',
+    },
+    {
+      id: 2,
+      name: 'Óscar Torres',
+      phone: '+34845254132',
+      email: 'oscartorres@gmail.com',
+    },
   ]);
 
-  const [showWorkerModal, setShowWorkerModal] = useState(false);
-  const [showClientModal, setShowClientModal] = useState(false);
+  const [showCreateProfileModal, setShowCreateProfileModal] = useState(false);
 
-  const [newWorker, setNewWorker] = useState({
-    name: "",
-    lastname: "",
-    phone: "",
-    email: "",
+  const [newProfile, setNewProfile] = useState({
+    type: '',
+    name: '',
+    lastname: '',
+    phone: '',
+    email: '',
+    province: '',
+    city: '',
+    password: '',
+    repeatPassword: '',
   });
 
-  const [newClient, setNewClient] = useState({
-    name: "",
-    lastname: "",
-    phone: "",
-    email: "",
-    province: "",
-    city: "",
-    password: "",
-    repeatPassword: "",
-  });
-
-  const handleWorkerChange = (e) => {
+  const handleProfileChange = (e) => {
     const { name, value } = e.target;
-    setNewWorker({ ...newWorker, [name]: value });
+    setNewProfile({ ...newProfile, [name]: value });
   };
 
-  const handleClientChange = (e) => {
-    const { name, value } = e.target;
-    setNewClient({ ...newClient, [name]: value });
-  };
-
-  const submitWorker = (e) => {
+  const submitProfile = (e) => {
     e.preventDefault();
-    // por ahora no hace nada, solo cierra
-    setShowWorkerModal(false);
-  };
+    /* Según el tipo de perfil que crees se guardará de una forma u otra */
+    if (newProfile.type === '2') {
+      setWorkers((prev) => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          name: `${newProfile.name} ${newProfile.lastname}`,
+          contact: newProfile.phone,
+        },
+      ]);
+    } else {
+      setClients((prev) => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          name: `${newProfile.name} ${newProfile.lastname}`,
+          phone: newProfile.phone,
+          email: newProfile.email,
+        },
+      ]);
 
-  const submitClient = (e) => {
-    e.preventDefault();
-    // por ahora no hace nada, solo cierra
-    setShowClientModal(false);
+      /* Limpiar el formulario una vez rellenado */
+      setShowCreateProfileModal(false);
+      setNewProfile({
+        type: 'worker',
+        name: '',
+        lastname: '',
+        phone: '',
+        email: '',
+        province: '',
+        city: '',
+        password: '',
+        repeatPassword: '',
+      });
+    }
   };
 
   return (
@@ -67,14 +93,6 @@ const AdminManage = () => {
       <section className="agr-section">
         <div className="agr-section-title">
           <h2 className="agr-subtitle">Tabla de trabajadores</h2>
-
-          <button
-            className="agr-add"
-            type="button"
-            onClick={() => setShowWorkerModal(true)}
-          >
-            <span>Añadir</span>
-          </button>
         </div>
 
         <div className="agr-table-wrap">
@@ -113,14 +131,6 @@ const AdminManage = () => {
       <section className="agr-section">
         <div className="agr-section-title">
           <h2 className="agr-subtitle">Clientes</h2>
-
-          <button
-            className="agr-add"
-            type="button"
-            onClick={() => setShowClientModal(true)}
-          >
-            <span>Añadir</span>
-          </button>
         </div>
 
         <div className="agr-table-wrap">
@@ -157,236 +167,27 @@ const AdminManage = () => {
       </section>
 
       <div className="agr-bottom">
+      <button
+        className="agr-back"
+        type="button"
+        onClick={() => setShowCreateProfileModal(true)}
+      >
+        <RiUserAddLine />
+        <span>Añadir perfil</span>
+      </button>
+      
         <button className="agr-back" type="button" onClick={() => navigate(-1)}>
           ATRÁS
         </button>
-      </div>
-
-      <Modal
-  show={showWorkerModal}
-  onHide={() => setShowWorkerModal(false)}
-  centered
-  dialogClassName="nc-modal-dialog"
-  contentClassName="nc-modal-content"
-  backdropClassName="nc-backdrop"
->
-  <Modal.Body className="nc-body">
-    <h2 className="nc-title">Nuevo empleado</h2>
-
-    <Form className="nc-form" onSubmit={submitWorker}>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Nombre</Form.Label>
-        <Form.Control
-          name="name"
-          value={newWorker.name}
-          onChange={handleWorkerChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Apellidos</Form.Label>
-        <Form.Control
-          name="lastname"
-          value={newWorker.lastname}
-          onChange={handleWorkerChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Teléfono</Form.Label>
-        <Form.Control
-          name="phone"
-          value={newWorker.phone}
-          onChange={handleWorkerChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          name="email"
-          value={newWorker.email}
-          onChange={handleWorkerChange}
-          type="email"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Provincia</Form.Label>
-        <Form.Control
-          name="province"
-          value={newWorker.province}
-          onChange={handleWorkerChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Ciudad</Form.Label>
-        <Form.Control
-          name="city"
-          value={newWorker.city}
-          onChange={handleWorkerChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Contraseña</Form.Label>
-        <Form.Control
-          name="password"
-          value={newWorker.password}
-          onChange={handleWorkerChange}
-          type="password"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Repetir contraseña</Form.Label>
-        <Form.Control
-          name="repeatPassword"
-          value={newWorker.repeatPassword}
-          onChange={handleWorkerChange}
-          type="password"
-        />
-      </Form.Group>
-
-      <div className="nc-buttons">
-        <button className="nc-btn nc-btn-ok" type="submit">
-          ACEPTAR
-        </button>
-        <button
-          className="nc-btn nc-btn-cancel"
-          type="button"
-          onClick={() => setShowWorkerModal(false)}
-        >
-          CANCELAR
-        </button>
-      </div>
-
-      <p className="nc-slogan">Patitas limpias, corazones felices</p>
-
-      <img className="nc-dog" src="../../../../public/img/adminAddUser/dog1.png" alt="dog" />
-    </Form>
-  </Modal.Body>
-</Modal>
-
-
-      <Modal
-  show={showClientModal}
-  onHide={() => setShowClientModal(false)}
-  centered
-  dialogClassName="nc-modal-dialog"
-  contentClassName="nc-modal-content"
-  backdropClassName="nc-backdrop"
->
-  <Modal.Body className="nc-body">
-    <h2 className="nc-title">Nuevo cliente</h2>
-
-    <Form className="nc-form" onSubmit={submitClient}>
-      <Form.Group className="nc-group">
-        <Form.Label>Nombre</Form.Label>
-        <Form.Control
-          name="name"
-          value={newClient.name}
-          onChange={handleClientChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Apellidos</Form.Label>
-        <Form.Control
-          name="lastname"
-          value={newClient.lastname}
-          onChange={handleClientChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Teléfono</Form.Label>
-        <Form.Control
-          name="phone"
-          value={newClient.phone}
-          onChange={handleClientChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          name="email"
-          value={newClient.email}
-          onChange={handleClientChange}
-          type="email"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Provincia</Form.Label>
-        <Form.Control
-          name="province"
-          value={newClient.province}
-          onChange={handleClientChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Ciudad</Form.Label>
-        <Form.Control
-          name="city"
-          value={newClient.city}
-          onChange={handleClientChange}
-          type="text"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Contraseña</Form.Label>
-        <Form.Control
-          name="password"
-          value={newClient.password}
-          onChange={handleClientChange}
-          type="password"
-        />
-      </Form.Group>
-
-      <Form.Group className="nc-group">
-        <Form.Label>Repetir contraseña</Form.Label>
-        <Form.Control
-          name="repeatPassword"
-          value={newClient.repeatPassword}
-          onChange={handleClientChange}
-          type="password"
-        />
-      </Form.Group>
-
-      <div className="nc-buttons">
-        <button className="nc-btn nc-btn-ok" type="submit">
-          ACEPTAR
-        </button>
-        <button
-          className="nc-btn nc-btn-cancel"
-          type="button"
-          onClick={() => setShowClientModal(false)}
-        >
-          CANCELAR
-        </button>
-      </div>
-
-      <p className="nc-slogan">Patitas limpias, corazones felices</p>
-
-      <img className="nc-dog" src="../../../../public/img/adminAddUser/dog1.png" alt="dog" />
-    </Form>
-  </Modal.Body>
-</Modal>
+     
+ </div>
+      <ModalCreateProfile
+        show={showCreateProfileModal}
+        onClose={() => setShowCreateProfileModal(false)}
+        newProfile={newProfile}
+        handleProfileChange={handleProfileChange}
+        submitProfile={submitProfile}
+      />
 
     </div>
   );
