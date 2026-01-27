@@ -1,0 +1,26 @@
+.rbc-event{
+  background-color: brown;
+  padding: 10px;
+}
+
+.rbc-active{
+  background-color: rgb(240, 170, 170) !important ;
+  padding: 10px;
+
+}
+
+.rbc-day-bg{
+  background-color: gainsboro;
+}
+
+.rbc-time-slot{
+  background-color: gainsboro;
+}
+
+.rbc-current-time-indicator{
+  display: none !important;
+}
+
+.rbc-today{
+  background-color: transparent !important;
+}

@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx'
 import './AdminProfile.css'
+import { useNavigate } from 'react-router';
 
 const AdminProfile = () => {
 
   const [openModal, setOpenModal] = useState(false);
+
+  const navigate = useNavigate();
 
   return (
     <section className="admin-section">
@@ -41,8 +44,8 @@ const AdminProfile = () => {
 
         <div className="options-row row-top">
 
-          <div className="option-card">
-            <div className="option-header">AGENDA</div>
+          <div className="option-card" onClick={()=>navigate('/admin/general')}>
+            <div className="option-header"  >AGENDA</div>
             <i class="bi bi-journal-richtext"></i>
           </div>
           <div className="option-card">

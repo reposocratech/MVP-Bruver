@@ -43,6 +43,9 @@ const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminPro
 
 
 
+//RUTA PRIVADA Admin
+const GeneralCalendarPage = lazy(()=>import("../pages/AdminPages/GeneralCalendarPage/GeneralCalendarPage.jsx") )
+
 
 export const AppRoutes = () => {
   return (
@@ -91,6 +94,7 @@ export const AppRoutes = () => {
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminProfile />} />
               <Route path="/admin/manage" element={<AdminManage />}/>
+              <Route path="/admin/general" element={<GeneralCalendarPage/>} />
             </Route>
           </Route>
 
