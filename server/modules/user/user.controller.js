@@ -115,8 +115,8 @@ class UserController {
         <p>Tu nueva contraseña es: ${passGenerada} </p>
         <p>Este enlace expira en 24 horas.</p>`;
         await sendEmail(email, html);
+        res.status(200).json({message: "Correo enviado correctamente"});
       }
-      res.status(200).json({message: "Correo enviado correctamente"});
     
     } catch (error) {
       console.log(error);
