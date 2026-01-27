@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
 import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx'
 import './AdminProfile.css'
 
-const AdminProfile = () => {
 
+const AdminProfile = () => {
+  const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -62,16 +64,16 @@ const AdminProfile = () => {
             <div className="option-header">MODIFICAR EMPLEADOS</div>
             <i class="bi bi-people"></i>
           </div>
-          <div className="option-card">
+          <div className="option-card" onClick={() => navigate('/admin/manage')} style={{ cursor: 'pointer' }}>
             <div className="option-header">ADMINISTRAR</div>
-            <i class="bi bi-gear"></i>
+            <i className="bi bi-gear"></i>
           </div>
 
         </div>
 
       </div>
 
-      <button className="back-btn"><span className="arrow">←</span>ATRAS</button>
+      <button className="back-btn" onClick={() => navigate(-1)}><span className="arrow">←</span>ATRAS</button>
 
 
 
