@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { Modal, Form, Button } from "react-bootstrap";
 import "./AdminManage.css";
+import { RiUserAddLine } from "react-icons/ri";
 
 const AdminManage = () => {
   const navigate = useNavigate();
@@ -73,6 +74,7 @@ const AdminManage = () => {
             type="button"
             onClick={() => setShowWorkerModal(true)}
           >
+            <RiUserAddLine />
             <span>Añadir</span>
           </button>
         </div>
@@ -119,6 +121,7 @@ const AdminManage = () => {
             type="button"
             onClick={() => setShowClientModal(true)}
           >
+            <RiUserAddLine />
             <span>Añadir</span>
           </button>
         </div>
