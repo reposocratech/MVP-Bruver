@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
+import { useEffect } from "react";
 
 const ClientProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);

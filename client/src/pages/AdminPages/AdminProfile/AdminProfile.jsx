@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import{ useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { fetchData } from "../../../helpers/axiosHelper"; 
 import ModalUserProfileEdit from "../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx";
@@ -21,7 +21,6 @@ const AdminProfile = () => {
     fetchAdmin();
   }, []);
 
-  const navigate = useNavigate();
 
   return (
     <section className="admin-section">
