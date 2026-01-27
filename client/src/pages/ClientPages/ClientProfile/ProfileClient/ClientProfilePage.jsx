@@ -1,15 +1,22 @@
-import { Button, Table } from "react-bootstrap";
+import { Button, Table , Col, Container, Row} from "react-bootstrap";
 import "./clientprofilepage.css";
 import { Link } from 'react-router'
 import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
 import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
+import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
 
 const ClientProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const { user } = useContext(AuthContext);
+
+
+
 
   return (
     <div className="clientProfilePage">
-      <h1 className="profileTitle">PERFIL USUARIO</h1>
+      <h1 className="profileTitle">Perfil usuario</h1>
 
       {/* INFO */}
       <section className="infoCard">
@@ -20,8 +27,6 @@ const ClientProfilePage = () => {
             <Button onClick={() => setOpenModal(true)} className="editBtn" type="button">
               ✎ Editar
             </Button>
-
-            
           </div>
 
           <div className="infoTableWrap">
@@ -29,15 +34,17 @@ const ClientProfilePage = () => {
               <tbody>
                 <tr>
                   <td className="infoKey">Nombre</td>
-                  <td className="infoValue">Clara Rodríguez</td>
+                  <td className="infoValue">
+                    {user?.name_user} {user?.last_name}
+                  </td>
                 </tr>
                 <tr>
                   <td className="infoKey">Correo</td>
-                  <td className="infoValue">clarard@gmail.com</td>
+                  <td className="infoValue">{user?.email}</td>
                 </tr>
                 <tr>
                   <td className="infoKey">Teléfono</td>
-                  <td className="infoValue">638493234</td>
+                  <td className="infoValue">{user?.phone}</td>
                 </tr>
               </tbody>
             </Table>
@@ -61,55 +68,17 @@ const ClientProfilePage = () => {
           </Button>
         </div>
 
-        <div className="petsGrid">
-          {/* Mascota 1 */}
-          <article className="petCard">
-            <div className="petImage">
-              <span>IMG</span>
-            </div>
-            <div className="petBody">
-              <h3 className="petName">Toy</h3>
-
-              <div className="petActions">
-                <button className="petBtn" type="button">
-                  EDITAR
-                </button>
-                {/* ✅ AQUÍ VA TU MODAL DE EDITAR MASCOTA */}
-                <button
-                  className="petBtn danger"
-                  type="button"
-                  onClick={() => window.confirm("¿Estás seguro de borrar a Toy?")}
-                >
-                  ELIMINAR
-                </button>
-              </div>
-            </div>
-          </article>
-
-          {/* Mascota 2 */}
-          <article className="petCard">
-            <div className="petImage">
-              <span>IMG</span>
-            </div>
-            <div className="petBody">
-              <h3 className="petName">Sam</h3>
-
-              <div className="petActions">
-                <button className="petBtn" type="button">
-                  EDITAR
-                </button>
-                {/* ✅ AQUÍ VA TU MODAL DE EDITAR MASCOTA */}
-                <button
-                  className="petBtn danger"
-                  type="button"
-                  onClick={() => window.confirm("¿Estás seguro de borrar a Sam?")}
-                >
-                  ELIMINAR
-                </button>
-              </div>
-            </div>
-          </article>
+       <div className="petsGrid">
+          <Container>
+            <Row>
+              <Col>
+                <UsersPetsGallery />
+              </Col>
+            </Row>
+          </Container>
         </div>
+
+
       </section>
 
       {/* CITAS */}
@@ -145,6 +114,7 @@ const ClientProfilePage = () => {
           </Table>
         </div>
       </section>
+
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </div>
   );

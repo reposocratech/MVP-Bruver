@@ -1,9 +1,8 @@
-import { useNavigate} from 'react-router';
 import { Button, Form, Table } from 'react-bootstrap';
 import './ModalAddReserve.css';
 
 const ModalSearchClient = ({ toBack }) => {
-  const navigate = useNavigate()
+
   return (
     <section className="addReserveModal">
       <div className="addReserveGridModal">

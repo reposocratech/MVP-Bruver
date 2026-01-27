@@ -34,6 +34,7 @@ const LoginPage = () => {
       setUser(resUser.data.user)
       setToken(token)
       navigate("/profile")
+      
     } catch (error) {
       if (error instanceof ZodError) {
         const fieldsErrors = {}
