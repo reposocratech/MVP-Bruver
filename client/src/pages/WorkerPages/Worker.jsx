@@ -1,19 +1,55 @@
-import React, { useState } from 'react';
+import { useState } from 'react'
+import ModalAddReserve from '../../components/Modal/ModalAddReserve/ModalAddReserve';
+import ModalQuickReserve from '../../components/Modal/ModalAddReserve/ModalQuickReserve';
+import ModalSearchClient from '../../components/Modal/ModalAddReserve/ModalSearchClient';
 import { Button } from 'react-bootstrap';
-import ModalServices from '../../components/Modal/ModalServices/ModalServices';
+
 
 const Worker = () => {
-  const [showModal, setShowModal] = useState(false);
 
-  const handleOpenModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openSearchClient, setOpenSearchClient] = useState(false);
+  const [openQuickReserve, setOpenQuickReserve] = useState(false);
+
+    const handleChange = (option) => {
+    setOpenModal(false);
+
+    if (option === '1') {
+      setOpenSearchClient(true);
+    }
+
+    if (option === '2') {
+      setOpenQuickReserve(true);
+    }
+  };
+
+    const backModalAddReserve = () => {
+      setOpenModal(true);
+      setOpenSearchClient(false);
+      setOpenQuickReserve(false);
+    }
 
   return (
-    <div>
-      <Button onClick={handleOpenModal}>Consultar</Button>
-      {showModal && <ModalServices onClose={handleCloseModal} />}
-    </div>
-  );
-};
+    <>
+    <Button onClick={() => setOpenModal(true)} 
+    className="Añadir reserva">
+              Añadir una reserva
+            </Button>
+    
 
-export default Worker;
+    {openModal && (
+      <ModalAddReserve 
+      toBack={backModalAddReserve}
+      onClose={() => setOpenModal(false)} 
+      onAccept  ={handleChange}/>)}
+
+      {openSearchClient && <ModalSearchClient 
+       toBack={backModalAddReserve}/>}
+      {openQuickReserve && <ModalQuickReserve 
+       toBack={backModalAddReserve}/>}
+    </>
+  )
+}
+
+export default Worker
+

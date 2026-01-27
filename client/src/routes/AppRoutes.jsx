@@ -21,7 +21,6 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 /* RUTAS PRIVADAS */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
 import { AdminLayout } from "../layouts/AdminLayout.jsx"
-import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
 const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"))
@@ -35,8 +34,8 @@ const AdminManage = lazy(() =>
 
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
 const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
+const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
 
-const Worker = lazy(() => import("../pages/WorkerPages/worker.jsx"))
 
 
 export const AppRoutes = () => {
@@ -69,10 +68,7 @@ export const AppRoutes = () => {
                <Route path="/addpet" element={<AddPet />} />
                <Route path="/selectservices" element={<SelectServices />} /> 
                <Route path="/selectdate" element={<SelectDate />} /> 
-               
-            </Route>
-            <Route element={<WorkerLayout />}>
-              <Route path="/worker" element={<Worker/>} /> 
+               <Route path="/worker" element={<Worker />} /> 
             </Route>
           </Route>
 
