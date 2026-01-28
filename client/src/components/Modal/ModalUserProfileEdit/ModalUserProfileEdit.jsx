@@ -1,12 +1,14 @@
+
 import { useContext, useEffect, useState } from "react";
+import { Button } from "react-bootstrap"
 import "./ModalUserProfileEdit.css";
 
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../helpers/axiosHelper";
-import { useNavigate } from "react-router"; // ✅ para mandar al home
+import { useNavigate } from "react-router"; 
 
 const ModalUserProfileEdit = ({ onClose }) => {
-  const navigate = useNavigate(); // ✅
+  const navigate = useNavigate(); 
 
   // 1) Sacamos user/token y helpers del contexto
   const { user, setUser, token, logout } = useContext(AuthContext);
@@ -151,16 +153,22 @@ const ModalUserProfileEdit = ({ onClose }) => {
           />
 
           <label>Email</label>
+
           <input name="email" value={form.email} disabled />
 
-          <label>Foto</label>
-          <div className="photoSection">
-            <button type="button" className="changePhotoBtn">
-              Cambiar foto
-            </button>
-          </div>
+         
 
           {errorMsg && <p className="text-danger">{errorMsg}</p>}
+
+          <label>Contraseña</label>
+
+          <input type="password" name="password" value={form.password} onChange={handleChange} />
+          <label>Repite contraseña</label>
+
+          <input type="password" name="repeatPassword" value={form.repeatPassword} onChange={handleChange} />
+          <label>Cambiar foto</label>
+
+          <input type="file" className="changePhotoBtn"/>
 
           <div className="modalButtons">
             <button className="confirmBtn" type="submit" disabled={loading}>

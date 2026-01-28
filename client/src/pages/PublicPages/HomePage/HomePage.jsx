@@ -15,7 +15,7 @@ const HomePage = () => {
             backgroundImage: "url(/img/home/background2-2.png)",
           }}
         >
-          <p className="heroQuote">"Bienestar con alma para mascotas felices"</p>
+          <p className="heroQuote">"Fieles a tu mascota"</p>
         </div>
       </section>
 

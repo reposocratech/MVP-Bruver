@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router'
 import { NavbarLogin } from '../components/NavbarLogin/NavbarLogin'
-import { FooterPublic } from "../components/Footer/FooterPublic";
+import { FooterPrivate } from '../components/Footer/FooterPrivate/FooterPrivate';
 
 export const WorkerLayout = () => {
   return (
@@ -12,7 +12,7 @@ export const WorkerLayout = () => {
           <Outlet/>
       </main>
       <footer>
-           <FooterPublic />
+           <FooterPrivate />
       </footer>
     </>  
   )

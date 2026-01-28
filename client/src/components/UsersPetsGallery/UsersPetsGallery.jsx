@@ -35,7 +35,6 @@ export const UsersPetsGallery = () => {
   const delPet = async (pet_id, pet_name) => {
  
     try {
-    // forma rapida de verificar el borrao
       if (window.confirm(`¿Seguro que quieres eliminar a ${pet_name}?`)) {
         // 3.1) Borramos en backend
         let res = await fetchData(`pet/${pet_id}`, "DELETE", null, token);
@@ -54,11 +53,13 @@ export const UsersPetsGallery = () => {
  
   // 4) Pintamos la galería de mascotas
   return (
-    <div>
- 
-      {pets?.map((elem) => {
-        return (
-          <div className="petCard" key={elem.pet_id}>
+
+    <div className="row g-4 justify-content-center">
+
+      {pets?.map((elem) => (
+        <div className="col-12 col-sm-6 col-lg-4" key={elem.pet_id}>
+          <div className="petCard">
+
             <div className="petImage">
               {elem.picture_pet ? (
                 <img
@@ -69,7 +70,6 @@ export const UsersPetsGallery = () => {
                 <span>IMG</span>
               )}
             </div>
-              {/* inform de la card */}
             <div className="petInfo">
               <h3>{elem.name_pet}</h3>
  
@@ -92,8 +92,8 @@ export const UsersPetsGallery = () => {
               </div>
             </div>
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };
