@@ -9,52 +9,40 @@ export const UsersPetsGallery = () => {
 
   // 2) Al montar el componente, si hay token, pedimos las mascotas al backend
   useEffect(() => {
-
     const getMyPets = async () => {
-
       try {
         const res = await fetchData("pet/mine", "GET", null, token);
         setPets(res.data.pets); 
-      } 
-      catch (error)
-       {
+      } catch (error) {
         console.log(error);
       }
     };
 
     if (token) getMyPets();
-
-  },
-   []);
+  }, [token, setPets]);
 
   // 3) Borrar mascota en BD y actualizar el array global quitando esa mascota
   const delPet = async (pet_id, pet_name) => {
-
     try {
-    // forma rapida de verificar el borrao
       if (window.confirm(`¿Seguro que quieres eliminar a ${pet_name}?`)) {
         // 3.1) Borramos en backend
         let res = await fetchData(`pet/${pet_id}`, "DELETE", null, token);
         console.log(res);
 
         // 3.2) Actualizamos el array en el contexto
-
         setPets(pets.filter((elem) => elem.pet_id !== pet_id));
       }
-    } 
-    catch (error) 
-    {
+    } catch (error) {
       console.log(error);
     }
   };
 
   // 4) Pintamos la galería de mascotas
   return (
-    <div>
-
-      {pets?.map((elem) => {
-        return (
-          <div className="petCard" key={elem.pet_id}>
+    <div className="row g-4 justify-content-center">
+      {pets?.map((elem) => (
+        <div className="col-12 col-sm-6 col-lg-4" key={elem.pet_id}>
+          <div className="petCard">
             <div className="petImage">
               {elem.picture_pet ? (
                 <img
@@ -65,7 +53,6 @@ export const UsersPetsGallery = () => {
                 <span>IMG</span>
               )}
             </div>
-              {/* inform de la card */}
             <div className="petInfo">
               <h3>{elem.name_pet}</h3>
 
@@ -84,8 +71,8 @@ export const UsersPetsGallery = () => {
               </div>
             </div>
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 };

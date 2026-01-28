@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "react-bootstrap"
 import "./ModalUserProfileEdit.css";
 const ModalUserProfileEdit = ({ onClose }) => {
   const [form, setForm] = useState({
@@ -41,10 +42,8 @@ const ModalUserProfileEdit = ({ onClose }) => {
           <input type="password" name="password" value={form.password} onChange={handleChange} />
           <label>Repite contraseña</label>
           <input type="password" name="repeatPassword" value={form.repeatPassword} onChange={handleChange} />
-          <label>Foto</label>
-          <div className="photoSection">
-            <button type="button" className="changePhotoBtn">Cambiar foto</button>
-          </div>
+          <label>Cambiar foto</label>
+          <input type="file" className="changePhotoBtn"/>
           <div className="modalButtons">
             <button className="confirmBtn">CONFIRMAR</button>
             <button type="button" className="cancelBtn" onClick={onClose}>CANCELAR</button>
