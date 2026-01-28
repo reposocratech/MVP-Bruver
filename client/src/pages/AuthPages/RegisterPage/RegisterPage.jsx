@@ -39,7 +39,7 @@ const RegisterPage = () => {
       registerSchema.parse(register);
       await fetchData("user/register", "POST", register);
 
-      // ✅ En vez de navegar, abrimos modal como en el código anterior
+     
       setOpenModal(true);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -178,19 +178,19 @@ const RegisterPage = () => {
           <p className="register-phrase">Patitas limpias, corazones felices</p>
         </Form>
 
-        {/* ✅ Modal (abre tras registro OK) */}
+        
         {openModal && (
           <ModalVerifyEmail
             onClose={() => {
               setOpenModal(false);
-              navigate("/login"); // si quieres que al cerrar vaya al login
+              navigate("/login"); 
             }}
           />
         )}
       </div>
 
       <img
-        src="/img/home/dog-corner.png"
+        src="/img/home/dog1.png"
         alt="Perrito decorativo"
         className="dogCorner"
       />
