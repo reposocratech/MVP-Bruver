@@ -25,30 +25,38 @@ const LoginPage = () => {
   }
 
   const onSubmit = async () => {
-    try {
-      loginSchema.parse(login)
-      const res = await fetchData("user/login", "POST", login)
-      const token = res.data.token
-      const resUser = await fetchData("user/userByToken", "GET", null, token)
-      localStorage.setItem("token", token)
-      setUser(resUser.data.user)
-      setToken(token)
-      navigate("/profile")
-      
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const fieldsErrors = {}
-        error.issues.forEach((elem) => {
-          fieldsErrors[elem.path[0]] = elem.message
-        })
-        setValErrors(fieldsErrors)
-        setErrorMsg("")
-      } else {
-        setErrorMsg(error.response?.data?.message)
-        setValErrors({})
-      }
+  try {
+    loginSchema.parse(login)
+
+    const res = await fetchData("user/login", "POST", login)
+    const token = res.data.token
+
+    const resUser = await fetchData("user/userByToken", "GET", null, token)
+
+    localStorage.setItem("token", token)
+    setUser(resUser.data.user)
+    setToken(token)
+
+    const type = Number(resUser.data.user?.type)
+
+    if (type === 1) navigate("/admin")
+    else if (type === 2) navigate("/worker/profile")
+    else navigate("/profile")
+
+  } catch (error) {
+    if (error instanceof ZodError) {
+      const fieldsErrors = {}
+      error.issues.forEach((elem) => {
+        fieldsErrors[elem.path[0]] = elem.message
+      })
+      setValErrors(fieldsErrors)
+      setErrorMsg("")
+    } else {
+      setErrorMsg(error.response?.data?.message)
+      setValErrors({})
     }
   }
+}
 
   return (
     <div className="login-page">

@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
 import { useState } from "react";
 import { useContext } from "react";
+import { useEffect } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
 import { useEffect } from "react";
