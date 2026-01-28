@@ -1,27 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { fetchData } from "../../../helpers/axiosHelper"; 
+import { fetchData } from "../../../helpers/axiosHelper";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import ModalUserProfileEdit from "../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx";
 import "./AdminProfile.css";
-import { AuthContext } from "../../../contexts/AuthContext/AuthContext.js";
 
 const AdminProfile = () => {
-  const [openModal, setOpenModal] = useState(false);
-  const [admin, setAdmin] = useState();
-
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [admin, setAdmin] = useState();
+  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     const fetchAdmin = async () => {
-      const res = await fetchData("/admin", "GET", null, token);
-      setAdmin(res.data.user);
+      try {
+        const res = await fetchData("admin", "GET", null, token);
+        setAdmin(res.data.user);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     fetchAdmin();
   }, []);
-
-  const navigate = useNavigate();
 
   return (
     <section className="admin-section">
@@ -32,14 +34,22 @@ const AdminProfile = () => {
           <h3>Información</h3>
 
           <button onClick={() => setOpenModal(true)} className="edit-btn">
-             Editar
+            Editar
           </button>
 
           <table>
             <tbody>
-              <tr><td>{admin?.name_user} {admin?.last_name}</td></tr>
-              <tr><td>{admin?.email}</td></tr>
-              <tr><td>{admin?.phone}</td></tr>
+              <tr>
+                <td>
+                  {admin?.name_user} {admin?.last_name}
+                </td>
+              </tr>
+              <tr>
+                <td>{admin?.email}</td>
+              </tr>
+              <tr>
+                <td>{admin?.phone}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -54,10 +64,9 @@ const AdminProfile = () => {
 
       <div className="options-wrapper">
         <div className="options-row row-top">
-
-          <div className="option-card" onClick={()=>navigate('/admin/general')}>
-            <div className="option-header"  >AGENDA</div>
-            <i class="bi bi-journal-richtext"></i>
+          <div className="option-card">
+            <div className="option-header">AGENDA</div>
+            <i className="bi bi-journal-richtext"></i>
           </div>
 
           <div className="option-card">
@@ -76,16 +85,21 @@ const AdminProfile = () => {
             <div className="option-header">MODIFICAR EMPLEADOS</div>
             <i className="bi bi-people"></i>
           </div>
-          <div className="option-card" onClick={() => navigate('/admin/manage')} style={{ cursor: 'pointer' }}>
+
+          <div
+            className="option-card"
+            onClick={() => navigate("/admin/manage")}
+            style={{ cursor: "pointer" }}
+          >
             <div className="option-header">ADMINISTRAR</div>
             <i className="bi bi-gear"></i>
           </div>
         </div>
       </div>
 
-      <button className="back-btn" onClick={() => navigate(-1)}><span className="arrow">←</span>ATRAS</button>
-
-
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        <span className="arrow">←</span>ATRAS
+      </button>
 
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </section>
