@@ -156,16 +156,8 @@ const ModalUserProfileEdit = ({ onClose }) => {
 
           <input name="email" value={form.email} disabled />
 
-         
-
           {errorMsg && <p className="text-danger">{errorMsg}</p>}
 
-          <label>Contraseña</label>
-
-          <input type="password" name="password" value={form.password} onChange={handleChange} />
-          <label>Repite contraseña</label>
-
-          <input type="password" name="repeatPassword" value={form.repeatPassword} onChange={handleChange} />
           <label>Cambiar foto</label>
 
           <input type="file" className="changePhotoBtn"/>
