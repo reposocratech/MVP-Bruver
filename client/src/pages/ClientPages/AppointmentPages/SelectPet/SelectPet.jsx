@@ -38,7 +38,7 @@ const SelectPet = () => {
           <h3>Frod</h3>
           <button
             type="button"
-            onClick={() => navigate("/selectservices")}
+            onClick={() => navigate("/selectcat")}
             className="selectPetBtn"
           >
             SELECCIONAR

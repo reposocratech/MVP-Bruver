@@ -4,17 +4,12 @@ import { Link } from 'react-router'
 import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { useEffect } from "react";
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
-import { useEffect } from "react";
 
 const ClientProfilePage = () => {
   const [openModal, setOpenModal] = useState(false);
   const { user } = useContext(AuthContext);
-
-
-
 
   /* Función para que haya scroll en la página o en el modal, según donde estés */
   useEffect(() => {
