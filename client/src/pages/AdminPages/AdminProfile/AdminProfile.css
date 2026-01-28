@@ -1,3 +1,16 @@
+.back-btn-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.option-card-link {
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.option-card-link:hover {
+  box-shadow: 0 4px 16px rgba(130, 183, 161, 0.15);
+  transform: translateY(-2px) scale(1.04);
+}
 .admin-section {
   display: flex;
   flex-direction: column;

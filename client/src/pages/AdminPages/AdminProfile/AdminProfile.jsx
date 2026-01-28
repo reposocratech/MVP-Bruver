@@ -54,28 +54,28 @@ const AdminProfile = () => {
       <div className="options-wrapper">
         <div className="options-row row-top">
 
-          <div className="option-card" onClick={()=>navigate('/admin/general')}>
-            <div className="option-header"  >AGENDA</div>
-            <i class="bi bi-journal-richtext"></i>
+          <div className="option-card option-card-link" onClick={()=>navigate('/admin/general')}>
+            <div className="option-header">AGENDA</div>
+            <i className="bi bi-journal-richtext"></i>
           </div>
 
-          <div className="option-card">
+          <div className="option-card option-card-link" onClick={()=>navigate('/admin/appointments')}>
             <div className="option-header">MIS CITAS</div>
             <i className="bi bi-pencil-square"></i>
           </div>
 
-          <div className="option-card">
+          <div className="option-card option-card-link" onClick={()=>navigate('/admin/workinghours')}>
             <div className="option-header">HORARIO LABORAL</div>
             <i className="bi bi-calendar3"></i>
           </div>
         </div>
 
         <div className="options-row row-bottom">
-          <div className="option-card">
+          {/* <div className="option-card">
             <div className="option-header">MODIFICAR EMPLEADOS</div>
             <i className="bi bi-people"></i>
-          </div>
-          <div className="option-card" onClick={() => navigate('/admin/manage')} style={{ cursor: 'pointer' }}>
+          </div> */}
+          <div className="option-card option-card-link" onClick={() => navigate('/admin/manage')}>
             <div className="option-header">ADMINISTRAR</div>
             <i className="bi bi-gear"></i>
           </div>
