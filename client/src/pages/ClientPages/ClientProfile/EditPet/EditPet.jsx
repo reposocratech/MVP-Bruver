@@ -11,7 +11,7 @@ const EditPet = () => {
 
   const { token, pets, setPets } = useContext(AuthContext);
 
-  // ✅ Arranca en null y NO lo usamos hasta que llegue el GET
+  
   const [editPet, setEditPet] = useState(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const EditPet = () => {
       try {
         const res = await fetchData(`pet/${petId}`, "GET", null, token);
 
-        // ✅ soporta: { pet: {...} } o directamente { ... }
+        
         const petFromApi = res?.data?.pet ?? res?.data;
 
         setEditPet(petFromApi || null);
@@ -32,7 +32,7 @@ const EditPet = () => {
     if (token) getPet();
   }, [token, petId]);
 
-  // ✅ si aún no hay datos, no pintamos nada que use editPet.name_pet
+ 
   if (!editPet) {
     return (
       <div className="editPetPage">
