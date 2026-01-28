@@ -1,68 +1,54 @@
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Table, Col, Container, Row } from "react-bootstrap";
+import { Link, useNavigate } from "react-router";
 import "./clientprofilepage.css";
-import { Link } from "react-router";
+
 import ModalUserProfileEdit from "../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
-import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
+import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../../helpers/axiosHelper";
 
 const ClientProfilePage = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   const { user, token } = useContext(AuthContext);
 
-  // los estados de las citas
+  const [openModal, setOpenModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
 
-  /* Función para que haya scroll en la página o en el modal, según donde estés */
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
+  }, [openModal]);
 
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  },
-   [openModal]);
-
-  // para cargar las citas del usuario
   useEffect(() => {
     const getMyAppointments = async () => {
       try {
-
         const res = await fetchData("appointment/mine", "GET", null, token);
-        setAppointments(res.data.appointments || []);
-      } 
-      catch (error) 
-      {
+        setAppointments(res?.data?.appointments || []);
+      } catch (error) {
         console.log(error);
+        setAppointments([]);
       }
     };
 
     if (token) getMyAppointments();
-  }, 
-  [token]
-);
+  }, [token]);
 
-  // esto es para el formato de la fecha 
   const formatDate = (dateStr) => {
-
-    //  viene co neste tipo"2026-01-18"
-
     if (!dateStr) return "";
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("es-ES");
+    const dateSelect = new Date(dateStr);
+    return dateSelect.toLocaleDateString("es-ES");
   };
 
   const formatTime = (timeStr) => {
-    // formato de la fecha 
     if (!timeStr) return "";
     return timeStr.slice(0, 5);
   };
 
   const formatPrice = (value) => {
-    const num = Number(value || 0);
-    return num.toFixed(2).replace(".", ",") + " €";
+    const numMoney = Number(value || 0);
+    return numMoney.toFixed(2).replace(".", ",") + " €";
   };
 
   return (
@@ -75,7 +61,11 @@ const ClientProfilePage = () => {
           <div className="infoHeader">
             <h2 className="infoTitle">Información</h2>
 
-            <Button onClick={() => setOpenModal(true)} className="editBtn" type="button">
+            <Button
+              type="button"
+              className="editBtn"
+              onClick={() => setOpenModal(true)}
+            >
               ✎ Editar
             </Button>
           </div>
@@ -114,7 +104,11 @@ const ClientProfilePage = () => {
         <div className="sectionHeader">
           <h1 className="sectionTitle">Mis mascotas</h1>
 
-          <Button as={Link} to="/addpet" className="addLinkBtn">
+          <Button
+            type="button"
+            className="addLinkBtn"
+            onClick={() => navigate("/addpet")}
+          >
             🐾 Añadir
           </Button>
         </div>
@@ -158,8 +152,10 @@ const ClientProfilePage = () => {
                     <td>{formatDate(a.appointment_date)}</td>
                     <td>{formatPrice(a.total_price)}</td>
                   </tr>
-                ))
-              )}
+                )
+              )
+              )
+              }
             </tbody>
           </Table>
         </div>
