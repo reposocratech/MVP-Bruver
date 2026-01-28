@@ -24,7 +24,8 @@ export const UsersPetsGallery = () => {
 
     if (token) getMyPets();
 
-  }, []);
+  },
+   []);
 
   // 3) Borrar mascota en BD y actualizar el array global quitando esa mascota
   const delPet = async (pet_id, pet_name) => {
