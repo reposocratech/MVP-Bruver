@@ -72,7 +72,7 @@ export const AppRoutes = () => {
                <Route path="/profile" element={<ClientProfile />} />
                <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} />
-               <Route path="/profile/edit-pet" element={<EditPet />} /> 
+               <Route path="/profile/edit-pet/:petId" element={<EditPet />} /> 
                <Route path="/addpet" element={<AddPet />} />
                <Route path="/selectservices" element={<SelectServices />} /> 
                <Route path="/selectdate" element={<SelectDate />} /> 

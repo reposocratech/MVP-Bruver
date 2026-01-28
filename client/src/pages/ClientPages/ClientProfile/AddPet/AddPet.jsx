@@ -13,6 +13,11 @@ const AddPet = () => {
   const [species, setSpecies] = useState(""); // "perro" | "gato"
   const [category, setCategory] = useState(""); // "toy" | "pequeno" | "mediano" | "grande"
   const [notes, setNotes] = useState("");
+
+  // ✅ NUEVO
+  const [hair, setHair] = useState("");
+  const [medicalHistory, setMedicalHistory] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const categories = [
@@ -41,15 +46,17 @@ const AddPet = () => {
       description: notes.trim() || null,
       specie: specieMap[species],
       size_category: sizeCategoryMap[category],
+
+      // ✅ NUEVO
+      hair: hair.trim() || null,
+      medical_history: medicalHistory.trim() || null,
     };
 
     try {
       setLoading(true);
 
-      // VITE_SERVER_URL = http://localhost:4000/  => sin "/" al inicio
       await fetchData("pet", "POST", body, token);
 
-      // ✅ Sin alert, navegación directa al perfil
       navigate("/profile");
     } catch (err) {
       console.log("Error creando mascota:", err);
@@ -123,6 +130,33 @@ const AddPet = () => {
           </div>
         </div>
 
+        
+        <Form.Group className="addPetGroup">
+          <Form.Label className="addPetLabel">Pelo</Form.Label>
+          <Form.Control
+            className="addPetInput"
+            type="text"
+            placeholder="Ej: corto, largo, rizado..."
+            value={hair}
+            onChange={(e) => setHair(e.target.value)}
+            disabled={loading}
+          />
+        </Form.Group>
+
+        
+        <Form.Group className="addPetGroup">
+          <Form.Label className="addPetLabel">Historial médico</Form.Label>
+          <Form.Control
+            className="addPetTextarea"
+            as="textarea"
+            rows={4}
+            placeholder="Vacunas, alergias, enfermedades, medicación..."
+            value={medicalHistory}
+            onChange={(e) => setMedicalHistory(e.target.value)}
+            disabled={loading}
+          />
+        </Form.Group>
+
         <Form.Group className="addPetGroup">
           <Form.Label className="addPetLabel">
             Observaciones (Alergias, cuidados especiales, ...)
@@ -143,12 +177,7 @@ const AddPet = () => {
             {loading ? "GUARDANDO..." : "CONFIRMAR"}
           </Button>
 
-          <Button
-            type="button"
-            className="btnCancel"
-            onClick={handleCancel}
-            disabled={loading}
-          >
+          <Button type="button" className="btnCancel" onClick={handleCancel} disabled={loading}>
             CANCELAR
           </Button>
         </div>
