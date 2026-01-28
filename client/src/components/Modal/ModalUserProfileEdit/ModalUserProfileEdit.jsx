@@ -1,19 +1,17 @@
-
 import { useContext, useEffect, useState } from "react";
-import { Button } from "react-bootstrap"
 import "./ModalUserProfileEdit.css";
 
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../helpers/axiosHelper";
-import { useNavigate } from "react-router"; 
+import { useNavigate } from "react-router";
 
 const ModalUserProfileEdit = ({ onClose }) => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // 1) Sacamos user/token y helpers del contexto
   const { user, setUser, token, logout } = useContext(AuthContext);
 
-  // 2) Estado local del formulario, no he añadido ni contraseña ni edicion del correo
+  // 2) Estado local del formulario
   const [form, setForm] = useState({
     nombre: "",
     apellidos: "",
@@ -22,12 +20,13 @@ const ModalUserProfileEdit = ({ onClose }) => {
     ciudad: "",
     direccion: "",
     email: "",
-  });
+  }
+);
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  // 3) para traer la previsualizacion de los datos del user
+  // 3) Traer previsualización de datos del user al abrir modal
   useEffect(() => {
     if (user) {
       setForm((prev) => ({
@@ -51,16 +50,14 @@ const ModalUserProfileEdit = ({ onClose }) => {
     });
   };
 
-  // 5) conformar la actualizacion del token
-  const handleConfirm = async (e) => {
-    e.preventDefault();
+  // 5) Confirmar -> actualizar perfil en BD + actualizar contexto
+  const handleConfirm = async () => {
     if (!token || loading) return;
 
     try {
       setLoading(true);
       setErrorMsg("");
 
-      // si no se envia no se edita
       const body = {
         name_user: form.nombre,
         last_name: form.apellidos,
@@ -83,10 +80,10 @@ const ModalUserProfileEdit = ({ onClose }) => {
     }
   };
 
-  // 6) eliminar perfil, borrado logico 
+  // 6) Eliminar perfil -> borrado lógico + logout + home
   const handleDeleteProfile = async () => {
     if (!token || loading) return;
-    /* borrado logico */
+
     try {
       if (window.confirm("¿Seguro que quieres eliminar tu perfil ?")) {
         setLoading(true);
@@ -96,9 +93,7 @@ const ModalUserProfileEdit = ({ onClose }) => {
 
         logout();
         onClose();
-
-        /* al hacer el borrado nos lleva al home */
-        navigate("/"); 
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -113,70 +108,45 @@ const ModalUserProfileEdit = ({ onClose }) => {
       <div className="userProfileModalContent">
         <h2 className="modalTitle">Edita tu perfil</h2>
 
-        <form className="userProfileForm" onSubmit={handleConfirm}>
+       
+        <form className="userProfileForm">
           <label>Nombre</label>
           <input name="nombre" value={form.nombre} onChange={handleChange} disabled={loading} />
 
           <label>Apellidos</label>
-          <input
-            name="apellidos"
-            value={form.apellidos}
-            onChange={handleChange}
-            disabled={loading}
-          />
+          <input name="apellidos" value={form.apellidos} onChange={handleChange} disabled={loading} />
 
           <label>Teléfono</label>
-          <input
-            name="telefono"
-            value={form.telefono}
-            onChange={handleChange}
-            disabled={loading}
-          />
+          <input name="telefono" value={form.telefono} onChange={handleChange} disabled={loading} />
 
           <label>Provincia</label>
-          <input
-            name="provincia"
-            value={form.provincia}
-            onChange={handleChange}
-            disabled={loading}
-          />
+          <input name="provincia" value={form.provincia} onChange={handleChange} disabled={loading} />
 
           <label>Ciudad</label>
           <input name="ciudad" value={form.ciudad} onChange={handleChange} disabled={loading} />
 
           <label>Dirección</label>
-          <input
-            name="direccion"
-            value={form.direccion}
-            onChange={handleChange}
-            disabled={loading}
-          />
+          <input name="direccion" value={form.direccion} onChange={handleChange} disabled={loading} />
 
           <label>Email</label>
-
           <input name="email" value={form.email} disabled />
 
           {errorMsg && <p className="text-danger">{errorMsg}</p>}
 
           <label>Cambiar foto</label>
-
-          <input type="file" className="changePhotoBtn"/>
+          <input type="file" className="changePhotoBtn" />
 
           <div className="modalButtons">
-            <button className="confirmBtn" type="submit" disabled={loading}>
-              {loading ? "GUARDANDO..." : "CONFIRMAR"}
+           
+            <button className="confirmBtn" type="button" onClick={handleConfirm} disabled={loading}>
+              CONFIRMAR
             </button>
 
             <button type="button" className="cancelBtn" onClick={onClose} disabled={loading}>
               CANCELAR
             </button>
 
-            <button
-              type="button"
-              className="deleteBtn"
-              onClick={handleDeleteProfile}
-              disabled={loading}
-            >
+            <button type="button" className="deleteBtn" onClick={handleDeleteProfile} disabled={loading}>
               ELIMINAR PERFIL
             </button>
           </div>
