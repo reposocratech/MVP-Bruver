@@ -1,80 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
 body {
-  background: #F3E4D6;
+  background-color: #f4efe8;
+  font-family: "Raleway", sans-serif;
 }
 
-h2 ,form {
-  margin-block-start: 5rem;
+.forgotpass-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 200px;
+  padding-bottom: 228px;
 }
 
+.forgotpass-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 3em;
+  padding-left: 3em;
+  padding-right: 3em;
+  padding-bottom: 2.6em;
+  width: 620px;
+  background-color: #E6D3C2;
+  border: 2px dashed #6bb3a7;
+  border-radius: 28px;
+  box-shadow: 
+    0 0 0 4px #E6D3C2,
+    4px 4px 12px rgba(0, 0, 0, 0.25);
+  transition: 0.4s ease-in-out;
+  animation: cardIn 0.8s ease-out both;
+}
 
-h2 {
-  color: #6BB3A7;
-  font-size: 32px;
-  margin-bottom: 35px;
-  font-family: "Lora", serif;
+.forgotpass-card:hover {
+  box-shadow: 
+    0 0 0 4px #E6D3C2,
+    6px 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.forgotpass-card h2 {
+  color: #6aafa5;
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  font-size: 2.4rem;
+  letter-spacing: 0.35em;
   text-align: center;
+  padding: 0.6em 0 1.2em;
 }
 
+.mb-3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
 
-form {
-  width: min(520px, 92%);
-  margin: 24px auto 0;
-  padding: 26px 28px;
-  border-radius: 14px;
+.mb-3 label {
+  color: #1f1f1f;
+}
+
+.mb-3 input {
+  outline: none;
+  padding: 0.7em;
+  border: 1px solid #6bb3a7;
+  color: #1f1f1f;
+  width: 18em;
+  height: 3.1em;
+  border-radius: 12px;
+  background-color: #ffffff;
   text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease-in-out;
 }
 
-
-form label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 14px;
-  color: #4b4b4b;
+.mb-3 input::placeholder {
+  color: #6bb3a789;
 }
 
-form input[type="email"] {
-  width: 100%;
-  height: 34px;
-  border: 0;
-  outline: 0;
-  border-radius: 4px;
-  background: #ffffff;
-  padding: 6px 10px;
-  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.12);
-}
-
-.text-danger {
-  margin: 10px 0 0;
-  font-size: 13px;
-}
-
-
-form .btn {
-  margin-top: 18px;
-  height: 34px;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 999px;
-  font-size: 12px;
-  letter-spacing: 0.3px;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
-  transition: transform 0.08s ease, filter 0.12s ease;
-}
-
-
-form .btn,
-form .btn.btn-primary {
-  background: #6AAFA5;
-  color: #ffffff;
-}
-
-
-form .btn:hover {
-  background-color: #5a9f96;
+.mb-3 input:focus {
+  box-shadow: 0 6px 18px rgba(107, 179, 167, 0.35);
   transform: translateY(-1px);
 }
 
-form .btn:active {
-  transform: translateY(1px);
+.text-danger {
+  font-size: 0.85rem;
+  margin-top: 6px;
+  text-align: center;
 }
 
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.4em;
+}
+
+.button_forgot {
+  border-radius: 14px;
+  border: none;
+  padding: 1em 2.6em;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  color: white;
+  background-color: #6bb3a7;
+  cursor: pointer;
+  transition: 0.35s ease-in-out;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.button_forgot:hover {
+  opacity: 0.85;
+}
+
+.button_forgot:active {
+  transform: translateX(2px) translateY(2px);
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .forgotpass-page {
+    padding-top: 90px;
+    padding-bottom: 60px;
+  }
+
+  .forgotpass-card {
+    width: 90%;
+    padding: 2.6rem 2.2rem;
+  }
+
+  .mb-3 input {
+    width: 100%;
+  }
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

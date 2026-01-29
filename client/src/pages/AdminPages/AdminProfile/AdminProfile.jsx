@@ -1,4 +1,4 @@
-import{ useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { fetchData } from "../../../helpers/axiosHelper";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
@@ -23,7 +23,7 @@ const AdminProfile = () => {
     };
 
     fetchAdmin();
-  }, []);
+  }, [token]);
 
   return (
     <section className="admin-section">
@@ -33,8 +33,12 @@ const AdminProfile = () => {
         <div className="info-block">
           <h3>Información</h3>
 
-          <button onClick={() => setOpenModal(true)} className="edit-btn">
-            Editar
+          <button
+            className="edit-btn"
+            type="button"
+            onClick={() => setOpenModal(true)}
+          >
+            ✎ Editar
           </button>
 
           <table>
@@ -64,25 +68,36 @@ const AdminProfile = () => {
 
       <div className="options-wrapper">
         <div className="options-row row-top">
-
-          <div className="option-card option-card-link" onClick={()=>navigate('/admin/general')}>
+          <div
+            className="option-card option-card-link"
+            onClick={() => navigate("/admin/general")}
+          >
             <div className="option-header">AGENDA</div>
             <i className="bi bi-journal-richtext"></i>
           </div>
 
-          <div className="option-card option-card-link" onClick={()=>navigate('/admin/appointments')}>
+          <div
+            className="option-card option-card-link"
+            onClick={() => navigate("/admin/appointments")}
+          >
             <div className="option-header">MIS CITAS</div>
             <i className="bi bi-pencil-square"></i>
           </div>
 
-          <div className="option-card option-card-link" onClick={()=>navigate('/admin/workinghours')}>
+          <div
+            className="option-card option-card-link"
+            onClick={() => navigate("/admin/workinghours")}
+          >
             <div className="option-header">HORARIO LABORAL</div>
             <i className="bi bi-calendar3"></i>
           </div>
         </div>
 
         <div className="options-row row-bottom">
-          <div className="option-card option-card-link" onClick={() => navigate('/admin/manage')}>
+          <div
+            className="option-card option-card-link"
+            onClick={() => navigate("/admin/manage")}
+          >
             <div className="option-header">ADMINISTRAR</div>
             <i className="bi bi-gear"></i>
           </div>
@@ -90,10 +105,12 @@ const AdminProfile = () => {
       </div>
 
       <button className="back-btn" onClick={() => navigate(-1)}>
-        <span className="arrow">←</span>ATRAS
+        <span className="arrow">←</span>ATRÁS
       </button>
 
-      {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
+      {openModal && (
+        <ModalUserProfileEdit onClose={() => setOpenModal(false)} />
+      )}
     </section>
   );
 };
