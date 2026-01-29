@@ -7,7 +7,7 @@ const About = () => {
       <section className="aboutTop">
         <div className="aboutText">
           <h2 className="aboutTitle">Sobre Nosotras</h2>
-          <h3>Donde la vocación se encuentra con el cariño</h3>
+          <h4>Donde la vocación se encuentra con el cariño</h4>
           <p>
             Para nosotras, BRÜVER es la respuesta a un sentimiento que nos acompaña desde siempre.
           </p>

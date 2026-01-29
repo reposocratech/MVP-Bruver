@@ -12,7 +12,9 @@ import { fileURLToPath } from 'url';
 import appointmentRouter from "./modules/appointment/appointment.routes.js";
 import petRouter from "./modules/pet/pet.routes.js";
 import userRouter from './modules/user/user.routes.js';
-import adminRouter from "./modules/admin/admin.routes.js"
+import adminRouter from "./modules/admin/admin.routes.js";
+import workerRouter from "./modules/worker/worker.routes.js";
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -32,6 +34,8 @@ app.use('/user', userRouter);
 app.use("/pet", petRouter);
 app.use("/appointment", appointmentRouter);
 app.use("/admin", adminRouter)
+app.use("/worker", workerRouter);
+
 
 
 // catch 404 and forward to error handler
