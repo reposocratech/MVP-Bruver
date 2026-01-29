@@ -12,6 +12,10 @@
   animation: fadeIn 0.3s ease forwards;
 }
 
+th{
+  background-color: #6AAFA5;
+}
+
 /* SELECT */
 #selectClient {
   width: fit-content;
@@ -23,7 +27,7 @@
 .addReserveGridModal {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 50%;
   padding: 1rem;
 }
 
@@ -56,17 +60,17 @@
   }
 }
 
-/* BUSCADOR DE CLIENTES */
+
 .searchClient{
 margin: 1rem;
 }
 
-/* TABLA DE CLIENTES ENCONTRADOS */
+
 .tableClients td{
   padding: 1rem;
 }
 
-/* ESTILOS COMUNES */
+
 .searchClient,
 .quickReserveForm,
 .tableClients,
@@ -114,3 +118,235 @@ margin: 1rem;
     opacity: 1;
   }
 }
+/* Evita que los TH se peguen cuando no hay resultados */
+.tableClients table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* clave: reparte columnas */
+  
+}
+
+.tableClients th,
+.tableClients td {
+  padding: 10px 12px;  /* separación horizontal */
+  text-align: left;
+  white-space: nowrap; /* que no se rompa raro */
+  color: #4A2E24;
+}
+
+/* Opcional: si quieres que el email pueda partirse en pantallas pequeñas */
+/* EMAIL: que haga salto de línea */
+.tableClients td:nth-child(3) {
+  white-space: normal;         /* permite salto */
+  overflow-wrap: anywhere;     /* rompe si hace falta */
+  word-break: break-word;      /* fallback */
+}
+
+/* Que la lista de clientes tenga scroll si hay muchos */
+.tableClients {
+  max-height: 400px;      /* ajusta a tu modal (220-320 suele ir bien) */
+  min-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: 12px;  
+   border-radius: 10px;
+}
+
+
+.tableClients thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #6AAFA5;
+}
+
+
+
+
+/* ===== RESPONSIVE TABLE: tablet & mobile sin scroll horizontal ===== */
+
+/* Base: asegura que NO haya scroll horizontal en el modal */
+.addReserveCardModal,
+.tableClients,
+.tableClients table {
+  max-width: 100%;
+}
+
+.tableClients table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* reparte bien el espacio */
+}
+
+.tableClients th,
+.tableClients td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* En desktop: mantenemos 3 columnas y controlamos anchos */
+.tableClients th:nth-child(1),
+.tableClients td:nth-child(1) {
+  width: 36%;
+}
+
+.tableClients th:nth-child(2),
+.tableClients td:nth-child(2) {
+  width: 22%;
+}
+
+.tableClients th:nth-child(3),
+.tableClients td:nth-child(3) {
+  width: 42%;
+}
+
+/* Email: que rompa línea si es largo */
+.tableClients td:nth-child(3) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* ---------- TABLET (<= 1024px) ---------- */
+/* Ocultamos la columna Teléfono, y lo mostramos debajo del nombre */
+@media (max-width: 1024px) {
+  .addReserveGridModal {
+    width: 90%;
+  }
+
+  .addReserveCardModal {
+    width: 100%;
+    max-width: 720px;
+  }
+
+  /* Fuera columna Teléfono */
+  .tableClients th:nth-child(2),
+  .tableClients td:nth-child(2) {
+    display: none;
+  }
+
+  /* Repartimos 2 columnas */
+  .tableClients th:nth-child(1),
+  .tableClients td:nth-child(1) {
+    width: 45%;
+    white-space: normal;
+  }
+
+  .tableClients th:nth-child(3),
+  .tableClients td:nth-child(3) {
+    width: 55%;
+  }
+
+  /* Teléfono debajo del nombre (usa data-phone que ya tienes) */
+  .tableClients td:nth-child(1)::after {
+    content: attr(data-phone);
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    opacity: 0.85;
+    white-space: nowrap;
+  }
+
+  .tableClients td[colspan] {
+    white-space: normal;
+  }
+}
+
+
+@media (max-width: 520px) {
+  .addReserveGridModal {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .addReserveCardModal {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .addReserveCardModal h3 {
+    font-size: 24px;
+  }
+
+  .quickReserveForm input {
+    width: 100%;
+    margin: 10px 0;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .tableClients {
+    max-height: 55vh;
+    min-height: 260px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 10px;
+  }
+
+  /* Ocultamos cabecera Teléfono y Email */
+  .tableClients thead th:nth-child(2),
+  .tableClients thead th:nth-child(3) {
+    display: none;
+  }
+
+  /* Ocultamos columnas Teléfono y Email como columnas */
+  .tableClients tbody td:nth-child(2),
+  .tableClients tbody td:nth-child(3) {
+    display: none;
+  }
+
+  /* SOLO una columna visible */
+  .tableClients th:nth-child(1),
+  .tableClients td:nth-child(1) {
+    width: 100%;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.25;
+  }
+
+  /* Mostramos debajo: teléfono + email (desde la celda 1) */
+  .tableClients tbody tr td:nth-child(1)::after {
+  content: "📞 " attr(data-phone);
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+  /* Truco: imprimir el email debajo del teléfono usando la celda 3 como “data” visual */
+  .tableClients tbody tr {
+    position: relative;
+  }
+
+  .tableClients tbody tr td:nth-child(1) {
+    position: relative;
+    padding-bottom: 30px; /* espacio para email */
+  }
+
+  .tableClients tbody tr td:nth-child(1)::after {
+  content: attr(data-phone) "\A" attr(data-email);
+  white-space: pre-line;
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.85;
+  overflow-wrap: anywhere;
+}
+
+  /* Mensaje de "no hay clientes" a pantalla completa */
+  .tableClients td[colspan] {
+    white-space: normal;
+    padding: 18px !important;
+  }
+
+  .close {
+    margin: 10px 6px 0;
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+

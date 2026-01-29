@@ -1,88 +1,115 @@
-import{ useState } from 'react';
+import { useState } from 'react';
+import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router';
+import { profileSchema } from '../../../schemas/ProfileSchema';
+import { ZodError } from 'zod';
 import './AdminManage.css';
 import { RiUserAddLine } from 'react-icons/ri';
 import ModalCreateProfile from '../../../components/Modal/ModalCreateProfile/ModalCreateProfile';
 
+const initialProfile = {
+  type: '',
+  name: '',
+  lastname: '',
+  phone: '',
+  email: '',
+  province: '',
+  city: '',
+  password: '',
+  repeatPassword: '',
+};
+
+const initialWorkers = [
+  { id: 1, name: 'Carol Rodriguez Lopez', phone: '+34678965412', email: 'Carol.Rodriguez@gmail.com' },
+  { id: 2, name: 'Javi Sanchez Torres', phone: '+34678965413', email: 'Javi.Sanchez@gmail.com' }
+];
+const initialClients = [
+  { id: 1, name: 'Soledad Ortega', phone: '+34526859614', email: 'sole_og66@gmail.com' },
+  { id: 2, name: 'Óscar Torres', phone: '+34845254132', email: 'oscartorres@gmail.com' }
+];
+
+
 const AdminManage = () => {
   const navigate = useNavigate();
-
-  const [workers, setWorkers] = useState([
-    { id: 1, name: 'Carol Rodriguez Lopez', hireDate: '', contact: '' },
-    { id: 2, name: 'Javi Sanchez Torres', hireDate: '', contact: '' },
-    { id: 3, name: 'Ricardo Jimenez Martin', hireDate: '', contact: '' },
-  ]);
-
-  const [clients, setClients] = useState([
-    {
-      id: 1,
-      name: 'Soledad Ortega',
-      phone: '+34526859614',
-      email: 'sole_og66@gmail.com',
-    },
-    {
-      id: 2,
-      name: 'Óscar Torres',
-      phone: '+34845254132',
-      email: 'oscartorres@gmail.com',
-    },
-  ]);
-
+  const [workers, setWorkers] = useState(initialWorkers);
+  const [clients, setClients] = useState(initialClients);
   const [showCreateProfileModal, setShowCreateProfileModal] = useState(false);
+  const [profile, setProfile] = useState(initialProfile);
+  const [valErrors, setValErrors] = useState({});
+  const [fetchError, setFetchError] = useState('');
 
-  const [newProfile, setNewProfile] = useState({
-    type: '',
-    name: '',
-    lastname: '',
-    phone: '',
-    email: '',
-    province: '',
-    city: '',
-    password: '',
-    repeatPassword: '',
-  });
-
-  const handleProfileChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewProfile({ ...newProfile, [name]: value });
+    setProfile({ ...profile, [name]: value });
   };
 
-  const submitProfile = (e) => {
+  const submitProfile = async (e) => {
     e.preventDefault();
-    /* Según el tipo de perfil que crees se guardará de una forma u otra */
-    if (newProfile.type === '2') {
-      setWorkers((prev) => [
-        ...prev,
-        {
-          id: prev.length + 1,
-          name: `${newProfile.name} ${newProfile.lastname}`,
-          contact: newProfile.phone,
-        },
-      ]);
-    } else {
-      setClients((prev) => [
-        ...prev,
-        {
-          id: prev.length + 1,
-          name: `${newProfile.name} ${newProfile.lastname}`,
-          phone: newProfile.phone,
-          email: newProfile.email,
-        },
-      ]);
+    setValErrors({});
+    setFetchError('');
+    //validación del select type
+    if (!profile.type || (profile.type !== 'worker' && profile.type !== 'client')) {
+      setValErrors({ type: 'Selecciona un tipo de perfil' });
+      return;
+    }
+      console.log('submitProfile ejecutado'); // DEPURACIÓN: Ver si se ejecuta al pulsar ACEPTAR
+      console.log('Datos del perfil:', profile); // DEPURACIÓN: Ver los datos que llegan del formulario
+    try {
+      //validar los campos
+      profileSchema.parse(profile);
+      //creamos el body que guarda los datos que introducimos del modal
+      const body = {
+        name_user: profile.name,
+        last_name: profile.lastname,
+        phone: profile.phone,
+        email: profile.email,
+        province: profile.province,
+        city: profile.city,
+        password: profile.password,
+        type: profile.type === 'worker' ? 2 : 3,
+      };
+      //enviamos solicitud al backend
+      const res =await fetchData('user/register', 'POST', body);
+      //comprobamos el res
+      console.log(res);
 
-      /* Limpiar el formulario una vez rellenado */
+      //comprueba si es worker o client y lo introduce en su tabla correspondiente
+      if (profile.type === 'worker') {
+        const newWorker = {
+          id: workers.length + 1,
+          name: `${profile.name} ${profile.lastname}`,
+          phone: profile.phone,
+          email: profile.email,
+        };
+        setWorkers([...workers, newWorker]);
+      } else if (profile.type === 'client') {
+        const newClient = {
+          id: clients.length + 1,
+          name: `${profile.name} ${profile.lastname}`,
+          phone: profile.phone,
+          email: profile.email,
+        };
+        setClients([...clients, newClient]);
+      }
+      //cerramos el formulario y seteamos los campos a vacío
       setShowCreateProfileModal(false);
-      setNewProfile({
-        type: 'worker',
-        name: '',
-        lastname: '',
-        phone: '',
-        email: '',
-        province: '',
-        city: '',
-        password: '',
-        repeatPassword: '',
-      });
+      setProfile(initialProfile);
+    } catch (error) {
+      console.log('ERROR REAL:', error); // DEPURACIÓN: Mostrar el error real
+      if (error instanceof ZodError) {
+        const fieldsErrors = {};
+        error.issues.forEach((elem) => {
+          fieldsErrors[elem.path[0]] = elem.message;
+        });
+        setValErrors(fieldsErrors);
+      } else {
+        setValErrors({});
+        if (error.response?.data?.errno === 1062) {
+          setFetchError('Email repetido usa otro');
+        } else {
+          setFetchError('Upss, hay algún error chungo');
+        }
+      }
     }
   };
 
@@ -100,8 +127,8 @@ const AdminManage = () => {
             <thead>
               <tr>
                 <th>EMPLEADO</th>
-                <th>FECHA DE ALTA</th>
-                <th>CONTACTO</th>
+                <th>TELÉFONO</th>
+                <th>E-MAIL</th>
                 <th>ADMINISTRAR</th>
               </tr>
             </thead>
@@ -109,8 +136,8 @@ const AdminManage = () => {
               {workers.map((w) => (
                 <tr key={w.id}>
                   <td className="agr-bold">{w.name}</td>
-                  <td>{w.hireDate}</td>
-                  <td>{w.contact}</td>
+                  <td>{w.phone}</td>
+                  <td>{w.email}</td>
                   <td>
                     <div className="agr-actions">
                       <button className="agr-pill" type="button">
@@ -184,9 +211,11 @@ const AdminManage = () => {
       <ModalCreateProfile
         show={showCreateProfileModal}
         onClose={() => setShowCreateProfileModal(false)}
-        newProfile={newProfile}
-        handleProfileChange={handleProfileChange}
+        newProfile={profile}
+        handleProfileChange={handleChange}
         submitProfile={submitProfile}
+        valErrors={valErrors}
+        fetchError={fetchError}
       />
 
     </div>

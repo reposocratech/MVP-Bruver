@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router";
-import "./editpet.css";
-import { fetchData } from "../../../../helpers/axiosHelper";
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
+import { fetchData } from "../../../../helpers/axiosHelper";
+import "./editpet.css";
 
 const EditPet = () => {
   const navigate = useNavigate();
@@ -10,69 +11,57 @@ const EditPet = () => {
 
   const { token, pets, setPets } = useContext(AuthContext);
 
-  // 1) estado del formulario con campos reales de Base de datos
-  const [pet, setPet] = useState({
-    pet_id: null,
-    name_pet: "",
-    description: "",
-    specie: 1,
-    size_category: 1,
-    hair: "", // ✅ nuevo
-    medical_history: "", // ✅ nuevo
-    picture_pet: null,
-  });
+  
+  const [editPet, setEditPet] = useState(null);
 
-  const [loading, setLoading] = useState(false);
-
-  // Mapeos para mostrar texto “real”
-  const specieText = (value) => (Number(value) === 1 ? "Perro" : "Gato");
-  const sizeText = (value) => {
-    const map = { 1: "Toy", 2: "Pequeño", 3: "Mediano", 4: "Grande" };
-    return map[Number(value)] || "Sin definir";
-  };
-
-  // 2) al entrar en la página, pedimos la mascota a la BD por id
   useEffect(() => {
     const getPet = async () => {
       try {
         const res = await fetchData(`pet/${petId}`, "GET", null, token);
-        setPet(res.data.pet);
+
+        
+        const petFromApi = res?.data?.pet ?? res?.data;
+
+        setEditPet(petFromApi || null);
       } catch (error) {
         console.log(error);
+        setEditPet(null);
       }
     };
 
     if (token) getPet();
   }, [token, petId]);
 
-  // 3) cambios en inputs
+ 
+  if (!editPet) {
+    return (
+      <div className="editPetPage">
+        <h2 className="pageTitle">Cargando mascota...</h2>
+      </div>
+    );
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPet((prev) => ({ ...prev, [name]: value }));
+    setEditPet({ ...editPet, [name]: value });
   };
 
-  // 4) volver al perfil
-  const handleBack = () => {
-    navigate("/profile");
+  const specieText = (value) => (Number(value) === 1 ? "Perro" : "Gato");
+
+  const sizeText = (value) => {
+    const map = { 1: "Toy", 2: "Pequeño", 3: "Mediano", 4: "Grande" };
+    return map[Number(value)] || "Sin definir";
   };
 
-  // 5) confirmar -> PUT a la BD + actualizar contexto + volver a /profile
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!token || loading) return;
-
+  const onSubmit = async () => {
     try {
-      setLoading(true);
-
       const body = {
-        name_pet: pet.name_pet,
-        description: pet.description,
-        specie: Number(pet.specie), // no editable, pero se manda igual
-        size_category: Number(pet.size_category), // editable
-
-        // ✅ nuevos
-        hair: pet.hair,
-        medical_history: pet.medical_history,
+        name_pet: editPet.name_pet,
+        description: editPet.description,
+        specie: Number(editPet.specie),
+        size_category: Number(editPet.size_category),
+        hair: editPet.hair,
+        medical_history: editPet.medical_history,
       };
 
       const res = await fetchData(`pet/${petId}`, "PUT", body, token);
@@ -84,8 +73,6 @@ const EditPet = () => {
       navigate("/profile");
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -97,14 +84,17 @@ const EditPet = () => {
       <section className="petInfoBox">
         <div className="petInfoLeft">
           <h3>Información</h3>
-          <div className="infoRow">{pet.name_pet}</div>
-          <div className="infoRow">Especie: {specieText(pet.specie)}</div>
-          <div className="infoRow">Tamaño: {sizeText(pet.size_category)}</div>
+          <div className="infoRow">{editPet.name_pet || ""}</div>
+          <div className="infoRow">Especie: {specieText(editPet.specie)}</div>
+          <div className="infoRow">Tamaño: {sizeText(editPet.size_category)}</div>
         </div>
 
         <div className="petInfoRight">
-          {pet.picture_pet ? (
-            <img src={`http://localhost:4000/images/pets/${pet.picture_pet}`} alt={pet.name_pet} />
+          {editPet.picture_pet ? (
+            <img
+              src={`http://localhost:4000/images/pets/${editPet.picture_pet}`}
+              alt={editPet.name_pet}
+            />
           ) : (
             <div className="noPhoto">SIN FOTO</div>
           )}
@@ -114,54 +104,86 @@ const EditPet = () => {
       {/* FORMULARIO */}
       <h3 className="editTitle">Edita tu mascota</h3>
 
-      <form className="editPetForm" onSubmit={handleSubmit}>
-        <label>Nombre</label>
-        <input name="name_pet" value={pet.name_pet} onChange={handleChange} />
+      <Container>
+        <Row className="d-flex justify-content-center pt-4">
+          <Col xs={6}>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name_pet"
+                  value={editPet.name_pet || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <label>Descripción</label>
-        <input name="description" value={pet.description || ""} onChange={handleChange} />
+              <Form.Group className="mb-3">
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  value={editPet.description || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <label>Especie</label>
-        <input value={specieText(pet.specie)} disabled />
-        
-        <label>Pelo</label>
-        <input name="hair" value={pet.hair || ""} onChange={handleChange} />
+              <Form.Group className="mb-3">
+                <Form.Label>Especie</Form.Label>
+                <Form.Control type="text" value={specieText(editPet.specie)} disabled />
+              </Form.Group>
 
-        
-        <label>Historial médico</label>
-        <input
-          name="medical_history"
-          value={pet.medical_history || ""}
-          onChange={handleChange}
-        />
+              <Form.Group className="mb-3">
+                <Form.Label>Categoría (peso)</Form.Label>
+                <Form.Select
+                  name="size_category"
+                  value={editPet.size_category}
+                  onChange={handleChange}
+                >
+                  <option value={1}>Toy</option>
+                  <option value={2}>Pequeño</option>
+                  <option value={3}>Mediano</option>
+                  <option value={4}>Grande</option>
+                </Form.Select>
+              </Form.Group>
 
-        <label>Categoría (peso)</label>
-        <select name="size_category" value={pet.size_category} onChange={handleChange}>
-          <option value={1}>Toy</option>
-          <option value={2}>Pequeño</option>
-          <option value={3}>Mediano</option>
-          <option value={4}>Grande</option>
-        </select>
+              <Form.Group className="mb-3">
+                <Form.Label>Pelo</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="hair"
+                  value={editPet.hair || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <label>Foto</label>
-        <div className="photoSection">
-          <button type="button" className="changePhotoBtn">
-            Cambiar foto
-          </button>
-        </div>
+              <Form.Group className="mb-3">
+                <Form.Label>Historial médico</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  name="medical_history"
+                  value={editPet.medical_history || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <div className="formActions">
-          <button type="button" className="backBtn" onClick={handleBack} disabled={loading}>
-            ATRÁS
-          </button>
+              <div className="formActions">
+                <button type="button" className="backBtn" onClick={() => navigate("/profile")}>
+                  ATRÁS
+                </button>
 
-          <button type="submit" className="confirmBtn" disabled={loading}>
-            {loading ? "GUARDANDO..." : "CONFIRMAR"}
-          </button>
-        </div>
-      </form>
+                <button type="button" className="confirmBtn" onClick={onSubmit}>
+                  CONFIRMAR
+                </button>
+              </div>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 };
 
 export default EditPet;
+

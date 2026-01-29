@@ -54,7 +54,7 @@ class PetDal {
     }
   };
 
-// 4) Traer 1 mascota por id (solo si es del usuario)
+// 4) Traer 1 mascota por id 
 getOne = async (petId, userId) => {
   try {
     const sql = `
@@ -69,7 +69,7 @@ getOne = async (petId, userId) => {
   }
 };
 
-// 5) Editar mascota (solo si es del usuario)
+// 5) Editar mascota 
 edit = async ({ petId, userId, name_pet, description, specie, size_category, hair, medical_history }) => {
   try {
     const sql = `
