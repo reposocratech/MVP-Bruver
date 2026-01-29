@@ -183,3 +183,23 @@
 .mapInfo p {
   margin: 4px 0;
 }
+
+/* Botón volver Contact */
+.contactBackBtn {
+  border: none;
+  color: #fff;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  background: #e6d3c2;
+  border-radius: 18px;
+  margin-top: 1.5rem;
+}
+
+.contactBackBtn:hover {
+  background: #5a9f96;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}

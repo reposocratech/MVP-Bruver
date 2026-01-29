@@ -13,6 +13,7 @@ import appointmentRouter from "./modules/appointment/appointment.routes.js";
 import petRouter from "./modules/pet/pet.routes.js";
 import userRouter from './modules/user/user.routes.js';
 import adminRouter from "./modules/admin/admin.routes.js"
+import availabilityRouter from './modules/availability/availability.routes.js'
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,7 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/user', userRouter);
 app.use("/pet", petRouter);
 app.use("/appointment", appointmentRouter);
-app.use("/admin", adminRouter)
+app.use("/admin", adminRouter);
+app.use("/availability", availabilityRouter);
 
 
 // catch 404 and forward to error handler

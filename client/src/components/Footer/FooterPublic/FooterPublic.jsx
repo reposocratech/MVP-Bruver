@@ -1,5 +1,5 @@
-import "./footer.css";
-import logoFooter from "../../assets/images/logo-footer.png"
+import "../footer.css";
+import logoFooter from "../../../assets/images/logo-footer.png"
 import {
   FaMapMarkerAlt,
   FaPhoneAlt,
@@ -8,8 +8,10 @@ import {
   FaWhatsapp,
   FaEnvelope,
 } from "react-icons/fa";
+import { useNavigate } from "react-router";
  
 export const FooterPublic = () => {
+  const navigate = useNavigate()
   return (
     <footer className="footer">
       <div className="footer__content">
@@ -39,7 +41,7 @@ export const FooterPublic = () => {
  
         <div className="footer__actions">
          
-          <button className="footer__button">
+          <button className="footer__button" onClick={()=>navigate('/login')}>
             Reservar una cita
             <span className="footer__arrow">➜</span>
           </button>
