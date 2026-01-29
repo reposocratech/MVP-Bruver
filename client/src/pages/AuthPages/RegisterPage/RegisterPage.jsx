@@ -23,7 +23,6 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
-
   const [register, setRegister] = useState(initialValue);
   const [valErrors, setValErrors] = useState({});
   const [fetchError, setFetchError] = useState("");
@@ -38,8 +37,6 @@ const RegisterPage = () => {
     try {
       registerSchema.parse(register);
       await fetchData("user/register", "POST", register);
-
-      // ✅ En vez de navegar, abrimos modal como en el código anterior
       setOpenModal(true);
     } catch (error) {
       if (error instanceof ZodError) {
@@ -72,6 +69,7 @@ const RegisterPage = () => {
               name="name_user"
               value={register.name_user}
               onChange={handleChange}
+              placeholder="Introduce tu nombre"
             />
             {valErrors.name_user && (
               <p className="text-danger">{valErrors.name_user}</p>
@@ -84,6 +82,7 @@ const RegisterPage = () => {
               name="last_name"
               value={register.last_name}
               onChange={handleChange}
+              placeholder="Introduce tus apellidos"
             />
           </Form.Group>
 
@@ -93,6 +92,7 @@ const RegisterPage = () => {
               name="phone"
               value={register.phone}
               onChange={handleChange}
+              placeholder="Introduce tu teléfono"
             />
             {valErrors.phone && <p className="text-danger">{valErrors.phone}</p>}
           </Form.Group>
@@ -103,6 +103,7 @@ const RegisterPage = () => {
               name="email"
               value={register.email}
               onChange={handleChange}
+              placeholder="Introduce tu e-mail"
             />
             {valErrors.email && <p className="text-danger">{valErrors.email}</p>}
           </Form.Group>
@@ -113,6 +114,7 @@ const RegisterPage = () => {
               name="address"
               value={register.address}
               onChange={handleChange}
+              placeholder="Introduce tu dirección"
             />
           </Form.Group>
 
@@ -122,6 +124,7 @@ const RegisterPage = () => {
               name="province"
               value={register.province}
               onChange={handleChange}
+              placeholder="Introduce tu provincia"
             />
           </Form.Group>
 
@@ -131,6 +134,7 @@ const RegisterPage = () => {
               name="city"
               value={register.city}
               onChange={handleChange}
+              placeholder="Introduce tu ciudad"
             />
           </Form.Group>
 
@@ -141,6 +145,7 @@ const RegisterPage = () => {
               name="password"
               value={register.password}
               onChange={handleChange}
+              placeholder="Introduce tu contraseña"
             />
             {valErrors.password && (
               <p className="text-danger">{valErrors.password}</p>
@@ -154,6 +159,7 @@ const RegisterPage = () => {
               name="rep_password"
               value={register.rep_password}
               onChange={handleChange}
+              placeholder="Repite tu contraseña"
             />
             {valErrors.rep_password && (
               <p className="text-danger">{valErrors.rep_password}</p>
@@ -178,12 +184,11 @@ const RegisterPage = () => {
           <p className="register-phrase">Patitas limpias, corazones felices</p>
         </Form>
 
-        {/* ✅ Modal (abre tras registro OK) */}
         {openModal && (
           <ModalVerifyEmail
             onClose={() => {
               setOpenModal(false);
-              navigate("/login"); // si quieres que al cerrar vaya al login
+              navigate("/login");
             }}
           />
         )}

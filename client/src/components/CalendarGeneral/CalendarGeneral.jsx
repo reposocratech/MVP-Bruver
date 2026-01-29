@@ -14,20 +14,13 @@ export const CalendarGeneral = ({ events,
   onViewChange,
   onDateChange }) => {
 
-  //controlar las horas diarias ene l calendario
+  //controlar las horas diarias en el calendario
   const minTime = new Date()
   minTime.setHours(9, 30, 0)
 
   const maxTime = new Date()
   maxTime.setHours(20, 15, 0)
 
-  const components = {
-    event: ({ event }) => (
-      <div style={{ backgroundColor: 'green' }}>
-        {event.title}
-      </div>
-    )
-  }
 
   return (
     <div style={{ height: '95vh', width: '100%' }}>
@@ -38,15 +31,16 @@ export const CalendarGeneral = ({ events,
         date={date}
         onView={onViewChange}
         onNavigate={onDateChange}
-        views={['day', 'week', 'month']}
+        views={['day']}
         min={minTime}
         max={maxTime}
         step={15}
         timeslots={1}
-        components={components}
         resources={workers}
         resourceIdAccessor="id"
         resourceTitleAccessor="title"
+        popup
+        selectable={false}
       />
     </div>
   )
