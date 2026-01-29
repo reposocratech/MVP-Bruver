@@ -1,34 +1,41 @@
 import appointmentDal from "./appointment.dal.js";
 
 class AppointmentController {
+  // 1) Citas del usuario logueado (cliente)
   getMine = async (req, res) => {
     try {
-      let userId = req.user_id;
+      // 
+      const userId = req.user_id;
 
-      let result = await appointmentDal.getMine(userId);
+      const appointments = await appointmentDal.getMine(userId);
 
-      res.status(200).json({
-        ok: true,
-        appointments: result,
-      });
-    } catch (error) {
+      // si funciona perfe
+      res.status(200).json({ appointments });
+    } 
+    catch (error) 
+    {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).json({ message: "Error al cargar tus citas" });
     }
   };
 
-  getGeneralAppoiment = async(req, res)=>{
+  // 2) Citas generales (ej: admin/empleados)
+  getGeneralAppoiment = async (req, res) => {
     try {
-      let result = await appointmentDal.getGenaralAppoiment()
+      const result = await appointmentDal.getGenaralAppoiment();
+
       res.status(200).json({
-        message:"datos recibidos",
-        result
-      })
-    } catch (error) {
+        message: "Citas generales cargadas",
+        appointments: result,
+      }
+    );
+    } 
+    catch (error)
+    {
       console.log(error);
-      res.status(500).json(error)
+      res.status(500).json({ message: "Error al cargar citas generales" });
     }
-  }
+  };
 }
 
 export default new AppointmentController();

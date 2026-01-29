@@ -64,7 +64,7 @@ const RegisterPage = () => {
 
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Nombre</Form.Label>
+            <Form.Label>Nombre*</Form.Label>
             <Form.Control
               name="name_user"
               value={register.name_user}
@@ -87,7 +87,7 @@ const RegisterPage = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Teléfono</Form.Label>
+            <Form.Label>Teléfono*</Form.Label>
             <Form.Control
               name="phone"
               value={register.phone}
@@ -98,7 +98,7 @@ const RegisterPage = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Email*</Form.Label>
             <Form.Control
               name="email"
               value={register.email}
@@ -139,7 +139,7 @@ const RegisterPage = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
+            <Form.Label>Contraseña*</Form.Label>
             <Form.Control
               type="password"
               name="password"
@@ -153,7 +153,7 @@ const RegisterPage = () => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Repetir contraseña</Form.Label>
+            <Form.Label>Repetir contraseña*</Form.Label>
             <Form.Control
               type="password"
               name="rep_password"
@@ -195,7 +195,7 @@ const RegisterPage = () => {
       </div>
 
       <img
-        src="/img/home/dog-corner.png"
+        src="/img/home/dog1.png"
         alt="Perrito decorativo"
         className="dogCorner"
       />

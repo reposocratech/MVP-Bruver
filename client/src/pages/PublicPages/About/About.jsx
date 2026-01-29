@@ -1,13 +1,15 @@
 import "./about.css";
+import { useNavigate } from "react-router";
 
 const About = () => {
+  const navigate = useNavigate()
   return (
     <div className="aboutPage">
 
       <section className="aboutTop">
         <div className="aboutText">
           <h2 className="aboutTitle">Sobre Nosotras</h2>
-          <h3>Donde la vocación se encuentra con el cariño</h3>
+          <h4>Donde la vocación se encuentra con el cariño</h4>
           <p>
             Para nosotras, BRÜVER es la respuesta a un sentimiento que nos acompaña desde siempre.
           </p>
@@ -45,6 +47,15 @@ const About = () => {
           </p>
         </div>
       </section>
+         <div className="aboutActions">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="aboutBackBtn"
+        >
+          VOLVER
+        </button>
+      </div>
     </div>
   );
 };

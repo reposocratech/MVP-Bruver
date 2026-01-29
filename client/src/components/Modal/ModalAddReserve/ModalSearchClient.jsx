@@ -1,54 +1,85 @@
-import { Button, Form, Table } from 'react-bootstrap';
-import './ModalAddReserve.css';
+import { useState } from "react";
+import { Button } from "react-bootstrap";
+import "./ModalAddReserve.css";
+import { fetchData } from "../../../helpers/axiosHelper";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 
-const ModalSearchClient = ({ toBack }) => {
+const ModalSearchClient = ({ toBack, onClose }) => {
+  const [search, setSearch] = useState("");
+  const [clientsFiltered, setClientsFiltered] = useState([]);
+  const { token } = useContext(AuthContext);
+
+  const handleChange = async (e) => {
+    const value = e.target.value;
+    setSearch(value);
+
+    if (value.trim() === "") {
+      setClientsFiltered([]);
+      return;
+    }
+
+    try {
+
+      const res = await fetchData(`worker/clients?search=${value}`, "GET", null, token);
+      setClientsFiltered(res.data.result);
+    } catch (error) {
+      console.log(error);
+      setClientsFiltered([]);
+    }
+  };
 
   return (
     <section className="addReserveModal">
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
-          <h3>Busca al cliente</h3>
-         <Form className="d-flex searchClient">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
+          <h3>Buscar cliente</h3>
+
+          <form className="quickReserveForm" onSubmit={(e) => e.preventDefault()}>
+            <input
+              name="search"
+              value={search}
+              onChange={handleChange}
+              placeholder="Nombre, apellido, num o email"
+              autoComplete="off"
             />
-            <Button className='close'>Buscar cliente</Button>
-          </Form>
-            <Table className='tableClients' striped bordered hover>
+          </form>
+
+          <div className="tableClients">
+            <table>
               <thead>
                 <tr>
-                  <th></th>
-                  <th>Nombre</th>
-                  <th>E-mail</th>
-                  <th>Teléfono</th>
+                  <th>CLIENTE</th>
+                  <th>TELÉFONO</th>
+                  <th>E-MAIL</th>
                 </tr>
               </thead>
+
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Susana Ruíz</td>
-                  <td>susir10@gmail.com</td>
-                  <td>352 263 415</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Susana Pérez</td>
-                  <td>susanpe3@gmail.com</td>
-                  <td>663 215 441</td>
-                </tr>
+                {clientsFiltered.length === 0 ? (
+                  <tr>
+                    <td colSpan="3" style={{ textAlign: "center", padding: "12px" }}>
+                      {search.trim() ? "No hay clientes con ese nombre" : ""}
+                    </td>
+                  </tr>
+                ) : (
+                  clientsFiltered.map((c) => (
+                    <tr key={c.user_id}>
+                      <td data-phone={c.phone} data-email={c.email}>
+                        {c.name_user} {c.last_name}
+                      </td>
+                      <td>{c.phone}</td>
+                      <td>{c.email}</td>
+                    </tr>
+                  ))
+                )}
               </tbody>
-            </Table>
- 
+            </table>
+          </div>
+
           <div>
-            <Button className="close">
-              Aceptar
-            </Button>
-            <Button className="close" onClick={toBack}>
-              Atrás
-            </Button>
+            <Button className="close" onClick={toBack}>Atrás</Button>
+            <Button className="close" onClick={onClose}>Cerrar</Button>
           </div>
         </div>
       </div>
@@ -57,3 +88,4 @@ const ModalSearchClient = ({ toBack }) => {
 };
 
 export default ModalSearchClient;
+

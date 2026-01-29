@@ -1,76 +1,110 @@
 import petDal from "./pet.dal.js";
 
 class PetController {
-  // 1) devuelve las mascotas del usuario logueado
   getMine = async (req, res) => {
-    
     const { user_id } = req;
 
     try {
-      // 2) pedimos al DAL las mascotas del usuario
-      const result = await petDal.getMine(user_id);
+
+      let result = await petDal.getMine(user_id);
       res.status(200).json({ pets: result });
 
-    } 
-    catch (error) 
-    {
-      // 3) si falla, devolvemos error 500
+    } catch (error) {
       console.log(error);
       res.status(500).json(error);
     }
   };
 
-  // 4 crea una mascota asociada al usuario logueado
   create = async (req, res) => {
+    try {
+      const { user_id } = req;
+      const { name_pet, description, specie, size_category, hair, medical_history } = req.body;
 
+      if (!name_pet || !specie || !size_category) {
+        res.status(400).json({ message: "Faltan campos obligatorios" });
+
+      } else {
+        let data = {
+          name_pet,
+          description,
+          specie,
+          size_category,
+          hair,
+          medical_history,
+          user_id,
+        };
+
+        let result = await petDal.create(data);
+        res.status(201).json({ message: "creación ok", result });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  };
+
+  /* borrado */
+  remove = async (req, res) => {
+    const { petId } = req.params;
     const { user_id } = req;
 
     try {
-      // 5) sacamos datos del body
-      const { name_pet, description, specie, size_category } = req.body;
-
-      // 5.1) validación mínima
-      if (!name_pet || !specie || !size_category) {
-        return res.status(400).json({ message: "Faltan campos obligatorios" });
-      }
-
-      // 5.2) data + token
-      const data = {
-        name_pet: name_pet.trim(),
-        description: description?.trim() || null,
-        specie,
-        size_category,
-        user_id,
-      };
-
-      // 6 ) insert a la bd
-      const result = await petDal.create(data);
-
-      res.status(201).json({ message: "creación ok", result });
+      await petDal.softDelete(petId, user_id);
+      res.status(204).json({ message: "borrado ok" });
 
     } catch (error) {
-      // 7 si falla algo mostramos el error
       console.log(error);
       res.status(500).json(error);
     }
   };
 
-  // 8 realizamos el borrado logico
-  remove = async (req, res) => {
-    
-    const { user_id } = req;
+  getOne = async (req, res) => {
     const { petId } = req.params;
+    const { user_id } = req;
 
     try {
-      //9 marcamos pet_is_deleted = 1  si es uno la mascota a sido eliminada
-      const result = await petDal.softDelete(petId, user_id);
+      let result = await petDal.getOne(petId, user_id);
 
-      res.status(200).json({ message: "borrado ok", result });
+      if (result.length === 0) {
+        res.status(404).json({ message: "Mascota no encontrada" });
+      } else {
+        res.status(200).json(result[0]);
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  };
 
-    } 
-    catch (error)
-    {
-      // 10 si falla algo mostramos el error
+  /* edit */
+  edit = async (req, res) => {
+    const { petId } = req.params;
+    const { user_id } = req;
+
+    try {
+      const { name_pet, description, specie, size_category, hair, medical_history } = req.body;
+
+      if (!name_pet || !specie || !size_category) {
+        res.status(400).json({ message: "Faltan campos obligatorios" });
+
+      } else {
+        let data = {
+          petId,
+          userId: user_id,
+          name_pet,
+          description,
+          specie,
+          size_category,
+          hair,
+          medical_history,
+        };
+
+        await petDal.edit(data);
+
+        let updated = await petDal.getOne(petId, user_id);
+        res.status(200).json({ message: "edición ok", pet: updated[0] });
+      }
+    } catch (error) {
       console.log(error);
       res.status(500).json(error);
     }

@@ -3,14 +3,16 @@ import { AuthContext } from "./AuthContext";
 import { fetchData } from "../../helpers/axiosHelper";
 
 export const AuthContextProvider = ({ children }) => {
+
+
   // Estado global del usuario logueado
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
 
   // Token JWT (sirve para autenticar peticiones al backend)
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState();
 
   // Mascotas del usuario logueado
-  const [pets, setPets] = useState(null);
+  const [pets, setPets] = useState();
 
   useEffect(() => {
     // 1) Al arrancar la app (y tras F5), miramos si hay token guardado
@@ -40,10 +42,13 @@ export const AuthContextProvider = ({ children }) => {
   []); 
 
   // para el cierre de sesión vacía estados y borra token guardado
+  //Setear el usuario con el InitialValue 
+  //Setear el token
+  //Borrar el token de localStorage
   const logout = () => {
-    setUser(null);
-    setToken(null);
-    setPets(null);
+    setUser();
+    setToken();
+    setPets();
     localStorage.removeItem("token");
   };
 
