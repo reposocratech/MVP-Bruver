@@ -1,6 +1,8 @@
 import "./about.css";
+import { useNavigate } from "react-router";
 
 const About = () => {
+  const navigate = useNavigate()
   return (
     <div className="aboutPage">
 
@@ -45,6 +47,15 @@ const About = () => {
           </p>
         </div>
       </section>
+         <div className="aboutActions">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="aboutBackBtn"
+        >
+          VOLVER
+        </button>
+      </div>
     </div>
   );
 };
