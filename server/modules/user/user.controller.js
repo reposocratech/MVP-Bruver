@@ -144,16 +144,14 @@ class UserController {
     const { name_user, last_name, phone, province, city, address } = req.body;
 
     try {
+
+      if(req.file){
+        let values=[name_user, last_name, phone, province, city, address, req.file.filename, user_id];
+      }
+
       // 5) Actualizamos en BD
-      await userDal.updateProfile([
-        name_user,
-        last_name || null,
-        phone || null,
-        province || null,
-        city || null,
-        address || null,
-        user_id,
-      ]);
+      await userDal.updateProfile(values);
+
 
       //Volvemos a pedir el usuario actualizado
       const result = await userDal.userByToken(user_id);
