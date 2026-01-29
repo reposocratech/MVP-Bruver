@@ -1,12 +1,15 @@
 import { Modal, Form } from 'react-bootstrap';
 import './ModalCreateProfile.css';
 
+
 const ModalCreateProfile = ({
   show,
   onClose,
   newProfile,
   handleProfileChange,
   submitProfile,
+  valErrors,
+  fetchError,
 }) => {
   return (
     <>
@@ -15,7 +18,7 @@ const ModalCreateProfile = ({
           <div className='createProfileGridModal'>
         <Modal
           show={show}
-          onHide={onclose}
+          onHide={onClose}
           centered
           dialogClassName="nc-modal-dialog"
           contentClassName="nc-modal-content"
@@ -23,6 +26,8 @@ const ModalCreateProfile = ({
         >
           <Modal.Body className="createProfileCardModal">
             <h3 className="nc-title">Nuevo perfil</h3>
+
+            {fetchError && <div className="error-msg">{fetchError}</div>}
 
             <Form className="nc-form formNewProfile" onSubmit={submitProfile}>
               <Form.Group className="nc-group">
@@ -32,22 +37,23 @@ const ModalCreateProfile = ({
                   value={newProfile.type}
                   onChange={handleProfileChange}
                 >
-                  <option value="Defect" disabled>
-                    Elige
-                  </option>
+                  <option value="">Elige</option>
                   <option value="worker">Trabajador</option>
                   <option value="client">Cliente</option>
                 </Form.Select>
+                {valErrors?.type && <div className="error-msg">{valErrors.type}</div>}
               </Form.Group>
 
+
               <Form.Group className="nc-group">
-                <Form.Label>Nombre</Form.Label>
+                <Form.Label>Nombre*</Form.Label>
                 <Form.Control
                   name="name"
                   value={newProfile.name}
                   onChange={handleProfileChange}
                   type="text"
                 />
+                {valErrors?.name && <div className="error-msg">{valErrors.name}</div>}
               </Form.Group>
 
               <Form.Group className="nc-group">
@@ -70,14 +76,28 @@ const ModalCreateProfile = ({
                 />
               </Form.Group>
 
+
               <Form.Group className="nc-group">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>Email*</Form.Label>
                 <Form.Control
                   name="email"
                   value={newProfile.email}
                   onChange={handleProfileChange}
                   type="email"
                 />
+                {valErrors?.email && <div className="error-msg">{valErrors.email}</div>}
+              </Form.Group>
+
+
+              <Form.Group className="nc-group">
+                <Form.Label>Contraseña</Form.Label>
+                <Form.Control
+                  name="password"
+                  value={newProfile.password}
+                  onChange={handleProfileChange}
+                  type="password"
+                />
+                {valErrors?.password && <div className="error-msg">{valErrors.password}</div>}
               </Form.Group>
 
               <Form.Group className="nc-group">
@@ -100,7 +120,7 @@ const ModalCreateProfile = ({
                 />
               </Form.Group>
 
-              <Form.Group className="nc-group">
+{/*               <Form.Group className="nc-group">
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control
                   name="password"
@@ -118,7 +138,8 @@ const ModalCreateProfile = ({
                   onChange={handleProfileChange}
                   type="password"
                 />
-              </Form.Group>
+              </Form.Group> */}
+
 
               <div className="nc-buttons">
                 <button className="close" type="submit">
