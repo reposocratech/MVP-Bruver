@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import "./addpet.css";
 import { useNavigate } from "react-router";
+import "./addpet.css";
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../../helpers/axiosHelper";
 
@@ -9,75 +9,74 @@ const AddPet = () => {
   const navigate = useNavigate();
   const { token } = useContext(AuthContext);
 
-  const [name, setName] = useState("");
-  const [species, setSpecies] = useState(""); // "perro" | "gato"
-  const [category, setCategory] = useState(""); // "toy" | "pequeno" | "mediano" | "grande"
-  const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(false);
+  
+  const [newPet, setNewPet] = useState({
+    name_pet: "",
+    specie: "", 
+    size_category: "", 
+    description: "",
+    hair: "",
+    medical_history: "",
+  });
 
   const categories = [
-    { id: "toy", title: "Toy", desc: "Menos de 4 Kg" },
-    { id: "pequeno", title: "Pequeño", desc: "Entre 5 y 14 Kg" },
-    { id: "mediano", title: "Mediano", desc: "Entre 15 y 25 Kg" },
-    { id: "grande", title: "Grande", desc: "Más de 25 Kg" },
+    { id: 1, title: "Toy", desc: "Menos de 4 Kg" },
+    { id: 2, title: "Pequeño", desc: "Entre 5 y 14 Kg" },
+    { id: 3, title: "Mediano", desc: "Entre 15 y 25 Kg" },
+    { id: 4, title: "Grande", desc: "Más de 25 Kg" },
   ];
 
-  const isFormValid = name.trim() !== "" && species !== "" && category !== "";
-
-  const specieMap = { perro: 1, gato: 2 };
-  const sizeCategoryMap = { toy: 1, pequeno: 2, mediano: 3, grande: 4 };
-
-  const handleConfirm = async (e) => {
-    e.preventDefault();
-    if (!isFormValid || loading) return;
-
-    if (!token) {
-      alert("No hay sesión activa. Vuelve a iniciar sesión.");
-      return;
-    }
-
-    const body = {
-      name_pet: name.trim(),
-      description: notes.trim() || null,
-      specie: specieMap[species],
-      size_category: sizeCategoryMap[category],
-    };
-
-    try {
-      setLoading(true);
-
-      // VITE_SERVER_URL = http://localhost:4000/  => sin "/" al inicio
-      await fetchData("pet", "POST", body, token);
-
-      // ✅ Sin alert, navegación directa al perfil
-      navigate("/profile");
-    } catch (err) {
-      console.log("Error creando mascota:", err);
-      alert(err?.response?.data?.message || "Error al crear la mascota ❌");
-    } finally {
-      setLoading(false);
-    }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewPet({ ...newPet, [name]: value });
   };
 
-  const handleCancel = (e) => {
-    e.preventDefault();
-    navigate("/profile");
+  const selectCategory = (id) => {
+    setNewPet({ ...newPet, size_category: id });
+  };
+
+  const onSubmit = async () => {
+    try {
+
+      if (!token) return alert("No hay sesión activa. Vuelve a iniciar sesión.");
+
+      
+      if (!newPet.name_pet.trim() || !newPet.specie || !newPet.size_category) {
+        return alert("Faltan campos obligatorios (nombre, especie y categoría).");
+      }
+
+      const body = {
+        name_pet: newPet.name_pet.trim(),
+        description: newPet.description.trim() || null,
+        specie: Number(newPet.specie),
+        size_category: Number(newPet.size_category),
+        hair: newPet.hair.trim() || null,
+        medical_history: newPet.medical_history.trim() || null,
+      };
+
+      await fetchData("pet", "POST", body, token);
+
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+      alert(error?.response?.data?.message || "Error al crear la mascota ❌");
+    }
   };
 
   return (
     <div className="addPetPage">
       <h1 className="addPetTitle">AÑADIR MASCOTA</h1>
 
-      <Form className="addPetForm" onSubmit={handleConfirm}>
+      <Form className="addPetForm">
         <Form.Group className="addPetGroup">
           <Form.Label className="addPetLabel">Nombre</Form.Label>
           <Form.Control
             className="addPetInput"
             type="text"
             placeholder="Nombre de tu mascota"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            disabled={loading}
+            name="name_pet"
+            value={newPet.name_pet}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -85,13 +84,13 @@ const AddPet = () => {
           <Form.Label className="addPetLabel">Especie</Form.Label>
           <Form.Select
             className="addPetInput"
-            value={species}
-            onChange={(e) => setSpecies(e.target.value)}
-            disabled={loading}
+            name="specie"
+            value={newPet.specie}
+            onChange={handleChange}
           >
             <option value="">Selecciona una opción</option>
-            <option value="perro">Perro</option>
-            <option value="gato">Gato</option>
+            <option value={1}>Perro</option>
+            <option value={2}>Gato</option>
           </Form.Select>
         </Form.Group>
 
@@ -100,16 +99,15 @@ const AddPet = () => {
 
           <div className="categoryGrid">
             {categories.map((c) => {
-              const selected = category === c.id;
+              const selected = Number(newPet.size_category) === c.id;
 
               return (
                 <button
                   type="button"
                   key={c.id}
                   className={`categoryCard ${selected ? "selected" : ""}`}
-                  onClick={() => setCategory(c.id)}
+                  onClick={() => selectCategory(c.id)}
                   aria-pressed={selected}
-                  disabled={loading}
                 >
                   <div className="categoryText">
                     <h4>{c.title}</h4>
@@ -124,6 +122,31 @@ const AddPet = () => {
         </div>
 
         <Form.Group className="addPetGroup">
+          <Form.Label className="addPetLabel">Pelo</Form.Label>
+          <Form.Control
+            className="addPetInput"
+            type="text"
+            placeholder="Ej: corto, largo, rizado..."
+            name="hair"
+            value={newPet.hair}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="addPetGroup">
+          <Form.Label className="addPetLabel">Historial médico</Form.Label>
+          <Form.Control
+            className="addPetTextarea"
+            as="textarea"
+            rows={4}
+            placeholder="Vacunas, alergias, enfermedades, medicación..."
+            name="medical_history"
+            value={newPet.medical_history}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group className="addPetGroup">
           <Form.Label className="addPetLabel">
             Observaciones (Alergias, cuidados especiales, ...)
           </Form.Label>
@@ -132,23 +155,18 @@ const AddPet = () => {
             as="textarea"
             rows={5}
             placeholder="Escribe aquí cualquier detalle importante..."
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            disabled={loading}
+            name="description"
+            value={newPet.description}
+            onChange={handleChange}
           />
         </Form.Group>
 
         <div className="addPetButtons">
-          <Button type="submit" className="btnConfirm" disabled={!isFormValid || loading}>
-            {loading ? "GUARDANDO..." : "CONFIRMAR"}
+          <Button type="button" className="btnConfirm" onClick={onSubmit}>
+            CONFIRMAR
           </Button>
 
-          <Button
-            type="button"
-            className="btnCancel"
-            onClick={handleCancel}
-            disabled={loading}
-          >
+          <Button type="button" className="btnCancel" onClick={() => navigate("/profile")}>
             CANCELAR
           </Button>
         </div>

@@ -1,10 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
-/*
-font-family: "Raleway", sans-serif;
-  font-family: "Lora", serif; */
 
-  html, body {
+html, body {
   height: 100%;
   margin: 0;
 }
@@ -15,250 +12,171 @@ font-family: "Raleway", sans-serif;
   flex-direction: column;
 }
 
-.aboutPage {
-  flex: 1;
-}
 
-
-  h2 {
- 
-    font-family: "Lora", serif;
-  }
- 
-  p {
-    font-family: "Raleway", sans-serif;
-  }
- 
 .aboutPage {
   background: #F4EFE8;
-  padding: 80px 200px;
- 
+  font-family: "Raleway", sans-serif;
+  flex: 1;
+  padding: 80px clamp(20px, 6vw, 200px);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
- 
+
+.aboutPage h2,
+.aboutPage h3 {
+  font-family: "Lora", serif;
+}
+
+.aboutPage p {
+  font-family: "Raleway", sans-serif;
+}
+
 .aboutTop {
   display: flex;
   align-items: center;
-  gap: 60px;
- 
+  gap: clamp(24px, 4vw, 60px);
+  margin-right: calc(-1 * clamp(20px, 6vw, 200px));
 }
- 
+
 .aboutTop .aboutText {
   flex: 1;
+  min-width: 280px;
   padding-left: 40px;
- 
 }
- 
+
 .aboutTitle {
   color: #6BB3A7;
   font-size: 50px;
   margin-bottom: 26px;
 }
- 
+
 .aboutText h3 {
-  font-size: 28px;
+  font-size: 50px;
   margin-bottom: 12px;
 }
- 
+
 .aboutText p {
   font-size: 18px;
   line-height: 1.6;
   margin-bottom: 10px;
 }
- 
+
 .aboutLogo {
   margin-top: 70px;
-  margin-left: 250px;  
+  display: flex;
+  justify-content: center;
 }
- 
- 
-.logoText {
-  margin-top: 20px;
-  font-weight: bold;
+
+.aboutLogo img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
 }
- 
-.logoText span {
-  font-size: 12px;
-  font-weight: normal;
-}
- 
+
 .aboutImageBig {
-  position: relative;
-  margin-left: auto;
-  margin-right: -200px;
+  flex: 1;
+  min-width: 280px;
+  display: flex;
+  justify-content: flex-end;
 }
- 
+
 .aboutImageBig img {
-  width: 680px;
+  width: min(680px, 50vw);
   height: 420px;
   object-fit: cover;
+  display: block;
   border-top-left-radius: 220px;
   border-bottom-left-radius: 220px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
- 
- 
+
 .aboutBottom {
   margin-top: 80px;
   margin-bottom: 30px;
   display: flex;
-  gap: 60px;
+  gap: clamp(24px, 4vw, 60px);
   align-items: center;
-  justify-content: flex-start;
 }
- 
+
 .aboutImages {
   position: relative;
   width: 460px;
   height: 460px;
   margin-left: 60px;
+  flex: 0 0 auto;
 }
- 
+
 .circleImg {
   width: 370px;
   height: 370px;
   border-radius: 50%;
   object-fit: cover;
+  display: block;
 }
- 
+
 .circleImg.small {
   width: 250px;
   height: 250px;
+
   position: absolute;
   bottom: -16px;
   right: -32px;
+
   border: 6px solid #F4EFE8;
 }
- 
- 
+
 .aboutBottom .aboutText {
-  margin-left: auto;
+  flex: 1;
+  max-width: 720px;
   padding-left: 300px;
 }
- 
+
 .aboutSubtitle {
-  color: #000000;
-  margin-bottom: 12px;
-}
- 
- 
-@media (max-width: 520px) {
-  .aboutPage {
-    padding: 40px 20px;
-  }
-
-  .aboutTop {
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .aboutTop .aboutText {
-    padding-left: 0;
-    text-align: center;
-  }
-
-  .aboutTitle {
-    font-size: 34px;
-  }
-
-  .aboutText h3 {
-    font-size: 22px;
-  }
-
-  .aboutText p {
-    font-size: 16px;
-  }
-
-  .aboutLogo {
-    margin: 32px auto 0;
-    text-align: center;
-  }
-
-  .aboutImageBig {
-    margin: 0;
-  }
-
-  .aboutImageBig img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: 50%;
-  }
-
-  .aboutBottom {
-    flex-direction: column;
-    gap: 40px;
-    margin-top: 60px;
-  }
-
-  .aboutImages {
-    width: 300px;
-    height: 300px;
-    margin: 0 auto;
-  }
-
-  .circleImg {
-    width: 240px;
-    height: 240px;
-  }
-
-  .circleImg.small {
-    width: 160px;
-    height: 160px;
-    bottom: -16px;
-    right: -16px;
-  }
-
-  .aboutBottom .aboutText {
-    margin-left: 0;
-    padding-left: 0;
-    text-align: center;
-  }
+  color: #6BB3A7;
+  font-size: 60px;
+  margin-bottom: 26px;
 }
 
 
-
-@media (min-width: 521px) and (max-width: 1024px) {
+@media (max-width: 1024px) {
   .aboutPage {
     padding: 60px 60px;
   }
 
   .aboutTop {
-    gap: 40px;
+    margin-right: -60px;
   }
 
   .aboutTop .aboutText {
     padding-left: 0;
+    max-width: 600px;
   }
 
   .aboutTitle {
     font-size: 42px;
   }
 
-  .aboutImageBig {
-    margin-right: -80px;
+  .aboutSubtitle {
+    font-size: 42px;
   }
 
   .aboutImageBig img {
-    width: 520px;
+    width: min(520px, 55vw);
     height: 340px;
     border-top-left-radius: 180px;
     border-bottom-left-radius: 180px;
   }
 
   .aboutLogo {
-    margin-left: 0;
     margin-top: 40px;
   }
 
-  .aboutBottom {
-    gap: 40px;
-  }
-
   .aboutImages {
+    margin-left: 0;
     width: 380px;
     height: 380px;
-    margin-left: 0;
   }
 
   .circleImg {
@@ -273,8 +191,117 @@ font-family: "Raleway", sans-serif;
     bottom: -24px;
   }
 
-  .aboutBottom .aboutText {
-    padding-left: 0; 
-    margin-left: 0;
+  .aboutBottom {
+    align-items: flex-start;
   }
+
+  .aboutBottom .aboutText {
+    padding-left: 0;
+    flex: 1;
+    max-width: 600px;
+  }
+}
+
+
+@media (max-width: 520px) {
+  .aboutPage {
+    padding: 40px 20px;
+  }
+
+  .aboutTop {
+    flex-direction: column;
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .aboutTop .aboutText {
+    min-width: 0;
+    width: 100%;
+    max-width: 520px; 
+    margin: 0 auto;
+  }
+
+  .aboutTitle {
+    font-size: 34px;
+  }
+
+  .aboutText h3 {
+    font-size: 34px;
+  }
+
+  .aboutText p {
+    font-size: 16px;
+  }
+
+  .aboutLogo {
+    margin: 32px auto 0;
+  }
+
+  .aboutImageBig {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .aboutImageBig img {
+    width: min(320px, 100%);
+    height: auto;
+    border-radius: 50%;
+  }
+
+  .aboutBottom {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .aboutImages {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  .circleImg {
+    width: 240px;
+    height: 240px;
+    margin: 0 auto;
+  }
+
+  .circleImg.small {
+    width: 160px;
+    height: 160px;
+    right: -12px;
+    bottom: -12px;
+  }
+
+  .aboutBottom .aboutText {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+}
+
+
+.aboutActions {
+  display: flex;
+  justify-content: center;
+}
+
+/* Botón volver About */
+.aboutBackBtn {
+  border: none;
+  color: #fff;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  background: #e6d3c2;
+  border-radius: 18px;
+}
+
+.aboutBackBtn:hover {
+  background: #5a9f96;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }

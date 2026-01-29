@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap"
 import { recoverySchema } from "../../../schemas/RecoverySchema";
 import { fetchData } from "../../../helpers/axiosHelper";
 import {ZodError} from "zod"
+import "./ForgotPassPage.css"
 
 const initialValue = {
   email:""

@@ -43,7 +43,7 @@ export const NavbarPublic = () => {
          
           <div className="navbar-actions">
             <Button onClick={()=> navigate("/login")} className="nav-btn">INICIAR SESIÓN</Button>
-            <Button onClick={()=> navigate("/register")} className="nav-btn">PEDIR CITA</Button>
+            <Button onClick={()=> navigate("/register")} className="nav-btn">REGÍSTRATE</Button>
           </div>
         </Navbar.Collapse>
       </Container>

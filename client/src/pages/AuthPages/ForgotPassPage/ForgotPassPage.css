@@ -1,0 +1,80 @@
+body {
+  background: #F3E4D6;
+}
+
+h2 ,form {
+  margin-block-start: 5rem;
+}
+
+
+h2 {
+  color: #6BB3A7;
+  font-size: 32px;
+  margin-bottom: 35px;
+  font-family: "Lora", serif;
+  text-align: center;
+}
+
+
+form {
+  width: min(520px, 92%);
+  margin: 24px auto 0;
+  padding: 26px 28px;
+  border-radius: 14px;
+  text-align: center;
+}
+
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #4b4b4b;
+}
+
+form input[type="email"] {
+  width: 100%;
+  height: 34px;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  background: #ffffff;
+  padding: 6px 10px;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.text-danger {
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+
+form .btn {
+  margin-top: 18px;
+  height: 34px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.08s ease, filter 0.12s ease;
+}
+
+
+form .btn,
+form .btn.btn-primary {
+  background: #6AAFA5;
+  color: #ffffff;
+}
+
+
+form .btn:hover {
+  background-color: #5a9f96;
+  transform: translateY(-1px);
+}
+
+form .btn:active {
+  transform: translateY(1px);
+}
+
