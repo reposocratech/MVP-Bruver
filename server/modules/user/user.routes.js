@@ -1,6 +1,7 @@
 import express from "express";
 import userController from "./user.controller.js";
 import verifyToken from "../../middlewares/verifyToken.js";
+import { uploadImage } from '../../middlewares/multer.js';
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.get("/verifyEmail/:token", userController.verifyEmail);
 router.post("/login", userController.login);
 router.get("/userByToken", verifyToken, userController.userByToken);
 
-router.put("/profile", verifyToken, userController.updateProfile);
+router.put("/profile", verifyToken, uploadImage("clients"), userController.updateProfile);
 router.put("/delete", verifyToken, userController.deleteLogic);
 
 router.post("/forgotPassword", userController.forgotPassword);

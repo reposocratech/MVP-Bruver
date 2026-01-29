@@ -137,7 +137,6 @@ const ModalUserProfileEdit = ({ onClose }) => {
           <input type="file" className="changePhotoBtn" />
 
           <div className="modalButtons">
-           
             <button className="confirmBtn" type="button" onClick={handleConfirm} disabled={loading}>
               CONFIRMAR
             </button>

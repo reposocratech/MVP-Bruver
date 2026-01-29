@@ -57,10 +57,8 @@ class UserDal {
   
   updateProfile = async (values) => {
     try {
-      const sql = `
-        UPDATE user
-        SET name_user = ?, last_name = ?, phone = ?, province = ?, city = ?, address = ?
-        WHERE user_id = ? AND is_deleted = 0
+      const sql = 
+      `UPDATE user SET name_user = ?, last_name = ?, phone = ?, province = ?, city = ?, address = ?, picture_user=? WHERE user_id = ? AND is_deleted = 0
       `;
       const result = await executeQuery(sql, values);
       return result;
