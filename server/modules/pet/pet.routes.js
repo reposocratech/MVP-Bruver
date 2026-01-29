@@ -1,6 +1,7 @@
 import express from "express";
 import petController from "./pet.controller.js";
 import verifyToken from "../../middlewares/verifyToken.js";
+import { uploadImage } from '../../middlewares/multer.js';
 
 const router = express.Router();
 
@@ -12,6 +13,6 @@ router.delete("/:petId", verifyToken, petController.remove);
 router.get("/:petId", verifyToken, petController.getOne);
 
 // editar mascota (del usuario logueado)
-router.put("/:petId", verifyToken, petController.edit);
+router.put("/:petId", verifyToken, uploadImage("pets"), petController.edit);
 
 export default router;

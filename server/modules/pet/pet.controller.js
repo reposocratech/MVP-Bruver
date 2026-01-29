@@ -83,10 +83,10 @@ class PetController {
 
     try {
       const { name_pet, description, specie, size_category, hair, medical_history } = req.body;
-
-      if (!name_pet || !specie || !size_category) {
+      
+      if (!name_pet || !size_category) {
         res.status(400).json({ message: "Faltan campos obligatorios" });
-
+        
       } else {
         let data = {
           petId,
@@ -98,6 +98,12 @@ class PetController {
           hair,
           medical_history,
         };
+        
+        let values = [name_pet, description, specie, size_category, hair, medical_history]
+
+        if(req.file) {
+        values = [name_pet, description, specie, size_category, hair, medical_history, req.file.filename, petId];
+      }
 
         await petDal.edit(data);
 
