@@ -60,6 +60,18 @@
   text-align: center;
 }
 
+/* Fijar ancho de columnas para todas las tablas excepto la de botones */
+.agr-table th:not(:last-child),
+.agr-table td:not(:last-child) {
+  width: 160px;
+}
+
+/* La columna de los botones (ADMINISTRAR) más ancha */
+.agr-table th:last-child,
+.agr-table td:last-child {
+  width: 200px;
+}
+
 .agr-table td {
   padding: 10px 12px;
   border-top: 1px solid #6aaea7;

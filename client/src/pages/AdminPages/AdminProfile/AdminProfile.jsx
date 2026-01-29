@@ -82,10 +82,6 @@ const AdminProfile = () => {
         </div>
 
         <div className="options-row row-bottom">
-          {/* <div className="option-card">
-            <div className="option-header">MODIFICAR EMPLEADOS</div>
-            <i className="bi bi-people"></i>
-          </div> */}
           <div className="option-card option-card-link" onClick={() => navigate('/admin/manage')}>
             <div className="option-header">ADMINISTRAR</div>
             <i className="bi bi-gear"></i>

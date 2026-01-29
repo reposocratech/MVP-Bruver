@@ -1,3 +1,11 @@
+/* Mensajes de error para el modal de crear perfil */
+.error-msg {
+  color: red;
+  font-weight: bold;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  font-size: 0.95em;
+}
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
