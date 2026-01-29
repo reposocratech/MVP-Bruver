@@ -17,6 +17,7 @@
   align-items: center;
   padding: 2rem 1rem;
   background: #f6ece2;
+  min-height: 100vh;
 }
 
 .title {
