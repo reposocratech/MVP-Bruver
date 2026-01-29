@@ -1,28 +1,55 @@
-import { Button, Table , Col, Container, Row} from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Table, Col, Container, Row } from "react-bootstrap";
+import { Link, useNavigate } from "react-router";
 import "./clientprofilepage.css";
-import { Link } from 'react-router'
-import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
-import { useEffect, useState } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
-import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
 
+import ModalUserProfileEdit from "../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
+import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
+import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
+import { fetchData } from "../../../../helpers/axiosHelper";
 
 const ClientProfilePage = () => {
+  const navigate = useNavigate();
+
+  const { user, token } = useContext(AuthContext);
+
   const [openModal, setOpenModal] = useState(false);
-  const { user } = useContext(AuthContext);
+  const [appointments, setAppointments] = useState([]);
 
-
-
-
-  /* Función para que haya scroll en la página o en el modal, según donde estés */
   useEffect(() => {
-    document.body.style.overflow = openModal ? 'hidden' : 'auto';
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
+    document.body.style.overflow = openModal ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
   }, [openModal]);
+
+  useEffect(() => {
+    const getMyAppointments = async () => {
+      try {
+        const res = await fetchData("appointment/mine", "GET", null, token);
+        setAppointments(res?.data?.appointments || []);
+      } catch (error) {
+        console.log(error);
+        setAppointments([]);
+      }
+    };
+
+    if (token) getMyAppointments();
+  }, [token]);
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const dateSelect = new Date(dateStr);
+    return dateSelect.toLocaleDateString("es-ES");
+  };
+
+  const formatTime = (timeStr) => {
+    if (!timeStr) return "";
+    return timeStr.slice(0, 5);
+  };
+
+  const formatPrice = (value) => {
+    const numMoney = Number(value || 0);
+    return numMoney.toFixed(2).replace(".", ",") + " €";
+  };
 
   return (
     <div className="clientProfilePage">
@@ -35,9 +62,9 @@ const ClientProfilePage = () => {
             <h2 className="infoTitle">Información</h2>
 
             <Button
-              onClick={() => setOpenModal(true)}
-              className="editBtn"
               type="button"
+              className="editBtn"
+              onClick={() => setOpenModal(true)}
             >
               ✎ Editar
             </Button>
@@ -77,12 +104,16 @@ const ClientProfilePage = () => {
         <div className="sectionHeader">
           <h1 className="sectionTitle">Mis mascotas</h1>
 
-          <Button as={Link} to="/addpet" className="addLinkBtn">
+          <Button
+            type="button"
+            className="addLinkBtn"
+            onClick={() => navigate("/addpet")}
+          >
             🐾 Añadir
           </Button>
         </div>
 
-       <div className="petsGrid">
+        <div className="petsGrid">
           <Container>
             <Row>
               <Col>
@@ -91,8 +122,6 @@ const ClientProfilePage = () => {
             </Row>
           </Container>
         </div>
-
-
       </section>
 
       {/* CITAS */}
@@ -108,22 +137,25 @@ const ClientProfilePage = () => {
                 <th>TOTAL</th>
               </tr>
             </thead>
+
             <tbody>
-              <tr>
-                <td>10:00</td>
-                <td>18/01/2026</td>
-                <td>56,00€</td>
-              </tr>
-              <tr>
-                <td>11:00</td>
-                <td>18/01/2026</td>
-                <td>56,00€</td>
-              </tr>
-              <tr>
-                <td>12:00</td>
-                <td>18/01/2026</td>
-                <td>56,00€</td>
-              </tr>
+              {appointments.length === 0 ? (
+                <tr>
+                  <td colSpan={3} style={{ textAlign: "center" }}>
+                    No tienes citas todavía
+                  </td>
+                </tr>
+              ) : (
+                appointments.map((a) => (
+                  <tr key={a.appointment_id}>
+                    <td>{formatTime(a.start_time)}</td>
+                    <td>{formatDate(a.appointment_date)}</td>
+                    <td>{formatPrice(a.total_price)}</td>
+                  </tr>
+                )
+              )
+              )
+              }
             </tbody>
           </Table>
         </div>

@@ -4,6 +4,7 @@ import "./nutrition.css";
 const Nutrition = () => {
   const navigate = useNavigate();
   return (
+    <>
     <section className="nutritionPage">
       <section className="nutritionContent">
         <h1 className="nutritionTitle">Nutrición</h1>
@@ -28,8 +29,18 @@ const Nutrition = () => {
             onClick={() => navigate("/contact")}
           />
 
+          <div className="aboutActions">
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className="nutritionBackBtn"
+            >
+              VOLVER
+            </button>
+          </div>
       </section>
     </section>
+    </>
   );
 };
 

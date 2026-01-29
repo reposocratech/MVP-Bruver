@@ -1,93 +1,189 @@
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router";
+import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
+import { fetchData } from "../../../../helpers/axiosHelper";
 import "./editpet.css";
 
-
 const EditPet = () => {
-  // En el futuro vendrá de la BD
-  const [pet, setPet] = useState({
-    name: "Estrella",
-    specie: "Gato",
-    weight: "10.5kg",
-    description: "Es un gato muy malo",
-    diseases: "",
-    photo: "/img/mascotas/gato1.jfif",
-  });
+  const navigate = useNavigate();
+  const { petId } = useParams();
 
+  const { token, pets, setPets } = useContext(AuthContext);
+
+  
+  const [editPet, setEditPet] = useState(null);
+
+  useEffect(() => {
+    const getPet = async () => {
+      try {
+        const res = await fetchData(`pet/${petId}`, "GET", null, token);
+
+        
+        const petFromApi = res?.data?.pet ?? res?.data;
+
+        setEditPet(petFromApi || null);
+      } catch (error) {
+        console.log(error);
+        setEditPet(null);
+      }
+    };
+
+    if (token) getPet();
+  }, [token, petId]);
+
+ 
+  if (!editPet) {
+    return (
+      <div className="editPetPage">
+        <h2 className="pageTitle">Cargando mascota...</h2>
+      </div>
+    );
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setPet((prev) => ({ ...prev, [name]: value }));
+    setEditPet({ ...editPet, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Actualizar en BD:", pet);
+  const specieText = (value) => (Number(value) === 1 ? "Perro" : "Gato");
+
+  const sizeText = (value) => {
+    const map = { 1: "Toy", 2: "Pequeño", 3: "Mediano", 4: "Grande" };
+    return map[Number(value)] || "Sin definir";
   };
- 
+
+  const onSubmit = async () => {
+    try {
+      const body = {
+        name_pet: editPet.name_pet,
+        description: editPet.description,
+        specie: Number(editPet.specie),
+        size_category: Number(editPet.size_category),
+        hair: editPet.hair,
+        medical_history: editPet.medical_history,
+      };
+
+      const res = await fetchData(`pet/${petId}`, "PUT", body, token);
+
+      if (res?.data?.pet) {
+        setPets(pets.map((p) => (p.pet_id === res.data.pet.pet_id ? res.data.pet : p)));
+      }
+
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="editPetPage">
-
-      <h2 className="pageTitle">Mi perfil</h2>
+      <h2 className="pageTitle">Editar mascota</h2>
 
       {/* INFO MASCOTA */}
       <section className="petInfoBox">
         <div className="petInfoLeft">
           <h3>Información</h3>
-          <div className="infoRow">{pet.name}</div>
-          <div className="infoRow">{pet.weight}</div>
+          <div className="infoRow">{editPet.name_pet || ""}</div>
+          <div className="infoRow">Especie: {specieText(editPet.specie)}</div>
+          <div className="infoRow">Tamaño: {sizeText(editPet.size_category)}</div>
         </div>
 
         <div className="petInfoRight">
-          <img src={pet.photo} alt="Mascota" />
+          {editPet.picture_pet ? (
+            <img
+              src={`http://localhost:4000/images/pets/${editPet.picture_pet}`}
+              alt={editPet.name_pet}
+            />
+          ) : (
+            <div className="noPhoto">SIN FOTO</div>
+          )}
         </div>
       </section>
-
-      
 
       {/* FORMULARIO */}
       <h3 className="editTitle">Edita tu mascota</h3>
 
-      <form className="editPetForm" onSubmit={handleSubmit}>
+      <Container>
+        <Row className="d-flex justify-content-center pt-4">
+          <Col xs={6}>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name_pet"
+                  value={editPet.name_pet || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <label>Nombre</label>
-        <input
-          name="name"
-          value={pet.name}
-          onChange={handleChange}
-        />
+              <Form.Group className="mb-3">
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  value={editPet.description || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <label>Descripción</label>
-        <input
-          name="description"
-          value={pet.description}
-          onChange={handleChange}
-        />
+              <Form.Group className="mb-3">
+                <Form.Label>Especie</Form.Label>
+                <Form.Control type="text" value={specieText(editPet.specie)} disabled />
+              </Form.Group>
 
-        <label>Enfermedades</label>
-        <input
-          name="diseases"
-          value={pet.diseases}
-          onChange={handleChange}
-        />
+              <Form.Group className="mb-3">
+                <Form.Label>Categoría (peso)</Form.Label>
+                <Form.Select
+                  name="size_category"
+                  value={editPet.size_category}
+                  onChange={handleChange}
+                >
+                  <option value={1}>Toy</option>
+                  <option value={2}>Pequeño</option>
+                  <option value={3}>Mediano</option>
+                  <option value={4}>Grande</option>
+                </Form.Select>
+              </Form.Group>
 
-        <label>Foto</label>
-        <div className="photoSection">
-          <img src={pet.photo} alt="preview" />
-          <button type="button" className="changePhotoBtn">Cambiar foto</button>
-        </div>
+              <Form.Group className="mb-3">
+                <Form.Label>Pelo</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="hair"
+                  value={editPet.hair || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-        <div className="formActions">
-          <button type="button" className="backBtn">ATRÁS</button>
-          <button type="submit" className="confirmBtn">CONFIRMAR</button>
-        </div>
+              <Form.Group className="mb-3">
+                <Form.Label>Historial médico</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={4}
+                  name="medical_history"
+                  value={editPet.medical_history || ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
 
-      </form>
+              <div className="formActions">
+                <button type="button" className="backBtn" onClick={() => navigate("/profile")}>
+                  ATRÁS
+                </button>
 
-      
+                <button type="button" className="confirmBtn" onClick={onSubmit}>
+                  CONFIRMAR
+                </button>
+              </div>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     </div>
-    
   );
 };
 
 export default EditPet;
+
