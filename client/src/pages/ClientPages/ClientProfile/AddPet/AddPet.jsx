@@ -148,7 +148,7 @@ const AddPet = () => {
 
         <Form.Group className="addPetGroup">
           <Form.Label className="addPetLabel">
-            Observaciones (Alergias, cuidados especiales, ...)
+            Observaciones (Es Cachorro ?, Alergias, cuidados especiales, ...)
           </Form.Label>
           <Form.Control
             className="addPetTextarea"
