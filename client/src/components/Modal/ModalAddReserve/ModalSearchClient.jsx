@@ -5,9 +5,11 @@ import { fetchData } from "../../../helpers/axiosHelper";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 
-const ModalSearchClient = ({ toBack, onClose }) => {
+const ModalSearchClient = ({ toBack, onAcceptClient }) => {
   const [search, setSearch] = useState("");
   const [clientsFiltered, setClientsFiltered] = useState([]);
+  const [selectedClient, setSelectedClient] = useState(null);
+
   const { token } = useContext(AuthContext);
 
   const handleChange = async (e) => {
@@ -28,6 +30,10 @@ const ModalSearchClient = ({ toBack, onClose }) => {
       setClientsFiltered([]);
     }
   };
+      const handleAccept = () => {
+        if (!selectedClient) return;
+        onAcceptClient(selectedClient);
+      };
 
   return (
     <section className="addReserveModal">
@@ -64,7 +70,11 @@ const ModalSearchClient = ({ toBack, onClose }) => {
                   </tr>
                 ) : (
                   clientsFiltered.map((c) => (
-                    <tr key={c.user_id}>
+                    <tr key={c.user_id}
+                    onClick={() => setSelectedClient(c)}
+                    className={selectedClient?.user_id === c.user_id 
+                    ? "clientRow selectedClientRow" 
+                    : "clientRow"}>
                       <td data-phone={c.phone} data-email={c.email}>
                         {c.name_user} {c.last_name}
                       </td>
@@ -79,7 +89,7 @@ const ModalSearchClient = ({ toBack, onClose }) => {
 
           <div>
             <Button className="close" onClick={toBack}>Atrás</Button>
-            <Button className="close" onClick={onClose}>Cerrar</Button>
+            <Button className="close" onClick={handleAccept}>Aceptar</Button>
           </div>
         </div>
       </div>
