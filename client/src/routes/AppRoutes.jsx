@@ -83,7 +83,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes/>}>
                 <Route element={<WorkerLayout/>}>
                    <Route path="/worker" element={<Worker />} /> 
-                   <Route path="worker/profile" element={<WorkerProfile />} />
+                   <Route path="/worker/profile" element={<WorkerProfile />} />
                 </Route>    
           </Route>
 
@@ -95,7 +95,7 @@ export const AppRoutes = () => {
               <Route path="/admin/manage" element={<AdminManage />}/>
               <Route path="/admin/general" element={<GeneralCalendarPage/>} />
               <Route path="/admin/appointments" element={<AdminAppointments />} />
-              <Route path="/admin/workinghours" element={<AdminWorkingHours />} />
+              <Route path="/admin/workinghours/:adminId" element={<AdminWorkingHours />} />
             </Route>
           </Route>
 
