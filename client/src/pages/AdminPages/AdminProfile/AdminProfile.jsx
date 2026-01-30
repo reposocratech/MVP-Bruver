@@ -15,7 +15,7 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const res = await fetchData("admin", "GET", null, token);
+        const res = await fetchData("admin/getAdmin", "GET", null, token);
         setAdmin(res.data.user);
       } catch (error) {
         console.log(error);
@@ -78,7 +78,7 @@ const AdminProfile = () => {
 
           <div
             className="option-card option-card-link"
-            onClick={() => navigate("/admin/appointments")}
+            onClick={() => navigate(`/admin/appointments/${admin.user_id}`)}
           >
             <div className="option-header">MIS CITAS</div>
             <i className="bi bi-pencil-square"></i>
