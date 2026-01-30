@@ -15,7 +15,7 @@ router.put("/profile", verifyToken, uploadImage("clients"), userController.updat
 router.put("/delete", verifyToken, userController.deleteLogic);
 
 router.post("/forgotPassword", userController.forgotPassword);
-router.post("/contact", userController.sendContact);
+router.post("/", userController.sendContact);
 
 export default router;
 

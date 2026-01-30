@@ -168,6 +168,24 @@ h3 {
   }
 }
 
+.servicesCard.selected,
+.supplementsCard.selected {
+  background: #B79C81;    
+  color: #fff;             
+  border: 2px solid #E6D3C2;   
+  transform: scale(1.02);
+}
+
+.servicesCard.selected img,
+.supplementsCard.selected img {
+  filter: brightness(0.8); 
+}
+
+.servicesCard.selected .select-btn,
+.supplementsCard.selected .select-btn {
+  background: #695949;  
+  border-color: #000;
+}
 
 
 /* responsive */
