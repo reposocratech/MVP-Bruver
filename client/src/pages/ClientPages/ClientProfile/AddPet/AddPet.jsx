@@ -65,7 +65,7 @@ const AddPet = () => {
 
   return (
     <div className="addPetPage">
-      <h1 className="addPetTitle">AÑADIR MASCOTA</h1>
+      <h1 className="addPetTitle">Añadir Mascota</h1>
 
       <Form className="addPetForm">
         <Form.Group className="addPetGroup">
@@ -161,18 +161,26 @@ const AddPet = () => {
           />
         </Form.Group>
 
-        <div className="addPetButtons">
-          <Button type="button" className="btnConfirm" onClick={onSubmit}>
-            CONFIRMAR
-          </Button>
+        <div className="addPetActions">
+  <button
+    type="button"
+    className="addPetBtn acept"
+    onClick={onSubmit}
+  >
+    CONFIRMAR
+  </button>
 
-          <Button type="button" className="btnCancel" onClick={() => navigate("/profile")}>
-            CANCELAR
-          </Button>
-        </div>
+  <button
+    type="button"
+    className="addPetBtn cancel"
+    onClick={() => navigate(-1)}
+  >
+    CANCELAR
+  </button>
+</div>
       </Form>
     </div>
   );
-};
+};;
 
 export default AddPet;
