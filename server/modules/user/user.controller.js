@@ -41,14 +41,10 @@ class UserController {
       } catch (error) {
         console.log('Error al enviar email:', error);
       }
-<<<<<<< HEAD
 
-      res.status(201).json({ message: "Registro completado. Revisa tu correo para verificar la cuenta." });
-
-=======
       
       res.status(201).json({ message: "Registro completado. Revisa tu correo para verificar la cuenta." });
->>>>>>> 39c4229de4ba00c9ec08f005aab9941524b3a10b
+
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Error al registrar el usuario' });
@@ -103,10 +99,7 @@ class UserController {
       const result = await userDal.userByToken(user_id);
       
       res.status(200).json({ message: "Usuario cargado", user: result[0] });
-<<<<<<< HEAD
-
-=======
->>>>>>> 39c4229de4ba00c9ec08f005aab9941524b3a10b
+ 
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Error al cargar el usuario' });
@@ -183,7 +176,7 @@ class UserController {
 
         res.status(200).json({ message: 'Nueva contraseña enviada al correo' });
       }
-<<<<<<< HEAD
+
     } catch (error) {
       console.log(error);
       res
@@ -192,18 +185,8 @@ class UserController {
     }
   };
 
-  sendContact = async (req, res) => {
-    try {
-      const { nombre, telefono, email, mensaje } = req.body;
-
-      await sendContactEmail({ nombre, telefono, email, mensaje });
-
-      res.status(200).json({ message: 'Mensaje enviado' });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: 'Error al enviar el mensaje' });
-=======
-    };
+ 
+    
     
     sendContact = async (req, res) => {
       try {
@@ -215,7 +198,7 @@ class UserController {
       } catch (error) {
         console.log(error);
       res.status(500).json({ message: "Error al enviar el mensaje" });
->>>>>>> 39c4229de4ba00c9ec08f005aab9941524b3a10b
+
     }
   };
   
