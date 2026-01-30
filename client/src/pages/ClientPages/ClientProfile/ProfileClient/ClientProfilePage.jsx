@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import "./clientprofilepage.css";
 
 import ModalUserProfileEdit from "../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
+import ModalPetEdit from "../../../../components/Modal/ModalpetEdit/ModalPetEdit";
 import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../../helpers/axiosHelper";
@@ -14,12 +15,19 @@ const ClientProfilePage = () => {
   const { user, token } = useContext(AuthContext);
 
   const [openModal, setOpenModal] = useState(false);
+  const [openModalEditPet, setOpenModalEditPet] = useState(false);
+  const [selectedPet, setSelectedPet] = useState();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
     return () => (document.body.style.overflow = "auto");
   }, [openModal]);
+  
+  useEffect(() => {
+    document.body.style.overflow = openModalEditPet ? "hidden" : "auto";
+    return () => (document.body.style.overflow = "auto");
+  }, [openModalEditPet]);
 
   useEffect(() => {
     const getMyAppointments = async () => {
@@ -94,7 +102,10 @@ const ClientProfilePage = () => {
 
         <div className="infoRight">
           <div className="userPhoto">
-            <span>FOTO</span>
+            <span>
+             {user.picture_user ? <img className="userPhoto" src={`${import.meta.env.VITE_SERVER_IMAGES}/clients/${user?.picture_user}`} alt="Imagen de perfil" /> : 
+             <img className="userPhoto" src={`${import.meta.env.VITE_SERVER_IMAGES}/clients/perfilDefecto.jpg`}></img> } 
+            </span>
           </div>
         </div>
       </section>
@@ -117,7 +128,10 @@ const ClientProfilePage = () => {
           <Container>
             <Row>
               <Col>
-                <UsersPetsGallery />
+                <UsersPetsGallery 
+                  setOpenModalEditPet={setOpenModalEditPet}
+                  setSelectedPet={setSelectedPet}
+                />
               </Col>
             </Row>
           </Container>
@@ -162,6 +176,12 @@ const ClientProfilePage = () => {
       </section>
 
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
+      {openModalEditPet && (
+        <ModalPetEdit
+          onClose={() => setOpenModalEditPet(false)}
+          pet={selectedPet}
+        />
+      )}
     </div>
   );
 };

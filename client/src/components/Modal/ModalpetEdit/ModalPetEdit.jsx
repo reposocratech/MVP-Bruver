@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import './ModalUserProfileEdit.css';
+import './ModalPetEdit.css';
 
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { fetchData } from '../../../helpers/axiosHelper';
@@ -7,33 +7,35 @@ import { useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 
 
-const ModalUserProfileEdit = ({ onClose }) => {
+const ModalPetEdit = ({ onClose, pet, setPet }) => {
   const navigate = useNavigate(); 
-  const { user, setUser, token, logout } = useContext(AuthContext);
-  const [editUser, setEditUser] = useState(user);
+  const { token, logout } = useContext(AuthContext);
+  const [editPet, setEditPet] = useState(pet);
   const [avatar, setAvatar] = useState();
   const [errorMsg, setErrorMsg] = useState('');
-
+  console.log("-----------------------------", pet)
 
     const handleChange = (e) =>{
         const {name, value} = e.target;
         if(name === "avatar"){
             setAvatar(e.target.files[0])
             };
-            setEditUser({...editUser, [name]: value})
+            setEditPet({...editPet, [name]: value})
         }
 
+      const specieText = (value) => (Number(value) === 1 ? "Perro" : "Gato");
 
-   const onSubmit = async() =>{
+   const onSubmit = async (e) =>{
+        e.preventDefault();
         try {
             const newFormdata = new FormData();
-            newFormdata.append("editUser", JSON.stringify(editUser));
+            newFormdata.append("editPet", JSON.stringify(editPet));
             if (avatar) newFormdata.append("img", avatar);
 
-            const res = await fetchData("user/profile", "PUT", newFormdata, token);
+            const res = await fetchData(`pet/${pet.pet_id}`, "PUT", newFormdata, token);
 
-            if(res?.data?.user) {
-                setUser(res.data.user);
+            if(res?.data?.pet) {
+                setPet(res.data.pet);
             }
 
             onClose();
@@ -48,7 +50,7 @@ const ModalUserProfileEdit = ({ onClose }) => {
     if (!token) return;
 
     try {
-      if (window.confirm('¿Seguro que quieres eliminar tu perfil ?')) {
+      if (window.confirm('¿Seguro que quieres esta mascota?')) {
         setErrorMsg('');
 
         await fetchData('user/delete', 'PUT', null, token);
@@ -60,7 +62,7 @@ const ModalUserProfileEdit = ({ onClose }) => {
     } catch (error) {
       console.log(error);
       setErrorMsg(
-        error?.response?.data?.message || 'Error al eliminar el perfil',
+        error?.response?.data?.message || 'Error al eliminar la mascota',
       );
   }; 
 }
@@ -68,53 +70,51 @@ const ModalUserProfileEdit = ({ onClose }) => {
   return (
     <section className="userProfileModal">
       <div className="userProfileModalContent">
-        <h2 className="modalTitle">Edita tu perfil</h2>
+        <h2 className="modalTitle">Edita tu mascota</h2>
 
         <form className="userProfileForm">
           <label>Nombre</label>
           <input
-            name="name_user"
-            value={editUser.name_user?editUser.name_user:""}
+            name="name_pet"
+            value={editPet?.name_pet?editPet.name_pet:""}
             onChange={handleChange}
           />
 
-          <label>Apellidos</label>
+          <label>Descripción</label>
           <input
-            name="last_name"
-            value={editUser.last_name?editUser.last_name:""}
+            name="description"
+            value={editPet?.description?editPet.description:""}
             onChange={handleChange}
           />
 
-          <label>Teléfono</label>
+          <label>Especie</label>
+          <input name="specie" value={specieText(editPet?.specie?editPet.specie:"")} disabled />
+
+          <label>Categoría (peso)</label>
+          <select
+            name="size_category"
+            value={editPet?.size_category ? editPet.size_category : ""}
+            onChange={handleChange}
+          >
+            <option value={1}>Toy</option>
+            <option value={2}>Pequeño</option>
+            <option value={3}>Mediano</option>
+            <option value={4}>Grande</option>
+          </select>
+
+          <label>Pelo</label>
           <input
-            name="phone"
-            value={editUser.phone?editUser.phone:""}
+            name="hair"
+            value={editPet?.hair?editPet.hair:""}
             onChange={handleChange}
           />
 
-          <label>Provincia</label>
+          <label>Historial Médico</label>
           <input
-            name="province"
-            value={editUser.province?editUser.province:""}
+            name="medical_history"
+            value={editPet?.medical_history?editPet.medical_history:""}
             onChange={handleChange}
           />
-
-          <label>Ciudad</label>
-          <input
-            name="city"
-            value={editUser.city?editUser.city:""}
-            onChange={handleChange}
-          />
-
-          <label>Dirección</label>
-          <input
-            name="address"
-            value={editUser.address?editUser.address:""}
-            onChange={handleChange}
-          />
-
-          <label>Email</label>
-          <input name="email" value={editUser.email?editUser.email:""} disabled />
 
           {errorMsg && <p className="text-danger">{errorMsg}</p>}
 
@@ -127,10 +127,7 @@ const ModalUserProfileEdit = ({ onClose }) => {
           />
 
           <div className="modalButtons">
-            <Button
-              className="confirmBtn"
-              onClick={onSubmit}
-            >
+            <Button className="confirmBtn" onClick={onSubmit}>
               CONFIRMAR
             </Button>
 
@@ -147,7 +144,7 @@ const ModalUserProfileEdit = ({ onClose }) => {
               className="deleteBtn"
               onClick={handleDeleteProfile}
             >
-              ELIMINAR PERFIL
+              ELIMINAR MASCOTA
             </button>
           </div>
         </form>
@@ -157,4 +154,4 @@ const ModalUserProfileEdit = ({ onClose }) => {
 }
 
 
-export default ModalUserProfileEdit;
+export default ModalPetEdit;
