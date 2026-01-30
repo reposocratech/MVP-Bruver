@@ -82,30 +82,20 @@ class PetController {
     const { user_id } = req;
 
     try {
-      const { name_pet, description, specie, size_category, hair, medical_history } = req.body;
-      
+      const { name_pet, description, specie, size_category, hair, medical_history } = JSON.parse(req.body.editPet);
       if (!name_pet || !size_category) {
         res.status(400).json({ message: "Faltan campos obligatorios" });
+
         
       } else {
-        let data = {
-          petId,
-          userId: user_id,
-          name_pet,
-          description,
-          specie,
-          size_category,
-          hair,
-          medical_history,
-        };
         
-        let values = [name_pet, description, specie, size_category, hair, medical_history]
+        let values = [name_pet, description, specie, size_category, hair, medical_history, petId, user_id]
 
         if(req.file) {
-        values = [name_pet, description, specie, size_category, hair, medical_history, req.file.filename, petId];
+        values = [name_pet, description, specie, size_category, hair, medical_history, req.file.filename, petId, user_id];
       }
-
-        await petDal.edit(data);
+/* console.log("++++++++++++++++++++++",req.file) */
+        await petDal.edit(values, !!req.file);
 
         let updated = await petDal.getOne(petId, user_id);
         res.status(200).json({ message: "edición ok", pet: updated[0] });

@@ -70,14 +70,21 @@ getOne = async (petId, userId) => {
 };
 
 // 5) Editar mascota 
-edit = async (values) => {
-  console.log("##################", values)
+edit = async (values, file) => {
   try {
-    const sql = `
+    let sql = `
       UPDATE pet
       SET name_pet = ?, description = ?, specie = ?, size_category = ?, hair = ?, medical_history = ?
       WHERE pet_id = ? AND user_id = ? AND pet_is_deleted = 0
-    `;
+    `; 
+    if(file){
+      sql = `
+      UPDATE pet
+      SET name_pet = ?, description = ?, specie = ?, size_category = ?, hair = ?, medical_history = ?, picture_pet = ?
+      WHERE pet_id = ? AND user_id = ? AND pet_is_deleted = 0
+    `; 
+    }
+
     const result = await executeQuery(sql, values);
     return result;
   } catch (error) {
