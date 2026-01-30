@@ -67,7 +67,7 @@ const AdminWorkingHours = () => {
     setSchedule(prev => [
       ...prev,
       {
-        availability_id: res.data.availability_id,
+        availability_id: res.data.result.insertId,
         ...data
       }
     ]);
@@ -165,6 +165,7 @@ const AdminWorkingHours = () => {
     title: "Disponible",
     start: buildDateTime(item.day_id, item.start_time),
     end: buildDateTime(item.day_id, item.end_time),
+   
   }));
 
   const allEvents = [...eventsMap]
