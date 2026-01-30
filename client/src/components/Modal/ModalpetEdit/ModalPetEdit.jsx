@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 
 
-const ModalPetEdit = ({ onClose, pet, setPet }) => {
+const ModalPetEdit = ({ onClose, pet }) => {
   const navigate = useNavigate(); 
-  const { token, logout } = useContext(AuthContext);
+  const { token, logout, pets, setPets } = useContext(AuthContext);
   const [editPet, setEditPet] = useState(pet);
   const [avatar, setAvatar] = useState();
   const [errorMsg, setErrorMsg] = useState('');
-  console.log("-----------------------------", pet)
 
     const handleChange = (e) =>{
         const {name, value} = e.target;
@@ -32,12 +31,14 @@ const ModalPetEdit = ({ onClose, pet, setPet }) => {
             newFormdata.append("editPet", JSON.stringify(editPet));
             if (avatar) newFormdata.append("img", avatar);
 
-            const res = await fetchData(`pet/${pet.pet_id}`, "PUT", newFormdata, token);
-
-            if(res?.data?.pet) {
-                setPet(res.data.pet);
-            }
-
+            await fetchData(`pet/${pet.pet_id}`, "PUT", newFormdata, token);
+            setPets(pets.map(elem =>{
+              if(elem.pet_id === pet.pet_id){
+                return editPet;
+              }else{
+                return elem;
+              }
+            }))
             onClose();
 
         } catch (error) {
@@ -73,7 +74,7 @@ const ModalPetEdit = ({ onClose, pet, setPet }) => {
         <h2 className="modalTitle">Edita tu mascota</h2>
 
         <form className="userProfileForm">
-          <label>Nombre</label>
+          <label>Nombre*</label>
           <input
             name="name_pet"
             value={editPet?.name_pet?editPet.name_pet:""}
@@ -90,7 +91,7 @@ const ModalPetEdit = ({ onClose, pet, setPet }) => {
           <label>Especie</label>
           <input name="specie" value={specieText(editPet?.specie?editPet.specie:"")} disabled />
 
-          <label>Categoría (peso)</label>
+          <label>Categoría (peso)*</label>
           <select
             name="size_category"
             value={editPet?.size_category ? editPet.size_category : ""}
