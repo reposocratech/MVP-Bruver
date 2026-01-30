@@ -1,52 +1,84 @@
-import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router'
-import './navbar.css'
-import logoNavbar from "../../assets/images/logo-navbar.png"
+import { useState } from "react";
+import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
+import { Link, useNavigate } from "react-router";
+import "./navbar.css";
+import logoNavbar from "../../assets/images/logo-navbar.png";
 
 export const NavbarPublic = () => {
-
+  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
-  
+
+  const handleNavigate = (path) => {
+    setExpanded(false);
+    navigate(path);
+  };
+
   return (
-    <Navbar expand="lg" className="navbar-custom">
+    <Navbar
+      expand="lg"
+      expanded={expanded}
+      className="navbar-custom"
+    >
       <Container fluid>
-     
-        <Navbar.Brand as={Link} to="/" className="navbar-logo">
-          <img src={logoNavbar} 
-          alt="" 
-          className='navbar-logo-img'/>
+        <Navbar.Brand
+          as={Link}
+          to="/"
+          className="navbar-logo"
+          onClick={() => setExpanded(false)}
+        >
+          <img
+            src={logoNavbar}
+            alt="Logo"
+            className="navbar-logo-img"
+          />
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="navbar-nav" />
+        <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
 
-        <Navbar.Collapse id="navbar-nav">
-         
+        <Navbar.Collapse>
           <Nav className="navbar-nav-center">
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
-            <Nav.Link as={Link} to="/about">Quienes somos</Nav.Link>
+            <Nav.Link onClick={() => handleNavigate("/")}>
+              Inicio
+            </Nav.Link>
+
+            <Nav.Link onClick={() => handleNavigate("/about")}>
+              Quienes somos
+            </Nav.Link>
 
             <NavDropdown title="Servicios" id="services-dropdown">
-              <NavDropdown.Item as={Link} to="/grooming">
+              <NavDropdown.Item onClick={() => handleNavigate("/grooming")}>
                 Grooming & Spa
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/pharmacy">
+              <NavDropdown.Item onClick={() => handleNavigate("/pharmacy")}>
                 Farmacia veterinaria
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/nutrition">
+              <NavDropdown.Item onClick={() => handleNavigate("/nutrition")}>
                 Nutrición y accesorios
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link as={Link} to="/contact">Contacto</Nav.Link>
+            <Nav.Link onClick={() => handleNavigate("/contact")}>
+              Contacto
+            </Nav.Link>
           </Nav>
 
-         
           <div className="navbar-actions">
-            <Button onClick={()=> navigate("/login")} className="nav-btn">INICIAR SESIÓN</Button>
-            <Button onClick={()=> navigate("/register")} className="nav-btn">REGÍSTRATE</Button>
+            <Button
+              className="nav-btn"
+              onClick={() => handleNavigate("/login")}
+            >
+              INICIAR SESIÓN
+            </Button>
+
+            <Button
+              className="nav-btn"
+              onClick={() => handleNavigate("/register")}
+            >
+              REGÍSTRATE
+            </Button>
           </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
-}
+  );
+};

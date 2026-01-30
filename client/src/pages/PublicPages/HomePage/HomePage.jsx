@@ -1,11 +1,10 @@
 import "./HomePage.css";
-import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap'
-import { Link } from 'react-router'
+import { Link } from "react-router";
 
 const HomePage = () => {
   return (
     <section className="home">
-     
+      
       <section className="hero">
         <div className="heroLeft"></div>
 
@@ -19,57 +18,63 @@ const HomePage = () => {
         </div>
       </section>
 
-      
+     
       <section className="services">
-        <article className="serviceCard">
-          <div className="serviceImgWrap">
-            <img
-              className="serviceImg"
-              src="/img/home/service-grooming.png"
-              alt="Grooming & Spa"
-            />
-          </div>
-         <NavDropdown.Item as={Link} to="/grooming" className="serviceText">
-          <br />
-          Grooming &amp; Spa
-        </NavDropdown.Item>
 
-        </article>
+        
+        <Link to="/grooming" className="serviceLink">
+          <article className="serviceCard">
+            <div className="serviceImgWrap">
+              <img
+                className="serviceImg"
+                src="/img/home/service-grooming.png"
+                alt="Grooming & Spa"
+              />
+            </div>
+            <span className="serviceText">
+              Grooming &amp; Spa
+            </span>
+          </article>
+        </Link>
 
-        <article className="serviceCard">
-          <div className="serviceImgWrap">
-            <img
-              className="serviceImg"
-              src="/img/home/service-vet.png"
-              alt="Farmacia Veterinaria"
-            />
-          </div>
-          
-          <NavDropdown.Item as={Link} to="/pharmacy" className="serviceText">
-          Farmacia
-          <br />
-          Veterinaria
-        </NavDropdown.Item>
+        
+        <Link to="/pharmacy" className="serviceLink">
+          <article className="serviceCard">
+            <div className="serviceImgWrap">
+              <img
+                className="serviceImg"
+                src="/img/home/service-vet.png"
+                alt="Farmacia Veterinaria"
+              />
+            </div>
+            <span className="serviceText">
+              Farmacia
+              <br />
+              Veterinaria
+            </span>
+          </article>
+        </Link>
 
-        </article>
+        
+        <Link to="/nutrition" className="serviceLink">
+          <article className="serviceCard">
+            <div className="serviceImgWrap">
+              <img
+                className="serviceImg"
+                src="/img/home/service-nutrition.png"
+                alt="Nutrición y accesorios"
+              />
+            </div>
+            <span className="serviceText">
+              Nutrición y
+              <br />
+              accesorios
+            </span>
+          </article>
+        </Link>
 
-        <article className="serviceCard">
-          <div className="serviceImgWrap">
-            <img
-              className="serviceImg"
-              src="/img/home/service-nutrition.png"
-              alt="Nutrición y accesorios"
-            />
-          </div>
-          <NavDropdown.Item as={Link} to="/nutrition" className="serviceText">
-            Nutrición y
-            <br />
-            accesorios
-            </NavDropdown.Item>
-        </article>
       </section>
 
-      
       <img className="dogCorner" src="/img/home/dog-corner.png" alt="Perro" />
     </section>
   );
