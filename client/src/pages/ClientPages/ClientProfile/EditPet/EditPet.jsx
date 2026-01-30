@@ -5,14 +5,13 @@ import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../../helpers/axiosHelper";
 import "./editpet.css";
 
-const EditPet = () => {
+const EditPet = ({ onClose }) => {
   const navigate = useNavigate();
   const { petId } = useParams();
-
-  const { token, pets, setPets } = useContext(AuthContext);
-
-  
-  const [editPet, setEditPet] = useState(null);
+  const { token, pets, setPets, logout } = useContext(AuthContext);
+  const [editPet, setEditPet] = useState(pets);
+  const [picture, setPicture] = useState()
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     const getPet = async () => {
@@ -43,8 +42,12 @@ const EditPet = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditPet({ ...editPet, [name]: value });
-  };
+     if(name === "picture"){
+            setPicture(e.target.files[0])
+            };
+            setEditPet({...editPet, [name]: value})
+        }
+
 
   const specieText = (value) => (Number(value) === 1 ? "Perro" : "Gato");
 
@@ -54,27 +57,45 @@ const EditPet = () => {
   };
 
   const onSubmit = async () => {
+ try {
+            const newFormdata = new FormData();
+            newFormdata.append("editPet", JSON.stringify(editPet));
+            if (picture) newFormdata.append("img", picture);
+
+            const res = await fetchData("user/profile", "PUT", newFormdata, token);
+
+            if(res?.data?.pet) {
+                setPets(res.data.pet);
+            }
+
+            onClose();
+
+        } catch (error) {
+            console.log(error);
+            setErrorMsg(error?.response?.data?.message || 'Error al actualizar tu mascota');
+        }
+    }
+
+     // 6) Eliminar perfil -> borrado lógico + logout + home
+ const handleDeleteProfile = async () => {
     try {
-      const body = {
-        name_pet: editPet.name_pet,
-        description: editPet.description,
-        specie: Number(editPet.specie),
-        size_category: Number(editPet.size_category),
-        hair: editPet.hair,
-        medical_history: editPet.medical_history,
-      };
+      if (window.confirm('¿Seguro que quieres eliminar esta mascota?')) {
+        setErrorMsg('');
 
-      const res = await fetchData(`pet/${petId}`, "PUT", body, token);
+        await fetchData('user/delete', 'PUT', null);
 
-      if (res?.data?.pet) {
-        setPets(pets.map((p) => (p.pet_id === res.data.pet.pet_id ? res.data.pet : p)));
+        logout();
+        onClose();
+        navigate('/profile');
       }
-
-      navigate("/profile");
     } catch (error) {
       console.log(error);
-    }
-  };
+      setErrorMsg(
+        error?.response?.data?.message || 'Error al eliminar el perfil',
+      );
+  }; 
+}
+
 
   return (
     <div className="editPetPage">
@@ -108,7 +129,7 @@ const EditPet = () => {
         <Row className="d-flex justify-content-center pt-4">
           <Col xs={6}>
             <Form>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-3" controlId="formBasicName">
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
                   type="text"
@@ -168,14 +189,32 @@ const EditPet = () => {
                 />
               </Form.Group>
 
-              <div className="formActions">
-                <button type="button" className="backBtn" onClick={() => navigate("/profile")}>
-                  ATRÁS
-                </button>
+              <Form.Group className="mb-3">
+                <Form.Label>Cambiar foto</Form.Label>
+                <Form.Control
+                  type="file"
+                   name="picture"
+                   onChange={handleChange}
+                  className="changePhotoBtn"
+                />
+              </Form.Group>
 
+               {errorMsg && <p className="text-danger">{errorMsg}</p>}
+
+              <div className="formActions">
                 <button type="button" className="confirmBtn" onClick={onSubmit}>
                   CONFIRMAR
                 </button>
+                <button type="button" className="backBtn" onClick={() => navigate("/profile")}>
+                  CANCELAR
+                </button>
+                <button
+              type="button"
+              className="deleteBtn"
+              onClick={handleDeleteProfile}
+            >
+              ELIMINAR MASCOTA
+            </button>
               </div>
             </Form>
           </Col>
@@ -184,6 +223,7 @@ const EditPet = () => {
     </div>
   );
 };
+
 
 export default EditPet;
 
