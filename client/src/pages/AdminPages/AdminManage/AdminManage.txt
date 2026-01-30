@@ -1,4 +1,24 @@
-import React, { useState, useEffect } from 'react';
+    // Cambiar tipo a admin (type = 1)
+    const handleMakeAdmin = async (userId) => {
+      try {
+        await fetchData(`user/makeAdmin/${userId}`, 'PUT', { type: 1 });
+        // Recarga la lista de workers
+        fetchWorkers();
+      } catch (error) {
+        console.error('Error al hacer admin:', error);
+      }
+    };
+  // Cambiar tipo a trabajador (type = 2)
+  const handleMakeWorker = async (userId) => {
+    try {
+      await fetchData(`user/makeAdmin/${userId}`, 'PUT', { type: 2 });
+      // Recarga la lista de workers
+      fetchWorkers();
+    } catch (error) {
+      console.error('Error al hacer trabajador:', error);
+    }
+  };
+import { useState } from 'react';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router';
 import { profileSchema } from '../../../schemas/ProfileSchema';
@@ -6,6 +26,7 @@ import { ZodError } from 'zod';
 import './AdminManage.css';
 import { RiUserAddLine } from 'react-icons/ri';
 import ModalCreateProfile from '../../../components/Modal/ModalCreateProfile/ModalCreateProfile';
+import { useEffect } from 'react';
 
 const initialProfile = {
   type: '',
@@ -22,80 +43,54 @@ const initialProfile = {
 const AdminManage = () => {
   
   const navigate = useNavigate();
-
   const [workers, setWorkers] = useState([]);
   const [clients, setClients] = useState([]);
+
+    // useEffect para cargar los datos de la base de datos al montar el componente
+    useEffect(() => {
+      // Función para obtener trabajadores
+      const fetchWorkers = async () => {
+        try {
+          const res = await fetchData('user/workers', 'GET');
+          // Mapeo de los datos ajustando los nombres
+          const workersData = res.data.workers.map((w) => ({
+            id: w.id_user,
+            name: `${w.name_user} ${w.last_name}`,
+            phone: w.phone,
+            email: w.email,
+            type: w.type,
+          }));
+          setWorkers(workersData);
+        } catch (error) {
+          console.error('Error al obtener trabajadores:', error);
+        }
+      };
+
+      // Función para obtener clientes
+      const fetchClients = async () => {
+        try {
+          const res = await fetchData('user/clients', 'GET');
+          // Mapeo de los datos ajustando los nombres
+          const clientsData = res.data.clients.map((c) => ({
+            id: c.id_user,
+            name: `${c.name_user} ${c.last_name}`,
+            phone: c.phone,
+            email: c.email,
+          }));
+          setClients(clientsData);
+        } catch (error) {
+          console.error('Error al obtener clientes:', error);
+        }
+      };
+
+      fetchWorkers();
+      fetchClients();
+    }, []);
+    
   const [showCreateProfileModal, setShowCreateProfileModal] = useState(false);
   const [profile, setProfile] = useState(initialProfile);
   const [valErrors, setValErrors] = useState({});
   const [fetchError, setFetchError] = useState('');
-  // Estado para forzar la recarga de datos
-  const [reload, setReload] = useState(false);
-
-  // useEffect para cargar los datos de la base de datos al montar el componente y cuando cambie reload
-  useEffect(() => {
-    // Función para obtener trabajadores y admins
-    const fetchWorkers = async () => {
-      try {
-        const res = await fetchData('user/workers', 'GET');
-        const resAdmins = await fetchData('user/admins', 'GET');
-        // Mapeo de los datos ajustando los nombres
-        const workersData = [
-          ...res.data.workers,
-          ...resAdmins.data.admins
-        ].map((w) => ({
-          id: w.id_user,
-          name: `${w.name_user} ${w.last_name}`,
-          phone: w.phone,
-          email: w.email,
-          type: w.type,
-        }));
-        setWorkers(workersData);
-      } catch (error) {
-        console.error('Error al obtener trabajadores y admins:', error);
-      }
-    };
-
-    // Función para obtener clientes
-    const fetchClients = async () => {
-      try {
-        const res = await fetchData('user/clients', 'GET');
-        // Mapeo de los datos ajustando los nombres
-        const clientsData = res.data.clients.map((c) => ({
-          id: c.id_user,
-          name: `${c.name_user} ${c.last_name}`,
-          phone: c.phone,
-          email: c.email,
-        }));
-        setClients(clientsData);
-      } catch (error) {
-        console.error('Error al obtener clientes:', error);
-      }
-    };
-
-    // Llamamos a las funciones para cargar los datos
-    fetchWorkers();
-    fetchClients();
-  }, [reload]);
-
-  // Cambiar tipo a admin (type = 1)
-  const handleMakeAdmin = async (userId) => {
-    try {
-      await fetchData(`user/makeAdmin/${userId}`, 'PUT');
-      setReload(r => !r); // Cambiamos reload para forzar recarga de datos
-    } catch (error) {
-      console.error('Error al hacer admin:', error);
-    }
-  };
-  // Cambiar tipo a trabajador (type = 2)
-  const handleMakeWorker = async (userId) => {
-    try {
-      await fetchData(`user/makeWorker/${userId}`, 'PUT');
-      setReload(r => !r); // Cambiamos reload para forzar recarga de datos
-    } catch (error) {
-      console.error('Error al hacer trabajador:', error);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -106,7 +101,7 @@ const AdminManage = () => {
     e.preventDefault();
     setValErrors({});
     setFetchError('');
-    //validación del select type (que escoja uno)
+    //validación del select type
     if (!profile.type || (profile.type !== 'worker' && profile.type !== 'client')) {
       setValErrors({ type: 'Selecciona un tipo de perfil' });
       return;
@@ -221,6 +216,7 @@ const AdminManage = () => {
         <div className="agr-section-title">
           <h2 className="agr-subtitle">Clientes</h2>
         </div>
+
         <div className="agr-table-wrap">
           <table className="agr-table">
             <thead>
@@ -255,18 +251,20 @@ const AdminManage = () => {
       </section>
 
       <div className="agr-bottom">
-        <button
-          className="agr-back"
-          type="button"
-          onClick={() => setShowCreateProfileModal(true)}
-        >
-          <RiUserAddLine />
-          <span>Añadir perfil</span>
-        </button>
+      <button
+        className="agr-back"
+        type="button"
+        onClick={() => setShowCreateProfileModal(true)}
+      >
+        <RiUserAddLine />
+        <span>Añadir perfil</span>
+      </button>
+      
         <button className="agr-back" type="button" onClick={() => navigate(-1)}>
           ATRÁS
         </button>
-      </div>
+     
+ </div>
       <ModalCreateProfile
         show={showCreateProfileModal}
         onClose={() => setShowCreateProfileModal(false)}
