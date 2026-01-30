@@ -15,6 +15,7 @@ import userRouter from './modules/user/user.routes.js';
 import adminRouter from "./modules/admin/admin.routes.js";
 import workerRouter from "./modules/worker/worker.routes.js";
 import availabilityRouter from './modules/availability/availability.routes.js'
+import serviceRouter from "./modules/service/service.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +36,8 @@ app.use("/appointment", appointmentRouter);
 app.use("/admin", adminRouter)
 app.use("/worker", workerRouter);
 app.use("/availability", availabilityRouter);
+app.use('/contact', userRouter);
+app.use("/service", serviceRouter);
 
 
 // catch 404 and forward to error handler

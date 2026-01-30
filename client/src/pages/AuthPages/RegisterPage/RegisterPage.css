@@ -7,6 +7,7 @@ body {
 }
 
 .register-page {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -14,6 +15,7 @@ body {
   padding-bottom: 140px;
   position: relative;
 }
+
 
 .register-card {
   background-color: #E6D3C2;
