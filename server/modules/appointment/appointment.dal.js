@@ -33,7 +33,8 @@ class AppointmentDal {
         JOIN user u ON u.user_id = a.employee_user_id
         WHERE a.status != 3
       `;
-      return await executeQuery(sql);
+      let result = await executeQuery(sql);
+      return result
     }
      catch (error) 
      {

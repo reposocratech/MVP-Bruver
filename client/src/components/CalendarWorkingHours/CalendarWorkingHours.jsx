@@ -5,56 +5,24 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { useState } from 'react'
-import { ModalWorkingHours } from '../Modal/ModalWorkingHours/ModalWorkingHours'
+
 
 dayjs.locale('es');
 dayjs.extend(customParseFormat)
+
 const localizer = dayjsLocalizer(dayjs)
 const DnDCalendar = withDragAndDrop(Calendar);
 
-export const CalendarWorkingHours = () => {
-  const [view, setView] = useState('week');
-  const [date, setDate] = useState(new Date());
-  const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  //crear evento
-  const handleSelectSlot = ({ start, end }) => {
-    const title = window.prompt("Título del evento");
-
-    if (!title) return;
-
-    // Verificar si ya existe un evento en el rango seleccionado
-    const overlappingEvent = events.some(event =>
-      (start < event.end && end > event.start) // Verificar superposición
-    );
-
-    if (overlappingEvent) {
-      alert("Ya existe un evento en este rango de tiempo.");
-      return;
-    }
-
-    setEvents((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        title,
-        start,
-        end,
-      }
-    ]);
-  }
-
-  //modificar horas de un evento ya creado 
-  const handleSelectEvent = (event) => {
-    setSelectedEvent(event);
-    setIsModalOpen(true)
-  };
-
-
-
+export const CalendarWorkingHours = ({
+  view,
+  date,
+  events,
+  setView,
+  setDate,
+  handleSelectSlot,
+  handleSelectEvent,
+}) => {
+  
 
   return (
     <>
@@ -67,7 +35,7 @@ export const CalendarWorkingHours = () => {
         onNavigate={setDate}
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
-        selectable='ignoreEvents'
+        selectable
         views={['week']}
         startAccessor="start"
         endAccessor="end"
@@ -78,38 +46,8 @@ export const CalendarWorkingHours = () => {
         style={{ height: "95vh" }}
 
         resizable
-        onEventDrop={({ event, start, end }) => {
-          setEvents(prev =>
-            prev.map(e =>
-              e.id === event.id
-                ? { ...e, start, end }
-                : e
-            )
-          );
-        }}
-
-        onEventResize={({ event, start, end }) => {
-          setEvents(prev =>
-            prev.map(e =>
-              e.id === event.id
-                ? { ...e, start, end }
-                : e
-            )
-          );
-        }}
+       
       />
-
-      {isModalOpen && selectedEvent && (
-        <ModalWorkingHours
-          show={isModalOpen}
-          setShow={setIsModalOpen}
-          selectedEvent={selectedEvent}
-          setEvents={setEvents}
-          
-        />
-      )}
-
-
 
 
     </>

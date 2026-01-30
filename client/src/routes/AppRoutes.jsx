@@ -25,6 +25,8 @@ const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/Selec
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
 const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
+
+
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
 const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
 
@@ -71,7 +73,7 @@ export const AppRoutes = () => {
                <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} /> 
                <Route path="/addpet" element={<AddPet />} />
-               <Route path="/selectservices" element={<SelectServices />} /> 
+               <Route path="/selectservices/:petId" element={<SelectServices />} /> 
                <Route path="/selectdate" element={<SelectDate />} /> 
             </Route>
           </Route>
@@ -80,7 +82,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes/>}>
                 <Route element={<WorkerLayout/>}>
                    <Route path="/worker" element={<Worker />} /> 
-                   <Route path="worker/profile" element={<WorkerProfile />} />
+                   <Route path="/worker/profile" element={<WorkerProfile />} />
                 </Route>    
           </Route>
 
@@ -92,7 +94,7 @@ export const AppRoutes = () => {
               <Route path="/admin/manage" element={<AdminManage />}/>
               <Route path="/admin/general" element={<GeneralCalendarPage/>} />
               <Route path="/admin/appointments" element={<AdminAppointments />} />
-              <Route path="/admin/workinghours" element={<AdminWorkingHours />} />
+              <Route path="/admin/workinghours/:adminId" element={<AdminWorkingHours />} />
             </Route>
           </Route>
 

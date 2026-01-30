@@ -1,13 +1,41 @@
+body {
+  padding-right: 0 !important;
+}
+html {
+  overflow-y: scroll;
+}
+
+
 .navbar-custom {
   background-color: #E6D3C2;
-  padding: 16px 48px;
+  padding-left: 0;
+  padding-right: 0;
+  
 }
- 
+
+.profile-btn {
+  position: relative;
+}
+
+.profile-btn-img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: block;
+}
+
+
 .navbar-logo-img {
   height: 50px;
 }
  
- 
+
+.navbar-custom .container-fluid {
+  padding-left: 48px;
+  padding-right: 48px;
+  box-sizing: border-box;
+}
+
 .nav-btn-icon-img {
   width: 25px;
 }
@@ -172,6 +200,7 @@
   top: 44px;
 }
  
+
  
 .profile-btn {
   position: relative;
@@ -189,6 +218,8 @@
  
   transition: box-shadow 0.25s ease;
 }
+
+
  
 .profile-btn:hover {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
@@ -217,3 +248,4 @@
 .profile-btn:hover .profile-filled {
   height: 100%;
 }
+

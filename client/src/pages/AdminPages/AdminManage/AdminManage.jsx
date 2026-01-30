@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router';
 import { profileSchema } from '../../../schemas/ProfileSchema';
@@ -19,24 +19,83 @@ const initialProfile = {
   repeatPassword: '',
 };
 
-const initialWorkers = [
-  { id: 1, name: 'Carol Rodriguez Lopez', phone: '+34678965412', email: 'Carol.Rodriguez@gmail.com' },
-  { id: 2, name: 'Javi Sanchez Torres', phone: '+34678965413', email: 'Javi.Sanchez@gmail.com' }
-];
-const initialClients = [
-  { id: 1, name: 'Soledad Ortega', phone: '+34526859614', email: 'sole_og66@gmail.com' },
-  { id: 2, name: 'Óscar Torres', phone: '+34845254132', email: 'oscartorres@gmail.com' }
-];
-
-
 const AdminManage = () => {
+  
   const navigate = useNavigate();
-  const [workers, setWorkers] = useState(initialWorkers);
-  const [clients, setClients] = useState(initialClients);
+
+  const [workers, setWorkers] = useState([]);
+  const [clients, setClients] = useState([]);
   const [showCreateProfileModal, setShowCreateProfileModal] = useState(false);
   const [profile, setProfile] = useState(initialProfile);
   const [valErrors, setValErrors] = useState({});
   const [fetchError, setFetchError] = useState('');
+  // Estado para forzar la recarga de datos
+  const [reload, setReload] = useState(false);
+
+  // useEffect para cargar los datos de la base de datos al montar el componente y cuando cambie reload
+  useEffect(() => {
+    // Función para obtener trabajadores y admins
+    const fetchWorkers = async () => {
+      try {
+        const res = await fetchData('user/workers', 'GET');
+        const resAdmins = await fetchData('user/admins', 'GET');
+        // Mapeo de los datos ajustando los nombres
+        const workersData = [
+          ...res.data.workers,
+          ...resAdmins.data.admins
+        ].map((w) => ({
+          id: w.id_user,
+          name: `${w.name_user} ${w.last_name}`,
+          phone: w.phone,
+          email: w.email,
+          type: w.type,
+        }));
+        setWorkers(workersData);
+      } catch (error) {
+        console.error('Error al obtener trabajadores y admins:', error);
+      }
+    };
+
+    // Función para obtener clientes
+    const fetchClients = async () => {
+      try {
+        const res = await fetchData('user/clients', 'GET');
+        // Mapeo de los datos ajustando los nombres
+        const clientsData = res.data.clients.map((c) => ({
+          id: c.id_user,
+          name: `${c.name_user} ${c.last_name}`,
+          phone: c.phone,
+          email: c.email,
+        }));
+        setClients(clientsData);
+      } catch (error) {
+        console.error('Error al obtener clientes:', error);
+      }
+    };
+
+    // Llamamos a las funciones para cargar los datos
+    fetchWorkers();
+    fetchClients();
+  }, [reload]);
+
+  // Cambiar tipo a admin (type = 1)
+  const handleMakeAdmin = async (userId) => {
+    try {
+      await fetchData(`user/makeAdmin/${userId}`, 'PUT');
+      setReload(r => !r); // Cambiamos reload para forzar recarga de datos
+    } catch (error) {
+      console.error('Error al hacer admin:', error);
+    }
+  };
+  // Cambiar tipo a trabajador (type = 2)
+  const handleMakeWorker = async (userId) => {
+    try {
+      await fetchData(`user/makeWorker/${userId}`, 'PUT');
+      setReload(r => !r); // Cambiamos reload para forzar recarga de datos
+    } catch (error) {
+      console.error('Error al hacer trabajador:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,13 +106,11 @@ const AdminManage = () => {
     e.preventDefault();
     setValErrors({});
     setFetchError('');
-    //validación del select type
+    //validación del select type (que escoja uno)
     if (!profile.type || (profile.type !== 'worker' && profile.type !== 'client')) {
       setValErrors({ type: 'Selecciona un tipo de perfil' });
       return;
     }
-      console.log('submitProfile ejecutado'); // DEPURACIÓN: Ver si se ejecuta al pulsar ACEPTAR
-      console.log('Datos del perfil:', profile); // DEPURACIÓN: Ver los datos que llegan del formulario
     try {
       //validar los campos
       profileSchema.parse(profile);
@@ -95,7 +152,6 @@ const AdminManage = () => {
       setShowCreateProfileModal(false);
       setProfile(initialProfile);
     } catch (error) {
-      console.log('ERROR REAL:', error); // DEPURACIÓN: Mostrar el error real
       if (error instanceof ZodError) {
         const fieldsErrors = {};
         error.issues.forEach((elem) => {
@@ -143,9 +199,15 @@ const AdminManage = () => {
                       <button className="agr-pill" type="button">
                         EDITAR
                       </button>
-                      <button className="agr-pill" type="button">
-                        HACER ADMIN
-                      </button>
+                      {w.type === 2 ? (
+                        <button className="agr-pill" type="button" onClick={() => handleMakeAdmin(w.id)}>
+                          HACER ADMIN
+                        </button>
+                      ) : w.type === 1 ? (
+                        <button className="agr-pill" type="button" onClick={() => handleMakeWorker(w.id)}>
+                          HACER TRABAJADOR
+                        </button>
+                      ) : null}
                     </div>
                   </td>
                 </tr>
@@ -159,7 +221,6 @@ const AdminManage = () => {
         <div className="agr-section-title">
           <h2 className="agr-subtitle">Clientes</h2>
         </div>
-
         <div className="agr-table-wrap">
           <table className="agr-table">
             <thead>
@@ -194,20 +255,18 @@ const AdminManage = () => {
       </section>
 
       <div className="agr-bottom">
-      <button
-        className="agr-back"
-        type="button"
-        onClick={() => setShowCreateProfileModal(true)}
-      >
-        <RiUserAddLine />
-        <span>Añadir perfil</span>
-      </button>
-      
+        <button
+          className="agr-back"
+          type="button"
+          onClick={() => setShowCreateProfileModal(true)}
+        >
+          <RiUserAddLine />
+          <span>Añadir perfil</span>
+        </button>
         <button className="agr-back" type="button" onClick={() => navigate(-1)}>
           ATRÁS
         </button>
-     
- </div>
+      </div>
       <ModalCreateProfile
         show={showCreateProfileModal}
         onClose={() => setShowCreateProfileModal(false)}

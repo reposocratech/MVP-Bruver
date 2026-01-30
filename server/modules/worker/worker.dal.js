@@ -29,6 +29,37 @@ class WorkerDal {
       throw error;
     }
   };
+
+  getClientPets = async (clientId) => {
+    try {
+      const sql = `
+        SELECT pet_id, name_pet, size_category, specie
+        FROM pet
+        WHERE user_id = ?
+          AND pet_is_deleted = 0
+        ORDER BY name_pet ASC
+      `;
+      return await executeQuery(sql, [clientId]);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getServices = async (type, size_category) => {
+    try {
+      const sql = `
+        SELECT service_id, title, duration_minutes, price, type, size_category
+        FROM service
+        WHERE is_active_services = 1
+          AND type = ?
+          AND size_category = ?
+        ORDER BY title ASC
+      `;
+      return await executeQuery(sql, [type, size_category]);
+    } catch (error) {
+      throw error;
+    }
+  };
 }
 
 export default new WorkerDal();
