@@ -1,6 +1,7 @@
 import executeQuery from "../../config/db.js";
 
 class UserDal {
+
   register = async (values) => {
     try {
       let sql =
@@ -77,6 +78,29 @@ class UserDal {
       throw error;
     }
   };
+
+  // Obtener usuarios por tipo (2=worker, 3=client)
+  getUsersByType = async (type) => {
+    try {
+      const sql = `SELECT user_id as id_user, name_user, last_name, phone, email, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
+      const result = await executeQuery(sql, [type]);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  // Actualizar el tipo del usuario
+  updateUserType = async (user_id, type) => {
+    try {
+      const sql = `UPDATE user SET type = ? WHERE user_id = ?`;
+      const result = await executeQuery(sql, [type, user_id]);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
 }
 
 export default new UserDal();
