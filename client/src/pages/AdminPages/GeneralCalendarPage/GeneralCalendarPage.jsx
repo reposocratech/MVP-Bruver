@@ -6,11 +6,12 @@ import { CalendarGeneral } from '../../../components/CalendarGeneral/CalendarGen
 
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { buildDate } from '../../../helpers/buildDateHelper.js'
 
 dayjs.extend(customParseFormat)
 
 const GeneralCalendarPage = () => {
-  const [view, setView] = useState('day') //calendario que se muestra (month, week, day) 
+  const [view, setView] = useState('day') 
   const [date, setDate] = useState(new Date())
   const [appoiment, setAppoiment] = useState([])
 
@@ -19,11 +20,9 @@ const GeneralCalendarPage = () => {
   useEffect(() => {
     const fetcTest = async () => {
       try {
-        const res = await fetchData("appointment/getGeneralAppoiment", "get")
+        const res = await fetchData("appointment/getGeneralAppoiment", "get", null, token)
         setAppoiment(res.data.result)
 
-
-        /* console.log("datos guardados en res", res.data.result); */
       } catch (error) {
         console.log(error);
 
@@ -32,16 +31,7 @@ const GeneralCalendarPage = () => {
     fetcTest();
   }, [])
 
-  /* console.log("token que llega", token); */
-
-
-  //funcion invalidate date
-  const buildDate = (date, time) => {
-    const [h, m, s] = time.split(':')
-    const d = new Date(date)
-    d.setHours(h, m, s || 0)
-    return d
-  }
+ 
 
 
   //eventos en el calendario mapeados
@@ -62,9 +52,7 @@ const GeneralCalendarPage = () => {
     { id: 3, title: 'Maria' },
   ]
 
-  console.log("datos guardados en appoiment2", appoiment);
-  console.log("Fecha calendario:", date)
-  console.log("Primer evento:", allEvents[0])
+  
 
   return (
     <>

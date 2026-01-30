@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../helpers/axiosHelper";
 import { useNavigate } from "react-router";
 import "./UsersPetsGallery.css";
  
-export const UsersPetsGallery = () => {
+export const UsersPetsGallery = ({ setOpenModalEditPet, setSelectedPet }) => {
   // 1) Traemos del contexto el array de mascotas, token y el setter global
   const { pets, token, setPets } = useContext(AuthContext);
  
@@ -30,6 +30,12 @@ export const UsersPetsGallery = () => {
  
   },
    []);
+
+   //Setear la mascota a Editar
+   const selectEditablePet = (pet) => {
+      setSelectedPet(pet);
+      setOpenModalEditPet(true);
+   }
  
   // 3) Borrar mascota en BD y actualizar el array global quitando esa mascota
   const delPet = async (pet_id, pet_name) => {
@@ -77,7 +83,7 @@ export const UsersPetsGallery = () => {
                 <button
                   className="petBtn"
                   type="button"
-                  onClick={() => navigate(`/profile/edit-pet/${elem.pet_id}`)}
+                  onClick={()=>selectEditablePet(elem)}
                 >
                   EDITAR
                 </button>

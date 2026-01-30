@@ -1,175 +1,188 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
 .addPetPage {
-  min-height: calc(100vh - 160px);
   background: #f4efe8;
-  padding: 40px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-height: calc(100vh - 160px);
+  padding: 40px 20px 80px;
+  font-family: "Raleway", sans-serif;
 }
 
 .addPetTitle {
   font-family: "Lora", serif;
+  text-align: center;
   color: #6bb3a7;
   font-weight: 700;
   letter-spacing: 1px;
-  margin-bottom: 28px;
-  text-align: center;
+  margin-bottom: 40px;
+  font-size: 32px;
 }
 
 .addPetForm {
-  width: 100%;
-  max-width: 820px;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .addPetGroup {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .addPetLabel {
-  font-family: "Raleway", sans-serif;
+  display: block;
   font-weight: 700;
+  color: #3a2f2a;
   margin-bottom: 8px;
-  color: #1f1f1f;
+  font-size: 14px;
 }
 
-.addPetInput {
-  border-radius: 10px;
-  border: 1px solid #e2d6ca;
-  padding: 12px 14px;
+.addPetInput,
+.addPetTextarea {
+  width: 100%;
+  border: 1px solid #e1d2c3;
+  border-radius: 16px;
+  padding: 14px 16px;
+  font-size: 14px;
+  background: #ffffff;
+  font-family: "Raleway", sans-serif;
+}
+
+.addPetInput:focus,
+.addPetTextarea:focus {
+  outline: none;
+  border-color: #6bb3a7;
+  box-shadow: 0 0 0 2px rgba(107, 179, 167, 0.25);
 }
 
 .addPetTextarea {
-  border-radius: 12px;
-  border: 1px solid #e2d6ca;
-  padding: 14px;
+  min-height: 120px;
   resize: vertical;
-  min-height: 160px;
 }
 
-/* Categorías */
 .categoryGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 18px;
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .categoryCard {
-  background: #e8d6c7;
-  border: 2px solid rgba(31, 31, 31, 0.18);
-  border-radius: 12px;
-  padding: 16px 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  position: relative;
+  background: #ead8c7;
+  border-radius: 20px;
+  padding: 20px 22px;
   cursor: pointer;
-  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  border: 2px dashed #6bb3a7;
+  box-shadow:
+    0 0 0 4px #ead8c7,
+    4px 4px 12px rgba(0, 0, 0, 0.22);
   text-align: left;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .categoryCard:hover {
-  transform: translateY(-1px);
+  background: #e2ccb8;
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 4px #ead8c7,
+    6px 6px 18px rgba(0, 0, 0, 0.28);
 }
 
 .categoryCard.selected {
-  border-color: #6bb3a7;
-  box-shadow: 0 0 0 3px rgba(107, 179, 167, 0.25);
+  background: #ead8c7;
+  box-shadow:
+    0 0 0 4px #ead8c7,
+    6px 6px 20px rgba(58, 47, 42, 0.3);
 }
 
 .categoryText h4 {
-  margin: 0;
-  font-family: "Raleway", sans-serif;
+  margin: 0 0 6px;
   font-weight: 800;
-  font-size: 18px;
-  color: #1f1f1f;
+  font-size: 16px;
+  color: #3a2f2a;
 }
 
 .categoryText p {
-  margin: 6px 0 0;
-  font-family: "Raleway", sans-serif;
-  font-weight: 600;
+  margin: 0;
   font-size: 13px;
-  color: rgba(31, 31, 31, 0.75);
+  color: #6a5a50;
 }
 
-/* Cuadradito tipo checkbox */
 .categoryCheck {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
   width: 18px;
   height: 18px;
   border-radius: 4px;
-  border: 2px solid rgba(31, 31, 31, 0.35);
+  border: 2px solid #6bb3a7;
   background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .categoryCheck.on {
-  border-color: #6bb3a7;
   background: #6bb3a7;
 }
 
-/* Botones */
-.addPetButtons {
+.categoryCheck.on::after {
+  content: "✓";
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.addPetActions {
   display: flex;
   justify-content: center;
-  gap: 14px;
-  margin-top: 18px;
-  
+  gap: 1.6rem;
+  margin-top: 42px;
 }
 
-.btnConfirm {
-  background-color: #6bb3a7;
+.addPetBtn {
   border: none;
-  border-radius: 18px;
-  padding: 10px 26px;
-  font-family: "Raleway", sans-serif;
-  font-weight: 800;
-  color: #ffffff;
+  padding: 12px 34px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  transition: all 0.3s ease;
 }
 
-.btnCancel {
-  background-color: #e8d6c7;
-  color: #1f1f1f;
-  border: none;
-  border-radius: 18px;
-  padding: 10px 26px;
-  font-family: "Raleway", sans-serif;
-  font-weight: 800;
+.addPetBtn.acept {
+  background: #6bb3a7;
+  color: white;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-.btnConfirm:hover,
-.btnCancel:hover {
-  opacity: 0.92;
-  background-color: #6bb3a7;
+.addPetBtn.acept:hover {
+  transform: translateY(-2px) scale(1.03);
+  opacity: 0.9;
 }
 
-/* Disabled más claro */
-.btnConfirm:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background-color: #a2b2af;
+.addPetBtn.acept:active {
+  transform: translateX(2px) translateY(2px);
+  box-shadow: none;
 }
 
-/* Responsive */
+.addPetBtn.cancel {
+  background: #ffffff;
+  color: #6bb3a7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.addPetBtn.cancel:hover {
+  transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
-  .addPetPage {
-    padding: 28px 16px;
-  }
-
-  .addPetForm {
-    max-width: 520px;
-  }
-
   .categoryGrid {
     grid-template-columns: 1fr;
   }
 
-  .addPetButtons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .btnConfirm,
-  .btnCancel {
-    width: 100%;
-    max-width: 340px;
+  .addPetTitle {
+    font-size: 26px;
   }
 }

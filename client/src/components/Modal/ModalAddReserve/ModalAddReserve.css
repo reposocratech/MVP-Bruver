@@ -12,6 +12,25 @@
   animation: fadeIn 0.3s ease forwards;
 }
 
+.clientRow {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+.clientRow:hover {
+  background-color: #f3bc8d;
+}
+
+.selectedClientRow {
+  background-color: #d49e6f;
+  border: 1px solid #4A2E24;
+}
+
+h3 {
+  color: #4A2E24;
+}
+
 th{
   background-color: #6AAFA5;
 }
@@ -60,16 +79,13 @@ th{
   }
 }
 
-
 .searchClient{
 margin: 1rem;
 }
 
-
 .tableClients td{
   padding: 1rem;
 }
-
 
 .searchClient,
 .quickReserveForm,
@@ -118,11 +134,11 @@ margin: 1rem;
     opacity: 1;
   }
 }
-/* Evita que los TH se peguen cuando no hay resultados */
+/* Para que los títulos no se junten si no hay datos */
 .tableClients table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: auto; /* clave: reparte columnas */
+  table-layout: auto;
   
 }
 
@@ -130,21 +146,21 @@ margin: 1rem;
 .tableClients td {
   padding: 10px 12px;  /* separación horizontal */
   text-align: left;
-  white-space: nowrap; /* que no se rompa raro */
+  white-space: nowrap; /* que no se rompa*/
   color: #4A2E24;
 }
 
-/* Opcional: si quieres que el email pueda partirse en pantallas pequeñas */
-/* EMAIL: que haga salto de línea */
+
+/* Por si no cabe todo el email en una línea */
 .tableClients td:nth-child(3) {
-  white-space: normal;         /* permite salto */
-  overflow-wrap: anywhere;     /* rompe si hace falta */
-  word-break: break-word;      /* fallback */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Que la lista de clientes tenga scroll si hay muchos */
 .tableClients {
-  max-height: 400px;      /* ajusta a tu modal (220-320 suele ir bien) */
+  max-height: 400px;
   min-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -161,11 +177,7 @@ margin: 1rem;
 }
 
 
-
-
-/* ===== RESPONSIVE TABLE: tablet & mobile sin scroll horizontal ===== */
-
-/* Base: asegura que NO haya scroll horizontal en el modal */
+/* para que no haya scroll horizontal */
 .addReserveCardModal,
 .tableClients,
 .tableClients table {
@@ -175,7 +187,7 @@ margin: 1rem;
 .tableClients table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* reparte bien el espacio */
+  table-layout: fixed;
 }
 
 .tableClients th,
@@ -184,7 +196,6 @@ margin: 1rem;
   text-overflow: ellipsis;
 }
 
-/* En desktop: mantenemos 3 columnas y controlamos anchos */
 .tableClients th:nth-child(1),
 .tableClients td:nth-child(1) {
   width: 36%;
@@ -200,14 +211,13 @@ margin: 1rem;
   width: 42%;
 }
 
-/* Email: que rompa línea si es largo */
+/* salto de línea del email */
 .tableClients td:nth-child(3) {
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
 }
 
-/* ---------- TABLET (<= 1024px) ---------- */
 /* Ocultamos la columna Teléfono, y lo mostramos debajo del nombre */
 @media (max-width: 1024px) {
   .addReserveGridModal {
@@ -237,7 +247,7 @@ margin: 1rem;
     width: 55%;
   }
 
-  /* Teléfono debajo del nombre (usa data-phone que ya tienes) */
+  /* Teléfono debajo del nombre */
   .tableClients td:nth-child(1)::after {
     content: attr(data-phone);
     display: block;
@@ -291,13 +301,13 @@ margin: 1rem;
     display: none;
   }
 
-  /* Ocultamos columnas Teléfono y Email como columnas */
+  /* Ocultar columnas Teléfono y Email como columnas */
   .tableClients tbody td:nth-child(2),
   .tableClients tbody td:nth-child(3) {
     display: none;
   }
 
-  /* SOLO una columna visible */
+
   .tableClients th:nth-child(1),
   .tableClients td:nth-child(1) {
     width: 100%;
@@ -307,9 +317,9 @@ margin: 1rem;
     line-height: 1.25;
   }
 
-  /* Mostramos debajo: teléfono + email (desde la celda 1) */
+  /* Debajo teléfono + email  */
   .tableClients tbody tr td:nth-child(1)::after {
-  content: "📞 " attr(data-phone);
+  content: attr(data-phone);
   display: block;
   margin-top: 6px;
   font-size: 13px;
@@ -317,7 +327,7 @@ margin: 1rem;
   white-space: nowrap;
 }
 
-  /* Truco: imprimir el email debajo del teléfono usando la celda 3 como “data” visual */
+  /* Truco: email debajo del teléfono */
   .tableClients tbody tr {
     position: relative;
   }
@@ -349,4 +359,317 @@ margin: 1rem;
     font-size: 14px;
   }
 }
+
+/* Calendariooooooo */
+
+.addReserveCardModal .selectDateTitle {
+  color: #6bb3a7;
+  font-size: 26px;
+  margin: 10px 0 14px;
+  font-family: "Lora", serif;
+  text-align: center;
+}
+
+/* calendario + horas */
+.addReserveCardModal .calendarAndHours{
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.addReserveCardModal .calendar-container{
+  flex: 0 0 65%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Contenedor principal del calendario */
+.addReserveCardModal .react-calendar {
+  background: #e9d9c8 !important;
+  border: none !important;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 0;
+  font-family: "Lora", serif;
+  width: 100%;
+  max-width: 520px;
+  min-height: 320px;
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
+  margin-bottom: 1rem;
+}
+
+
+.addReserveCardModal .react-calendar__navigation button {
+  background: transparent;
+  border: none;
+  font-weight: 600;
+  font-size: 20px;
+  color: #4A2E24;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 6px 10px;
+}
+
+/* Días de la semana */
+.addReserveCardModal .react-calendar__month-view__weekdays {
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(74, 46, 36, 0.75);
+}
+
+
+/* Días */
+.addReserveCardModal .react-calendar__tile {
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 600;
+  color: #4A2E24;
+  background: transparent;
+  height: 44px;
+}
+
+/* Día actual*/
+.addReserveCardModal .react-calendar__tile--now {
+  background: white !important;
+  color: #4A2E24;
+  font-weight: 800;
+}
+
+/* Día seleccionado */
+.addReserveCardModal .react-calendar__tile--active {
+  background: #5fae9c !important;
+  color: white !important;
+  font-weight: 800;
+}
+
+.addReserveCardModal .react-calendar__tile:enabled:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: #4A2E24;
+}
+
+/* Días de otros meses */
+.addReserveCardModal .react-calendar__month-view__days__day--neighboringMonth {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+
+/* Responsive calendario */
+@media (max-width: 1024px) {
+  .addReserveCardModal .calendarAndHours {
+    gap: 20px;
+  }
+
+  .addReserveCardModal .react-calendar {
+    width: 90%;
+    max-width: 80%;
+    padding: 8px;
+  }
+
+  .addReserveCardModal .react-calendar__navigation button {
+    font-size: 18px;
+  }
+
+  .addReserveCardModal .react-calendar__tile {
+    font-size: 15px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .addReserveCardModal .calendarAndHours {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .addReserveCardModal .calendar-container {
+    width: 100%;
+  }
+
+  .addReserveCardModal .react-calendar {
+    width: 95%;
+    max-width: 100%;
+  }
+}
+
+
+.hourColumn {
+  flex: 0 0 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hourLabel {
+  font-family: "Lora", serif;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #4A2E24;
+}
+
+/* desplegable de la hora (flecha)*/
+.hourSelectWrap {
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+}
+
+/* Botón que abre el desplegable */
+.hourSelectBtn {
+  width: 100%;
+  height: 44px;
+  border-radius: 14px;
+  border: 2px solid rgba(95, 174, 156, 0.6);
+  background: #fff;
+  color: #4A2E24;
+  font-family: "Lora", serif;
+  font-size: 16px;
+  padding: 0 14px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.10);
+}
+
+.hourSelectBtn:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hourChevron {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Desplegable: que no baje hasta tapar los campos de abajo */
+.hourDropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  background: #fdeddf;
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  z-index: 50;
+  max-height: 260px;
+  overflow-y: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Botones de hora */
+.hourOption {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 0;
+  font-family: "Lora", serif;
+  font-size: 15px;
+  cursor: pointer;
+  background: #5fae9c;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.hourOption:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+}
+
+.quickReserveForm select{
+  width: 50%;
+  height: 44px;
+  margin: 12px auto;
+  padding: 0 44px 0 14px;           /* espacio para la flecha */
+  border-radius: 14px;
+  border: 2px solid rgba(95, 174, 156, 0.6);
+  background-color: #ffffff;
+  color: #4A2E24;
+  font-family: "Lora", serif;
+  font-size: 16px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+  outline: none;
+  cursor: pointer;
+}
+
+/* Hover */
+.quickReserveForm select:hover{
+  background-color: rgba(255,255,255,0.7);
+}
+
+/* Focus */
+.quickReserveForm select:focus{
+  border-color: #5fae9c;
+  box-shadow: 0 0 0 4px rgba(95, 174, 156, 0.18);
+}
+
+.quickReserveForm select:disabled{
+  opacity: 0.55;
+}
+
+
+
+/* ajuste del modal */
+.addReserveCardModal {
+  max-height: 85vh;          /* para que no sobresalga de la página */
+  overflow-y: auto;         /* scroll */
+}
+
+/* Reducir un poco el padding para hacerlo más compacto */
+.addReserveCardModal {
+  padding: 1rem;
+}
+
+/* El contenedor no necesita ser tan ancho */
+.addReserveGridModal {
+  width: 70%;
+}
+
+/* En pantallas pequeñas */
+@media (max-width: 768px) {
+  .addReserveGridModal {
+    width: 95%;
+  }
+
+  .addReserveCardModal {
+    max-height: 90vh;
+  }
+}
+
+.supplementsBox{
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 6px 12px 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+
+
+.supplementCheck{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  font-family: "Lora", serif;
+  font-size: 18px;
+  color: #4A2E24;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.supplementCheck input{
+  width: 18px;
+  height: 18px;
+  accent-color: #5fae9c;
+}
+
 

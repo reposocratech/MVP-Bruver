@@ -8,6 +8,6 @@ const router = express.Router();
 router.get("/mine", verifyToken, appointmentController.getMine);
 
 // Citas generales
-router.get("/getGeneralAppoiment", appointmentController.getGeneralAppoiment);
+router.get("/getGeneralAppoiment",verifyToken, appointmentController.getGeneralAppoiment);
 
 export default router;

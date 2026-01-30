@@ -15,7 +15,7 @@ router.put("/profile", verifyToken, uploadImage("clients"), userController.updat
 router.put("/delete", verifyToken, userController.deleteLogic);
 
 router.post("/forgotPassword", userController.forgotPassword);
-router.post("/contact", userController.sendContact);
+router.post("/", userController.sendContact);
 
 // Endpoints para obtener trabajadores, clientes y admins para separarlos por las tablas de administración
 router.get("/workers", userController.getWorkers);

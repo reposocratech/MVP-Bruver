@@ -26,7 +26,7 @@ class AppointmentController {
 
       res.status(200).json({
         message: "Citas generales cargadas",
-        appointments: result,
+         result,
       }
     );
     } 

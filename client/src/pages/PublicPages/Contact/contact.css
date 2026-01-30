@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
+
 .contactPage {
   background: #F4EFE8;
   padding: 60px 20px;
@@ -12,6 +13,7 @@
 
 .contactTitle {
   color: #6BB3A7;
+  font-family: "Raleway", sans-serif;
   font-size: 38px;
   font-weight: 600;
   margin-bottom: 45px;
@@ -68,7 +70,6 @@
   box-shadow: 0 10px 22px rgba(107, 179, 167, 0.45);
 }
 
-
 .contactOptions {
   margin-top: 90px;
   margin-bottom: 20px;
@@ -82,38 +83,30 @@
   font-family: "Lora", serif;
 }
 
-
 .contactOptions .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-
   padding: 12px 22px;
   margin: 6px 10px;
-
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-
   color: #6BB3A7;
-  background-color: #FFFFFF; 
-
+  background-color: #FFFFFF;
   border: 2px solid #6BB3A7;
   border-radius: 999px;
-
   cursor: pointer;
   position: relative;
   overflow: hidden;
   z-index: 1;
-
   transition: color 0.3s ease;
 }
 
 .contactOptions .btn i {
   font-size: 18px;
 }
-
 
 .contactOptions .btn::before {
   content: "";
@@ -125,7 +118,6 @@
   z-index: -1;
 }
 
-
 .contactOptions .btn:hover {
   color: white;
   border-color: transparent;
@@ -134,8 +126,6 @@
 .contactOptions .btn:hover::before {
   transform: translateX(0);
 }
-
-
 
 .contactLocation {
   display: flex;
@@ -185,22 +175,34 @@
   margin: 4px 0;
 }
 
-/* Botón volver Contact */
 .contactBackBtn {
+  margin-top: 32px;
+  align-self: center;
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
   border: none;
-  color: #fff;
-  padding: 8px 18px;
+  padding: 10px 22px;
   font-size: 13px;
   font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-  background: #e6d3c2;
-  border-radius: 18px;
-  margin-top: 1.5rem;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
 }
 
 .contactBackBtn:hover {
-  background: #5a9f96;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}
+
+@media (max-width: 520px) {
+  .contactBackBtn {
+    margin-top: 26px;
+    font-size: 12px;
+    padding: 9px 20px;
+  }
 }

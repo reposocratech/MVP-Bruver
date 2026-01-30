@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
+
 body {
   background: #f4efe8;
   font-family: "Raleway", sans-serif;
@@ -71,15 +72,17 @@ table {
   width: 100%;
   background: #ecd9c8;
   border-radius: 20px;
-  padding: 18px 20px;
+  padding: 32px 28px;
+  min-height: 180px;
   border-collapse: collapse;
 }
 
 table td {
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 20px 0;
+  font-size: 17px;
   font-weight: 500;
   color: #6a5a50;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 table tr:last-child td {
@@ -136,8 +139,10 @@ table tr:last-child td {
   transition: transform 0.25s ease;
 }
 
-.option-card:hover {
-  transform: translateY(-4px);
+.option-card i {
+  font-size: 64px;
+  color: #000000;
+  margin-bottom: 24px;
 }
 
 .option-header {
@@ -153,46 +158,6 @@ table tr:last-child td {
   font-size: 14px;
   border-radius: 999px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-}
-
-.option-card i {
-  font-size: 64px;
-  color: #000000;
-  margin-bottom: 24px;
-}
-
-
-.back-btn {
-  margin-top: 140px;
-  align-self: flex-start;
-  background: #ecd9c8;
-  border: none;
-  border-radius: 18px;
-  padding: 10px 24px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-
-table {
-  width: 100%;
-  background: #ecd9c8;
-  border-radius: 20px;
-  padding: 32px 28px;
-  min-height: 180px;
-}
-
-table td {
-  padding: 20px 0;
-  font-size: 17px;
-}
-
-.option-card {
-  position: relative;
-  transition: transform 0.25s ease;
 }
 
 .option-card::before,
@@ -227,6 +192,30 @@ table td {
   transform: translateY(8px) rotate(4deg);
 }
 
+.back-btn {
+  margin-top: 140px;
+  align-self: flex-start;
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}
 
 @media (max-width: 768px) {
   .profile-card {
@@ -259,5 +248,9 @@ table td {
 
   table {
     text-align: center;
+  }
+
+  .back-btn {
+    margin-top: 80px;
   }
 }

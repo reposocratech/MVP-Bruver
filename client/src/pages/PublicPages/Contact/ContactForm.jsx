@@ -8,10 +8,7 @@ const ContactForm = () => {
     mensaje: "",
   });
 
-  const [status, setStatus] = useState({
-    ok: null,   // true | false | null
-    msg: ""
-  });
+  const [status, setStatus] = useState({ message: "" });
 
   const handleChange = (e) => {
     setForm({
@@ -22,7 +19,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus({ ok: null, msg: "" });
+    setStatus({ msg: "" });
 
     try {
       const res = await fetch("http://localhost:4000/contact", {
@@ -33,19 +30,19 @@ const ContactForm = () => {
         body: JSON.stringify(form)
       });
 
+      const data = await res.json();
+
       if (!res.ok) throw new Error();
 
       setStatus({
-        ok: true,
-        msg: "Mensaje enviado correctamente"
+       message: data.message
       });
 
       setForm({ nombre: "", telefono: "", email: "", mensaje: "" });
     } catch (error) {
       console.log(error)
       setStatus({
-        ok: false,
-        msg: "Error al enviar el mensaje"
+        message: "Error al enviar el mensaje"
       });
     }
   };

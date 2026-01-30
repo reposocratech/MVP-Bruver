@@ -1,151 +1,152 @@
-import { useContext, useEffect, useState } from "react";
-import "./ModalUserProfileEdit.css";
+import { useContext, useState } from 'react';
+import './ModalUserProfileEdit.css';
 
-import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
-import { fetchData } from "../../../helpers/axiosHelper";
-import { useNavigate } from "react-router";
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { fetchData } from '../../../helpers/axiosHelper';
+import { useNavigate } from 'react-router'; 
+import { Button } from 'react-bootstrap';
+
 
 const ModalUserProfileEdit = ({ onClose }) => {
-  const navigate = useNavigate();
-
-  // 1) Sacamos user/token y helpers del contexto
+  const navigate = useNavigate(); 
   const { user, setUser, token, logout } = useContext(AuthContext);
+  const [editUser, setEditUser] = useState(user);
+  const [avatar, setAvatar] = useState();
+  const [errorMsg, setErrorMsg] = useState('');
 
-  // 2) Estado local del formulario
-  const [form, setForm] = useState({
-    nombre: "",
-    apellidos: "",
-    telefono: "",
-    provincia: "",
-    ciudad: "",
-    direccion: "",
-    email: "",
-  }
-);
 
-  const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+    const handleChange = (e) =>{
+        const {name, value} = e.target;
+        if(name === "avatar"){
+            setAvatar(e.target.files[0])
+            };
+            setEditUser({...editUser, [name]: value})
+        }
 
-  // 3) Traer previsualización de datos del user al abrir modal
-  useEffect(() => {
-    if (user) {
-      setForm((prev) => ({
-        ...prev,
-        nombre: user.name_user || "",
-        apellidos: user.last_name || "",
-        telefono: user.phone || "",
-        provincia: user.province || "",
-        ciudad: user.city || "",
-        direccion: user.address || "",
-        email: user.email || "",
-      }));
+
+   const onSubmit = async() =>{
+        try {
+            const newFormdata = new FormData();
+            newFormdata.append("editUser", JSON.stringify(editUser));
+            if (avatar) newFormdata.append("img", avatar);
+
+            const res = await fetchData("user/profile", "PUT", newFormdata, token);
+
+            if(res?.data?.user) {
+                setUser(res.data.user);
+            }
+
+            onClose();
+
+        } catch (error) {
+            console.log(error);
+            setErrorMsg(error?.response?.data?.message || 'Error al actualizar el perfil');
+        }
     }
-  }, [user]);
-
-  // 4) Handle genérico para inputs
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // 5) Confirmar -> actualizar perfil en BD + actualizar contexto
-  const handleConfirm = async () => {
-    if (!token || loading) return;
-
-    try {
-      setLoading(true);
-      setErrorMsg("");
-
-      const body = {
-        name_user: form.nombre,
-        last_name: form.apellidos,
-        phone: form.telefono,
-        province: form.provincia,
-        city: form.ciudad,
-        address: form.direccion,
-      };
-
-      const res = await fetchData("user/profile", "PUT", body, token);
-
-      if (res?.data?.user) setUser(res.data.user);
-
-      onClose();
-    } catch (error) {
-      console.log(error);
-      setErrorMsg(error?.response?.data?.message || "Error al actualizar el perfil");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // 6) Eliminar perfil -> borrado lógico + logout + home
-  const handleDeleteProfile = async () => {
-    if (!token || loading) return;
+ const handleDeleteProfile = async () => {
+    if (!token) return;
 
     try {
-      if (window.confirm("¿Seguro que quieres eliminar tu perfil ?")) {
-        setLoading(true);
-        setErrorMsg("");
+      if (window.confirm('¿Seguro que quieres eliminar tu perfil ?')) {
+        setErrorMsg('');
 
-        await fetchData("user/delete", "PUT", null, token);
+        await fetchData('user/delete', 'PUT', null, token);
 
         logout();
         onClose();
-        navigate("/");
+        navigate('/');
       }
     } catch (error) {
       console.log(error);
-      setErrorMsg(error?.response?.data?.message || "Error al eliminar el perfil");
-    } finally {
-      setLoading(false);
-    }
-  };
+      setErrorMsg(
+        error?.response?.data?.message || 'Error al eliminar el perfil',
+      );
+  }; 
+}
 
   return (
     <section className="userProfileModal">
       <div className="userProfileModalContent">
         <h2 className="modalTitle">Edita tu perfil</h2>
 
-       
         <form className="userProfileForm">
           <label>Nombre</label>
-          <input name="nombre" value={form.nombre} onChange={handleChange} disabled={loading} />
+          <input
+            name="name_user"
+            value={editUser.name_user?editUser.name_user:""}
+            onChange={handleChange}
+          />
 
           <label>Apellidos</label>
-          <input name="apellidos" value={form.apellidos} onChange={handleChange} disabled={loading} />
+          <input
+            name="last_name"
+            value={editUser.last_name?editUser.last_name:""}
+            onChange={handleChange}
+          />
 
           <label>Teléfono</label>
-          <input name="telefono" value={form.telefono} onChange={handleChange} disabled={loading} />
+          <input
+            name="phone"
+            value={editUser.phone?editUser.phone:""}
+            onChange={handleChange}
+          />
 
           <label>Provincia</label>
-          <input name="provincia" value={form.provincia} onChange={handleChange} disabled={loading} />
+          <input
+            name="province"
+            value={editUser.province?editUser.province:""}
+            onChange={handleChange}
+          />
 
           <label>Ciudad</label>
-          <input name="ciudad" value={form.ciudad} onChange={handleChange} disabled={loading} />
+          <input
+            name="city"
+            value={editUser.city?editUser.city:""}
+            onChange={handleChange}
+          />
 
           <label>Dirección</label>
-          <input name="direccion" value={form.direccion} onChange={handleChange} disabled={loading} />
+          <input
+            name="address"
+            value={editUser.address?editUser.address:""}
+            onChange={handleChange}
+          />
 
           <label>Email</label>
-          <input name="email" value={form.email} disabled />
+          <input name="email" value={editUser.email?editUser.email:""} disabled />
 
           {errorMsg && <p className="text-danger">{errorMsg}</p>}
 
           <label>Cambiar foto</label>
-          <input type="file" className="changePhotoBtn" />
+          <input
+            type="file"
+            name="avatar"
+            onChange={handleChange}
+            className="changePhotoBtn"
+          />
 
           <div className="modalButtons">
-            <button className="confirmBtn" type="button" onClick={handleConfirm} disabled={loading}>
+            <Button
+              className="confirmBtn"
+              onClick={onSubmit}
+            >
               CONFIRMAR
-            </button>
+            </Button>
 
-            <button type="button" className="cancelBtn" onClick={onClose} disabled={loading}>
+            <button
+              type="button"
+              className="cancelBtn"
+              onClick={onClose}
+            >
               CANCELAR
             </button>
 
-            <button type="button" className="deleteBtn" onClick={handleDeleteProfile} disabled={loading}>
+            <button
+              type="button"
+              className="deleteBtn"
+              onClick={handleDeleteProfile}
+            >
               ELIMINAR PERFIL
             </button>
           </div>
@@ -153,6 +154,7 @@ const ModalUserProfileEdit = ({ onClose }) => {
       </div>
     </section>
   );
-};
+}
+
 
 export default ModalUserProfileEdit;

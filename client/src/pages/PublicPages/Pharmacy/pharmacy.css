@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
-
-
 .farmaciaPage {
   min-height: 100vh;
   background: #f4efe8;
@@ -24,12 +22,58 @@
   padding: 50px 30px 55px;
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: visible;
+  transition: transform 0.48s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease;
 }
 
 .farmaciaContent:hover {
-  transform: translateY(-6px);
+  transform: translateY(-16px);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+.farmaciaContent::before {
+  content: "";
+  position: absolute;
+  top: -4%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  transform: translateX(-50%);
+  background: #E6D3C2;
+  border-radius: 22px;
+  z-index: -1;
+  transform-origin: bottom;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.farmaciaContent::after {
+  content: "";
+  position: absolute;
+  top: -8%;
+  left: 50%;
+  width: 80%;
+  height: 80%;
+  transform: translateX(-50%);
+  background: #a9ccbb;
+  border-radius: 22px;
+  z-index: -2;
+  transform-origin: bottom;
+  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.farmaciaContent:hover::before {
+  rotate: -4deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.farmaciaContent:hover::after {
+  rotate: 5deg;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .farmaciaTitle {
@@ -72,6 +116,30 @@
   filter: brightness(1.03);
 }
 
+.pharmacyBackBtn {
+  margin-top: 32px;
+  align-self: center;
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.pharmacyBackBtn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}
+
 @media (max-width: 520px) {
   .farmaciaContent {
     padding: 40px 22px 45px;
@@ -93,85 +161,10 @@
   .farmaciaImg {
     width: 320px;
   }
-}
 
-
-
-.farmaciaContent {
-  position: relative;
-  overflow: visible;
-  transition: transform 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-
-.farmaciaContent::before {
-  content: "";
-  position: absolute;
-  top: -4%;
-  left: 50%;
-  width: 90%;
-  height: 90%;
-  transform: translateX(-50%);
-  background: #E6D3C2;
-  border-radius: 22px;
-  z-index: -1;
-  transform-origin: bottom;
-  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-
-
-.farmaciaContent::after {
-  content: "";
-  position: absolute;
-  top: -8%;
-  left: 50%;
-  width: 80%;
-  height: 80%;
-  transform: translateX(-50%);
-  /* filter:blur(5px); */
-  background: #a9ccbb;
-  border-radius: 22px;
-  z-index: -2;
-  transform-origin: bottom;
-  transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-
-.farmaciaContent:hover {
-  transform: translateY(-16px);
-}
-
-
-.farmaciaContent:hover::before {
-  rotate: -4deg;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.farmaciaContent:hover::after {
-  rotate: 5deg;
-  top: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.pharmacyBackBtn {
-  border: none;
-  color: #fff;
-  padding: 8px 18px;
-  font-size: 13px;
-  font-family: inherit;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-  background-color: #6c655e;
-  border-radius: 18px;
-  margin-top: 1.5rem;
-}
-
-.pharmacyBackBtn:hover {
-  background-color: #5a5550;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  .pharmacyBackBtn {
+    margin-top: 26px;
+    font-size: 12px;
+    padding: 9px 20px;
+  }
 }

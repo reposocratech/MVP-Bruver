@@ -86,7 +86,7 @@ const AdminProfile = () => {
 
           <div
             className="option-card option-card-link"
-            onClick={() => navigate("/admin/workinghours")}
+            onClick={() => navigate(`/admin/workinghours/${admin.user_id}`)}
           >
             <div className="option-header">HORARIO LABORAL</div>
             <i className="bi bi-calendar3"></i>
