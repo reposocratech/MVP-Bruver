@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { useNavigate } from "react-router"
+import React, { useContext, useState } from 'react'
+import { useNavigate} from "react-router"
 import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx'
 import "./WorkerProfile.css"
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js'
-import { useContext } from 'react'
+import { fetchData } from '../../../helpers/axiosHelper.js'
 
 const WorkerProfile = () => {
 
@@ -11,6 +11,10 @@ const WorkerProfile = () => {
 
 
   const [openModal, setOpenModal] = useState(false);
+
+ const {user} = useContext(AuthContext);
+
+
 
   const navigate = useNavigate()
 
@@ -62,7 +66,7 @@ const WorkerProfile = () => {
           </div>
 
           <div className="option-card">
-            <span onClick={() => navigate("/worker")} >
+            <span onClick={() => navigate(`/Worker/workerDate/${user.user_id}`)} >
             <div className="option-header">MIS CITAS</div>
             <i className="bi bi-pencil-square"></i> 
             </span>

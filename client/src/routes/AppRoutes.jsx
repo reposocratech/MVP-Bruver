@@ -33,7 +33,7 @@ const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/Sele
 
 /* RUTAS PRIVADAS WORKER */
 import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
-const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
+const Worker = lazy(() => import("../pages/WorkerPages/WorkerDate/Worker.jsx"))
 const WorkerProfile = lazy(() => import("../pages/WorkerPages/WorkerProfile/WorkerProfile.jsx"))
 
 /* RUTAS PRIVADAS ADMIN */
@@ -81,7 +81,7 @@ export const AppRoutes = () => {
           {/* Rutas privadas trabajador */}
           <Route element={<PrivateRoutes/>}>
                 <Route element={<WorkerLayout/>}>
-                   <Route path="/worker" element={<Worker />} /> 
+                   <Route path="/worker/WorkerDate/:workerId" element={<Worker />} /> 
                    <Route path="/worker/profile" element={<WorkerProfile />} />
                 </Route>    
           </Route>
@@ -93,7 +93,7 @@ export const AppRoutes = () => {
               <Route path="/admin" element={<AdminProfile />} />
               <Route path="/admin/manage" element={<AdminManage />}/>
               <Route path="/admin/general" element={<GeneralCalendarPage/>} />
-              <Route path="/admin/appointments" element={<AdminAppointments />} />
+              <Route path="/admin/appointments/:adminId" element={<AdminAppointments />} />
               <Route path="/admin/workinghours/:adminId" element={<AdminWorkingHours />} />
             </Route>
           </Route>

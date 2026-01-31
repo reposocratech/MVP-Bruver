@@ -53,17 +53,23 @@ export const UsersServicesAppointment = () => {
     });
   };
 
+  //Cada vez que clickas:
   const seleccionarBaseService = (service) => {
-    // Precio
+    //Quitas el servicio base anterior (precio)
     sumarValor(setSumaTotalPrecio, -baseServicePrice, "totalPrecio");
+    //Añades el nuevo servicio base 
     sumarValor(setSumaTotalPrecio, service.price, "totalPrecio");
 
-    // Minutos
+    //Quitas el servicio base anterior (minutos)
     sumarValor(setSumaTotalMinutos, -baseServiceMinutes, "totalMinutos");
+    //Añades el nuevo servicio base 
     sumarValor(setSumaTotalMinutos, service.duration_minutes, "totalMinutos");
 
+    //Nuevo servicio seleccionado
     setBaseServiceId(service.service_id);
+    //Cuanto cuesta
     setBaseServicePrice(Number(service.price));
+    //Cuanto dura
     setBaseServiceMinutes(Number(service.duration_minutes));
   };
 
@@ -124,8 +130,8 @@ export const UsersServicesAppointment = () => {
                 <h3>{Number(s.price).toFixed(2)}€</h3>
 
                 <Button className="select-btn" onClick={() => {toggleExtra(s.service_id);
-                  sumarValor(setSumaTotalPrecio, selected ? -s.price : s.price, "totalPrecio");
-                  sumarValor(setSumaTotalMinutos, selected ? -s.duration_minutes : s.duration_minutes, "totalMinutos");
+                  sumarValor(setSumaTotalPrecio, selected ? -s.price : s.price);
+                  sumarValor(setSumaTotalMinutos, selected ? -s.duration_minutes : s.duration_minutes);
                 }}>
                   {selected ? "QUITAR" : "AÑADIR"}
                 </Button>
@@ -142,7 +148,12 @@ export const UsersServicesAppointment = () => {
           VOLVER
         </Button>
 
-        <Button className="next-btn" disabled={!baseServiceId}>
+        <Button 
+          className="next-btn" 
+          disabled={!baseServiceId}
+          onClick={() =>
+            navigate("/selectdate")
+          }>
           SIGUIENTE
         </Button>
       </div>
