@@ -44,6 +44,8 @@ const AdminWorkingHours = () => {
 
   // Crear evento
   const handleSelectSlot = async ({ start, end }) => {
+    console.log(start, end);
+    
   try {
     const startDayjs = dayjs(start);
 
