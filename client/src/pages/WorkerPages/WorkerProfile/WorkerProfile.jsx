@@ -1,33 +1,22 @@
-<<<<<<< HEAD
-import { useState } from 'react'
-import { useNavigate } from "react-router"
-import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx'
-import "./WorkerProfile.css"
-import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js'
-import { useContext } from 'react'
-=======
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate} from "react-router"
 import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit.jsx'
 import "./WorkerProfile.css"
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js'
-import { fetchData } from '../../../helpers/axiosHelper.js'
->>>>>>> 56cbc26836bd50ed6cb2492032f96620f0307794
+
+
 
 const WorkerProfile = () => {
 
-  const {user, setUser} = useContext(AuthContext);
+
 
 
   const [openModal, setOpenModal] = useState(false);
 
-<<<<<<< HEAD
-=======
+
  const {user} = useContext(AuthContext);
 
 
-
->>>>>>> 56cbc26836bd50ed6cb2492032f96620f0307794
   const navigate = useNavigate()
 
   return (
