@@ -6,24 +6,23 @@ import ModalUserProfileEdit from "../../../components/Modal/ModalUserProfileEdit
 import "./AdminProfile.css";
 
 const AdminProfile = () => {
-  const { token, user } = useContext(AuthContext);
+  const { token, user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [admin, setAdmin] = useState();
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
         const res = await fetchData("admin/getAdmin", "GET", null, token);
-        setAdmin(res.data.user);
+        setUser(res.data.user);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchAdmin();
-  }, [token]);
+  }, []);
 
   return (
     <section className="admin-section">
@@ -45,14 +44,14 @@ const AdminProfile = () => {
             <tbody>
               <tr>
                 <td>
-                  {admin?.name_user} {admin?.last_name}
+                  {user?.name_user} {user?.last_name}
                 </td>
               </tr>
               <tr>
-                <td>{admin?.email}</td>
+                <td>{user?.email}</td>
               </tr>
               <tr>
-                <td>{admin?.phone}</td>
+                <td>{user?.phone}</td>
               </tr>
             </tbody>
           </table>
@@ -60,7 +59,7 @@ const AdminProfile = () => {
 
         <div className="profile-img">
           <img
-            src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user.picture_user}`}
+            src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user?.picture_user}`}
             alt="perfil"
           />
         </div>
@@ -78,7 +77,7 @@ const AdminProfile = () => {
 
           <div
             className="option-card option-card-link"
-            onClick={() => navigate(`/admin/appointments/${admin.user_id}`)}
+            onClick={() => navigate(`/admin/appointments/${user.user_id}`)}
           >
             <div className="option-header">MIS CITAS</div>
             <i className="bi bi-pencil-square"></i>
@@ -86,7 +85,7 @@ const AdminProfile = () => {
 
           <div
             className="option-card option-card-link"
-            onClick={() => navigate(`/admin/workinghours/${admin.user_id}`)}
+            onClick={() => navigate(`/admin/workinghours/${user.user_id}`)}
           >
             <div className="option-header">HORARIO LABORAL</div>
             <i className="bi bi-calendar3"></i>

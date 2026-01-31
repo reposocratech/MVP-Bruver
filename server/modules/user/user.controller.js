@@ -200,62 +200,7 @@ class UserController {
     }
   };
   
-  // Obtener trabajadores (type = 2)
-  getWorkers = async (req, res) => {
-    try {
-      const result = await userDal.getUsersByType(2);
-      res.status(200).json({ workers: result });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error al obtener trabajadores" });
-    }
-  };
-  
-  // Obtener clientes (type = 3)
-  getClients = async (req, res) => {
-    try {
-      const result = await userDal.getUsersByType(3);
-      res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error al obtener clientes" });
-    }
-  };
-
-  // Obtener admins (type = 1)
-  getAdmins = async (req, res) => {
-    try {
-      const result = await userDal.getUsersByType(1);
-      res.status(200).json({ admins: result });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error al obtener admins" });
-    }
-  };
-
-  // Cambiar el tipo de usuario a admin (type = 1)
-  makeAdmin = async (req, res) => {
-    try {
-      const { id } = req.params;
-      await userDal.updateUserType(id, 1);
-      res.status(200).json({ message: "Usuario actualizado a admin" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error al actualizar el usuario" });
-    }
-  };
-  
-  // Cambiar el tipo de usuario a trabajador (type = 2)
-  makeWorker = async (req, res) => {
-    try {
-      const { id } = req.params;
-      await userDal.updateUserType(id, 2);
-      res.status(200).json({ message: "Usuario actualizado a trabajador" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error al actualizar el usuario" });
-    }
-  };
+ 
   
 }
 

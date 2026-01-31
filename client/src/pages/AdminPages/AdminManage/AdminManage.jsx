@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router';
 import { profileSchema } from '../../../schemas/ProfileSchema';
 import { ZodError } from 'zod';
-import './AdminManage.css';
 import { RiUserAddLine } from 'react-icons/ri';
 import ModalCreateProfile from '../../../components/Modal/ModalCreateProfile/ModalCreateProfile';
+import './AdminManage.css';
+
 
 const initialProfile = {
   type: '',
@@ -36,9 +37,9 @@ const AdminManage = () => {
     // Función para obtener trabajadores y admins
     const fetchWorkers = async () => {
       try {
-        const res = await fetchData('user/workers', 'GET');
+        const res = await fetchData('admin/workers', 'GET');
         //console.log(res)
-        const resAdmins = await fetchData('user/admins', 'GET');
+        const resAdmins = await fetchData('admin/admins', 'GET');
         // Mapeo de los datos ajustando los nombres
         const workersData = [
           ...res.data,
@@ -59,7 +60,7 @@ const AdminManage = () => {
     // Función para obtener clientes
     const fetchClients = async () => {
       try {
-        const res = await fetchData('user/clients', 'GET');
+        const res = await fetchData('admin/clients', 'GET');
         // Mapeo de los datos ajustando los nombres
         const clientsData = res.data.map((c) => ({
           id: c.user_id,
@@ -81,7 +82,7 @@ const AdminManage = () => {
   // Cambiar tipo a admin (type = 1)
     const handleMakeAdmin = async (userId) => {
       try {
-        await fetchData(`user/makeAdmin/${userId}`, 'PUT');
+        await fetchData(`admin/makeAdmin/${userId}`, 'PUT');
         // Actualiza el tipo en el estado local
         const workersUpdated = workers.map(worker =>
           worker.id === userId ? { ...worker, type: 1 } : worker
@@ -94,7 +95,7 @@ const AdminManage = () => {
   // Cambiar tipo a trabajador (type = 2)
     const handleMakeWorker = async (userId) => {
       try {
-        await fetchData(`user/makeWorker/${userId}`, 'PUT');
+        await fetchData(`admin/makeWorker/${userId}`, 'PUT');
         // Actualiza el tipo en el estado local
         const workersUpdated = workers.map(worker =>
           worker.id === userId ? { ...worker, type: 2 } : worker
@@ -130,11 +131,11 @@ const AdminManage = () => {
         email: profile.email,
         province: profile.province,
         city: profile.city,
-        password: profile.password,
+        password: profile.hashedPass,
         type: profile.type === 'worker' ? 2 : 3,
       };
       //enviamos solicitud al backend
-      const res =await fetchData('user/register', 'POST', body);
+      const res = await fetchData('admin/createUser', 'POST', body);
       //comprobamos el res
       console.log(res);
 
