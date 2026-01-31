@@ -11,21 +11,23 @@ import { generarContrasena } from '../../utils/generarPassAle.js';
 class UserController {
   register = async (req, res) => {
     try {
-      const { name_user, last_name, phone, email, address, province, city, password, type } = req.body;
-      
-      let hashedPass = await bcrypt.hash(password, 10);
-      
-      await userDal.register([
-        name_user,
-        last_name || null,
-        phone,
-        email,
-        address || null,
-        province || null,
-        city || null,
-        hashedPass,
-        type
-      ]);
+        let { name_user, last_name, phone, email, address, province, city, password, type } = req.body;
+        // Si type es null o undefined, asignar 3 (cliente)
+        if (type === null || type === undefined) {
+          type = 3;
+        }
+        let hashedPass = await bcrypt.hash(password, 10);
+        await userDal.register([
+          name_user,
+          last_name || null,
+          phone,
+          email,
+          address || null,
+          province || null,
+          city || null,
+          hashedPass,
+          type
+        ]);
       
       const token = generateToken({ email }, process.env.SECRET_TOKEN_KEY, { expiresIn: "1d" });
       
