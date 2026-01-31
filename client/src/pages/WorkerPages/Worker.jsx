@@ -35,6 +35,11 @@ const Worker = () => {
       setOpenQuickReserve(false);
     }
 
+    const backModalAddReserveClient = () => {
+      setOpenAddReserveClient(false);
+      setOpenSearchClient(true);
+    };
+
     const handleAcceptClient = (client) => {
       setSelectedClient(client);
       setOpenSearchClient(false);
@@ -63,7 +68,7 @@ const Worker = () => {
        toBack={backModalAddReserve}/>}
 
        {openAddReserveClient && <ModalAddReserveClient
-       toBack={backModalAddReserve}
+       toBack={backModalAddReserveClient}
        client={selectedClient}/>}
 
 

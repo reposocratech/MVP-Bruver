@@ -7,7 +7,6 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const LS_KEY = 'reserve_client';
-
 const pad2 = (n) => String(n).padStart(2, '0');
 
 const formatYmd = (d) => {
@@ -39,50 +38,47 @@ const ModalAddReserveClient = ({ toBack, client }) => {
   const [price, setPrice] = useState('0.00');
 
   const [manualDuration, setManualDuration] = useState('');
-  const [manualPrice, setManualPrice] = useState(''); 
+  const [manualPrice, setManualPrice] = useState('');
 
   const [isEditingDuration, setIsEditingDuration] = useState(false);
   const [isEditingPrice, setIsEditingPrice] = useState(false);
 
-
   const hours = [
-    '9:15','9:30','9:45','10:00','10:15','10:30','10:45','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45',
+    '9:15','9:30','9:45','10:00','10:15','10:30','10:45','11:15','11:30',
   ];
-
   const [openHours, setOpenHours] = useState(false);
 
-  const petSelected = pets.find(
-    (p) => String(p.pet_id) === String(selectedPetId),
-  );
+  const petSelected = pets.find((p) => String(p.pet_id) === String(selectedPetId));
   const isSpecie2 = Number(petSelected?.specie) === 2;
 
-  //guardar los valores
+  //Guardamos la reserva en localStorage con las “claves del backend”
   const saveReserve = (extra = {}) => {
     const finalDuration =
-    manualDuration !== '' ? Number(manualDuration || 0) : Number(duration || 0);
+      manualDuration !== '' ? Number(manualDuration || 0) : Number(duration || 0);
 
-    const finalPrice = manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(price || '0.00');
-
+    const finalPrice =
+      manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(price || '0.00');
 
     const payload = {
-      client: {
-        user_id: client?.user_id,
-        name_user: client?.name_user,
-        last_name: client?.last_name,
-        phone: client?.phone,
-        email: client?.email,
-      },
-
+      //ids de cliente y mascota (cliente registrado)
+      client_user_id: client?.user_id || null,
       pet_id: selectedPetId || null,
 
-      // para quitar servicios si es gato
+      //servicio base + suplementos
       service_id: isSpecie2 ? null : selectedServiceId || null,
       supplement_ids: isSpecie2 ? [] : selectedSupplementIds,
-      observations: isSpecie2 ? observations : '',
-      date: formatYmd(date),
+
+      //fecha/hora con nombres tipo backend
+      appointment_date: formatYmd(date),
       start_time: startTime || null,
+
+      //números finales
       duration_minutes: finalDuration,
       total_price: finalPrice,
+
+      //esto será si añadimos el campo observaciones. comentar con los demás
+      //observations: observations || '',
+
       ...extra,
     };
 
@@ -96,9 +92,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
       return;
     }
 
-    const serv = services.find(
-      (s) => String(s.service_id) === String(serviceId),
-    );
+    const serv = services.find((s) => String(s.service_id) === String(serviceId));
 
     const selectedSupps = supplements.filter((s) =>
       supplementIds.includes(String(s.service_id)),
@@ -132,6 +126,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
     calcTotal(selectedServiceId, next);
   };
 
+  // Al cambiar el cliente, reiniciamos el localStorage
   useEffect(() => {
     if (client?.user_id) {
       localStorage.removeItem(LS_KEY);
@@ -140,17 +135,18 @@ const ModalAddReserveClient = ({ toBack, client }) => {
         service_id: null,
         supplement_ids: [],
         start_time: null,
-        duration_minutes:
-          manualDuration !== '' ? Number(manualDuration) : duration,
-        total_price:
-          manualPrice !== '' ? Number(manualPrice).toFixed(2) : price,
+        duration_minutes: 0,
+        total_price: '0.00',
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client?.user_id]);
 
+  // Cada cambio -> guardar en localStorage
   useEffect(() => {
     if (!client?.user_id) return;
     saveReserve();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedPetId,
     selectedServiceId,
@@ -168,12 +164,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const res = await fetchData(
-          `worker/pets/${client.user_id}`,
-          'GET',
-          null,
-          token,
-        );
+        const res = await fetchData(`worker/pets/${client.user_id}`, 'GET', null, token);
         setPets(res.data.result);
       } catch (error) {
         console.log(error);
@@ -184,7 +175,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
     if (client?.user_id) fetchPets();
   }, [client, token]);
 
-  // Después de elegir mascota, cargamos servicios
+  // Cuando eliges mascota -> cargar servicios/suplementos por tamaño
   useEffect(() => {
     const servicesAndSupplements = async () => {
       try {
@@ -193,7 +184,6 @@ const ModalAddReserveClient = ({ toBack, client }) => {
         );
         if (!petSelectedLocal) return;
 
-        // Si la especie es 2 (gato) no habrá ni servicios ni suplementos
         if (Number(petSelectedLocal.specie) === 2) {
           setServices([]);
           setSupplements([]);
@@ -251,16 +241,45 @@ const ModalAddReserveClient = ({ toBack, client }) => {
     const value = e.target.value;
     setSelectedServiceId(value);
 
-    // para reiniciar los suplementos si cambiamos de servicio
     setSelectedSupplementIds([]);
     setManualDuration('');
     setManualPrice('');
     calcTotal(value, []);
   };
 
-  const handleSubmit = (e) => {
+  // ✅ Ahora el submit crea la cita en backend (como quick reserve)
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('localStorage:', localStorage.getItem(LS_KEY));
+
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+
+    const data = JSON.parse(raw);
+
+    // Validaciones mínimas
+    if (!data.client_user_id) return console.log('Falta cliente');
+    if (!data.pet_id) return console.log('Falta mascota');
+    if (!data.appointment_date) return console.log('Falta fecha');
+    if (!data.start_time) return console.log('Falta hora');
+
+    // Si NO es gato, obligamos servicio
+    if (!isSpecie2 && !data.service_id) return console.log('Falta servicio');
+
+    if (!data.duration_minutes || Number(data.duration_minutes) <= 0)
+      return console.log('Duración inválida');
+
+    try {
+      // ✅ Endpoint que debes crear en backend:
+      // POST /worker/appointments/client
+      // El backend asignará employee_user_id = req.user_id (usuario logueado)
+      const res = await fetchData('worker/appointments/client', 'POST', data, token);
+      console.log('CITA CREADA (CLIENTE REGISTRADO):', res.data);
+
+      localStorage.removeItem(LS_KEY);
+      toBack();
+    } catch (error) {
+      console.log('ERROR creando cita:', error);
+    }
   };
 
   return (
@@ -326,16 +345,14 @@ const ModalAddReserveClient = ({ toBack, client }) => {
 
             <label>Mascota</label>
             <select value={selectedPetId} onChange={handlePetChange}>
-              <option value="" disabled>
-                Selecciona una mascota
-              </option>
+              <option value="" disabled>Selecciona una mascota</option>
               {pets.map((p) => (
                 <option key={p.pet_id} value={p.pet_id}>
                   {p.name_pet}
                 </option>
               ))}
             </select>
-            
+
             {isSpecie2 ? (
               <>
                 <label>Observaciones</label>
@@ -343,7 +360,6 @@ const ModalAddReserveClient = ({ toBack, client }) => {
                   type="text"
                   value={observations}
                   onChange={(e) => setObservations(e.target.value)}
-                  placeholder="Escribe aquí..."
                 />
               </>
             ) : (
@@ -355,9 +371,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
                   disabled={!selectedPetId}
                 >
                   <option value="" disabled>
-                    {selectedPetId
-                      ? 'Selecciona servicio'
-                      : 'Elige mascota primero'}
+                    {selectedPetId ? 'Selecciona servicio' : 'Elige mascota primero'}
                   </option>
                   {services.map((s) => (
                     <option key={s.service_id} value={s.service_id}>
@@ -397,21 +411,24 @@ const ModalAddReserveClient = ({ toBack, client }) => {
                   value={
                     isEditingDuration
                       ? manualDuration
-                      : (manualDuration !== '' ? manualDuration : (duration > 0 ? String(duration) : ''))
+                      : manualDuration !== ''
+                        ? manualDuration
+                        : duration > 0
+                          ? String(duration)
+                          : ''
                   }
                   onFocus={() => {
                     setIsEditingDuration(true);
-                    if (manualDuration === '') setManualDuration(duration > 0 ? String(duration) : '');
+                    if (manualDuration === '')
+                      setManualDuration(duration > 0 ? String(duration) : '');
                   }}
-                  onChange={(e) => setManualDuration(e.target.value)} 
+                  onChange={(e) => setManualDuration(e.target.value)}
                   onBlur={() => {
                     setIsEditingDuration(false);
-                    // si lo deja vacío, vuelve a automático (fallback cuando NO está editando)
                     if (manualDuration !== '' && Number(manualDuration) < 0) setManualDuration('');
                   }}
                   style={{ width: '90px', marginLeft: '10px' }}
                 />
-
               </label>
             </div>
 
@@ -425,23 +442,25 @@ const ModalAddReserveClient = ({ toBack, client }) => {
                   value={
                     isEditingPrice
                       ? manualPrice
-                      : (manualPrice !== '' ? manualPrice : (Number(price) > 0 ? String(price) : ''))
+                      : manualPrice !== ''
+                        ? manualPrice
+                        : Number(price) > 0
+                          ? String(price)
+                          : ''
                   }
                   onFocus={() => {
                     setIsEditingPrice(true);
-                    if (manualPrice === '') setManualPrice(Number(price) > 0 ? String(price) : '');
+                    if (manualPrice === '')
+                      setManualPrice(Number(price) > 0 ? String(price) : '');
                   }}
-
-                  onChange={(e) => setManualPrice(e.target.value)} 
+                  onChange={(e) => setManualPrice(e.target.value)}
                   onBlur={() => {
                     setIsEditingPrice(false);
-                    // si lo deja vacío, vuelve a automático
                     if (manualPrice !== '' && Number(manualPrice) < 0) setManualPrice('');
                     else if (manualPrice !== '') setManualPrice(Number(manualPrice).toFixed(2));
                   }}
                   style={{ width: '90px', marginLeft: '10px' }}
                 />
-
               </label>
             </div>
 
@@ -449,10 +468,11 @@ const ModalAddReserveClient = ({ toBack, client }) => {
               <Button
                 className="close"
                 type="submit"
-                disabled={(!isSpecie2 && !selectedServiceId) || !startTime}
+                disabled={!selectedPetId || !startTime || (!isSpecie2 && !selectedServiceId)}
               >
                 Aceptar
               </Button>
+
               <Button className="close" onClick={toBack} type="button">
                 Atrás
               </Button>
