@@ -77,7 +77,7 @@ export const ModalWorkingHours = ({
             Close
           </Button>
 
-          <Button variant="secondary" onClick={()=>handleDelete(selectedEvent.id)}>
+          <Button variant="secondary" onClick={()=>handleDelete(selectedEvent.availability_id || selectedEvent.id)}>
             Eliminar
           </Button>
           <Button variant="primary" onClick={()=>handleSave(selectedEvent.id, start, end)}>

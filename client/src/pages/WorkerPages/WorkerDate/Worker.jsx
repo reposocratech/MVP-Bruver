@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import ModalAddReserve from '../../components/Modal/ModalAddReserve/ModalAddReserve';
-import ModalQuickReserve from '../../components/Modal/ModalAddReserve/ModalQuickReserve';
-import ModalSearchClient from '../../components/Modal/ModalAddReserve/ModalSearchClient';
-import ModalSeeAppointment from '../../components/Modal/ModalSeeAppointment/ModalSeeAppointment';
-import ModalAddReserveClient from '../../components/Modal/ModalAddReserve/ModalAddReserveClient';
+import ModalAddReserve from '../../../components/Modal/ModalAddReserve/ModalAddReserve';
+import ModalQuickReserve from '../../../components/Modal/ModalAddReserve/ModalQuickReserve';
+import ModalSearchClient from '../../../components/Modal/ModalAddReserve/ModalSearchClient';
+import ModalSeeAppointment from '../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment';
+import ModalAddReserveClient from '../../../components/Modal/ModalAddReserve/ModalAddReserveClient';
 import { Button } from 'react-bootstrap';
 
 

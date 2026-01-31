@@ -10,6 +10,7 @@ import { fetchData } from '../../../helpers/axiosHelper.js';
 import { getDateFromDayId } from '../../../helpers/dateHelper.js';
 
 
+
 dayjs.extend(isoWeek);
 
 const AdminWorkingHours = () => {
@@ -44,6 +45,8 @@ const AdminWorkingHours = () => {
 
   // Crear evento
   const handleSelectSlot = async ({ start, end }) => {
+    console.log(start, end);
+    
   try {
     const startDayjs = dayjs(start);
 
@@ -64,7 +67,7 @@ const AdminWorkingHours = () => {
     setSchedule(prev => [
       ...prev,
       {
-        availability_id: res.data.availability_id,
+        availability_id: res.data.result.insertId,
         ...data
       }
     ]);
@@ -79,6 +82,8 @@ const AdminWorkingHours = () => {
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
     setIsModalOpen(true);
+    console.log(event);
+    
   };
 
 
@@ -155,11 +160,12 @@ const AdminWorkingHours = () => {
 
 
   //mapeo de horario disponible
-  const eventsMap = schedule.map((item) => ({
+  const eventsMap = schedule?.map((item) => ({
     id: item.availability_id,
     title: "Disponible",
     start: buildDateTime(item.day_id, item.start_time),
     end: buildDateTime(item.day_id, item.end_time),
+   
   }));
 
   const allEvents = [...eventsMap]
@@ -179,6 +185,7 @@ const AdminWorkingHours = () => {
           handleSelectSlot={handleSelectSlot}
           handleSelectEvent={handleSelectEvent}
         />
+      
 
         {isModalOpen && selectedEvent && (
           <ModalWorkingHours

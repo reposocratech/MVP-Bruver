@@ -36,6 +36,20 @@ class AppointmentController {
       res.status(500).json({ message: "Error al cargar citas generales" });
     }
   };
+
+  getAdminAppoiment = async(req, res)=>{
+    const {employeeId} = req.params
+    try {
+      const result = await appointmentDal.getAdminAppoiment(employeeId)
+      res.status(200).json({
+        message:"oki",
+        result
+      })
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
 }
 
 export default new AppointmentController();

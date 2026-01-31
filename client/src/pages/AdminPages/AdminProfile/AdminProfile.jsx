@@ -6,7 +6,7 @@ import ModalUserProfileEdit from "../../../components/Modal/ModalUserProfileEdit
 import "./AdminProfile.css";
 
 const AdminProfile = () => {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [admin, setAdmin] = useState();
@@ -15,7 +15,7 @@ const AdminProfile = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const res = await fetchData("admin", "GET", null, token);
+        const res = await fetchData("admin/getAdmin", "GET", null, token);
         setAdmin(res.data.user);
       } catch (error) {
         console.log(error);
@@ -60,7 +60,7 @@ const AdminProfile = () => {
 
         <div className="profile-img">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
+            src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user.picture_user}`}
             alt="perfil"
           />
         </div>
@@ -78,7 +78,7 @@ const AdminProfile = () => {
 
           <div
             className="option-card option-card-link"
-            onClick={() => navigate("/admin/appointments")}
+            onClick={() => navigate(`/admin/appointments/${admin.user_id}`)}
           >
             <div className="option-header">MIS CITAS</div>
             <i className="bi bi-pencil-square"></i>

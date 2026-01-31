@@ -71,6 +71,29 @@ class AppointmentDal {
       throw error;
     }
   };
+
+  getAdminAppoiment = async(employeeId)=>{
+    try {
+      const sql = `
+        SELECT
+          a.appointment_id,
+          a.appointment_date,
+          a.start_time,
+          a.end_time,
+          a.employee_user_id,
+          u.name_user AS employee_name
+        FROM appointment a
+        JOIN user u ON u.user_id = a.employee_user_id
+        WHERE a.status != 3
+        AND a.employee_user_id = ?
+      `;
+       let result = await executeQuery(sql, [employeeId]);
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
 }
 
 export default new AppointmentDal();
