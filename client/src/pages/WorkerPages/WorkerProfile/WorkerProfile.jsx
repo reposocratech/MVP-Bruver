@@ -7,6 +7,9 @@ import { fetchData } from '../../../helpers/axiosHelper.js'
 
 const WorkerProfile = () => {
 
+  const {user, setUser} = useContext(AuthContext);
+
+
   const [openModal, setOpenModal] = useState(false);
 
  const {user} = useContext(AuthContext);
@@ -31,15 +34,22 @@ const WorkerProfile = () => {
 
           <table>
             <tbody>
-              <tr><td>Admin</td></tr>
-              <tr><td>admin@admin</td></tr>
-              <tr><td>666666666</td></tr>
+              <tr>
+                  <td>{user.name_user}</td>
+              </tr>
+              <tr>
+                  <td>{user.email}</td>
+              </tr>
+              <tr>
+                  <td>{user.phone}</td>
+              </tr>
             </tbody>
           </table>
+
         </div>
 
         <div className="profile-img">
-          <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png" alt="perfil" />
+          <img src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user?.picture_user}`} alt="perfil" />
         </div>
 
       </div>
@@ -52,19 +62,19 @@ const WorkerProfile = () => {
           
           <div className="option-card">
             <div className="option-header">HORARIO LABORAL</div>
-            <i class="bi bi-calendar3"></i>
+            <i className="bi bi-calendar3"></i>
           </div>
 
           <div className="option-card">
             <span onClick={() => navigate(`/Worker/workerDate/${user.user_id}`)} >
             <div className="option-header">MIS CITAS</div>
-            <i class="bi bi-pencil-square"></i> 
+            <i className="bi bi-pencil-square"></i> 
             </span>
           </div>
 
           <div className="option-card">
             <div className="option-header">AGENDA</div>
-            <i class="bi bi-journal-richtext"></i>
+            <i className="bi bi-journal-richtext"></i>
           </div>
         </div>
       </div>

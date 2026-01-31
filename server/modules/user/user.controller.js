@@ -109,13 +109,10 @@ class UserController {
   /* update */
   updateProfile = async (req, res) => {
     try {
-      //Este código es para pasar todos los datos a string
-      const editUserData = typeof req.body === 'string' 
-        ? JSON.parse(req.body) 
-        : req.body;
       
-      const { name_user, last_name, phone, province, city, address } = editUserData;
       const { user_id } = req;
+      const { name_user, last_name, phone, province, city, address }  = JSON.parse(req.body.editUser);
+      
 
       let values = [name_user, last_name, phone, province, city, address, user_id];
       

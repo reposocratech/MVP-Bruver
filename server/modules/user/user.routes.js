@@ -11,7 +11,7 @@ router.get("/verifyEmail/:token", userController.verifyEmail);
 router.post("/login", userController.login);
 router.get("/userByToken", verifyToken, userController.userByToken);
 
-router.put("/profile", verifyToken, uploadImage("clients"), userController.updateProfile);
+router.put("/profile", verifyToken, uploadImage("picturesGeneral"), userController.updateProfile);
 router.put("/delete", verifyToken, userController.deleteLogic);
 
 router.post("/forgotPassword", userController.forgotPassword);

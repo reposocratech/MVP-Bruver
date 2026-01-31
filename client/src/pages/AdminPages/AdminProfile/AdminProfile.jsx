@@ -6,7 +6,7 @@ import ModalUserProfileEdit from "../../../components/Modal/ModalUserProfileEdit
 import "./AdminProfile.css";
 
 const AdminProfile = () => {
-  const { token } = useContext(AuthContext);
+  const { token, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [admin, setAdmin] = useState();
@@ -60,7 +60,7 @@ const AdminProfile = () => {
 
         <div className="profile-img">
           <img
-            src="https://cdn-icons-png.flaticon.com/512/456/456212.png"
+            src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user.picture_user}`}
             alt="perfil"
           />
         </div>

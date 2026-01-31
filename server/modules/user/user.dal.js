@@ -57,6 +57,8 @@ class UserDal {
 
   
   updateProfile = async (values) => {
+    console.log("**********", values);
+    
     try {
       let sql;
       if (values.length === 8) {

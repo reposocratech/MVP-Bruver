@@ -31,14 +31,17 @@ const ModalPetEdit = ({ onClose, pet }) => {
             newFormdata.append("editPet", JSON.stringify(editPet));
             if (avatar) newFormdata.append("img", avatar);
 
-            await fetchData(`pet/${pet.pet_id}`, "PUT", newFormdata, token);
+            const res = await fetchData(`pet/${pet.pet_id}`, "PUT", newFormdata, token);
+            const updatedPet = res?.data?.pet || editPet;
+
             setPets(pets.map(elem =>{
               if(elem.pet_id === pet.pet_id){
-                return editPet;
+                return { ...elem, ...updatedPet };
               }else{
                 return elem;
               }
             }))
+            setEditPet(updatedPet);
             onClose();
 
         } catch (error) {
@@ -94,7 +97,7 @@ const ModalPetEdit = ({ onClose, pet }) => {
           <label>Categoría (peso)*</label>
           <select
             name="size_category"
-            value={editPet?.size_category ? editPet.size_category : ""}
+            value={editPet?.size_category?editPet.size_category:""}
             onChange={handleChange}
           >
             <option value={1}>Toy</option>
