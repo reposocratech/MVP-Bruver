@@ -80,7 +80,7 @@ const WorkerProfile = () => {
         </div>
       </div>
 
-      <button className="back-btn"><span className="arrow">←</span>ATRAS</button>
+      <button className="back-btn"><span className="arrow">←</span>VOLVER</button>
 
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </section>
