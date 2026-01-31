@@ -180,5 +180,5 @@ const AdminWorkingHours = () => {
     </section>
   )
 }
-
+};
 export default AdminWorkingHours
