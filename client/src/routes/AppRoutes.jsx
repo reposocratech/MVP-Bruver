@@ -33,7 +33,7 @@ const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/Sele
 
 /* RUTAS PRIVADAS WORKER */
 import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
-const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
+const Worker = lazy(() => import("../pages/WorkerPages/WorkerDate/Worker.jsx"))
 const WorkerProfile = lazy(() => import("../pages/WorkerPages/WorkerProfile/WorkerProfile.jsx"))
 
 /* RUTAS PRIVADAS ADMIN */
