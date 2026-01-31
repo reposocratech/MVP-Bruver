@@ -9,5 +9,6 @@ router.get("/mine", verifyToken, appointmentController.getMine);
 
 // Citas generales
 router.get("/getGeneralAppoiment",verifyToken, appointmentController.getGeneralAppoiment);
+router.get("/getAdminAppoiment/:employeeId", verifyToken, appointmentController.getAdminAppoiment)
 
 export default router;
