@@ -51,7 +51,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
   const petSelected = pets.find((p) => String(p.pet_id) === String(selectedPetId));
   const isSpecie2 = Number(petSelected?.specie) === 2;
 
-  //Guardamos la reserva en localStorage con las “claves del backend”
+  //Guardamos la reserva en localStorage
   const saveReserve = (extra = {}) => {
     const finalDuration =
       manualDuration !== '' ? Number(manualDuration || 0) : Number(duration || 0);
@@ -76,8 +76,8 @@ const ModalAddReserveClient = ({ toBack, client }) => {
       duration_minutes: finalDuration,
       total_price: finalPrice,
 
-      //esto será si añadimos el campo observaciones. comentar con los demás
-      //observations: observations || '',
+      //comentar con los demás si añadir observaciones en BD
+      observations: observations || null,
 
       ...extra,
     };
@@ -139,14 +139,12 @@ const ModalAddReserveClient = ({ toBack, client }) => {
         total_price: '0.00',
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client?.user_id]);
 
-  // Cada cambio -> guardar en localStorage
+  // Cada cambio se guardar en localStorage
   useEffect(() => {
     if (!client?.user_id) return;
     saveReserve();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     selectedPetId,
     selectedServiceId,
@@ -175,7 +173,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
     if (client?.user_id) fetchPets();
   }, [client, token]);
 
-  // Cuando eliges mascota -> cargar servicios/suplementos por tamaño
+  // Cuando eliges mascota cargar servicios/suplementos por tamaño
   useEffect(() => {
     const servicesAndSupplements = async () => {
       try {
@@ -247,7 +245,6 @@ const ModalAddReserveClient = ({ toBack, client }) => {
     calcTotal(value, []);
   };
 
-  // ✅ Ahora el submit crea la cita en backend (como quick reserve)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -269,9 +266,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
       return console.log('Duración inválida');
 
     try {
-      // ✅ Endpoint que debes crear en backend:
-      // POST /worker/appointments/client
-      // El backend asignará employee_user_id = req.user_id (usuario logueado)
+      // usuario logueado
       const res = await fetchData('worker/appointments/client', 'POST', data, token);
       console.log('CITA CREADA (CLIENTE REGISTRADO):', res.data);
 
