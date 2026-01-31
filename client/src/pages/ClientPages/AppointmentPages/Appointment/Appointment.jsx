@@ -60,8 +60,8 @@ const Appointment = () => {
     const showWorkersAndAdmins = async () => {
       try {
         const [adminsRes, workersRes] = await Promise.all([
-          fetchData("/user/admins", "GET", null, token),
-          fetchData("/user/workers", "GET", null, token)
+          fetchData("user/admins", "GET", null, token),
+          fetchData("user/workers", "GET", null, token)
         ]);
         // Unimos ambos arrays
         const allWorkers = [

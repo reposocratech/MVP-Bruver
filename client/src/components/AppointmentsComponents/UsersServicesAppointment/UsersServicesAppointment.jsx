@@ -1,7 +1,9 @@
+
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../helpers/axiosHelper";
 import { Button } from "react-bootstrap";
+import "./UsersServicesAppointment.css"
 
 export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) => {
   const { token } = useContext(AuthContext);
@@ -82,7 +84,13 @@ export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) =
 
       <section className="services">
         <div className="servicesGrid">
-          {baseServices.map((s) => {
+          {baseServices.map((s, idx) => {
+            // Asignar imagen según el índice del servicio
+            const serviceImages = [
+              '/img/appointment/servicio1.jpg',
+              '/img/appointment/servicio2.jpg',
+              '/img/appointment/servicio3.jpg',
+            ];
             return (
               <div
                 key={s.service_id}
@@ -90,7 +98,7 @@ export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) =
                   baseServiceId === s.service_id ? "selected" : ""
                 }`}
               >
-                <img src="" alt={s.title} />
+                <img src={serviceImages[idx] || serviceImages[0]} alt={s.title} />
                 <h3>{s.title}</h3>
                 <p>{s.duration_minutes} min</p>
                 <h3>{Number(s.price).toFixed(2)}€</h3>
@@ -110,23 +118,30 @@ export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) =
 
       <section className="supplements">
         <div className="supplementsGrid">
-          {extras.map((s) => {
+          {extras.map((s, idx) => {
             const selected = extrasIds.includes(s.service_id);
-
+            // Asignar imagen según el índice del suplemento
+            const supplementImages = [
+              '/img/appointment/nudos.png',
+              '/img/appointment/deslanado.png',
+            ];
             return (
               <div
                 key={s.service_id}
                 className={`supplementsCard ${selected ? "selected" : ""}`}
               >
-                <img src="" alt={s.title} />
+                <img src={supplementImages[idx] || supplementImages[0]} alt={s.title} />
                 <h3>{s.title}</h3>
                 <p>{s.duration_minutes} min</p>
                 <h3>{Number(s.price).toFixed(2)}€</h3>
-
-                <Button className="select-btn" onClick={() => {toggleExtra(s.service_id);
+                <Button
+                  className={selected ? "select-btn selected" : "select-btn"}
+                  onClick={() => {toggleExtra(s.service_id);
                   sumarValor(setSumaTotalPrecio, selected ? -s.price : s.price);
                   sumarValor(setSumaTotalMinutos, selected ? -s.duration_minutes : s.duration_minutes);
-                }}>
+                }}
+                >
+
                   {selected ? "QUITAR" : "AÑADIR"}
                 </Button>
               </div>
@@ -134,7 +149,6 @@ export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) =
           })}
         </div>
       </section>
-
       <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
       <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
       <div className="servicesActions">
