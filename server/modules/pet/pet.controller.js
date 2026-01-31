@@ -94,7 +94,6 @@ class PetController {
         if(req.file) {
         values = [name_pet, description, specie, size_category, hair, medical_history, req.file.filename, petId, user_id];
       }
-/* console.log("++++++++++++++++++++++",req.file) */
         await petDal.edit(values, !!req.file);
 
         let updated = await petDal.getOne(petId, user_id);

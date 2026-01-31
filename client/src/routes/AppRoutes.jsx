@@ -20,16 +20,10 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS USUARIO */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
-
-const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
-const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
-
-
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
-const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
-
+const Appointment = lazy(() => import("../pages/ClientPages/AppointmentPages/Appointment/Appointment.jsx"))
 
 /* RUTAS PRIVADAS WORKER */
 import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
@@ -70,11 +64,9 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route element={<ClientLayout />}>
                <Route path="/profile" element={<ClientProfile />} />
-               <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} /> 
                <Route path="/addpet" element={<AddPet />} />
-               <Route path="/selectservices/:petId" element={<SelectServices />} /> 
-               <Route path="/selectdate" element={<SelectDate />} /> 
+               <Route path="/appointment" element={<Appointment />} />
             </Route>
           </Route>
 

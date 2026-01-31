@@ -1,13 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { AuthContext } from "../../contexts/AuthContext/AuthContext";
-import { fetchData } from "../../helpers/axiosHelper";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
+import { fetchData } from "../../../helpers/axiosHelper";
 import { Button } from "react-bootstrap";
 
-export const UsersServicesAppointment = () => {
-  const navigate = useNavigate();
-  const {petId} = useParams();
-
+export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) => {
   const { token } = useContext(AuthContext);
 
   const [sumaTotalPrecio, setSumaTotalPrecio] = useState(0);
@@ -20,27 +16,25 @@ export const UsersServicesAppointment = () => {
   const [baseServiceId, setBaseServiceId] = useState(null);
   const [extrasIds, setExtrasIds] = useState([]);
 
+  
   useEffect(() => {
-  const fetchService = async () => {
-    try {
-      if (!token) return;
-
-      const res = await fetchData(
-        `service/getServiceByPetId/${petId}`,
-        "GET",
-        null,
-        token
-      );
-
-      setServices(res.data.services);
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  fetchService();
-}, [token, petId, navigate]);
+    const fetchService = async () => {
+      try {
+        if (!token || !selectedPet) return;
+        const res = await fetchData(
+          `service/getServiceByPetId/${selectedPet.pet_id}`,
+          "GET",
+          null,
+          token
+        );
+        setServices(res.data.services);
+        console.log(res.data.services)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchService();
+  }, [token, selectedPet]);
 
   const baseServices = services.filter((s) => Number(s.type) === 1);
   const extras = services.filter((s) => Number(s.type) === 2);
@@ -144,16 +138,14 @@ export const UsersServicesAppointment = () => {
       <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
       <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
       <div className="servicesActions">
-        <Button onClick={() => navigate(-1)} className="back-btn">
+        <Button onClick={() => setCurrentAppointment(1)} className="back-btn">
           VOLVER
         </Button>
 
         <Button 
           className="next-btn" 
-          disabled={!baseServiceId}
-          onClick={() =>
-            navigate("/selectdate")
-          }>
+          /* disabled={!baseServiceId} */
+           onClick={() => setCurrentAppointment(3)}>
           SIGUIENTE
         </Button>
       </div>

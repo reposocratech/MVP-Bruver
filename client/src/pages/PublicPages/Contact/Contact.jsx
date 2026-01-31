@@ -65,7 +65,7 @@ const Contact = () => {
         </div>
       </div>
       <div className="aboutActions">
-        <button type="button" onClick={() => navigate('/')} className="contactBackBtn">
+        <button type="button" onClick={() => navigate(-1)} className="contactBackBtn">
           VOLVER
         </button>
       </div>

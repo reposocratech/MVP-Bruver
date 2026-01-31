@@ -50,12 +50,12 @@ export const NavbarLogin = () => {
           <div className="btnNavbar d-flex flex-row gap-2">
             <div className="botones d-flex align-items-center gap-2">
               <div className="navbar-actions">
-                <Button className="nav-btn" onClick={()=>navigate('/selectpet')}>PEDIR CITA</Button>
+                <Button className="nav-btn" onClick={()=>navigate('/appointment')}>PEDIR CITA</Button>
               </div>
             </div>
             <div className="profile-icon">
               <span className="profile-tooltip">Perfil</span>
-              <button className="profile-btn">
+              <button onClick={()=>navigate('/profile')} className="profile-btn">
                 <img src={iconoLogin} alt="Perfil" className="profile-btn-img" />
                 <span className="profile-filled"></span>
               </button>
