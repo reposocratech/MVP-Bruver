@@ -1,22 +1,36 @@
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect , useState} from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../helpers/axiosHelper";
 import { Button } from "react-bootstrap";
 import "./UsersServicesAppointment.css"
 
-export const UsersServicesAppointment = ({setCurrentAppointment, selectedPet}) => {
+export const UsersServicesAppointment = ({
+  setCurrentAppointment,
+  selectedPet,
+
+  sumaTotalPrecio,
+  setSumaTotalPrecio,
+
+  sumaTotalMinutos,
+  setSumaTotalMinutos,
+
+  baseServicePrice,
+  setBaseServicePrice,
+
+  baseServiceMinutes,
+  setBaseServiceMinutes,
+
+  baseServiceId,
+  setBaseServiceId,
+
+  extrasIds,
+  setExtrasIds
+}) => {
+
   const { token } = useContext(AuthContext);
-
-  const [sumaTotalPrecio, setSumaTotalPrecio] = useState(0);
-  const [sumaTotalMinutos, setSumaTotalMinutos] = useState(0);
-
-  const [baseServicePrice, setBaseServicePrice] = useState(0);
-  const [baseServiceMinutes, setBaseServiceMinutes] = useState(0);
-
-  const [services, setServices] = useState([]);
-  const [baseServiceId, setBaseServiceId] = useState(null);
-  const [extrasIds, setExtrasIds] = useState([]);
+      const [services, setServices] = useState([]);
+  
 
   
   useEffect(() => {
