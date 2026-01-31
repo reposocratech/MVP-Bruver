@@ -11,7 +11,7 @@ import { generarContrasena } from '../../utils/generarPassAle.js';
 class UserController {
   register = async (req, res) => {
     try {
-      const { name_user, last_name, phone, email, address, province, city, password } = req.body;
+      const { name_user, last_name, phone, email, address, province, city, password, type } = req.body;
       
       let hashedPass = await bcrypt.hash(password, 10);
       
@@ -24,6 +24,7 @@ class UserController {
         province || null,
         city || null,
         hashedPass,
+        type
       ]);
       
       const token = generateToken({ email }, process.env.SECRET_TOKEN_KEY, { expiresIn: "1d" });
@@ -42,7 +43,6 @@ class UserController {
         console.log('Error al enviar email:', error);
       }
 
-      
       res.status(201).json({ message: "Registro completado. Revisa tu correo para verificar la cuenta." });
 
     } catch (error) {
@@ -106,7 +106,6 @@ class UserController {
     }
   };
   
-  /* update */
   updateProfile = async (req, res) => {
     try {
       
@@ -202,8 +201,8 @@ class UserController {
   // Obtener trabajadores (type = 2)
   getWorkers = async (req, res) => {
     try {
-      const workers = await userDal.getUsersByType(2);
-      res.status(200).json({ workers });
+      const result = await userDal.getUsersByType(2);
+      res.status(200).json(result);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al obtener trabajadores" });
@@ -213,8 +212,8 @@ class UserController {
   // Obtener clientes (type = 3)
   getClients = async (req, res) => {
     try {
-      const clients = await userDal.getUsersByType(3);
-      res.status(200).json({clients });
+      const result = await userDal.getUsersByType(3);
+      res.status(200).json(result);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al obtener clientes" });
@@ -224,8 +223,8 @@ class UserController {
   // Obtener admins (type = 1)
   getAdmins = async (req, res) => {
     try {
-      const admins = await userDal.getUsersByType(1);
-      res.status(200).json({ admins });
+      const result = await userDal.getUsersByType(1);
+      res.status(200).json(result);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al obtener admins" });
