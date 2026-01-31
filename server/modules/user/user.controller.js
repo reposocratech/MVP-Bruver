@@ -11,21 +11,23 @@ import { generarContrasena } from '../../utils/generarPassAle.js';
 class UserController {
   register = async (req, res) => {
     try {
-      const { name_user, last_name, phone, email, address, province, city, password, type } = req.body;
-      
-      let hashedPass = await bcrypt.hash(password, 10);
-      
-      await userDal.register([
-        name_user,
-        last_name || null,
-        phone,
-        email,
-        address || null,
-        province || null,
-        city || null,
-        hashedPass,
-        type
-      ]);
+        let { name_user, last_name, phone, email, address, province, city, password, type } = req.body;
+        // Si type es null o undefined, asignar 3 (cliente)
+        if (type === null || type === undefined) {
+          type = 3;
+        }
+        let hashedPass = await bcrypt.hash(password, 10);
+        await userDal.register([
+          name_user,
+          last_name || null,
+          phone,
+          email,
+          address || null,
+          province || null,
+          city || null,
+          hashedPass,
+          type
+        ]);
       
       const token = generateToken({ email }, process.env.SECRET_TOKEN_KEY, { expiresIn: "1d" });
       
@@ -202,7 +204,7 @@ class UserController {
   getWorkers = async (req, res) => {
     try {
       const result = await userDal.getUsersByType(2);
-      res.status(200).json(result);
+      res.status(200).json({ workers: result });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al obtener trabajadores" });
@@ -224,7 +226,7 @@ class UserController {
   getAdmins = async (req, res) => {
     try {
       const result = await userDal.getUsersByType(1);
-      res.status(200).json(result);
+      res.status(200).json({ admins: result });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error al obtener admins" });
