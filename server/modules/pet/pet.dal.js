@@ -5,7 +5,7 @@ class PetDal {
   getMine = async (userId) => {
     try {
       let sql = `
-        SELECT pet_id, name_pet, description, picture_pet, specie, size_category
+        SELECT pet_id, name_pet, description, specie, hair, picture_pet, specie, size_category, medical_history
         FROM pet
         WHERE user_id = ? AND pet_is_deleted = 0
       `;
