@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import ModalAddReserve from '../../components/Modal/ModalAddReserve/ModalAddReserve';
-import ModalQuickReserve from '../../components/Modal/ModalAddReserve/ModalQuickReserve';
-import ModalSearchClient from '../../components/Modal/ModalAddReserve/ModalSearchClient';
-import ModalSeeAppointment from '../../components/Modal/ModalSeeAppointment/ModalSeeAppointment';
-import ModalAddReserveClient from '../../components/Modal/ModalAddReserve/ModalAddReserveClient';
+import ModalAddReserve from '../../../components/Modal/ModalAddReserve/ModalAddReserve';
+import ModalQuickReserve from '../../../components/Modal/ModalAddReserve/ModalQuickReserve';
+import ModalSearchClient from '../../../components/Modal/ModalAddReserve/ModalSearchClient';
+import ModalSeeAppointment from '../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment';
+import ModalAddReserveClient from '../../../components/Modal/ModalAddReserve/ModalAddReserveClient';
 import { Button } from 'react-bootstrap';
 
 
@@ -35,6 +35,11 @@ const Worker = () => {
       setOpenQuickReserve(false);
     }
 
+    const backModalAddReserveClient = () => {
+      setOpenAddReserveClient(false);
+      setOpenSearchClient(true);
+    };
+
     const handleAcceptClient = (client) => {
       setSelectedClient(client);
       setOpenSearchClient(false);
@@ -63,6 +68,7 @@ const Worker = () => {
        toBack={backModalAddReserve}/>}
 
        {openAddReserveClient && <ModalAddReserveClient
+       toBack={backModalAddReserveClient}
        toBack={backModalAddReserve}
        client={selectedClient}/>}
 

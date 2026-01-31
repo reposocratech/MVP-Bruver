@@ -103,8 +103,8 @@ const ClientProfilePage = () => {
         <div className="infoRight">
           <div className="userPhoto">
             <span>
-             {user.picture_user ? <img className="userPhoto" src={`${import.meta.env.VITE_SERVER_IMAGES}/clients/${user?.picture_user}`} alt="Imagen de perfil" /> : 
-             <img className="userPhoto" src={`${import.meta.env.VITE_SERVER_IMAGES}/clients/perfilDefecto.jpg`}></img> } 
+             {user.picture_user ? <img className="userPhoto" src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user?.picture_user}`} alt="Imagen de perfil" /> : 
+             <img className="userPhoto" src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/perfilDefecto.jpg`}></img> } 
             </span>
           </div>
         </div>

@@ -83,7 +83,7 @@ class PetController {
 
     try {
       const { name_pet, description, specie, size_category, hair, medical_history } = JSON.parse(req.body.editPet);
-      if (!name_pet || !size_category) {
+      if (!name_pet || !specie || !size_category) {
         res.status(400).json({ message: "Faltan campos obligatorios" });
 
         
