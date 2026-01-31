@@ -1,0 +1,194 @@
+:root {
+  --bg: #faf7f3;
+  --panel: #f4ede4;
+  --calendar-bg: #fffdf9;
+  --header-bg: #d8ebe6;
+  --line: rgba(47,111,104,0.45);
+  --text: #3f342a;
+  --muted: #8a7c6d;
+  --accent: #9fcfc3;
+  --shadow: 0 8px 30px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 34px rgba(0,0,0,0.14);
+}
+
+.admin-section,
+.admin-working-hours-page {
+  background: var(--bg);
+  padding: 32px 0 64px;
+}
+
+.admin-section .title,
+.admin-working-hours-page .title {
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.calendar-working-hours {
+  min-height: 1000px;
+  position: relative;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 56px;
+  border-radius: 40px;
+  background: var(--panel);
+}
+
+.calendar-working-hours::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #e6d3c252;
+  border-radius: 40px;
+  z-index: 0;
+}
+
+.calendar-working-hours > * {
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-working-hours .rbc-calendar {
+  width: 100%;
+  font-family: Poppins, sans-serif;
+  color: var(--text);
+}
+
+.calendar-working-hours .rbc-toolbar {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding-bottom: 32px;
+}
+
+.calendar-working-hours .rbc-toolbar-label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+  color: #6c5037;
+  white-space: nowrap;
+}
+
+.calendar-working-hours .rbc-btn-group {
+  display: flex !important;
+  gap: 8px;
+}
+
+.calendar-working-hours .rbc-btn-group button {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  border-radius: 14px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.calendar-working-hours .rbc-time-view {
+  background: var(--calendar-bg);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transform: translateZ(0);
+}
+
+.calendar-working-hours .rbc-time-header,
+.calendar-working-hours .rbc-time-header-content,
+.calendar-working-hours .rbc-header {
+  background: var(--header-bg);
+}
+
+.calendar-working-hours .rbc-time-header-content {
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+.calendar-working-hours .rbc-header {
+  padding: 16px 0;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: inset -1px 0 0 var(--line);
+}
+
+.calendar-working-hours .rbc-time-gutter {
+  background: var(--calendar-bg);
+  color: var(--muted);
+  box-shadow: inset -1px 0 0 var(--line);
+}
+
+.calendar-working-hours .rbc-time-content {
+  background: var(--calendar-bg);
+  margin-top: -1px;
+}
+
+.calendar-working-hours .rbc-event {
+  border-radius: 16px;
+  padding: 10px 14px;
+  margin: 4px;
+  box-shadow: var(--shadow);
+  border: none;
+}
+
+.calendar-working-hours .rbc-event-title {
+  color: #fff;
+  font-weight: 700;
+}
+
+.calendar-working-hours
+.rbc-time-content
+> .rbc-day-slot:nth-child(2)
+.rbc-event {
+  background: linear-gradient(135deg,#daab7f,#d3965d);
+}
+
+.calendar-working-hours
+.rbc-time-content
+> .rbc-day-slot:nth-child(3)
+.rbc-event {
+  background: linear-gradient(135deg,#75ccb7,#56ceac);
+}
+
+.calendar-working-hours .rbc-today {
+  background: rgba(143,199,187,0.14) !important;
+}
+
+.calendar-working-hours .rbc-current-time-indicator {
+  display: none;
+}
+
+.back-btn-center {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.back-btn {
+  margin-top: 32px;
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}

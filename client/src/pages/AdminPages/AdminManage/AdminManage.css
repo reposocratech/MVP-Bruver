@@ -6,7 +6,9 @@
   min-height: calc(100vh - 160px);
   padding: 40px 20px 80px;
   font-family: "Raleway", sans-serif;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .agr-title {
@@ -14,30 +16,28 @@
   color: #6bb3a7;
   font-weight: 700;
   letter-spacing: 2px;
-  margin-bottom: 100px;
-  font-size: 40px;
+  margin-bottom: 40px;
+  font-size: 38px;
 }
 
 .agr-section {
-  max-width: 900px;
-  margin: 0 auto 100px;
+  width: 100%;
+  max-width: 920px;
+  margin-bottom: 70px;
 }
 
 .agr-section-title {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 60px;
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 
 .agr-subtitle {
   font-family: "Lora", serif;
-  font-size: 20px;
   color: #3a2f2a;
-  margin: 0;
+  font-weight: 600;
+  font-size: 22px;
 }
-
 
 .agr-table-wrap {
   width: 100%;
@@ -49,23 +49,22 @@
   border-spacing: 0;
   background: #ffffff;
   border-radius: 22px;
-  outline: 2px solid #246B64;
-  outline-offset: -2px;
   overflow: hidden;
+  border: 2px solid #246B64;
+  box-shadow: rgba(58, 47, 42, 0.18) 0px 30px 30px -20px;
 }
-
 
 .agr-table thead th {
   background: #A6C8B7;
   color: #4A2E24;
   font-weight: 700;
-  padding: 14px;
+  padding: 16px;
   text-align: center;
   border-bottom: 1px solid #246B64;
 }
 
 .agr-table td {
-  padding: 12px;
+  padding: 14px;
   font-weight: 600;
   color: #4A2E24;
   text-align: center;
@@ -88,7 +87,7 @@
 .agr-actions {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
@@ -97,7 +96,7 @@
   color: #246B64;
   border: 1px solid #246B64;
   border-radius: 999px;
-  padding: 8px 18px;
+  padding: 9px 22px;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
@@ -111,35 +110,44 @@
   transform: translateY(-2px);
 }
 
+
 .agr-bottom {
   display: flex;
   justify-content: center;
-  gap: 22px;
-  margin-top: 40px;
+  align-items: center;
+  gap: 24px;
+  margin-top: 60px;
   flex-wrap: wrap;
 }
 
 .agr-back {
   background: #6bb3a7;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 999px;
-  padding: 14px 0;
-  width: 180px;
+  padding: 14px 28px;
+  min-width: 180px;
   font-weight: 700;
+  font-size: 14px;
   cursor: pointer;
   box-shadow: rgba(58, 47, 42, 0.25) 0px 10px 20px -10px;
   transition: all 0.25s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .agr-back:hover {
   background: #246B64;
   transform: translateY(-2px);
 }
+
+.agr-back:active {
+  transform: translateY(0);
+  box-shadow: rgba(58, 47, 42, 0.25) 0px 6px 12px -8px;
+}
+
 
 .nc-backdrop {
   opacity: 0.35 !important;
@@ -152,15 +160,14 @@
 
 .nc-modal-content {
   border: none !important;
-  border-radius: 20px !important;
+  border-radius: 22px !important;
   background: #f4efe8 !important;
-  box-shadow: none !important;
 }
 
 .nc-body {
   padding: 32px 28px 120px;
   position: relative;
-  min-height: 640px;
+  min-height: 620px;
 }
 
 .nc-title {
@@ -177,82 +184,7 @@
   margin: 0 auto;
 }
 
-.nc-group {
-  margin-bottom: 12px;
-}
 
-.nc-group .form-label {
-  font-size: 12px;
-  margin-bottom: 4px;
-  color: #3a2f2a;
-}
-
-.nc-group .form-control {
-  height: 36px;
-  border-radius: 10px;
-  border: none;
-  background: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
-  padding: 6px 10px;
-  font-size: 13px;
-}
-
-.nc-group .form-control:focus {
-  outline: none;
-  box-shadow: inset 0 0 0 2px #6bb3a7;
-}
-
-.nc-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  margin-top: 28px;
-}
-
-.nc-btn {
-  border: none;
-  width: 100px;
-  height: 36px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 14px;
-}
-
-.nc-btn-ok {
-  background: #6bb3a7;
-  color: #ffffff;
-}
-
-.nc-btn-ok:hover {
-  background: #246B64;
-}
-
-.nc-btn-cancel {
-  background: #d6c4b3;
-  color: #3a2f2a;
-}
-
-.nc-btn-cancel:hover {
-  background: #bfa894;
-}
-
-.nc-slogan {
-  text-align: center;
-  margin-top: 28px;
-  font-weight: 700;
-  font-size: 12px;
-  color: #3a2f2a;
-}
-
-.nc-dog {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 160px;
-  pointer-events: none;
-}
 
 @media (max-width: 768px) {
   .agr-title {
@@ -275,14 +207,13 @@
     margin-bottom: 18px;
     background: #ffffff;
     border-radius: 18px;
-    outline: 2px solid #246B64;
-    outline-offset: -2px;
     overflow: hidden;
+    border: 1px solid #246B64;
   }
 
   .agr-table td {
     border: none;
-    padding: 10px 14px;
+    padding: 12px 14px;
     text-align: right;
     position: relative;
   }
