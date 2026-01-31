@@ -69,7 +69,7 @@ const AdminWorkingHours = () => {
     console.error(error);
     alert("Error al crear el horario");
   }
-
+  }
   // Seleccionar evento
   const handleSelectEvent = (event) => {
     setSelectedEvent(event);
@@ -145,7 +145,7 @@ const AdminWorkingHours = () => {
 
   const allEvents = [...eventsMap]
 
-
+  
 
   return (
     <section className="admin-working-hours-page">
@@ -154,7 +154,7 @@ const AdminWorkingHours = () => {
       <CalendarWorkingHours
         view={view}
         date={date}
-        events={events}
+        events={allEvents}
         setView={setView}
         setDate={setDate}
         handleSelectSlot={handleSelectSlot}
@@ -179,6 +179,6 @@ const AdminWorkingHours = () => {
       </div>
     </section>
   )
-}
+  
 };
 export default AdminWorkingHours
