@@ -31,13 +31,15 @@ body {
   border-radius: 18px;
   padding: 32px;
   display: flex;
-  gap: 40px;
+  gap: 4px;
   align-items: center;
 }
 
 .info-block {
   flex: 1;
   position: relative;
+  text-align: right;
+  
 }
 
 .info-block h3 {
@@ -107,6 +109,7 @@ table tr:last-child td {
 
 .options-wrapper {
   margin-top: 90px;
+  margin-bottom: 39px;
   display: flex;
   flex-direction: column;
   gap: 70px;
@@ -193,8 +196,9 @@ table tr:last-child td {
 }
 
 .back-btn {
-  margin-top: 140px;
-  align-self: flex-start;
+  align-self: center; 
+  margin-top: 110x;
+  margin-bottom: 10px;
   background: rgba(108, 101, 94, 0.9);
   color: #ffffff;
   border: none;

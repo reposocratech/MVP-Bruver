@@ -69,6 +69,7 @@ const Worker = () => {
 
        {openAddReserveClient && <ModalAddReserveClient
        toBack={backModalAddReserveClient}
+       toBack={backModalAddReserve}
        client={selectedClient}/>}
 
 
