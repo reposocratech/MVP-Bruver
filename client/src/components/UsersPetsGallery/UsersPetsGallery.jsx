@@ -1,15 +1,11 @@
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../helpers/axiosHelper";
-import { useNavigate } from "react-router";
 import "./UsersPetsGallery.css";
  
 export const UsersPetsGallery = ({ setOpenModalEditPet, setSelectedPet }) => {
   // 1) Traemos del contexto el array de mascotas, token y el setter global
   const { pets, token, setPets } = useContext(AuthContext);
- 
-  const navigate = useNavigate();
- 
  
   // 2) Al montar el componente, si hay token, pedimos las mascotas al backend
   useEffect(() => {
@@ -73,7 +69,11 @@ export const UsersPetsGallery = ({ setOpenModalEditPet, setSelectedPet }) => {
                   alt={elem.name_pet}
                 />
               ) : (
-                <span>IMG</span>
+                 <img
+                  className="petPhoto"
+                  src={`/img/defaultimg/IconDefaultPet.png`}
+                  alt="Imagen de mascota por defecto"
+                />
               )}
             </div>
             <div className="petInfo">

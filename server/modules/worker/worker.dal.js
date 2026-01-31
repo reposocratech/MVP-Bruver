@@ -81,38 +81,87 @@ class WorkerDal {
       throw error;
     }
   };
+  createClientAppointment = async ({
+  created_by_user_id,
+  employee_user_id,
+  client_user_id,
+  pet_id,
+  appointment_date,
+  start_time,
+  duration_minutes,
+  total_price,
+  service_id,
+  supplement_ids = [],
+  observations,
+}) => {
+  try {
+    // Cambiar formato
+    const st = start_time.length === 5 ? `${start_time}:00` : start_time; 
 
-  createAppointmentQuick = async (
-    userId,
-    appointment_date,
-    start_time,
-    end_time,
-    total_price
-  ) => {
-    try {
-      const sql = `
-        INSERT INTO appointment
-        (created_by_user_id, employee_user_id, client_user_id, pet_id, status,
-         total_price, appointment_date, start_time, end_time)
-        VALUES (?, ?, NULL, NULL, 1, ?, ?, ?, ?)
-      `;
-
-      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
-
-      const result = await executeQuery(sql, [
-        userId,
-        userId,
+    // 1) Insertar la cita
+    const sql = `
+      INSERT INTO appointment (
+        created_by_user_id,
+        employee_user_id,
+        client_user_id,
+        pet_id,
+        status,
         total_price,
         appointment_date,
-        st,
+        start_time,
         end_time,
-      ]);
+        observations
+      )
+      VALUES (
+        ?, ?, ?, ?,
+        1,
+        ?,
+        ?,
+        ?,
+        ADDTIME(?, SEC_TO_TIME(? * 60)),
+        ?
+      )
+    `;
 
-      return result.insertId;
-    } catch (error) {
-      throw error;
+    const appointmentRes = await executeQuery(sql, [
+      created_by_user_id,
+      employee_user_id,
+      client_user_id,
+      pet_id,
+      total_price,
+      appointment_date,
+      st,
+      st,
+      duration_minutes,
+      observations || null,
+    ]);
+
+    const appointmentId = appointmentRes.insertId;
+
+    //Insertar relación con servicios (si hay servicio base o suplementos)
+    const ids = [];
+
+    if (service_id) ids.push(String(service_id));
+    if (Array.isArray(supplement_ids)) {
+      for (const s of supplement_ids) ids.push(String(s));
     }
-  };
+
+    const uniqueIds = [...new Set(ids)].filter(Boolean);
+
+    for (const sid of uniqueIds) {
+      const linkSql = `
+        INSERT INTO service_appointment (appointment_id, service_id)
+        VALUES (?, ?)
+      `;
+      await executeQuery(linkSql, [appointmentId, sid]);
+    }
+
+    return { appointment_id: appointmentId };
+  } catch (error) {
+    throw error;
+  }
+};
+
 
   insertServicesForAppointment = async (
     appointmentId,
@@ -137,20 +186,24 @@ class WorkerDal {
       throw error;
     }
   };
-  createQuickAppointment = async ({
-  createdBy,
-  employeeId,
-  appointmentDate,
-  startTime,
-  durationMinutes,
-  totalPrice,
-  status,
-  guestName,
-  guestPhone,
-  guestHair,
-  serviceIds,
+ createQuickAppointment = async ({
+  created_by_user_id,
+  employee_user_id,
+  appointment_date,
+  start_time,
+  duration_minutes,
+  total_price,
+  guest_name,
+  guest_phone,
+  guest_hair,
+  service_id,
+  supplement_ids = [],
+  observations,
 }) => {
   try {
+    // formato tiempo
+    const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
     const sqlAppointment = `
       INSERT INTO appointment (
         created_by_user_id,
@@ -164,42 +217,53 @@ class WorkerDal {
         total_price,
         appointment_date,
         start_time,
-        end_time
+        end_time,
+        observations
       )
       VALUES (
         ?, ?, NULL, NULL,
         ?, ?, ?,
+        1,
+        ?,
         ?, ?,
-        ?, ?,
-        ADDTIME(?, SEC_TO_TIME(? * 60))
+        ADDTIME(?, SEC_TO_TIME(? * 60)),
+        ?
       )
     `;
 
     const appointmentRes = await executeQuery(sqlAppointment, [
-      createdBy,
-      employeeId,
-      guestName,
-      guestPhone,
-      guestHair,
-      status,
-      totalPrice,
-      appointmentDate,
-      startTime,
-      startTime,
-      durationMinutes,
+      created_by_user_id,
+      employee_user_id,
+      guest_name,
+      guest_phone,
+      guest_hair,
+      total_price,
+      appointment_date,
+      st,
+      st,
+      duration_minutes,
+      observations || null,
     ]);
 
     const appointmentId = appointmentRes.insertId;
 
-    // 2) Insert relaciones con servicios (base + suplementos)
-    if (Array.isArray(serviceIds) && serviceIds.length > 0) {
-      for (const sid of serviceIds) {
-        const sqlLink = `
-          INSERT INTO service_appointment (appointment_id, service_id)
-          VALUES (?, ?)
-        `;
-        await executeQuery(sqlLink, [appointmentId, sid]);
-      }
+    // Vincular servicio base + suplementos
+    const ids = [];
+
+    if (service_id) ids.push(String(service_id));
+    if (Array.isArray(supplement_ids)) {
+      for (const s of supplement_ids) ids.push(String(s));
+    }
+
+    const uniqueIds = [...new Set(ids)].filter(Boolean);
+
+
+    for (const sid of uniqueIds) {
+      const sqlLink = `
+        INSERT INTO service_appointment (appointment_id, service_id)
+        VALUES (?, ?)
+      `;
+      await executeQuery(sqlLink, [appointmentId, sid]);
     }
 
     return { appointment_id: appointmentId };
@@ -207,6 +271,7 @@ class WorkerDal {
     throw error;
   }
 };
+
 }
 
 export default new WorkerDal();

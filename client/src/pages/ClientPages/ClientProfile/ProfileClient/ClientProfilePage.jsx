@@ -112,7 +112,7 @@ const ClientProfilePage = () => {
               ) : (
                 <img
                   className="userPhoto"
-                  src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/perfilDefecto.jpg`}
+                  src={`/img/defaultimg/IconDefect.png`}
                   alt="Imagen de perfil por defecto"
                 />
               )}

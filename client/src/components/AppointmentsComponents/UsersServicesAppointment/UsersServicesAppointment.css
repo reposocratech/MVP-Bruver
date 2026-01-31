@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
-.appointmentPetPage {
+.servicesPage {
 	background: #f4efe8;
 	padding: 50px 40px 180px;
 	min-height: auto;
@@ -9,7 +9,7 @@
 	font-family: "Raleway", sans-serif;
 }
 
-.appointmentPetTitle {
+.services h2, .servicesTitle {
 	color: #6bb3a7;
 	font-size: 33px;
 	margin-bottom: 35px;
@@ -18,7 +18,7 @@
 	padding: 2rem;
 }
 
-.appointmentPetGrid {
+.servicesGrid, .supplementsGrid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 40px;
@@ -27,10 +27,10 @@
 	justify-items: center;
 }
 
-.appointmentPetCard {
+.servicesCard, .supplementsCard {
 	background: #f8eadf;
 	width: 280px;
-	height: 340px;
+	min-height: 180px;
 	border-radius: 28px;
 	position: relative;
 	overflow: hidden;
@@ -43,49 +43,34 @@
 	border: 2px solid #b79c81;
 	transition: box-shadow 0.2s;
 }
-.appointmentPetCard:hover {
+.servicesCard.selected, .supplementsCard.selected {
 	box-shadow: 0 8px 24px rgba(107, 179, 167, 0.18);
+	border: 2px solid #6bb3a7;
 }
 
-.appointmentPetImage {
+.servicesCard img {
 	width: 100%;
-	height: 200px;
+	height: 120px;
+	object-fit: cover;
 	background: #1f5953;
 	border-radius: 24px 24px 0 0;
-	overflow: hidden;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	margin-bottom: 10px;
 }
-.appointmentPetImage img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-}
-.appointmentPetInfo {
-	width: 100%;
-	background: #6bb3a7;
-	border-radius: 0 0 22px 22px;
-	padding: 18px 10px 10px 10px;
-	color: white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 90px;
-}
-.appointmentPetInfo h3 {
+
+.servicesCard h3, .supplementsCard h3 {
 	margin: 0 0 8px;
 	font-size: 20px;
 	font-weight: 800;
 	letter-spacing: 0.5px;
+	color: #3b2a1e;
 }
-.appointmentPetActions {
-	display: flex;
-	gap: 14px;
-	margin-top: 10px;
+.servicesCard p, .supplementsCard p {
+	margin: 0 0 8px;
+	color: #246b64;
+	font-weight: 600;
 }
-.selectPetBtn {
+
+.select-btn {
 	background: #ffffff;
 	color: #246b64;
 	border: 1px solid #246b64;
@@ -96,22 +81,48 @@
 	cursor: pointer;
 	transition: all 0.2s ease;
 	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+	margin-bottom: 10px;
 }
-.selectPetBtn:hover {
+.select-btn.selected, .select-btn:hover {
 	background: #246b64;
 	color: #ffffff;
 	transform: translateY(-2px);
 }
-.selectPetBtn:active {
+.select-btn:active {
 	transform: translateY(0);
 	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
+.servicesActions {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 30px;
+}
+.back-btn, .next-btn {
+	background: #b79c81;
+	color: #fff;
+	border: none;
+	padding: 10px 28px;
+	border-radius: 999px;
+	font-size: 15px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s, transform 0.15s;
+}
+.back-btn:hover, .next-btn:hover {
+	background: #6bb3a7;
+	transform: translateY(-2px);
+}
+.back-btn:active, .next-btn:active {
+	transform: translateY(0);
+}
+
 @media (max-width: 768px) {
-	.appointmentPetGrid {
+	.servicesGrid, .supplementsGrid {
 		grid-template-columns: 1fr;
 	}
-	.appointmentPetCard {
+	.servicesCard, .supplementsCard {
 		width: 100%;
 		max-width: 320px;
 	}

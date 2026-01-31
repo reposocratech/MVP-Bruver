@@ -26,6 +26,9 @@ const ModalQuickReserve = ({ toBack }) => {
   const [clientName, setClientName] = useState('');
   const [phone, setPhone] = useState('');
   const [hair, setHair] = useState('');
+  const [observations, setObservations] = useState('');
+  const [specie, setSpecie] = useState('');
+
 
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState('');
@@ -44,11 +47,12 @@ const ModalQuickReserve = ({ toBack }) => {
 
   const [sizeCategory, setSizeCategory] = useState('');
 
+  const isCat = String(specie) === "2";
+
   const hours = [
     '9:15','9:30','9:45','10:00','10:15','10:30','10:45',
     '11:15','11:30','11:45','12:00','12:15','12:30','12:45',
-    '13:00','13:15','13:30','14:00','14:15','14:30','14:45',
-    '15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45',
+    '13:00','13:15','13:30'
   ];
 
   const saveReserve = () => {
@@ -59,19 +63,17 @@ const ModalQuickReserve = ({ toBack }) => {
       manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(price || '0.00');
 
     const payload = {
-      // esto lo puedes ignorar en backend si no lo quieres
       client_name: clientName || null,
       phone: phone || null,
       hair: hair || null,
-
-      service_id: selectedServiceId || null,
-      supplement_ids: selectedSupplementIds,
-
+      specie: specie || null,
+      service_id: isCat ? null: selectedServiceId || null,
+      supplement_ids: isCat ?[] : selectedSupplementIds,
       appointment_date: formatYmd(date),
       start_time: startTime || null,
-
-      duration_minutes: finalDuration,
-      total_price: finalPrice,
+      duration_minutes: isCat ? 0: finalDuration,
+      total_price: isCat? "0.00": finalPrice,
+      observations: observations || null
     };
 
     localStorage.setItem(LS_KEY, JSON.stringify(payload));
@@ -117,6 +119,19 @@ const ModalQuickReserve = ({ toBack }) => {
     setSelectedSupplementIds(next);
     calcTotal(selectedServiceId, next);
   };
+
+  //condicionalm para cargar los datos si es un gato
+  useEffect(() => {
+  if (String(specie) === "2") {
+    setSizeCategory('');
+    setSelectedServiceId('');
+    setSelectedSupplementIds([]);
+    setDuration(0);
+    setPrice('0.00');
+    setManualDuration('');
+    setManualPrice('');
+  }
+}, [specie]);
 
   // carga servicios y suplementos por la categoria
   useEffect(() => {
@@ -186,6 +201,7 @@ const ModalQuickReserve = ({ toBack }) => {
     clientName,
     phone,
     hair,
+    observations,
     date,
     startTime,
     selectedServiceId,
@@ -194,6 +210,7 @@ const ModalQuickReserve = ({ toBack }) => {
     price,
     manualDuration,
     manualPrice,
+    specie
   ]);
 
   const handleServiceChange = (e) => {
@@ -214,11 +231,14 @@ const ModalQuickReserve = ({ toBack }) => {
 
     const data = JSON.parse(raw);
 
-    // Validaciones mínimas
+    // Validaciones mínimas y si no es gato
     if (!data.appointment_date) return console.log('Falta fecha');
     if (!data.start_time) return console.log('Falta hora');
+    if (String(data.specie) !== "2") {
     if (!data.service_id) return console.log('Falta servicio');
-    if (!data.duration_minutes || Number(data.duration_minutes) <= 0) return console.log('Duración inválida');
+    if (!data.duration_minutes || Number(data.duration_minutes) <= 0)
+      return console.log('Duración inválida');
+  }
 
     try {
       const res = await fetchData('worker/appointments/quick', 'POST', data, token);
@@ -238,19 +258,19 @@ const ModalQuickReserve = ({ toBack }) => {
           <h3>Añadir una reserva rápida</h3>
 
           <form className="quickReserveForm" onSubmit={handleSubmit}>
-            <label>Seleccionar cliente (ahora mismo no guarda info)</label>
+            <label>Añadir cliente</label>
             <input
               name="client"
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
             />
 
-            <label>Teléfono (ahora mismo no guarda info)</label>
+            <label>Teléfono</label>
             <input name="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
 
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', gap: '10px' }}>
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <label>Pelaje (ahora mismo no guarda info)</label>
+                <label>Pelaje</label>
                 <input
                   value={hair}
                   onChange={(e) => setHair(e.target.value)}
@@ -258,9 +278,22 @@ const ModalQuickReserve = ({ toBack }) => {
                 />
               </div>
 
-              <div style={{ width: '60%', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ width: '40%', display: 'flex', flexDirection: 'column' }}>
+                <label>Especie</label>
+                <select value={specie} onChange={(e) => setSpecie(e.target.value)}>
+                  <option value="" disabled>Selecciona especie</option>
+                  <option value="1">Perro</option>
+                  <option value="2">Gato</option>
+                </select>
+              </div>
+
+              <div style={{ width: '40%', display: 'flex', flexDirection: 'column' }}>
                 <label>Tamaño</label>
-                <select value={sizeCategory} onChange={(e) => setSizeCategory(e.target.value)}>
+                <select
+                  value={sizeCategory}
+                  onChange={(e) => setSizeCategory(e.target.value)}
+                  disabled={String(specie) === "2"} //si es gato, deshabilitado
+                >
                   <option value="" disabled>Selecciona tamaño</option>
                   <option value="1">Toy</option>
                   <option value="2">Pequeño</option>
@@ -321,7 +354,7 @@ const ModalQuickReserve = ({ toBack }) => {
             </div>
 
             <label>Servicio</label>
-            <select value={selectedServiceId} onChange={handleServiceChange} disabled={!sizeCategory}>
+            <select value={selectedServiceId} onChange={handleServiceChange} disabled={!sizeCategory || isCat}>
               <option value="" disabled>
                 {sizeCategory ? 'Selecciona servicio' : 'Selecciona tamaño primero'}
               </option>
@@ -332,8 +365,11 @@ const ModalQuickReserve = ({ toBack }) => {
               ))}
             </select>
 
-            <label>Suplementos</label>
-            <div className="supplementsBox">
+            {/* para ocultar los suplementos en caso de ser gato */}
+            {!isCat && selectedServiceId && (
+              <>
+            <label  >Suplementos</label>
+            <div className="supplementsBox"> 
               {supplements.map((s) => {
                 const sid = String(s.service_id);
                 return (
@@ -342,13 +378,22 @@ const ModalQuickReserve = ({ toBack }) => {
                       type="checkbox"
                       checked={selectedSupplementIds.includes(sid)}
                       onChange={() => toggleSupplement(sid)}
-                      disabled={!selectedServiceId}
+                      /* disabled={!selectedServiceId} */
                     />
                     <span>{`${s.title} (+${s.duration_minutes} min) +${s.price}€`}</span>
                   </label>
                 );
               })}
             </div>
+            </>
+            )}
+            <label>Observaciones</label>
+              <input
+                type="text"
+                value={observations}
+                onChange={(e) => setObservations(e.target.value)}
+              />
+
 
             <div className="resultLine">
               <label className="resultValue">
@@ -414,7 +459,7 @@ const ModalQuickReserve = ({ toBack }) => {
               <Button
                 className="close"
                 type="submit"
-                disabled={!selectedServiceId || !startTime || (!manualDuration && duration === 0)}
+                disabled={!startTime || (!manualDuration && duration === 0)}
               >
                 Aceptar
               </Button>

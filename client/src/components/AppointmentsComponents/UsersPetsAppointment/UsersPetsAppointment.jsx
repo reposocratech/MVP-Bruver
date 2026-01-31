@@ -5,7 +5,7 @@ export const UsersPetsAppointment = ({ pets, setSelectedPet })=>{
 
     <div className="appointmentPetPage">
       <h2 className="appointmentPetTitle">Selecciona tu mascota</h2> 
-      {!!pets && <p>No hay mascotas disponibles.</p>}
+      {!pets && <p>No hay mascotas disponibles.</p>}
       <div className="appointmentPetGrid row g-4 justify-content-center">
         
         {pets?.map((elem) => (
@@ -19,7 +19,11 @@ export const UsersPetsAppointment = ({ pets, setSelectedPet })=>{
                     alt={elem.name_pet}
                   />
                 ) : (
-                  <span>IMG</span>
+                 <img
+                  className="petPhoto"
+                  src={`/img/defaultimg/IconDefaultPet.png`}
+                  alt="Imagen de mascota por defecto"
+                />
                 )}
               </div>
 
