@@ -1,14 +1,17 @@
-import { useContext, useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours'
-import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours'
-import dayjs from 'dayjs'
-import isoWeek from 'dayjs/plugin/isoWeek'
-import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
-import { fetchData } from '../../../helpers/axiosHelper.js'
-import { getDateFromDayId } from '../../../helpers/dateHelper.js'
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import '../AdminProfile/AdminProfile.css';
+import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours';
+import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours';
+import dayjs from "dayjs";
+import isoWeek from "dayjs/plugin/isoWeek";
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { fetchData } from '../../../helpers/axiosHelper.js';
+import { getDateFromDayId } from '../../../helpers/dateHelper.js';
 
-dayjs.extend(isoWeek)
+
+
+dayjs.extend(isoWeek);
 
 const AdminWorkingHours = () => {
   const [view, setView] = useState('week')
@@ -36,7 +39,10 @@ const AdminWorkingHours = () => {
   
 
   const handleSelectSlot = async ({ start, end }) => {
-    const startDayjs = dayjs(start)
+    console.log(start, end);
+    
+  try {
+    const startDayjs = dayjs(start);
 
     const data = {
       user_id: adminId,
@@ -55,16 +61,26 @@ const AdminWorkingHours = () => {
     setSchedule(prev => [
       ...prev,
       {
-        availability_id: res.data.availability_id,
-        ...data,
-      },
-    ])
+        availability_id: res.data.result.insertId,
+        ...data
+      }
+    ]);
+  } catch (error) {
+    console.error(error);
+    alert("Error al crear el horario");
   }
 
-  const handleSelectEvent = event => {
-    setSelectedEvent(event)
-    setIsModalOpen(true)
-  }
+  // Seleccionar evento
+  const handleSelectEvent = (event) => {
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+    console.log(event);
+    
+  };
+
+
+
+  // Guardar cambios
 
   const handleSaveEvent = async (availability_id, start, end) => {
     const startDayjs = dayjs(start)
@@ -118,12 +134,18 @@ const AdminWorkingHours = () => {
       .toDate()
   }
 
-  const events = schedule.map(item => ({
+  //mapeo de horario disponible
+  const eventsMap = schedule?.map((item) => ({
     id: item.availability_id,
     title: 'Disponible',
     start: buildDateTime(item.day_id, item.start_time),
     end: buildDateTime(item.day_id, item.end_time),
-  }))
+   
+  }));
+
+  const allEvents = [...eventsMap]
+
+
 
   return (
     <section className="admin-working-hours-page">

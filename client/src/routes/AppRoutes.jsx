@@ -20,20 +20,14 @@ const ErrorPage = lazy(() => import("../pages/PublicPages/ErrorPage/ErrorPage"))
 
 /* RUTAS PRIVADAS USUARIO */
 import { ClientLayout } from "../layouts/ClientLayout.jsx"
-
-const SelectPet = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectPet/SelectPet.jsx"))
 const SelectCat = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectCat/SelectCat.jsx"))
 const ClientProfile = lazy(() => import("../pages/ClientPages/ClientProfile/ProfileClient/ClientProfilePage.jsx"))
-const SelectServices = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectServices/SelectServices.jsx"))
-
-
 const AddPet  = lazy(() => import("../pages/ClientPages/ClientProfile/AddPet/AddPet.jsx"))
-const SelectDate = lazy(() => import("../pages/ClientPages/AppointmentPages/SelectDate/SelectDate.jsx"))
-
+const Appointment = lazy(() => import("../pages/ClientPages/AppointmentPages/Appointment/Appointment.jsx"))
 
 /* RUTAS PRIVADAS WORKER */
 import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
-const Worker = lazy(() => import("../pages/WorkerPages/Worker.jsx"))
+const Worker = lazy(() => import("../pages/WorkerPages/WorkerDate/Worker.jsx"))
 const WorkerProfile = lazy(() => import("../pages/WorkerPages/WorkerProfile/WorkerProfile.jsx"))
 
 /* RUTAS PRIVADAS ADMIN */
@@ -70,18 +64,16 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes />}>
             <Route element={<ClientLayout />}>
                <Route path="/profile" element={<ClientProfile />} />
-               <Route path="/selectpet" element={<SelectPet />} />
                <Route path="/selectcat" element={<SelectCat />} /> 
                <Route path="/addpet" element={<AddPet />} />
-               <Route path="/selectservices/:petId" element={<SelectServices />} /> 
-               <Route path="/selectdate" element={<SelectDate />} /> 
+               <Route path="/appointment" element={<Appointment />} />
             </Route>
           </Route>
 
           {/* Rutas privadas trabajador */}
           <Route element={<PrivateRoutes/>}>
                 <Route element={<WorkerLayout/>}>
-                   <Route path="/worker" element={<Worker />} /> 
+                   <Route path="/worker/WorkerDate/:workerId" element={<Worker />} /> 
                    <Route path="/worker/profile" element={<WorkerProfile />} />
                 </Route>    
           </Route>
@@ -93,7 +85,7 @@ export const AppRoutes = () => {
               <Route path="/admin" element={<AdminProfile />} />
               <Route path="/admin/manage" element={<AdminManage />}/>
               <Route path="/admin/general" element={<GeneralCalendarPage/>} />
-              <Route path="/admin/appointments" element={<AdminAppointments />} />
+              <Route path="/admin/appointments/:adminId" element={<AdminAppointments />} />
               <Route path="/admin/workinghours/:adminId" element={<AdminWorkingHours />} />
             </Route>
           </Route>

@@ -30,7 +30,6 @@ const AdminManage = () => {
   const [valErrors, setValErrors] = useState({});
   const [fetchError, setFetchError] = useState('');
   // Estado para forzar la recarga de datos
-  const [reload, setReload] = useState(false);
 
   // useEffect para cargar los datos de la base de datos al montar el componente y cuando cambie reload
   useEffect(() => {
@@ -38,13 +37,14 @@ const AdminManage = () => {
     const fetchWorkers = async () => {
       try {
         const res = await fetchData('user/workers', 'GET');
+        //console.log(res)
         const resAdmins = await fetchData('user/admins', 'GET');
         // Mapeo de los datos ajustando los nombres
         const workersData = [
-          ...res.data.workers,
-          ...resAdmins.data.admins
+          ...res.data,
+          ...resAdmins.data
         ].map((w) => ({
-          id: w.id_user,
+          id: w.user_id,
           name: `${w.name_user} ${w.last_name}`,
           phone: w.phone,
           email: w.email,
@@ -61,8 +61,8 @@ const AdminManage = () => {
       try {
         const res = await fetchData('user/clients', 'GET');
         // Mapeo de los datos ajustando los nombres
-        const clientsData = res.data.clients.map((c) => ({
-          id: c.id_user,
+        const clientsData = res.data.map((c) => ({
+          id: c.user_id,
           name: `${c.name_user} ${c.last_name}`,
           phone: c.phone,
           email: c.email,
@@ -76,26 +76,34 @@ const AdminManage = () => {
     // Llamamos a las funciones para cargar los datos
     fetchWorkers();
     fetchClients();
-  }, [reload]);
+  }, []);
 
   // Cambiar tipo a admin (type = 1)
-  const handleMakeAdmin = async (userId) => {
-    try {
-      await fetchData(`user/makeAdmin/${userId}`, 'PUT');
-      setReload(r => !r); // Cambiamos reload para forzar recarga de datos
-    } catch (error) {
-      console.error('Error al hacer admin:', error);
-    }
-  };
+    const handleMakeAdmin = async (userId) => {
+      try {
+        await fetchData(`user/makeAdmin/${userId}`, 'PUT');
+        // Actualiza el tipo en el estado local
+        const workersUpdated = workers.map(worker =>
+          worker.id === userId ? { ...worker, type: 1 } : worker
+        );
+        setWorkers(workersUpdated);
+      } catch (error) {
+        console.error('Error al hacer admin:', error);
+      }
+    };
   // Cambiar tipo a trabajador (type = 2)
-  const handleMakeWorker = async (userId) => {
-    try {
-      await fetchData(`user/makeWorker/${userId}`, 'PUT');
-      setReload(r => !r); // Cambiamos reload para forzar recarga de datos
-    } catch (error) {
-      console.error('Error al hacer trabajador:', error);
-    }
-  };
+    const handleMakeWorker = async (userId) => {
+      try {
+        await fetchData(`user/makeWorker/${userId}`, 'PUT');
+        // Actualiza el tipo en el estado local
+        const workersUpdated = workers.map(worker =>
+          worker.id === userId ? { ...worker, type: 2 } : worker
+        );
+        setWorkers(workersUpdated);
+      } catch (error) {
+        console.error('Error al hacer trabajador:', error);
+      }
+    };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -112,7 +120,7 @@ const AdminManage = () => {
       return;
     }
     try {
-      //validar los campos
+      //validar los campos segun el zod(recordar cambiar password)
       profileSchema.parse(profile);
       //creamos el body que guarda los datos que introducimos del modal
       const body = {
@@ -137,6 +145,7 @@ const AdminManage = () => {
           name: `${profile.name} ${profile.lastname}`,
           phone: profile.phone,
           email: profile.email,
+          type: profile.type,
         };
         setWorkers([...workers, newWorker]);
       } else if (profile.type === 'client') {

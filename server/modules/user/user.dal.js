@@ -5,7 +5,7 @@ class UserDal {
   register = async (values) => {
     try {
       let sql =
-        "INSERT INTO user (name_user, last_name, phone, email, address, province, city, password) VALUES (?,?,?,?,?,?,?,?)";
+        "INSERT INTO user (name_user, last_name, phone, email, address, province, city, password, type) VALUES (?,?,?,?,?,?,?,?,?)";
       let result = await executeQuery(sql, values);
       return result;
     } catch (error) {
@@ -57,6 +57,8 @@ class UserDal {
 
   
   updateProfile = async (values) => {
+    console.log("**********", values);
+    
     try {
       let sql;
       if (values.length === 8) {
@@ -85,7 +87,7 @@ class UserDal {
   // Obtener usuarios por tipo (2=worker, 3=client)
   getUsersByType = async (type) => {
     try {
-      const sql = `SELECT user_id as id_user, name_user, last_name, phone, email, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
+      const sql = `SELECT user_id, name_user, last_name, phone, email, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
       const result = await executeQuery(sql, [type]);
       return result;
     } catch (error) {
