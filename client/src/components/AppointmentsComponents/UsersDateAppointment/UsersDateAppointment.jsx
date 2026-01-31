@@ -2,7 +2,7 @@ import './UsersDateAppointment.css';
 import { useState} from 'react';
 import Calendar from 'react-calendar';
 
-export const UsersDateAppointment = ({ setCurrentAppointment, workers }) => {
+export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotalPrecio, sumaTotalMinutos}) => {
   const [date, setDate] = useState(new Date());
   const [workerId, setWorkerId] = useState(null);
 
@@ -46,6 +46,9 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers }) => {
           </div>
         </div>
       </div>
+
+      <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
+      <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
 
       <div className="selectDate">
         <h2 className="selectDateTitle">Selecciona la fecha</h2>

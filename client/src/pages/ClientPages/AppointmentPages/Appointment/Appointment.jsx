@@ -12,6 +12,14 @@ const Appointment = () => {
   const [selectedPet, setSelectedPet] = useState();
   const [workers, setWorkers] = useState([]);
   const navigate = useNavigate();
+  const [sumaTotalPrecio, setSumaTotalPrecio] = useState(0);
+    const [sumaTotalMinutos, setSumaTotalMinutos] = useState(0);
+  
+    const [baseServicePrice, setBaseServicePrice] = useState(0);
+    const [baseServiceMinutes, setBaseServiceMinutes] = useState(0);
+  
+    const [baseServiceId, setBaseServiceId] = useState(null);
+    const [extrasIds, setExtrasIds] = useState([]);
 
 /*   const cancel = (e) => {
     e.preventDefault();
@@ -101,7 +109,25 @@ const Appointment = () => {
                 <UsersServicesAppointment 
                   setCurrentAppointment={setCurrentAppointment}
                   selectedPet={selectedPet}
-                />
+
+                  sumaTotalPrecio={sumaTotalPrecio}
+                  setSumaTotalPrecio={setSumaTotalPrecio}
+
+                  sumaTotalMinutos={sumaTotalMinutos}
+                  setSumaTotalMinutos={setSumaTotalMinutos}
+
+                  baseServicePrice={baseServicePrice}
+                  setBaseServicePrice={setBaseServicePrice}
+
+                  baseServiceMinutes={baseServiceMinutes}
+                  setBaseServiceMinutes={setBaseServiceMinutes}
+
+                  baseServiceId={baseServiceId}
+                  setBaseServiceId={setBaseServiceId}
+
+                  extrasIds={extrasIds}
+                  setExtrasIds={setExtrasIds}
+                />      
               </Col>
             </Row>
           </Container>
@@ -115,6 +141,8 @@ const Appointment = () => {
                 <UsersDateAppointment 
                   setCurrentAppointment={setCurrentAppointment}
                   workers={workers}
+                  sumaTotalPrecio={sumaTotalPrecio}
+                  sumaTotalMinutos={sumaTotalMinutos}
                 />
               </Col>
             </Row>
