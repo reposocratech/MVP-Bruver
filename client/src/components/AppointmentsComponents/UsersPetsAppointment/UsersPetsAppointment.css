@@ -47,6 +47,13 @@
 	box-shadow: 0 8px 24px rgba(107, 179, 167, 0.18);
 }
 
+/* New class for centering pet photos */
+.petPhoto {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .appointmentPetImage {
 	width: 100%;
 	height: 200px;

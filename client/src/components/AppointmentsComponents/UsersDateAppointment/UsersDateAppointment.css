@@ -81,8 +81,9 @@
   border-radius: 10px;
 }
 
-.selectEmployeeBtn:hover {
-  background: #a98d73;
+.selectEmployeeBtn:hover,
+.selectEmployeeBtn:focus {
+  background: #766351;
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
 }

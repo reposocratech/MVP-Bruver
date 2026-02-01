@@ -29,6 +29,8 @@ const Appointment = lazy(() => import("../pages/ClientPages/AppointmentPages/App
 import { WorkerLayout } from "../layouts/WorkerLayout.jsx"
 const Worker = lazy(() => import("../pages/WorkerPages/WorkerDate/Worker.jsx"))
 const WorkerProfile = lazy(() => import("../pages/WorkerPages/WorkerProfile/WorkerProfile.jsx"))
+const WorkerAppointments = lazy(() => import("../pages/AdminPages/AdminAppointments/AdminAppointments.jsx"));
+const WorkerWorkingHours = lazy(() => import("../pages/AdminPages/AdminWorkingHours/AdminWorkingHours.jsx"))
 
 /* RUTAS PRIVADAS ADMIN */
 import { AdminLayout } from "../layouts/AdminLayout.jsx"
@@ -78,6 +80,8 @@ export const AppRoutes = () => {
                 <Route element={<WorkerLayout/>}>
                    <Route path="/worker/WorkerDate/:workerId" element={<Worker />} /> 
                    <Route path="/worker/profile" element={<WorkerProfile />} />
+                    <Route path="/worker/appointments/:workerId" element={<WorkerAppointments />} />
+              <Route path="/worker/workinghours/:workerId" element={<WorkerWorkingHours />} />
                 </Route>    
           </Route>
 
