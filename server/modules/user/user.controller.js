@@ -183,9 +183,6 @@ class UserController {
     }
   };
 
- 
-    
-    
     sendContact = async (req, res) => {
       try {
         const { nombre, telefono, email, mensaje } = req.body;
@@ -197,6 +194,39 @@ class UserController {
         console.log(error);
       res.status(500).json({ message: "Error al enviar el mensaje" });
 
+    }
+  };
+
+   // Obtener trabajadores (type = 2)
+  getWorkers = async (req, res) => {
+    try {
+      const result = await userDal.getUsersByType(2);
+      res.status(200).json({ workers: result });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener trabajadores" });
+    }
+  };
+  
+  // Obtener clientes (type = 3)
+  getClients = async (req, res) => {
+    try {
+      const result = await userDal.getUsersByType(3);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener clientes" });
+    }
+  };
+
+  // Obtener admins (type = 1)
+  getAdmins = async (req, res) => {
+    try {
+      const result = await userDal.getUsersByType(1);
+      res.status(200).json({ admins: result });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener admins" });
     }
   };
   

@@ -17,6 +17,10 @@ router.put("/delete", verifyToken, userController.deleteLogic);
 router.post("/forgotPassword", userController.forgotPassword);
 router.post("/", userController.sendContact);
 
+router.get("/workers", userController.getWorkers);
+router.get("/clients", userController.getClients);
+router.get("/admins", userController.getAdmins);
+
 
 
 

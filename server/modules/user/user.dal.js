@@ -84,6 +84,15 @@ class UserDal {
     }
   };
 
+  getUsersByType = async (type) => {
+    try {
+      const sql = `SELECT user_id, name_user, last_name, phone, email, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
+      const result = await executeQuery(sql, [type]);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
  
 
 }
