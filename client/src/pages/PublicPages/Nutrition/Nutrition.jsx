@@ -11,7 +11,7 @@ const Nutrition = () => {
         <h1 className="nutritionTitle">Próximamente</h1>
 
         <p className="nutritionText">
-          Una buena alimentación es la base de una vida larga y feliz. En Brüber
+          Una buena alimentación es la base de una vida larga y feliz. En Brüver
           te ayudamos a escoger la dieta ideal para tu mascota según su edad,
           tamaño, nivel de actividad o necesidades especiales. Te asesoramos con
           opciones de calidad para mejorar su energía, digestión y bienestar día
