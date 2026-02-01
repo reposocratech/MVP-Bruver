@@ -6,6 +6,7 @@ import { ZodError } from 'zod';
 import './AdminManage.css';
 import { RiUserAddLine } from 'react-icons/ri';
 import ModalCreateProfile from '../../../components/Modal/ModalCreateProfile/ModalCreateProfile';
+import ModalUserProfileEdit from '../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
 
 const initialProfile = {
   type: '',
@@ -29,6 +30,8 @@ const AdminManage = () => {
   const [profile, setProfile] = useState(initialProfile);
   const [valErrors, setValErrors] = useState({});
   const [fetchError, setFetchError] = useState('');
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   // Estado para forzar la recarga de datos
 
   // useEffect para cargar los datos de la base de datos al montar el componente y cuando cambie reload
@@ -198,29 +201,31 @@ const AdminManage = () => {
               </tr>
             </thead>
             <tbody>
-              {workers.map((w) => (
-                <tr key={w.id}>
-                  <td className="agr-bold">{w.name}</td>
-                  <td>{w.phone}</td>
-                  <td>{w.email}</td>
-                  <td>
-                    <div className="agr-actions">
-                      <button className="agr-pill" type="button">
-                        EDITAR
-                      </button>
-                      {w.type === 2 ? (
-                        <button className="agr-pill" type="button" onClick={() => handleMakeAdmin(w.id)}>
-                          HACER ADMIN
+              {workers
+                .filter(w => !(w.type === 1 && w.id === 1))
+                .map((w) => (
+                  <tr key={w.id}>
+                    <td className="agr-bold">{w.name}</td>
+                    <td>{w.phone}</td>
+                    <td>{w.email}</td>
+                    <td>
+                      <div className="agr-actions">
+                        <button className="agr-pill" type="button" onClick={() => { setSelectedUser(w); setShowEditProfileModal(true); }}>
+                          EDITAR
                         </button>
-                      ) : w.type === 1 ? (
-                        <button className="agr-pill" type="button" onClick={() => handleMakeWorker(w.id)}>
-                          HACER TRABAJADOR
-                        </button>
-                      ) : null}
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                        {w.type === 2 ? (
+                          <button className="agr-pill" type="button" onClick={() => handleMakeAdmin(w.id)}>
+                            HACER ADMIN
+                          </button>
+                        ) : w.type === 1 ? (
+                          <button className="agr-pill" type="button" onClick={() => handleMakeWorker(w.id)}>
+                            HACER TRABAJADOR
+                          </button>
+                        ) : null}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -285,6 +290,12 @@ const AdminManage = () => {
         valErrors={valErrors}
         fetchError={fetchError}
       />
+      {showEditProfileModal && (
+        <ModalUserProfileEdit
+          onClose={() => setShowEditProfileModal(false)}
+          user={selectedUser}
+        />
+      )}
 
     </div>
   );

@@ -104,7 +104,7 @@ const AdminProfile = () => {
         </div>
       </div>
 
-      <button className="back-btn" onClick={() => navigate(-1)}>
+      <button className="back-btn" type="button" onClick={() => navigate(-1)}>
         <span className="arrow">←</span>VOLVER
       </button>
 
