@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router"
-import { lazy, Suspense } from "react"
+import { lazy, Suspense, useContext } from "react"
 import { PublicRoutes } from "./PublicRoutes"
 import { PrivateRoutes } from "./PrivateRoutes"
 
@@ -32,6 +32,7 @@ const WorkerProfile = lazy(() => import("../pages/WorkerPages/WorkerProfile/Work
 
 /* RUTAS PRIVADAS ADMIN */
 import { AdminLayout } from "../layouts/AdminLayout.jsx"
+import { AuthContext } from "../contexts/AuthContext/AuthContext.js"
 const AdminManage = lazy(() =>import("../pages/AdminPages/AdminManage/AdminManage.jsx"));
 const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminProfile.jsx"));
 const AdminAppointments = lazy(() => import("../pages/AdminPages/AdminAppointments/AdminAppointments.jsx"));
@@ -41,6 +42,8 @@ const GeneralCalendarPage = lazy(()=>import("../pages/AdminPages/GeneralCalendar
 
 
 export const AppRoutes = () => {
+
+  const {user} = useContext(AuthContext)
   return (
     <BrowserRouter>
       <Suspense fallback={<h2>Cargando...</h2>}>
@@ -61,7 +64,7 @@ export const AppRoutes = () => {
         </Route>
 
           {/* Rutas privadas usuario */}
-          <Route element={<PrivateRoutes />}>
+          <Route element={<PrivateRoutes user={user}/>}>
             <Route element={<ClientLayout />}>
                <Route path="/profile" element={<ClientProfile />} />
                <Route path="/selectcat" element={<SelectCat />} /> 
@@ -71,7 +74,7 @@ export const AppRoutes = () => {
           </Route>
 
           {/* Rutas privadas trabajador */}
-          <Route element={<PrivateRoutes/>}>
+          <Route element={<PrivateRoutes user={user}/>}>
                 <Route element={<WorkerLayout/>}>
                    <Route path="/worker/WorkerDate/:workerId" element={<Worker />} /> 
                    <Route path="/worker/profile" element={<WorkerProfile />} />
@@ -80,7 +83,7 @@ export const AppRoutes = () => {
 
 
           {/* Rutas privadas de admin */}
-          <Route element={<PrivateRoutes />}>
+          <Route element={<PrivateRoutes user={user}/>}>
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<AdminProfile />} />
               <Route path="/admin/manage" element={<AdminManage />}/>

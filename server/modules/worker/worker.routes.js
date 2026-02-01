@@ -10,6 +10,4 @@ router.get("/services", verifyToken, workerController.getServices)
 router.post("/appointments/quick", verifyToken, workerController.createQuickAppointment);
 router.post("/appointments/client", verifyToken, workerController.createClientAppointment);
 
-
-
 export default router;

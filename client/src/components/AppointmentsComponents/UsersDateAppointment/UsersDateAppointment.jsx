@@ -2,9 +2,9 @@ import './UsersDateAppointment.css';
 import { useState} from 'react';
 import Calendar from 'react-calendar';
 
-export const UsersDateAppointment = ({ setCurrentAppointment, workers }) => {
+export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotalPrecio, sumaTotalMinutos}) => {
   const [date, setDate] = useState(new Date());
-  
+  const [workerId, setWorkerId] = useState(null);
 
   return (
     <>
@@ -12,12 +12,12 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers }) => {
         <div className="selectEmployee">
           <h2>Selecciona el empleado</h2>
           <div className="selectEmployeeGrid">
-            {employees.length === 0 && <p>No hay empleados disponibles.</p>}
-            {employees?.map((elem) => (
+            {workers.length === 0 && <p>No hay empleados disponibles.</p>}
+            {workers?.map((elem) => (
               <div
-                key={elem.id_user}
-                className={`selectEmployeeCard ${selectedEmployee === elem.id_user ? 'selected' : ''}`}
-              >
+                key={elem.user_id}
+                className={`selectEmployeeCard ${workerId === elem.user_id ? 'selected' : ''}`}
+ >
                 <div className="appointmentWorkerImage">
                   {elem.picture_user ? (
                     <img
@@ -33,7 +33,10 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers }) => {
                 </h3>
                 <button
                   type="button"
-                  onClick={() => setSelectedEmployee(elem.id_user)}
+                  onClick={() => {
+                    console.log('Empleado seleccionado:', elem.user_id);
+                    setWorkerId(elem.user_id);
+                  }}
                   className="selectEmployeeBtn"
                 >
                   SELECCIONAR
@@ -43,6 +46,9 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers }) => {
           </div>
         </div>
       </div>
+
+      <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
+      <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
 
       <div className="selectDate">
         <h2 className="selectDateTitle">Selecciona la fecha</h2>

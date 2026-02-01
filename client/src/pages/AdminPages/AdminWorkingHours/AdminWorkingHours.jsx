@@ -145,7 +145,7 @@ const AdminWorkingHours = () => {
 
   const allEvents = [...eventsMap]
 
-
+  
 
   return (
     <section className="admin-working-hours-page">
@@ -179,6 +179,6 @@ const AdminWorkingHours = () => {
       </div>
     </section>
   )
-}
-;
+  
+};
 export default AdminWorkingHours

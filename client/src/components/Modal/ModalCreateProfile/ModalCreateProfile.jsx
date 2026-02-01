@@ -14,7 +14,7 @@ const ModalCreateProfile = ({
   return (
     <>
       {show && (
-        <section createProfileModal>
+        <section>
           <div className='createProfileGridModal'>
         <Modal
           show={show}
@@ -89,7 +89,7 @@ const ModalCreateProfile = ({
               </Form.Group>
 
 
-              <Form.Group className="nc-group">
+             <Form.Group className="nc-group">
                 <Form.Label>Contraseña</Form.Label>
                 <Form.Control
                   name="password"
@@ -98,7 +98,7 @@ const ModalCreateProfile = ({
                   type="password"
                 />
                 {valErrors?.password && <div className="error-msg">{valErrors.password}</div>}
-              </Form.Group>
+              </Form.Group> 
 
               <Form.Group className="nc-group">
                 <Form.Label>Provincia</Form.Label>
@@ -158,7 +158,7 @@ const ModalCreateProfile = ({
 
               <img
                 className="nc-dog"
-                src="../../../../public/img/adminAddUser/dog1.png"
+                src="/img/adminAddUser/dog1.png"
                 alt="dog"
               />
             </Form>
