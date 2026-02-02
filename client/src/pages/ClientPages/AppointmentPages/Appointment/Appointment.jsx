@@ -142,6 +142,9 @@ const Appointment = () => {
                 <UsersDateAppointment 
                   setCurrentAppointment={setCurrentAppointment}
                   workers={workers}
+                  selectedPet={selectedPet}
+                  baseServiceId={baseServiceId}
+                  extrasIds={extrasIds}
                   sumaTotalPrecio={sumaTotalPrecio}
                   sumaTotalMinutos={sumaTotalMinutos}
                 />

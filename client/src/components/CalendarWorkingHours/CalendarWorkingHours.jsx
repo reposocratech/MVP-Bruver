@@ -33,7 +33,7 @@ export const CalendarWorkingHours = ({
         onNavigate={setDate}
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
-        selectable
+        selectable={handleSelectSlot ? "ignoreEvents" : false}
         views={['week']}
         startAccessor="start"
         endAccessor="end"
