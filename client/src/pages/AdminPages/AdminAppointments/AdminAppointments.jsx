@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../AdminProfile/AdminProfile.css";
-import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas";
+import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas.jsx";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
-import { fetchData } from "../../../helpers/axiosHelper";
+import { fetchData } from "../../../helpers/axiosHelper.js";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext.js";
 import { buildDate } from "../../../helpers/buildDateHelper.js";

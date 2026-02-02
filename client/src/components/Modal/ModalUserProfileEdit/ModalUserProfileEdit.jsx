@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 import { Button } from 'react-bootstrap';
 
 
-const ModalUserProfileEdit = ({ onClose, user, onUserUpdated }) => {
+const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode }) => {
 
   const navigate = useNavigate(); 
   const { user: contextUser, setUser, token, logout } = useContext(AuthContext);
@@ -82,6 +82,18 @@ const ModalUserProfileEdit = ({ onClose, user, onUserUpdated }) => {
         <h2 className="modalTitle">Edita tu perfil</h2>
 
         <form className="userProfileForm">
+
+          {editClientCode && (
+            <>
+              <label>Nº Cliente</label>
+              <input
+                name="client_code"
+                value={editUser.client_code ? editUser.client_code : ""}
+                onChange={handleChange}
+              />
+            </>
+          )}
+
           <label>Nombre</label>
           <input
             name="name_user"

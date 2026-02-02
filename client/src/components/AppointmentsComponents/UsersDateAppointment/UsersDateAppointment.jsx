@@ -3,6 +3,7 @@ import './UsersDateAppointment.css';
 // Hooks de React (estado, efectos y contexto)
 import { useState, useEffect, useContext } from 'react';
 // Calendario simple para elegir fecha (lado izquierdo)
+import { Button } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 // dayjs para manipular fechas y horas de forma sencilla
 import dayjs from 'dayjs';
@@ -251,28 +252,32 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
   return (
     <>
       <div className="selectDatePage">
-        <div className="selectEmployee">
           <h2>Selecciona el empleado</h2>
           <div className="selectEmployeeGrid">
             {(!workers || workers.length === 0) && <p>No hay empleados disponibles.</p>}
             {workers?.map((elem) => (
-              <div
+              <div              
                 key={elem.user_id}
-                className={`selectEmployeeCard ${workerId === elem.user_id ? 'selected' : ''}`}
+                className={`cardEmployee col-12 col-sm-6 col-lg-4 ${workerId === elem.user_id ? 'selected' : ''}`}
               >
-                <div className="appointmentWorkerImage">
+                <div className="appointmentEmployeeCard">
                   {elem.picture_user ? (
                     <img
-                      src={`http://localhost:4000/images/generalPictures/${elem.picture_user}`}
+                      src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${elem.picture_user}`}
                       alt={elem.name_user}
                     />
                   ) : (
-                    <span>IMG</span>
+                    <img
+                      className="employeePhoto"
+                      src={`/img/defaultimg/IconDefect.png`}
+                      alt="Imagen de perfil por defecto"
+                    />
                   )}
-                </div>
+                
                 <h3>
                   {elem.name_user}
                 </h3>
+                <div className="appointmentEmployeeActions">
                 <button
                   type="button"
                   onClick={() => {
@@ -284,13 +289,12 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                   SELECCIONAR
                 </button>
               </div>
+              </div>
+              </div>
             ))}
-          </div>
-        </div>
       </div>
 
-      <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
-      <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
+      </div>
 
       <div className="selectDate">
         <h2 className="selectDateTitle">Selecciona la fecha</h2>
@@ -341,6 +345,10 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
       </div>
 
       <div className="selectEmployeeActions">
+        <div className="infoAppoint">
+      <h3><img src='/img/appointment/clock.png' />{minutesToHour(sumaTotalMinutos)}</h3>
+      <h3><img src='/img/appointment/cart.png' />{sumaTotalPrecio.toFixed(2)}€</h3>
+      </div>
         <button
           type="button"
           onClick={() => setCurrentAppointment(2)}
