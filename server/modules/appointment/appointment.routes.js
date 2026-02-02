@@ -11,4 +11,7 @@ router.get("/mine", verifyToken, appointmentController.getMine);
 router.get("/getGeneralAppoiment",verifyToken, appointmentController.getGeneralAppoiment);
 router.get("/getAdminAppoiment/:employeeId", verifyToken, appointmentController.getAdminAppoiment)
 
+router.post("/quick", verifyToken, appointmentController.createQuickAppointment);
+router.post("/client", verifyToken, appointmentController.createClientAppointment);
+
 export default router;

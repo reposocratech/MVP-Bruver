@@ -1,21 +1,10 @@
-import { useEffect, useState, useContext } from 'react';
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import './ModalAddReserve.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 
 const LS_KEY = 'reserve_quick';
-
-const pad2 = (n) => String(n).padStart(2, '0');
-const formatYmd = (d) => {
-  if (!d) return null;
-  const dateObj = new Date(d);
-  if (Number.isNaN(dateObj.getTime())) return null;
-  return `${dateObj.getFullYear()}-${pad2(dateObj.getMonth() + 1)}-${pad2(dateObj.getDate())}`;
-};
 
 const ModalQuickReserve = ({ toBack }) => {
   const { token } = useContext(AuthContext);
@@ -28,11 +17,6 @@ const ModalQuickReserve = ({ toBack }) => {
   const [hair, setHair] = useState('');
   const [observations, setObservations] = useState('');
   const [specie, setSpecie] = useState('');
-
-
-  const [date, setDate] = useState(new Date());
-  const [startTime, setStartTime] = useState('');
-  const [openHours, setOpenHours] = useState(false);
 
   const [selectedServiceId, setSelectedServiceId] = useState('');
   const [selectedSupplementIds, setSelectedSupplementIds] = useState([]);
@@ -47,13 +31,7 @@ const ModalQuickReserve = ({ toBack }) => {
 
   const [sizeCategory, setSizeCategory] = useState('');
 
-  const isCat = String(specie) === "2";
-
-  const hours = [
-    '9:15','9:30','9:45','10:00','10:15','10:30','10:45',
-    '11:15','11:30','11:45','12:00','12:15','12:30','12:45',
-    '13:00','13:15','13:30'
-  ];
+  const isCat = String(specie) === '2';
 
   const saveReserve = () => {
     const finalDuration =
@@ -62,21 +40,25 @@ const ModalQuickReserve = ({ toBack }) => {
     const finalPrice =
       manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(price || '0.00');
 
-    const payload = {
+    const data = {
       client_name: clientName || null,
       phone: phone || null,
       hair: hair || null,
       specie: specie || null,
-      service_id: isCat ? null: selectedServiceId || null,
-      supplement_ids: isCat ?[] : selectedSupplementIds,
-      appointment_date: formatYmd(date),
-      start_time: startTime || null,
-      duration_minutes: isCat ? 0: finalDuration,
-      total_price: isCat? "0.00": finalPrice,
-      observations: observations || null
+
+      service_id: isCat ? null : selectedServiceId || null,
+      supplement_ids: isCat ? [] : selectedSupplementIds,
+
+      //AQUÍ IGUAL QUE EN EL OTRO MODAL, LOS DEJO EN NULL (DE MOMENTO DARÁ ERROR HASTA QUE TRAIGAMOS LOS DATOS DESDE EL CALENDARIO)
+      appointment_date: null,
+      start_time: null,
+
+      duration_minutes: isCat ? 0 : finalDuration,
+      total_price: isCat ? '0.00' : finalPrice,
+      observations: observations || null,
     };
 
-    localStorage.setItem(LS_KEY, JSON.stringify(payload));
+    localStorage.setItem(LS_KEY, JSON.stringify(data));
   };
 
   const calcTotal = (serviceId, supplementIds = []) => {
@@ -92,15 +74,13 @@ const ModalQuickReserve = ({ toBack }) => {
       supplementIds.includes(String(s.service_id)),
     );
 
-    const extraMinutes = selectedSupps.reduce(
-      (acc, s) => acc + Number(s.duration_minutes || 0),
-      0,
-    );
+     let extraMinutes = 0
+     let extraPrice = 0
 
-    const extraPrice = selectedSupps.reduce(
-      (acc, s) => acc + Number(s.price || 0),
-      0,
-    );
+    selectedSupps.forEach((s) => {
+      extraMinutes += Number(s.duration_minutes || 0)
+      extraPrice += Number(s.price || 0)
+    })
 
     const totalMinutes = Number(serv?.duration_minutes || 0) + extraMinutes;
     const totalPrice = Number(serv?.price || 0) + extraPrice;
@@ -120,9 +100,10 @@ const ModalQuickReserve = ({ toBack }) => {
     calcTotal(selectedServiceId, next);
   };
 
-  //condicionalm para cargar los datos si es un gato
+  // si es gato, limpiamos servicios/suplementos y precios
   useEffect(() => {
-  if (String(specie) === "2") {
+  if (String(specie) !== '2') return;
+  setTimeout(() => {
     setSizeCategory('');
     setSelectedServiceId('');
     setSelectedSupplementIds([]);
@@ -130,10 +111,11 @@ const ModalQuickReserve = ({ toBack }) => {
     setPrice('0.00');
     setManualDuration('');
     setManualPrice('');
-  }
+  }, 0);
 }, [specie]);
 
-  // carga servicios y suplementos por la categoria
+
+  // carga servicios y suplementos por categoria
   useEffect(() => {
     const fetchServicesAndSupps = async () => {
       try {
@@ -149,24 +131,22 @@ const ModalQuickReserve = ({ toBack }) => {
           return;
         }
 
-        const resServices = await fetchData(
-          `worker/services?type=1&size_category=${sizeCategory}`,
-          'GET',
-          null,
-          token,
+    const res = await fetchData(
+      `service?size_category=${sizeCategory}`,
+        'GET',
+        null,
+        token
         );
 
-        const resSupp = await fetchData(
-          `worker/services?type=2&size_category=${sizeCategory}`,
-          'GET',
-          null,
-          token,
-        );
+        const allServices = res.data.services || [];
 
-        setServices(resServices?.data?.result || []);
-        setSupplements(resSupp?.data?.result || []);
+        const servicesList = allServices.filter((s) => s.type === 1);
+        const supplementsList = allServices.filter((s) => s.type === 2);
 
-        // reset si cambia el tamaño
+        setServices(servicesList);
+        setSupplements(supplementsList);
+
+
         setSelectedServiceId('');
         setSelectedSupplementIds([]);
         setDuration(0);
@@ -202,15 +182,14 @@ const ModalQuickReserve = ({ toBack }) => {
     phone,
     hair,
     observations,
-    date,
-    startTime,
     selectedServiceId,
     selectedSupplementIds,
     duration,
     price,
     manualDuration,
     manualPrice,
-    specie
+    specie,
+    sizeCategory,
   ]);
 
   const handleServiceChange = (e) => {
@@ -231,23 +210,15 @@ const ModalQuickReserve = ({ toBack }) => {
 
     const data = JSON.parse(raw);
 
-    // Validaciones mínimas y si no es gato
-    if (!data.appointment_date) return console.log('Falta fecha');
-    if (!data.start_time) return console.log('Falta hora');
-    if (String(data.specie) !== "2") {
-    if (!data.service_id) return console.log('Falta servicio');
-    if (!data.duration_minutes || Number(data.duration_minutes) <= 0)
-      return console.log('Duración inválida');
-  }
 
     try {
-      const res = await fetchData('worker/appointments/quick', 'POST', data, token);
+      const res = await fetchData('appointment/quick', 'POST', data, token);
       console.log('CITA CREADA:', res.data);
 
       localStorage.removeItem(LS_KEY);
       toBack();
     } catch (error) {
-      console.log('ERROR creando cita:', error);
+      console.log('error al crear la cita:', error);
     }
   };
 
@@ -258,6 +229,8 @@ const ModalQuickReserve = ({ toBack }) => {
           <h3>Añadir una reserva rápida</h3>
 
           <form className="quickReserveForm" onSubmit={handleSubmit}>
+            {/* AQUÍ SE MOSTRARÁ LA FECHA Y LA HORA */}
+            <label>fecha y hora </label>
             <label>Añadir cliente</label>
             <input
               name="client"
@@ -292,7 +265,7 @@ const ModalQuickReserve = ({ toBack }) => {
                 <select
                   value={sizeCategory}
                   onChange={(e) => setSizeCategory(e.target.value)}
-                  disabled={String(specie) === "2"} //si es gato, deshabilitado
+                  disabled={String(specie) === '2'}
                 >
                   <option value="" disabled>Selecciona tamaño</option>
                   <option value="1">Toy</option>
@@ -303,58 +276,12 @@ const ModalQuickReserve = ({ toBack }) => {
               </div>
             </div>
 
-            <div className="selectDate">
-              <h2 className="selectDateTitle">Selecciona la fecha</h2>
-
-              <div className="calendarAndHours">
-                <div className="calendar-container">
-                  <Calendar
-                    onChange={(d) => {
-                      setDate(d);
-                      setOpenHours(false);
-                    }}
-                    value={date}
-                    selectRange={false}
-                  />
-                </div>
-
-                <div className="hourColumn">
-                  <label className="hourLabel">Hora</label>
-
-                  <div className="hourSelectWrap">
-                    <button
-                      type="button"
-                      className="hourSelectBtn"
-                      onClick={() => setOpenHours(!openHours)}
-                    >
-                      {startTime ? startTime : 'Selecciona una hora'}
-                      <span className="hourChevron">▾</span>
-                    </button>
-
-                    {openHours && (
-                      <div className="hourDropdown">
-                        {hours.map((h) => (
-                          <button
-                            key={h}
-                            type="button"
-                            className={`hourOption ${startTime === h ? 'active' : ''}`}
-                            onClick={() => {
-                              setStartTime(h);
-                              setOpenHours(false);
-                            }}
-                          >
-                            {h}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <label>Servicio</label>
-            <select value={selectedServiceId} onChange={handleServiceChange} disabled={!sizeCategory || isCat}>
+            <select
+              value={selectedServiceId}
+              onChange={handleServiceChange}
+              disabled={!sizeCategory || isCat}
+            >
               <option value="" disabled>
                 {sizeCategory ? 'Selecciona servicio' : 'Selecciona tamaño primero'}
               </option>
@@ -365,35 +292,33 @@ const ModalQuickReserve = ({ toBack }) => {
               ))}
             </select>
 
-            {/* para ocultar los suplementos en caso de ser gato */}
             {!isCat && selectedServiceId && (
               <>
-            <label  >Suplementos</label>
-            <div className="supplementsBox"> 
-              {supplements.map((s) => {
-                const sid = String(s.service_id);
-                return (
-                  <label key={sid} className="supplementCheck">
-                    <input
-                      type="checkbox"
-                      checked={selectedSupplementIds.includes(sid)}
-                      onChange={() => toggleSupplement(sid)}
-                      /* disabled={!selectedServiceId} */
-                    />
-                    <span>{`${s.title} (+${s.duration_minutes} min) +${s.price}€`}</span>
-                  </label>
-                );
-              })}
-            </div>
-            </>
+                <label>Suplementos</label>
+                <div className="supplementsBox">
+                  {supplements.map((s) => {
+                    const sid = String(s.service_id);
+                    return (
+                      <label key={sid} className="supplementCheck">
+                        <input
+                          type="checkbox"
+                          checked={selectedSupplementIds.includes(sid)}
+                          onChange={() => toggleSupplement(sid)}
+                        />
+                        <span>{`${s.title} (+${s.duration_minutes} min) +${s.price}€`}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </>
             )}
-            <label>Observaciones</label>
-              <input
-                type="text"
-                value={observations}
-                onChange={(e) => setObservations(e.target.value)}
-              />
 
+            <label>Observaciones</label>
+            <input
+              type="text"
+              value={observations}
+              onChange={(e) => setObservations(e.target.value)}
+            />
 
             <div className="resultLine">
               <label className="resultValue">
@@ -412,7 +337,8 @@ const ModalQuickReserve = ({ toBack }) => {
                   }
                   onFocus={() => {
                     setIsEditingDuration(true);
-                    if (manualDuration === '') setManualDuration(duration > 0 ? String(duration) : '');
+                    if (manualDuration === '')
+                      setManualDuration(duration > 0 ? String(duration) : '');
                   }}
                   onChange={(e) => setManualDuration(e.target.value)}
                   onBlur={() => {
@@ -442,7 +368,8 @@ const ModalQuickReserve = ({ toBack }) => {
                   }
                   onFocus={() => {
                     setIsEditingPrice(true);
-                    if (manualPrice === '') setManualPrice(Number(price) > 0 ? String(price) : '');
+                    if (manualPrice === '')
+                      setManualPrice(Number(price) > 0 ? String(price) : '');
                   }}
                   onChange={(e) => setManualPrice(e.target.value)}
                   onBlur={() => {
@@ -459,7 +386,7 @@ const ModalQuickReserve = ({ toBack }) => {
               <Button
                 className="close"
                 type="submit"
-                disabled={!startTime || (!manualDuration && duration === 0)}
+                disabled={!sizeCategory && !isCat}
               >
                 Aceptar
               </Button>

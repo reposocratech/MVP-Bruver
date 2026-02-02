@@ -94,6 +94,150 @@ class AppointmentDal {
     }
   }
 
+     insertServicesForAppointment = async (appointmentId, service_id, supplement_ids = []) => {
+    try {
+      const ids = [];
+
+      if (service_id) ids.push(String(service_id));
+      if (Array.isArray(supplement_ids)) {
+        for (const s of supplement_ids) ids.push(String(s));
+      }
+
+      const uniqueIds = [...new Set(ids)].filter(Boolean);
+
+      for (const sid of uniqueIds) {
+        const sql = `
+          INSERT INTO service_appointment (appointment_id, service_id)
+          VALUES (?, ?)
+        `;
+        await executeQuery(sql, [appointmentId, sid]);
+      }
+
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  createClientAppointment = async ({
+    created_by_user_id,
+    employee_user_id,
+    client_user_id,
+    pet_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    observations,
+  }) => {
+    try {
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
+      const sql = `
+        INSERT INTO appointment (
+          created_by_user_id,
+          employee_user_id,
+          client_user_id,
+          pet_id,
+          status,
+          total_price,
+          appointment_date,
+          start_time,
+          end_time,
+          observations
+        )
+        VALUES (
+          ?, ?, ?, ?,
+          1,
+          ?,
+          ?,
+          ?,
+          ADDTIME(?, SEC_TO_TIME(? * 60)),
+          ?
+        )
+      `;
+
+      const result = await executeQuery(sql, [
+        created_by_user_id,
+        employee_user_id,
+        client_user_id,
+        pet_id,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
+
+      return { appointment_id: result.insertId };
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  createQuickAppointment = async ({
+    created_by_user_id,
+    employee_user_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    guest_name,
+    guest_phone,
+    guest_hair,
+    observations,
+  }) => {
+    try {
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
+      const sql = `
+        INSERT INTO appointment (
+          created_by_user_id,
+          employee_user_id,
+          client_user_id,
+          pet_id,
+          guest_name,
+          guest_phone,
+          guest_hair,
+          status,
+          total_price,
+          appointment_date,
+          start_time,
+          end_time,
+          observations
+        )
+        VALUES (
+          ?, ?, NULL, NULL,
+          ?, ?, ?,
+          1,
+          ?,
+          ?, ?,
+          ADDTIME(?, SEC_TO_TIME(? * 60)),
+          ?
+        )
+      `;
+
+      const result = await executeQuery(sql, [
+        created_by_user_id,
+        employee_user_id,
+        guest_name,
+        guest_phone,
+        guest_hair,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
+
+      return { appointment_id: result.insertId };
+    } catch (error) {
+      throw error;
+    }
+  };
+
 }
 
 export default new AppointmentDal();

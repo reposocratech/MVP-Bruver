@@ -6,8 +6,6 @@ const router = express.Router();
 
 router.get("/clients", verifyToken, workerController.searchClients);
 router.get("/pets/:clientId", verifyToken, workerController.getClientPets);
-router.get("/services", verifyToken, workerController.getServices)
-router.post("/appointments/quick", verifyToken, workerController.createQuickAppointment);
-router.post("/appointments/client", verifyToken, workerController.createClientAppointment);
+
 
 export default router;
