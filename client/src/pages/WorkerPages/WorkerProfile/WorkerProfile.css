@@ -63,7 +63,16 @@ table tr:last-child td {
 }
 
 .profile-img {
+  width: 260px;
+  height: 260px;
   object-fit: cover;
+  border-radius: 18px;
+  background: #dedede;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #777;
   img{
     width: 250px;
     height: 250px;
