@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import styles from './ModalSearchClient.module.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import styles from './ModalSearchClient.module.css';
 
 const ModalSearchClient = ({ toBack, onAcceptClient }) => {
   const [search, setSearch] = useState('');

@@ -1,64 +1,63 @@
 import './UsersDateAppointment.css';
-import { useState} from 'react';
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 
-export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotalPrecio, sumaTotalMinutos}) => {
+export const UsersDateAppointment = ({
+  setCurrentAppointment,
+  workers,
+  sumaTotalPrecio,
+  sumaTotalMinutos,
+  minutesToHour
+}) => {
   const [date, setDate] = useState(new Date());
   const [workerId, setWorkerId] = useState(null);
 
   return (
     <>
       <div className="selectDatePage">
-        <div className="selectEmployee">
           <h2>Selecciona el empleado</h2>
           <div className="selectEmployeeGrid">
             {workers.length === 0 && <p>No hay empleados disponibles.</p>}
             {workers?.map((elem) => (
-          <div className="col-12 col-sm-6 col-lg-4" key={elem.workerId}>
-            <p>{elem.name_user} </p>
-            <div className="appointmentPetCard">
-
-              <div className="appointmentPetImage">
-                {elem.picture_user ? (
-                  <img
-                    src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${workers.picture_user}`}
-                    alt={elem.name_user}
-                  />
-                  
-                ) : (
-                 <img
-                  className="petPhoto"
-                  src={`/img/defaultimg/IconDefect.png`}
-                  alt="Imagen de perfil por defecto"
-                />
-                )}
-              </div>
-
-              <div className="appointmentPetInfo">
-                <h3>{elem.name_pet}</h3>
-
-                <div className="appointmentPetActions">
-                  <button
-                  type="button"
-                  onClick={() =>{
-                    setWorkerId(elem);
-                  }}
-                  className="selectEmployeeBtn"
-                >
-                  SELECCIONAR
-                </button>
+              <div className=" cardEmployee col-12 col-sm-6 col-lg-4" key={elem.workerId}>
+                <div className="appointmentEmployeeCard">
+                  {elem.picture_user ? (
+                    <img
+                      src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${elem.picture_user}`}
+                      alt={elem.name_user}
+                    />
+                  ) : (
+                    <img
+                      className="employeePhoto"
+                      src={`/img/defaultimg/IconDefect.png`}
+                      alt="Imagen de perfil por defecto"
+                    />
+                  )}
+                  <div className="appointmentEmployeeInfo">
+                    <h3>{elem.name_user} </h3>
+                    <div className="appointmentEmployeeActions">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setWorkerId(elem.user_id);
+                        }}
+                        className={
+                          workerId === elem.user_id
+                            ? 'selectEmployeeBtn selected'
+                            : 'selectEmployeeBtn'
+                        }
+                      >
+                        SELECCIONAR
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
+            ))}
+          </div>
 
-            </div>
-          </div>
-        ))}
-          </div>
-        </div>
       </div>
-
-      <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
-      <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
 
       <div className="selectDate">
         <h2 className="selectDateTitle">Selecciona la fecha</h2>
@@ -82,6 +81,10 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotal
       </div>
 
       <div className="selectEmployeeActions">
+        <div className="infoAppoint">
+      <h3><img src='/img/appointment/clock.png' />{minutesToHour(sumaTotalMinutos)}</h3>
+      <h3><img src='/img/appointment/cart.png' />{sumaTotalPrecio.toFixed(2)}€</h3>
+      </div>
         <button
           type="button"
           onClick={() => setCurrentAppointment(2)}

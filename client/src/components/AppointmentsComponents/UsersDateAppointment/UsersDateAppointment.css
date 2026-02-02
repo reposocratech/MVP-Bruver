@@ -1,63 +1,58 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
-
 .selectDatePage{
-    background: #f4efe8;
-}
-.selectEmployeePage {
-  background: #f4efe8;
-  padding: 50px 40px 180px;
-  min-height: auto;  
-  text-align: center;
-  font-family: "Raleway", sans-serif;
-
+	background: #f4efe8;
+	padding: 50px 40px;
+	min-height: auto;
+	text-align: center;
+	font-family: "Raleway", sans-serif;
 }
 
-.selectEmployeeTitle,
-.selectDateTitle {
-  color: #6bb3a7;
-  font-size: 33px;
-  margin-bottom: 35px;
-  font-family: "Lora", serif;
-  text-align: center;
-  padding: 2rem;
-}
 
 .selectEmployeeGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 70px;
-  max-width: 1000px;
-  margin: 1px auto 60px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
   justify-items: center;
+  .cardEmployee{
+  justify-items: center;
+  }
 }
 
-.selectEmployeeCard {
-  background: #e6d3c2;
-  width: 300px;
-  border: 2px solid #b79c81;
-  border-radius: 14px;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  padding-bottom: 20px;
+.appointmentEmployeeCard {
+  background: #f8eadf;
+	width: 280px;
+	min-height: 180px;
+	border-radius: 28px;
+	position: relative;
+	overflow: hidden;
+	box-shadow: rgba(68, 61, 57, 0.18) 30px 30px -20px;
+	margin: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	border: 2px solid #b79c81;
+	transition: box-shadow 0.2s;
 }
 
 /* imagen estilo grooming */
-.selectEmployeeCard img {
-  width: 100%;
-  height: 230px;
-  object-fit: cover;
-  margin-bottom: 10px;
+.appointmentEmployeeCard img {
+	width: 100%;
+	height: 220px;
+	object-fit: contain;
+	background: #1f5953;
+	border-radius: 24px 24px 0 0;
+	margin-bottom: 10px;
 }
 
-.selectEmployeeCard h3 {
-  margin: 0 0 12px;
-  font-size: 20px;
-  color: #3b2a1e;
+.appointmentEmployeeInfo h3 {
+	margin: 0 0 8px;
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: 0.5px;
+	color: #3b2a1e;
 }
 
-.selectEmployeeActions {
+.appointmentEmployeeActions {
   display: flex;
   justify-content: center;
 }
@@ -77,70 +72,101 @@
 
 /* Botón seleccionar */
 .selectEmployeeBtn {
-  background: #b79c81;
-  border-radius: 10px;
+	background: #ffffff;
+  color: #246b64;
+	border: 1px solid #246b64;
+	border-radius: 999px;
+	padding: 10px 22px;
+	font-size: 13px;
+	font-weight: 800;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+	margin-bottom: 10px;
 }
 
-.selectEmployeeBtn:hover,
-.selectEmployeeBtn:focus {
-  background: #766351;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.18);
+.selectEmployeeBtn:hover{
+  background: #eaf4f2;
+}
+
+.selectEmployeeBtn.selected {
+	background: #246b64;
+	color: #ffffff;
+	transform: translateY(-2px);
+}
+
+.selectEmployeeBtn:active {
+	transform: translateY(0);
+	background: #246b64;
+	color: white;
+	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Botón volver */
 .selectEmployeeBackBtn {
-  background: #e6d3c2;
-  border-radius: 18px;
-  margin: 2rem;
+	background: #b79c81;
+	color: #fff;
+	border: none;
+	padding: 10px 28px;
+	border-radius: 999px;
+	font-size: 15px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: 0.2s, transform 0.15s;
+  
 }
 
 .selectEmployeeBackBtn:hover {
-  background: #5a9f96;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+	background: #6bb3a7;
+	transform: translateY(-2px);
+}
+
+.servicesActions{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	img{
+		width: 40px;
+		height: 40px;
+		margin: 1rem;
+	}
+.buttons{
+display: flex;
+gap: 15px;
+	}
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .selectEmployeePage {
+  .selectDatePage {
     padding: 22px;
-  }
-
-  .selectEmployeeTitle {
-    font-size: 26px;
-    margin-bottom: 22px;
   }
 
   .selectEmployeeGrid {
     grid-template-columns: 1fr;
     gap: 22px;
     max-width: 520px;
-    margin: 0 auto 32px;
+    justify-content: center;
+        margin: 0 auto;
   }
 
-  .selectEmployeeCard img {
+  .appointmentEmployeeCard img {
     height: 180px;
   }
-
-  .selectEmployeeCard h3 {
+  .appointmentEmployeeCard h3 {
     font-size: 18px;
   }
 }
 
 
 
-
-
 /* CALENDARIO */
-
 
 .calendarAndHours{
   display: flex;
   gap: 40px;
   justify-content: center;
 }
-
 
 .calendar-container {
   flex: 0 0 70%;
@@ -176,7 +202,6 @@
   font-size: 25px;
   color: #222;
 }
-
 
 /* Días de la semana */
 .react-calendar__month-view__weekdays {
@@ -228,7 +253,6 @@
 .react-calendar__month-view__days__day--neighboringMonth {
   color: rgba(0, 0, 0, 0.3);
 }
-
 
 
 /* dateSelected */
