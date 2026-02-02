@@ -13,35 +13,36 @@ const localizer = dayjsLocalizer(dayjs)
 const DnDCalendar = withDragAndDrop(Calendar);
 
 export const CalendarCitas = ({
-   view,
+  view,
   date,
   events,
   setView,
   setDate,
+  onSelectEvent,
 }) => {
   return (
     <>
-     <DnDCalendar
-            localizer={localizer}
-            view={view}
-            date={date}
-            events={events}
-            onView={setView}
-            onNavigate={setDate}
-           
-            selectable
-            views={['week']}
-            startAccessor="start"
-            endAccessor="end"
-            min={dayjs(date).hour(9).minute(30).toDate()}
-            max={dayjs(date).hour(20).minute(30).toDate()}
-            step={30}
-            timeslots={1}
-            style={{ height: "95vh" }}
-    
-            resizable
-           
-          />
+      <DnDCalendar
+        localizer={localizer}
+        view={view}
+        date={date}
+        events={events}
+        onView={setView}
+        onNavigate={setDate}
+        onSelectEvent={onSelectEvent}
+        selectable
+        views={['week']}
+        startAccessor="start"
+        endAccessor="end"
+        min={dayjs(date).hour(9).minute(30).toDate()}
+        max={dayjs(date).hour(20).minute(30).toDate()}
+        step={15}
+        timeslots={1}
+        style={{ height: "95vh" }}
+
+        resizable
+
+      />
     </>
   )
 }
