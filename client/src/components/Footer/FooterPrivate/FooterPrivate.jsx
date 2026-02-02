@@ -9,9 +9,13 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
  
 export const FooterPrivate = () => {
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext);
+  const appointmentPath = user?.type === 1 || user?.type === 2 ? `/worker/WorkerDate/${user?.user_id}`: user?.type === 3 ? "/appointment" : "/";
   return (
     <footer className="footer">
       <div className="footer__content">
@@ -41,7 +45,7 @@ export const FooterPrivate = () => {
  
         <div className="footer__actions">
          
-          <button className="footer__button" onClick={()=>navigate('/selectpet')}>
+          <button className="footer__button" onClick={() => navigate(appointmentPath)}>
             Reservar una cita
             <span className="footer__arrow">➜</span>
           </button>
