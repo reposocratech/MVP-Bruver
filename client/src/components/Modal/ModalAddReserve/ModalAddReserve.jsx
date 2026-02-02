@@ -1,35 +1,35 @@
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
-import './ModalAddReserve.css';
+import styles from './ModalAddReserve.module.css';
 
 const ModalAddReserve = ({ onClose, onAccept }) => {
+  const [option, setOption] = useState('');
 
- const [option, setOption] = useState('');
-
-  const handleAccept  = () => {
+  const handleAccept = () => {
     if (!option) return;
     onAccept(option);
   };
 
   return (
-    <section className="addReserveModal">
-      <div className="addReserveGridModal">
-        <div className="addReserveCardModal">
+    <section className={styles.addReserveModal}>
+      <div className={styles.addReserveGridModal}>
+        <div className={styles.addReserveCardModal}>
           <h3>Añadir una reserva</h3>
-          <select id="selectClient"
-          value={option}
-          onChange={(e) => setOption(e.target.value)}>
-            <option value="" disabled>
-              Reserva para un nuevo cliente
-            </option>
+
+          <select
+            value={option}
+            onChange={(e) => setOption(e.target.value)}
+          >
+            <option value="" disabled>Reserva para un nuevo cliente</option>
             <option value="1">Buscar cliente</option>
             <option value="2">Reserva rápida</option>
           </select>
-          <div>
-            <Button className="close" onClick={handleAccept}>
+
+          <div className={styles.modalActions}>
+            <Button className={styles.primary} onClick={handleAccept}>
               Aceptar
             </Button>
-            <Button className="close" onClick={onClose}>
+            <Button className={styles.secondary} onClick={onClose}>
               Cerrar
             </Button>
           </div>

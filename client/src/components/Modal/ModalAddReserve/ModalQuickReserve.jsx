@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import './ModalAddReserve.css';
+import './ModalQuickReserve.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import Calendar from 'react-calendar';
