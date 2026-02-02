@@ -1,9 +1,9 @@
 
 import { useContext, useEffect, useState } from 'react'
-import { fetchData } from '../../../helpers/axiosHelper'
-import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
-import { CalendarGeneral } from '../../../components/CalendarGeneral/CalendarGeneral'
-
+import { fetchData } from '../../../helpers/axiosHelper.js'
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js'
+import { CalendarGeneral } from '../../../components/CalendarGeneral/CalendarGeneral.jsx'
+import './AdminGeneralCalendarPage.css';
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { buildDate } from '../../../helpers/buildDateHelper.js'
