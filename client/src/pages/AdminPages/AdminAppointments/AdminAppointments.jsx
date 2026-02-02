@@ -124,18 +124,13 @@ const AdminAppointments = () => {
   const allEvents = [...eventsMap]
 
 
-
-
-  const navigate = useNavigate();
-
-
   return (
     <section className="admin-section">
       <h2 className="title">Mis citas (Admin)</h2>
       <CalendarCitas
         view={view}
         date={date}
-        events={eventsMap}
+        events={allEvents}
         setView={setView}
         setDate={setDate}
         onSelectEvent={handleSelectEvent}
