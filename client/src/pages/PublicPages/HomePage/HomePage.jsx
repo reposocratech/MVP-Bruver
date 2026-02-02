@@ -19,11 +19,11 @@ const HomePage = () => {
       </section>
 
      
-      <section className="services">
+      <section className="servicesHome">
 
         
         <Link to="/grooming" className="serviceLink">
-          <article className="serviceCard">
+          <article className="serviceCardHome">
             <div className="serviceImgWrap">
               <img
                 className="serviceImg"
@@ -39,7 +39,7 @@ const HomePage = () => {
 
         
         <Link to="/pharmacy" className="serviceLink">
-          <article className="serviceCard">
+          <article className="serviceCardHome">
             <div className="serviceImgWrap">
               <img
                 className="serviceImg"
@@ -57,7 +57,7 @@ const HomePage = () => {
 
         
         <Link to="/nutrition" className="serviceLink">
-          <article className="serviceCard">
+          <article className="serviceCardHome">
             <div className="serviceImgWrap">
               <img
                 className="serviceImg"

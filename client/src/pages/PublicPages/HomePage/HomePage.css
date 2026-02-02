@@ -1,10 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
-
-* {
-  box-sizing: border-box;
-}
-
 body {
   margin: 0;
   background-color: #f4efe8;
@@ -50,7 +43,7 @@ body {
   font-family: "Lora", serif;
 }
 
-.services {
+.servicesHome {
   position: relative;
   padding: 300px 32px 250px;
   display: flex;
@@ -59,7 +52,7 @@ body {
   align-items: flex-start;
 }
 
-.serviceCard {
+.serviceCardHome {
   width: 320px;
   height: 300px;
   background: #BCD3CC;
@@ -71,7 +64,7 @@ body {
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.serviceCard::before {
+.serviceCardHome::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -87,12 +80,12 @@ body {
   pointer-events: none;
 }
 
-.serviceCard:hover::before {
+.serviceCardHome:hover::before {
   opacity: 1;
   animation: shine 3s infinite;
 }
 
-.serviceCard:hover {
+.serviceCardHome:hover {
   transform: translateY(-10px);
   box-shadow: 0 20px 25px rgba(0, 0, 0, 0.12),
     0 10px 10px rgba(0, 0, 0, 0.05);

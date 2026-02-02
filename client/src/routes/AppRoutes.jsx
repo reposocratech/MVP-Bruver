@@ -83,6 +83,7 @@ export const AppRoutes = () => {
                    <Route path="/worker/profile" element={<WorkerProfile />} />
                     <Route path="/worker/appointments/:workerId" element={<WorkerAppointments />} />
               <Route path="/worker/workinghours/:workerId" element={<WorkerWorkingHours />} />
+              <Route path="/worker/general" element={<GeneralCalendarPage />} />
                 </Route>    
           </Route>
 

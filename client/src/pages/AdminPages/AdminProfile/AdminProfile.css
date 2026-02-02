@@ -256,9 +256,15 @@ table tr:last-child td {
     font-size: 14px;
   }
 
+
+  .options-wrapper {
+    gap: 48px; 
+  }
+
   .row-top,
   .row-bottom {
     flex-direction: column;
+    gap: 48px;
   }
 
   .back-btn {

@@ -1,9 +1,9 @@
+import {useNavigate} from "react-router"
+import { useContext, useEffect, useState} from 'react'
+import { fetchData } from '../../../helpers/axiosHelper'
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
+import { CalendarGeneral } from '../../../components/CalendarGeneral/CalendarGeneral'
 
-import { useContext, useEffect, useState } from 'react'
-import { fetchData } from '../../../helpers/axiosHelper.js'
-import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js'
-import { CalendarGeneral } from '../../../components/CalendarGeneral/CalendarGeneral.jsx'
-import './AdminGeneralCalendarPage.css';
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { buildDate } from '../../../helpers/buildDateHelper.js'
@@ -16,6 +16,7 @@ const GeneralCalendarPage = () => {
   const [appoiment, setAppoiment] = useState([])
 
    const { token } = useContext(AuthContext) 
+   const navigate = useNavigate()
 
   useEffect(() => {
     const fetcTest = async () => {
@@ -66,6 +67,11 @@ const GeneralCalendarPage = () => {
           onDateChange={setDate}
         />
       </section>
+      <div className="back-btn-center">
+        <button className="back-btn" type="button" onClick={() => navigate(-1)}>
+          <span className="arrow">VOLVER</span>
+        </button>
+      </div>
     </>
   )
 }
