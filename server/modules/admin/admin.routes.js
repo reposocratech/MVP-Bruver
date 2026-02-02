@@ -25,4 +25,8 @@ router.put("/makeAdmin/:id", adminController.makeAdmin);
 // Endpoint para cambiar el tipo de usuario a 2 (hacer trabajador)
 router.put("/makeWorker/:id", adminController.makeWorker);
 
+// Endpoint para cambiar is_deleted (baja/alta) 
+router.put("/user/:id/status/:status", adminController.updateUserStatus);
+
+
 export default router;
