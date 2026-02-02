@@ -36,7 +36,7 @@ dayjs.extend(isoWeek);
 
   Comentarios y funciones clave están en español para facilitar mantenimiento.
 */
-export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedPet, baseServiceId, extrasIds, sumaTotalPrecio, sumaTotalMinutos, cleaningServiceId = null, cleaningServiceDuration = 0 }) => {
+export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedPet, baseServiceId, extrasIds, sumaTotalPrecio, sumaTotalMinutos, minutesToHour, cleaningServiceId = null, cleaningServiceDuration = 0 }) => {
   // Fecha seleccionada en el mini-calendario (Date)
   const [date, setDate] = useState(new Date());
   // Id del empleado seleccionado (null = ninguno)
@@ -273,7 +273,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                       alt="Imagen de perfil por defecto"
                     />
                   )}
-                
+                <div className='appointmentEmployeeInfo'> 
                 <h3>
                   {elem.name_user}
                 </h3>
@@ -284,10 +284,14 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                     console.log('Empleado seleccionado:', elem.user_id);
                     setWorkerId(elem.user_id);
                   }}
-                  className="selectEmployeeBtn"
+                  className={
+                    workerId === elem.user_id ?  
+                    "selectEmployeeBtn selected" : "selectedEmployeeBtn"
+                     }
                 >
                   SELECCIONAR
                 </button>
+              </div>
               </div>
               </div>
               </div>
