@@ -1,8 +1,9 @@
 import { calculateEndTime } from "../../utils/calcEndTime.js";
 import appointmentDal from "./appointment.dal.js";
+import userDal from "../user/user.dal.js";
 
 class AppointmentController {
-  // 1) Citas del usuario logueado (cliente)
+  //Citas del usuario logueado
   getMine = async (req, res) => {
     try {
       // 
@@ -51,6 +52,120 @@ class AppointmentController {
       
     }
   }
+  createQuickAppointment = async (req, res) => {
+  try {
+    const { user_id } = req;
+
+    const {
+      client_name,
+      phone,
+      hair,
+      specie,
+      service_id,
+      supplement_ids,
+      appointment_date,
+      start_time,
+      duration_minutes,
+      total_price,
+      observations
+    } = req.body;
+
+    if (!appointment_date || !start_time) {
+      return res.status(400).json({ message: "Falta appointment_date o start_time" });
+    }
+
+    const isCat = String(specie) === "2";
+
+    const dur = isCat ? 0 : Number(duration_minutes || 0);
+    const price = isCat ? 0 : Number(total_price || 0);
+
+    const baseServiceId = isCat ? null : (service_id || null);
+    const extrasArray = isCat ? [] : (Array.isArray(supplement_ids) ? supplement_ids : []);
+
+    //Crear cita
+    const created = await appointmentDal.createQuickAppointment({
+      created_by_user_id: user_id,
+      employee_user_id: user_id,
+      appointment_date,
+      start_time,
+      duration_minutes: dur,
+      total_price: price,
+      guest_name: client_name || null,
+      guest_phone: phone || null,
+      guest_hair: hair || null,
+      observations: observations || null,
+    });
+
+    //Vincular servicios
+    await appointmentDal.insertServicesForAppointment(
+      created.appointment_id,
+      baseServiceId,
+      extrasArray
+    );
+
+    return res.status(201).json({ message: "Cita rápida creada", result: created });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error al crear cita rápida" });
+  }
+};
+
+
+  createClientAppointment = async (req, res) => {
+  try {
+    const { user_id } = req;
+
+    // Datos
+    const {
+      client_user_id,
+      pet_id,
+      service_id,
+      supplement_ids,
+      appointment_date,
+      start_time,
+      duration_minutes,
+      total_price,
+      observations
+    } = req.body;
+
+    //Validaciones
+    if (!client_user_id || !pet_id || !appointment_date || !start_time) {
+      return res.status(400).json({ message: "Faltan datos obligatorios" });
+    }
+
+    //Normalizar
+    const dur = Number(duration_minutes || 0);
+    const price = Number(total_price || 0);
+
+    const extrasArray = Array.isArray(supplement_ids) ? supplement_ids : [];
+
+    //Crear cita
+    const created = await appointmentDal.createClientAppointment({
+      created_by_user_id: user_id,
+      employee_user_id: user_id,
+      client_user_id,
+      pet_id,
+      appointment_date,
+      start_time,
+      duration_minutes: dur,
+      total_price: price,
+      observations: observations || null,
+    });
+
+    //Vincular servicios si vienen
+    await appointmentDal.insertServicesForAppointment(
+      created.appointment_id,
+      service_id || null,
+      extrasArray
+    );
+
+    return res.status(201).json({ message: "Cita creada", result: created });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error al crear cita de cliente" });
+  }
+};
+
 
   //el creado para cualquier cita por id
   getByUserId = async (req, res) => {

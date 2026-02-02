@@ -1,166 +1,142 @@
-import { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import './ModalAddReserveClient.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 
-const LS_KEY = 'reserve_client';
-const pad2 = (n) => String(n).padStart(2, '0');
-
-const formatYmd = (d) => {
-  if (!d) return null;
-  const dateObj = new Date(d);
-  if (Number.isNaN(dateObj.getTime())) return null;
-
-  return `${dateObj.getFullYear()}-${pad2(dateObj.getMonth() + 1)}-${pad2(
-    dateObj.getDate(),
-  )}`;
-};
+const saveLocalStorage = 'reserve_client';
 
 const ModalAddReserveClient = ({ toBack, client }) => {
   const { token } = useContext(AuthContext);
 
   const [pets, setPets] = useState([]);
   const [services, setServices] = useState([]);
-  const [supplements, setSupplements] = useState([]);
+  const [extras, setExtras] = useState([]);
 
-  const [selectedPetId, setSelectedPetId] = useState('');
-  const [selectedServiceId, setSelectedServiceId] = useState('');
-  const [selectedSupplementIds, setSelectedSupplementIds] = useState([]);
+  const [petId, setPetId] = useState('');
+  const [serviceId, setServiceId] = useState('');
+  const [extrasIds, setExtrasIds] = useState([]);
 
-  const [date, setDate] = useState(new Date());
-  const [startTime, setStartTime] = useState('');
-  const [observations, setObservations] = useState('');
+  const [notes, setNotes] = useState('');
 
-  const [duration, setDuration] = useState(0);
-  const [price, setPrice] = useState('0.00');
+  const [minutes, setMinutes] = useState(0);
+  const [totalPrice, setTotalPrice] = useState('0.00');
 
-  const [manualDuration, setManualDuration] = useState('');
+  const [manualMinutes, setManualMinutes] = useState('');
   const [manualPrice, setManualPrice] = useState('');
 
-  const [isEditingDuration, setIsEditingDuration] = useState(false);
+  const [isEditingMinutes, setIsEditingMinutes] = useState(false);
   const [isEditingPrice, setIsEditingPrice] = useState(false);
 
-  const hours = [
-    '9:15','9:30','9:45','10:00','10:15','10:30','10:45','11:15','11:30',
-  ];
-  const [openHours, setOpenHours] = useState(false);
+  const petSelected = pets.find((p) => String(p.pet_id) === String(petId));
+  const isCat = Number(petSelected?.specie) === 2;
 
-  const petSelected = pets.find((p) => String(p.pet_id) === String(selectedPetId));
-  const isSpecie2 = Number(petSelected?.specie) === 2;
-
-  //Guardamos la reserva en localStorage
+  // Guardamos la reserva en localStorage
   const saveReserve = (extra = {}) => {
-    const finalDuration =
-      manualDuration !== '' ? Number(manualDuration || 0) : Number(duration || 0);
+    const finalMinutes =
+      manualMinutes !== '' ? Number(manualMinutes || 0) : Number(minutes || 0);
 
     const finalPrice =
-      manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(price || '0.00');
+      manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(totalPrice || '0.00');
 
     const payload = {
-      //ids de cliente y mascota (cliente registrado)
       client_user_id: client?.user_id || null,
-      pet_id: selectedPetId || null,
+      pet_id: petId || null,
 
-      //servicio base + suplementos
-      service_id: isSpecie2 ? null : selectedServiceId || null,
-      supplement_ids: isSpecie2 ? [] : selectedSupplementIds,
+      service_id: isCat ? null : serviceId || null,
+      supplement_ids: isCat ? [] : extrasIds,
 
-      //fecha/hora con nombres tipo backend
-      appointment_date: formatYmd(date),
-      start_time: startTime || null,
+      // AQUÍIII LOS HE DEJADO EN NULL HASTA CONECTAR CON EL CALENDARIO. DARÁ ERROR POR ESTOS 2 CAMPOS!!!!
+      appointment_date: null,
+      start_time: null,
 
-      //números finales
-      duration_minutes: finalDuration,
+      duration_minutes: finalMinutes,
       total_price: finalPrice,
 
-      //comentar con los demás si añadir observaciones en BD
-      observations: observations || null,
+      observations: notes || null,
 
       ...extra,
     };
 
-    localStorage.setItem(LS_KEY, JSON.stringify(payload));
+    localStorage.setItem(saveLocalStorage, JSON.stringify(payload));
   };
 
-  const calcTotal = (serviceId, supplementIds = []) => {
-    if (!serviceId) {
-      setDuration(0);
-      setPrice('0.00');
+  const calcTotal = (newServiceId, newExtrasIds = []) => {
+    if (!newServiceId) {
+      setMinutes(0);
+      setTotalPrice('0.00');
       return;
     }
 
-    const serv = services.find((s) => String(s.service_id) === String(serviceId));
-
-    const selectedSupps = supplements.filter((s) =>
-      supplementIds.includes(String(s.service_id)),
+    const baseService = services.find(
+      (s) => String(s.service_id) === String(newServiceId),
     );
 
-    const extraMinutes = selectedSupps.reduce(
+    const selectedExtras = extras.filter((s) =>
+      newExtrasIds.includes(String(s.service_id)),
+    );
+    
+
+    const extraMinutes = selectedExtras.reduce(
       (acc, s) => acc + Number(s.duration_minutes || 0),
       0,
     );
 
-    const extraPrice = selectedSupps.reduce(
+    const extraPrice = selectedExtras.reduce(
       (acc, s) => acc + Number(s.price || 0),
       0,
     );
 
-    const totalMinutes = Number(serv?.duration_minutes || 0) + extraMinutes;
-    const totalPrice = Number(serv?.price || 0) + extraPrice;
+    const totalMinutes = Number(baseService?.duration_minutes || 0) + extraMinutes;
+    const total = Number(baseService?.price || 0) + extraPrice;
 
-    setDuration(totalMinutes);
-    setPrice(totalPrice.toFixed(2));
+    setMinutes(totalMinutes);
+    setTotalPrice(total.toFixed(2));
   };
 
-  const toggleSupplement = (id) => {
+  const handleToggleExtra = (id) => {
     const sid = String(id);
 
-    const next = selectedSupplementIds.includes(sid)
-      ? selectedSupplementIds.filter((x) => x !== sid)
-      : [...selectedSupplementIds, sid];
+    const nextExtrasIds = extrasIds.includes(sid)
+      ? extrasIds.filter((x) => x !== sid)
+      : [...extrasIds, sid];
 
-    setSelectedSupplementIds(next);
-    calcTotal(selectedServiceId, next);
+    setExtrasIds(nextExtrasIds);
+    calcTotal(serviceId, nextExtrasIds);
   };
 
   // Al cambiar el cliente, reiniciamos el localStorage
   useEffect(() => {
     if (client?.user_id) {
-      localStorage.removeItem(LS_KEY);
+      localStorage.removeItem(saveLocalStorage);
       saveReserve({
         pet_id: null,
         service_id: null,
         supplement_ids: [],
-        start_time: null,
         duration_minutes: 0,
         total_price: '0.00',
       });
     }
   }, [client?.user_id]);
 
-  // Cada cambio se guardar en localStorage
+  // Cada cambio se guarda en localStorage
   useEffect(() => {
     if (!client?.user_id) return;
     saveReserve();
   }, [
-    selectedPetId,
-    selectedServiceId,
-    selectedSupplementIds,
-    date,
-    startTime,
-    duration,
-    price,
-    observations,
-    manualDuration,
+    petId,
+    serviceId,
+    extrasIds,
+    minutes,
+    totalPrice,
+    notes,
+    manualMinutes,
     manualPrice,
   ]);
 
   // Cargar mascotas del cliente
   useEffect(() => {
-    const fetchPets = async () => {
+    const getPets = async () => {
       try {
         const res = await fetchData(`worker/pets/${client.user_id}`, 'GET', null, token);
         setPets(res.data.result);
@@ -170,77 +146,71 @@ const ModalAddReserveClient = ({ toBack, client }) => {
       }
     };
 
-    if (client?.user_id) fetchPets();
+    if (client?.user_id) getPets();
   }, [client, token]);
 
-  // Cuando eliges mascota cargar servicios/suplementos por tamaño
+  // Cuando eliges mascota cargar servicios por tamaño
   useEffect(() => {
-    const servicesAndSupplements = async () => {
+    const getServices = async () => {
       try {
-        const petSelectedLocal = pets.find(
-          (p) => String(p.pet_id) === String(selectedPetId),
-        );
-        if (!petSelectedLocal) return;
+        const pet = pets.find((p) => String(p.pet_id) === String(petId));
+        if (!pet) return;
 
-        if (Number(petSelectedLocal.specie) === 2) {
+        if (Number(pet.specie) === 2) {
           setServices([]);
-          setSupplements([]);
-          setSelectedServiceId('');
-          setSelectedSupplementIds([]);
-          setManualDuration('');
+          setExtras([]);
+          setServiceId('');
+          setExtrasIds([]);
+          setManualMinutes('');
           setManualPrice('');
-          setObservations('');
+          setNotes('');
           return;
         }
 
-        const size = petSelectedLocal.size_category;
+        const size = pet.size_category;
 
-        const resServices = await fetchData(
-          `worker/services?type=1&size_category=${size}`,
+        const res = await fetchData(
+          `service?size_category=${size}`,
           'GET',
           null,
-          token,
+          token
         );
 
-        const resSupp = await fetchData(
-          `worker/services?type=2&size_category=${size}`,
-          'GET',
-          null,
-          token,
-        );
+        const all = res?.data?.services || [];
 
-        setServices(resServices.data.result || []);
-        setSupplements(resSupp.data.result || []);
+        setServices(all.filter((s) => Number(s.type) === 1));
+        setExtras(all.filter((s) => Number(s.type) === 2));
 
-        setSelectedServiceId('');
-        setSelectedSupplementIds([]);
-        setDuration(0);
-        setPrice('0.00');
-        setObservations('');
+
+        setServiceId('');
+        setExtrasIds([]);
+        setMinutes(0);
+        setTotalPrice('0.00');
+        setNotes('');
       } catch (error) {
         console.log(error);
         setServices([]);
-        setSupplements([]);
-        setSelectedServiceId('');
-        setSelectedSupplementIds([]);
-        setDuration(0);
-        setPrice('0.00');
+        setExtras([]);
+        setServiceId('');
+        setExtrasIds([]);
+        setMinutes(0);
+        setTotalPrice('0.00');
       }
     };
 
-    if (selectedPetId) servicesAndSupplements();
-  }, [selectedPetId, pets, token]);
+    if (petId) getServices();
+  }, [petId, pets, token]);
 
   const handlePetChange = (e) => {
-    setSelectedPetId(e.target.value);
+    setPetId(e.target.value);
   };
 
   const handleServiceChange = (e) => {
     const value = e.target.value;
-    setSelectedServiceId(value);
+    setServiceId(value);
 
-    setSelectedSupplementIds([]);
-    setManualDuration('');
+    setExtrasIds([]);
+    setManualMinutes('');
     setManualPrice('');
     calcTotal(value, []);
   };
@@ -248,32 +218,20 @@ const ModalAddReserveClient = ({ toBack, client }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = localStorage.getItem(saveLocalStorage);
     if (!raw) return;
 
     const data = JSON.parse(raw);
 
-    // Validaciones mínimas
-    if (!data.client_user_id) return console.log('Falta cliente');
-    if (!data.pet_id) return console.log('Falta mascota');
-    if (!data.appointment_date) return console.log('Falta fecha');
-    if (!data.start_time) return console.log('Falta hora');
-
-    // Si NO es gato, obligamos servicio
-    if (!isSpecie2 && !data.service_id) return console.log('Falta servicio');
-
-    if (!data.duration_minutes || Number(data.duration_minutes) <= 0)
-      return console.log('Duración inválida');
 
     try {
-      // usuario logueado
-      const res = await fetchData('worker/appointments/client', 'POST', data, token);
-      console.log('CITA CREADA (CLIENTE REGISTRADO):', res.data);
+      const res = await fetchData('appointment/client', 'POST', data, token);
+      console.log('Cita creada:', res.data);
 
-      localStorage.removeItem(LS_KEY);
+      localStorage.removeItem(saveLocalStorage);
       toBack();
     } catch (error) {
-      console.log('ERROR creando cita:', error);
+      console.log('error al crear cita:', error);
     }
   };
 
@@ -284,62 +242,14 @@ const ModalAddReserveClient = ({ toBack, client }) => {
           <h3>Añadir reserva</h3>
 
           <form className="quickReserveForm" onSubmit={handleSubmit}>
+            {/* Aquí se pintará la fecha y la hora!!!! */}
+            <label>Aquí irá la fecha y la hora</label>
             <label>
               Cliente: {client.name_user} {client.last_name}
             </label>
 
-            <div className="selectDate">
-              <h2 className="selectDateTitle">Selecciona la fecha</h2>
-
-              <div className="calendarAndHours">
-                <div className="calendar-container">
-                  <Calendar
-                    onChange={(d) => {
-                      setDate(d);
-                      setOpenHours(false);
-                    }}
-                    value={date}
-                    selectRange={false}
-                  />
-                </div>
-
-                <div className="hourColumn">
-                  <label className="hourLabel">Hora</label>
-
-                  <div className="hourSelectWrap">
-                    <button
-                      type="button"
-                      className="hourSelectBtn"
-                      onClick={() => setOpenHours(!openHours)}
-                    >
-                      {startTime ? startTime : 'Selecciona una hora'}
-                      <span className="hourChevron">▾</span>
-                    </button>
-
-                    {openHours && (
-                      <div className="hourDropdown">
-                        {hours.map((h) => (
-                          <button
-                            key={h}
-                            type="button"
-                            className={`hourOption ${startTime === h ? 'active' : ''}`}
-                            onClick={() => {
-                              setStartTime(h);
-                              setOpenHours(false);
-                            }}
-                          >
-                            {h}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <label>Mascota</label>
-            <select value={selectedPetId} onChange={handlePetChange}>
+            <select value={petId} onChange={handlePetChange}>
               <option value="" disabled>Selecciona una mascota</option>
               {pets.map((p) => (
                 <option key={p.pet_id} value={p.pet_id}>
@@ -348,25 +258,25 @@ const ModalAddReserveClient = ({ toBack, client }) => {
               ))}
             </select>
 
-            {isSpecie2 ? (
+            {isCat ? (
               <>
                 <label>Observaciones</label>
                 <input
                   type="text"
-                  value={observations}
-                  onChange={(e) => setObservations(e.target.value)}
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
                 />
               </>
             ) : (
               <>
                 <label>Servicio</label>
                 <select
-                  value={selectedServiceId}
+                  value={serviceId}
                   onChange={handleServiceChange}
-                  disabled={!selectedPetId}
+                  disabled={!petId}
                 >
                   <option value="" disabled>
-                    {selectedPetId ? 'Selecciona servicio' : 'Elige mascota primero'}
+                    {petId ? 'Selecciona servicio' : 'Elige mascota primero'}
                   </option>
                   {services.map((s) => (
                     <option key={s.service_id} value={s.service_id}>
@@ -377,15 +287,15 @@ const ModalAddReserveClient = ({ toBack, client }) => {
 
                 <label>Suplementos</label>
                 <div className="supplementsBox">
-                  {supplements.map((s) => {
+                  {extras.map((s) => {
                     const sid = String(s.service_id);
                     return (
                       <label key={sid} className="supplementCheck">
                         <input
                           type="checkbox"
-                          checked={selectedSupplementIds.includes(sid)}
-                          onChange={() => toggleSupplement(sid)}
-                          disabled={!selectedServiceId}
+                          checked={extrasIds.includes(sid)}
+                          onChange={() => handleToggleExtra(sid)}
+                          disabled={!serviceId}
                         />
                         <span>
                           {s.title} (+{s.duration_minutes} min) +{s.price}€
@@ -404,23 +314,23 @@ const ModalAddReserveClient = ({ toBack, client }) => {
                   type="number"
                   min="0"
                   value={
-                    isEditingDuration
-                      ? manualDuration
-                      : manualDuration !== ''
-                        ? manualDuration
-                        : duration > 0
-                          ? String(duration)
+                    isEditingMinutes
+                      ? manualMinutes
+                      : manualMinutes !== ''
+                        ? manualMinutes
+                        : minutes > 0
+                          ? String(minutes)
                           : ''
                   }
                   onFocus={() => {
-                    setIsEditingDuration(true);
-                    if (manualDuration === '')
-                      setManualDuration(duration > 0 ? String(duration) : '');
+                    setIsEditingMinutes(true);
+                    if (manualMinutes === '')
+                      setManualMinutes(minutes > 0 ? String(minutes) : '');
                   }}
-                  onChange={(e) => setManualDuration(e.target.value)}
+                  onChange={(e) => setManualMinutes(e.target.value)}
                   onBlur={() => {
-                    setIsEditingDuration(false);
-                    if (manualDuration !== '' && Number(manualDuration) < 0) setManualDuration('');
+                    setIsEditingMinutes(false);
+                    if (manualMinutes !== '' && Number(manualMinutes) < 0) setManualMinutes('');
                   }}
                   style={{ width: '90px', marginLeft: '10px' }}
                 />
@@ -439,14 +349,14 @@ const ModalAddReserveClient = ({ toBack, client }) => {
                       ? manualPrice
                       : manualPrice !== ''
                         ? manualPrice
-                        : Number(price) > 0
-                          ? String(price)
+                        : Number(totalPrice) > 0
+                          ? String(totalPrice)
                           : ''
                   }
                   onFocus={() => {
                     setIsEditingPrice(true);
                     if (manualPrice === '')
-                      setManualPrice(Number(price) > 0 ? String(price) : '');
+                      setManualPrice(Number(totalPrice) > 0 ? String(totalPrice) : '');
                   }}
                   onChange={(e) => setManualPrice(e.target.value)}
                   onBlur={() => {
@@ -459,20 +369,19 @@ const ModalAddReserveClient = ({ toBack, client }) => {
               </label>
             </div>
 
-            <div className="modalActions">
-  <Button
-    className="close"
-    type="submit"
-    disabled={!selectedPetId || !startTime || (!isSpecie2 && !selectedServiceId)}
-  >
-    Aceptar
-  </Button>
+            <div>
+              <Button
+                className="close"
+                type="submit"
+                disabled={!petId || (!isCat && !serviceId)}
+              >
+                Aceptar
+              </Button>
 
-  <Button className="close" onClick={toBack} type="button">
-    Atrás
-  </Button>
-</div>
-
+              <Button className="close" onClick={toBack} type="button">
+                Atrás
+              </Button>
+            </div>
           </form>
         </div>
       </div>

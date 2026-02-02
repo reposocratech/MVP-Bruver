@@ -16,4 +16,7 @@ router.get("/getAdminAppoiment/:employeeId", verifyToken, appointmentController.
 router.put("/updateAppointment/:appointmentId", verifyToken, appointmentController.updateAppointment)
 router.delete("/deleteAppointment/:appointmentId", verifyToken, appointmentController.deleteAppointment)
 
+router.post("/quick", verifyToken, appointmentController.createQuickAppointment);
+router.post("/client", verifyToken, appointmentController.createClientAppointment);
+
 export default router;
