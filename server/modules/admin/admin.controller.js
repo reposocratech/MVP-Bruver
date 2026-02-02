@@ -128,10 +128,8 @@ class AdminController {
 
   getUserById = async (req, res) => {
     try {
-      const {id} = req.params;
-      const sql = `SELECT user_id, name_user, last_name, email, phone, province, city, address, picture_user, type FROM user WHERE user_id = ?`;
-      const result = await adminDal.getUserById(id, sql);
-      console.log('Resultado SQL getUserById:', result);
+      const { id } = req.params;
+      const result = await adminDal.getUserById(id);
       if (!result || result.length === 0) {
         return res.status(404).json({ message: "Usuario no encontrado" });
       }
@@ -145,12 +143,10 @@ class AdminController {
   editUserById = async (req, res) => {
     try {
       const { id } = req.params;
-      const { name_user, last_name, phone, province, city, address } = JSON.parse(req.body.editUser)
-
-      let values = [name_user, last_name, phone, province, city, address, id];
-
+      const { name_user, last_name, phone, province, city, address, client_code } = JSON.parse(req.body.editUser);
+      let values = [name_user, last_name, phone, province, city, address, client_code, id];
       if (req.file) {
-        values = [name_user, last_name, phone, province, city, address, req.file.filename, id];
+        values = [name_user, last_name, phone, province, city, address, client_code, req.file.filename, id];
       }
 
       await adminDal.editUserById(values);
@@ -166,6 +162,22 @@ class AdminController {
       res.status(500).json({ message: 'Error al actualizar el usuario', error: error.message });
     }
   };
+  
+  // Delete logico y switch entre is_deleted (0 y 1)
+  updateUserStatus = async (req, res) => {
+    try {
+      const { id, status } = req.params;
+      if (status !== '0' && status !== '1') {
+        return res.status(400).json({ message: 'Error de status' });
+      }
+      await adminDal.updateUserIsDeleted(id, status);
+      res.status(200).json({ message: `Estado actualizado a ${status}` });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error al actualizar el estado', error: error.message });
+    }
+  };
+
 }
 
 export default new AdminController();
