@@ -285,6 +285,84 @@ WHERE appointment_id = ?;`
     }
   };
 
+  createAppointment = async ({
+    created_by_user_id,
+    employee_user_id,
+    client_user_id,
+    pet_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    service_id,
+    supplement_ids = [],
+    observations,
+  }) => {
+    try {
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
+      const sql = `
+        INSERT INTO appointment (
+          created_by_user_id,
+          employee_user_id,
+          client_user_id,
+          pet_id,
+          status,
+          total_price,
+          appointment_date,
+          start_time,
+          end_time,
+          observations
+        )
+        VALUES (
+          ?, ?, ?, ?,
+          1,
+          ?,
+          ?,
+          ?,
+          ADDTIME(?, SEC_TO_TIME(? * 60)),
+          ?
+        )
+      `;
+
+      const appointmentRes = await executeQuery(sql, [
+        created_by_user_id,
+        employee_user_id,
+        client_user_id,
+        pet_id,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
+
+      const appointmentId = appointmentRes.insertId;
+
+      // Vincular servicio base + suplementos + servicio de limpieza (si está en env) - versión simplificada
+      const rawIds = [
+        service_id,
+        ...(Array.isArray(supplement_ids) ? supplement_ids : []),
+        process.env.CLEANING_SERVICE_ID,
+      ].filter(Boolean);
+
+      const uniqueIds = [...new Set(rawIds)];
+
+      if (uniqueIds.length > 0) {
+        // Construimos VALUES directamente: (appointmentId, serviceId),(...)
+        // Convertimos a Number para evitar inyección si los ids vienen alterados
+        const values = uniqueIds.map(id => `(${appointmentId}, ${Number(id)})`).join(', ');
+        const sqlLink = `INSERT INTO service_appointment (appointment_id, service_id) VALUES ${values}`;
+        await executeQuery(sqlLink);
+      }
+
+      return { appointment_id: appointmentId };
+    } catch (error) {
+      throw error;
+    }
+  };
+
 }
 
 export default new AppointmentDal();

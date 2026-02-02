@@ -26,7 +26,7 @@ class AdminDal {
    // Obtener usuarios por tipo (2=worker, 3=client)
   getUsersByType = async (type) => {
     try {
-      const sql = `SELECT user_id, name_user, last_name, phone, email, address, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
+      const sql = `SELECT user_id, client_code, name_user, last_name, phone, email, address, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
       const result = await executeQuery(sql, [type]);
       return result;
     } catch (error) {
@@ -45,11 +45,10 @@ class AdminDal {
     }
   };
 
-  getUserById = async (userId, sql) => {
+  getUserById = async (userId) => {
     try {
-      // Si no se pasa un SQL, usa el de user.dal.js
-      const query = sql || `SELECT user_id, name_user, last_name, email, phone, province, city, address, picture_user, type FROM user WHERE user_id = ?`;
-      const result = await executeQuery(query, [userId]);
+      const sql = `SELECT user_id, client_code, name_user, last_name, email, phone, province, city, address, picture_user, type FROM user WHERE user_id = ?`;
+      const result = await executeQuery(sql, [userId]);
       return result;
     } catch (error) {
       throw error;
@@ -59,12 +58,23 @@ class AdminDal {
   editUserById = async (values) => {
     try {
       let sql;
-      if (values.length === 8) {
-        sql = 'UPDATE user SET name_user=?, last_name=?, phone=?, province=?, city=?, address=?, picture_user=? WHERE user_id=? AND is_deleted = 0';
+      if (values.length === 9) {
+        sql = 'UPDATE user SET name_user=?, last_name=?, phone=?, province=?, city=?, address=?, client_code=?, picture_user=? WHERE user_id=? AND is_deleted = 0';
       } else {
-        sql = 'UPDATE user SET name_user=?, last_name=?, phone=?, province=?, city=?, address=? WHERE user_id=? AND is_deleted = 0';
+        sql = 'UPDATE user SET name_user=?, last_name=?, phone=?, province=?, city=?, address=?, client_code=? WHERE user_id=? AND is_deleted = 0';
       }
       const result = await executeQuery(sql, values);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  // Actualizar is_deleted (0 o 1)
+  updateUserIsDeleted = async (user_id, status) => {
+    try {
+      const sql = `UPDATE user SET is_deleted = ? WHERE user_id = ?`;
+      const result = await executeQuery(sql, [status, user_id]);
       return result;
     } catch (error) {
       throw error;

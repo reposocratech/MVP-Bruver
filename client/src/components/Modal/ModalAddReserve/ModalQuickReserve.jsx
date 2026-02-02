@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import './ModalQuickReserve.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import './ModalQuickReserve.css';
 
 const LS_KEY = 'reserve_quick';
 

@@ -64,13 +64,13 @@ const navigate = useNavigate()
             </span>
           </div>
           <div className="option-card">
-            <span onClick={() => navigate(`/worker/WorkerDate/${user.user_id}`)} >
+            <span onClick={() => navigate(`/worker/appointments/${user.user_id}`)} >
               <div className="option-header">MIS CITAS</div>
               <i className="bi bi-pencil-square"></i>
             </span>
           </div>
           <div className="option-card">
-             <span onClick={() => navigate(`/admin/general`)} >
+             <span onClick={() => navigate(`/worker/general`)} >
             <div className="option-header">AGENDA</div>
             <i className="bi bi-journal-richtext"></i>
             </span>

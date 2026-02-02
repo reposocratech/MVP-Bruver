@@ -6,7 +6,7 @@ export const UsersPetsAppointment = ({ pets, setSelectedPet })=>{
     <div className="appointmentPetPage">
       <h2 className="appointmentPetTitle">Selecciona tu mascota</h2> 
       {!pets && <p>No hay mascotas disponibles.</p>}
-      <div className="appointmentPetGrid row g-4 justify-content-center">
+      <div className="appointmentPetGrid justify-content-center">
         
         {pets?.map((elem) => (
           <div className="col-12 col-sm-6 col-lg-4" key={elem.pet_id}>

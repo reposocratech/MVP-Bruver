@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect , useState} from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../helpers/axiosHelper";
@@ -25,7 +24,8 @@ export const UsersServicesAppointment = ({
   setBaseServiceId,
 
   extrasIds,
-  setExtrasIds
+  setExtrasIds,
+  minutesToHour
 }) => {
 
   const { token } = useContext(AuthContext);
@@ -95,7 +95,6 @@ export const UsersServicesAppointment = ({
   return (
     <section className="servicesPage">
       <h2>Selecciona tu servicio</h2>
-
       <section className="services">
         <div className="servicesGrid">
           {baseServices.map((s, idx) => {
@@ -117,10 +116,13 @@ export const UsersServicesAppointment = ({
                 <p>{s.duration_minutes} min</p>
                 <h3>{Number(s.price).toFixed(2)}€</h3>
 
-                <Button className="select-btn" onClick={() =>{
-                  setBaseServiceId(s.service_id); 
-                  seleccionarBaseService(s); 
-                }} > SELECCIONAR </Button>
+                <button
+                  className={baseServiceId === s.service_id ? "select-btn selected" : "select-btn"}
+                  onClick={() =>{
+                    setBaseServiceId(s.service_id); 
+                    seleccionarBaseService(s); 
+                  }}
+                > SELECCIONAR </button>
 
               </div>
             );
@@ -144,11 +146,9 @@ export const UsersServicesAppointment = ({
                 key={s.service_id}
                 className={`supplementsCard ${selected ? "selected" : ""}`}
               >
-                <img src={supplementImages[idx] || supplementImages[0]} alt={s.title} />
-                <h3>{s.title}</h3>
-                <p>{s.duration_minutes} min</p>
-                <h3>{Number(s.price).toFixed(2)}€</h3>
-                <Button
+                <div className="imgAndButton">
+                <img src={supplementImages[idx] || supplementImages[0]} alt={s.title} /> 
+                <button
                   className={selected ? "select-btn selected" : "select-btn"}
                   onClick={() => {toggleExtra(s.service_id);
                   sumarValor(setSumaTotalPrecio, selected ? -s.price : s.price);
@@ -157,25 +157,35 @@ export const UsersServicesAppointment = ({
                 >
 
                   {selected ? "QUITAR" : "AÑADIR"}
-                </Button>
+                </button>
+                </div>
+                <div className="suplDates">
+                <h3>{s.title}</h3>
+                <p>{s.duration_minutes} min</p>
+                <h3>{Number(s.price).toFixed(2)}€</h3>
+               
+                </div>
               </div>
             );
           })}
         </div>
       </section>
-      <h3>minutos/{sumaTotalMinutos.toFixed(2)}</h3>
-      <h3>carrito/{sumaTotalPrecio.toFixed(2)}€</h3>
       <div className="servicesActions">
-        <Button onClick={() => setCurrentAppointment(1)} className="back-btn">
-          VOLVER
-        </Button>
-
-        <Button 
-          className="next-btn" 
-          /* disabled={!baseServiceId} */
-           onClick={() => setCurrentAppointment(3)}>
-          SIGUIENTE
-        </Button>
+        <div className="infoAppoint">
+      <h3><img src='/img/appointment/clock.png' />{minutesToHour(sumaTotalMinutos)}</h3>
+      <h3><img src='/img/appointment/cart.png' />{sumaTotalPrecio.toFixed(2)}€</h3>
+      </div>
+        <div className="buttons">
+          <button onClick={() => setCurrentAppointment(1)} className="back-btn">
+            VOLVER
+          </button>
+          <button
+            className="next-btn"
+            /* disabled={!baseServiceId} */
+             onClick={() => setCurrentAppointment(3)}>
+            SIGUIENTE
+          </button>
+        </div>
       </div>
     </section>
   );

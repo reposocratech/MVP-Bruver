@@ -8,6 +8,16 @@ import { UsersServicesAppointment } from '../../../../components/AppointmentsCom
 import { UsersDateAppointment } from '../../../../components/AppointmentsComponents/UsersDateAppointment/UsersDateAppointment';
 import { useNavigate } from 'react-router';
 
+// Convertir minutos a horas
+function minutesToHour(totalMinutos) {
+  const horas = Math.floor(totalMinutos / 60);
+  const minutos = totalMinutos % 60;
+  if (horas > 0) {
+    return `${horas}h ${minutos}m`;
+  }
+  return `${minutos}m`;
+}
+
 const Appointment = () => {
   const [currentAppointment, setCurrentAppointment] = useState(1);
   const [selectedPet, setSelectedPet] = useState();
@@ -22,14 +32,9 @@ const Appointment = () => {
     const [baseServiceId, setBaseServiceId] = useState(null);
     const [extrasIds, setExtrasIds] = useState([]);
 
-/*   const cancel = (e) => {
+/*   const submit = (e) => {
     e.preventDefault();
-    setCurrentAppointment(1)
-  };
-
-  const submit = (e) => {
-    e.preventDefault();
-  }; */
+  };  */
 
   // 1) Traemos del contexto el array de mascotas, token y el setter global
   const { pets, setPets, token } = useContext(AuthContext);
@@ -117,6 +122,8 @@ const Appointment = () => {
                   sumaTotalMinutos={sumaTotalMinutos}
                   setSumaTotalMinutos={setSumaTotalMinutos}
 
+                  minutesToHour={minutesToHour}
+
                   baseServicePrice={baseServicePrice}
                   setBaseServicePrice={setBaseServicePrice}
 
@@ -142,8 +149,12 @@ const Appointment = () => {
                 <UsersDateAppointment 
                   setCurrentAppointment={setCurrentAppointment}
                   workers={workers}
+                  selectedPet={selectedPet}
+                  baseServiceId={baseServiceId}
+                  extrasIds={extrasIds}
                   sumaTotalPrecio={sumaTotalPrecio}
                   sumaTotalMinutos={sumaTotalMinutos}
+                  minutesToHour={minutesToHour}
                 />
               </Col>
             </Row>

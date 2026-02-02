@@ -160,6 +160,11 @@
     width: 92%;
     padding: 2.4rem 2rem;
   }
+  .modalButtons {
+    flex-wrap: wrap;
+    gap: 10px
+  }
+  
 }
 
 @keyframes modalIn {

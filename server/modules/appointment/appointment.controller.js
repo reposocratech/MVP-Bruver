@@ -110,6 +110,55 @@ class AppointmentController {
   }
 };
 
+createAppointment = async (req, res) => {
+    try {
+      const userId = req.user_id; // cliente que crea la cita
+
+      const {
+        pet_id,
+        employee_user_id,
+        service_id,
+        supplement_ids = [],
+        appointment_date,
+        start_time,
+        duration_minutes,
+        total_price,
+        observations,
+      } = req.body;
+
+      // Validaciones mínimas
+
+      const dura = Number(duration_minutes || 0);
+
+      // comprobamos solapamiento
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
+      const overlap = await appointmentDal.checkOverlap(employee_user_id, appointment_date, st, dura);
+      if (overlap && overlap.length > 0) {
+        return res.status(409).json({ message: 'El empleado ya tiene una cita en ese horario' });
+      }
+
+      const result = await appointmentDal.createAppointment({
+        created_by_user_id: userId,
+        employee_user_id,
+        client_user_id: userId,
+        pet_id,
+        appointment_date,
+        start_time: st,
+        duration_minutes: dura,
+        total_price: Number(total_price || 0),
+        service_id: service_id || null,
+        supplement_ids: Array.isArray(supplement_ids) ? supplement_ids : [],
+        observations: observations || null,
+      });
+
+      return res.status(201).json({ message: 'Cita creada', result });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: 'Error al crear cita' });
+    }
+  };
+
 
   createClientAppointment = async (req, res) => {
   try {
