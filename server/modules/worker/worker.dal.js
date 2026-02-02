@@ -67,6 +67,19 @@ class WorkerDal {
     }
   };
 
+   getAllWorkers = async () => {
+    try {
+      let sql = `SELECT user_id, name_user, last_name
+                     FROM user
+                     WHERE type IN (1, 2)
+                     AND is_deleted = 0;`
+      let result = executeQuery(sql);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 export default new WorkerDal();

@@ -127,7 +127,7 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
   value={appointmentEdit.employee_user_id}
   onChange={handleChange}
 >
-  {employees.map(emp => (
+  {employees?.map(emp => (
     <option key={emp.user_id} value={emp.user_id}>
       {emp.name_user} {emp.last_name}
     </option>

@@ -15,6 +15,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotal
             {workers.length === 0 && <p>No hay empleados disponibles.</p>}
             {workers?.map((elem) => (
           <div className="col-12 col-sm-6 col-lg-4" key={elem.workerId}>
+            <p>{elem.name_user} </p>
             <div className="appointmentPetCard">
 
               <div className="appointmentPetImage">
@@ -23,6 +24,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotal
                     src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${workers.picture_user}`}
                     alt={elem.name_user}
                   />
+                  
                 ) : (
                  <img
                   className="petPhoto"

@@ -48,6 +48,20 @@ class WorkerController {
     }
   };
 
+  getAllWorkers = async(req, res)=>{
+    try {
+      let result = await workerDal.getAllWorkers();
+      res.status(200).json({
+        message: 'datos recibidos',
+        result
+      })
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error)
+      
+    }
+  }
+
 }
 
 export default new WorkerController();
