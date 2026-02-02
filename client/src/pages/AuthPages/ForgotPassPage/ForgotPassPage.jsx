@@ -3,16 +3,19 @@ import { useState } from "react";
 import { recoverySchema } from "../../../schemas/RecoverySchema";
 import { fetchData } from "../../../helpers/axiosHelper";
 import { ZodError } from "zod";
+import { useNavigate } from "react-router";
 
 const initialValue = {
   email: ""
 };
 
+
+
 const ForgotPassPage = () => {
   const [recovery, setRecovery] = useState(initialValue);
   const [valErr, setValErr] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRecovery({ ...recovery, [name]: value });
@@ -70,6 +73,9 @@ const ForgotPassPage = () => {
           <div className="buttons">
             <button type="submit" className="button_forgot">
               Enviar
+            </button>
+            <button type="button" className="button_back" onClick={() => navigate(-1)}>
+              Volver
             </button>
           </div>
         </form>
