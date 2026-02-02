@@ -192,3 +192,52 @@
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
+@media (max-width: 768px) {
+  .calendar-working-hours {
+    padding: 16px;
+    border-radius: 20px;
+    min-height: auto;
+  }
+
+  .calendar-working-hours .rbc-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    padding-bottom: 12px;
+  }
+
+  .calendar-working-hours .rbc-toolbar-label {
+    position: static;
+    transform: none;
+    text-align: center;
+    font-size: 14px;
+    order: -1;
+  }
+
+  .calendar-working-hours .rbc-btn-group {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .calendar-working-hours .rbc-btn-group button {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+
+  .calendar-working-hours .rbc-time-view {
+    border-radius: 16px;
+  }
+
+  .calendar-working-hours .rbc-header {
+    padding: 10px 0;
+    font-size: 12px;
+  }
+
+  .calendar-working-hours .rbc-event {
+    padding: 6px 8px;
+    border-radius: 12px;
+  }
+}
