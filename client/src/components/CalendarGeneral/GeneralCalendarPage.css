@@ -219,4 +219,30 @@
   .rbc-month-view {
     border-radius: 14px;
   }
+.back-btn-center {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.back-btn {
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
