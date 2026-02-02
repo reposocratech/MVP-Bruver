@@ -67,6 +67,7 @@ export const AppRoutes = () => {
           <Route element={<PrivateRoutes user={user}/>}>
             <Route element={<ClientLayout />}>
                <Route path="/profile" element={<ClientProfile />} />
+               <Route path="/profile/:id" element={<ClientProfile />} />
                <Route path="/selectcat" element={<SelectCat />} /> 
                <Route path="/addpet" element={<AddPet />} />
                <Route path="/appointment" element={<Appointment />} />

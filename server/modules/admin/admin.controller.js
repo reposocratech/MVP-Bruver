@@ -126,6 +126,46 @@ class AdminController {
     }
   };
 
+  getUserById = async (req, res) => {
+    try {
+      const {id} = req.params;
+      const sql = `SELECT user_id, name_user, last_name, email, phone, province, city, address, picture_user, type FROM user WHERE user_id = ?`;
+      const result = await adminDal.getUserById(id, sql);
+      console.log('Resultado SQL getUserById:', result);
+      if (!result || result.length === 0) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      res.status(200).json({ user: result[0] });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener usuario por id" });
+    }
+  };
+
+  editUserById = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name_user, last_name, phone, province, city, address } = JSON.parse(req.body.editUser)
+
+      let values = [name_user, last_name, phone, province, city, address, id];
+
+      if (req.file) {
+        values = [name_user, last_name, phone, province, city, address, req.file.filename, id];
+      }
+
+      await adminDal.editUserById(values);
+      const result = await adminDal.getUserById(id);
+
+      res.status(200).json({
+        message: "update ok",
+        user: result[0],
+        newAvatar: req.file?.filename
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error al actualizar el usuario', error: error.message });
+    }
+  };
 }
 
 export default new AdminController();
