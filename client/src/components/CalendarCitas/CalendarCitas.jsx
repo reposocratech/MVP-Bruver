@@ -20,6 +20,7 @@ export const CalendarCitas = ({
   setView,
   setDate,
   onSelectEvent,
+  openNewAppointment
 }) => {
   return (
     <div className="calendar-working-hours">
@@ -31,6 +32,7 @@ export const CalendarCitas = ({
         onView={setView}
         onNavigate={setDate}
         onSelectEvent={onSelectEvent}
+        onSelectSlot={(event)=>openNewAppointment(event.start)}
         selectable
         views={['week']}
         startAccessor="start"

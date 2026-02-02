@@ -8,17 +8,32 @@ import { Button } from 'react-bootstrap';
 import "./Worker.css";
 
 
-const Worker = () => {
+const Worker = ({
+  openModal,
+  openSearchClient,
+  openQuickReserve,
+  openAddReserveClient,
+  setOpenModal,
+  setOpenSearchClient,
+  setOpenQuickReserve,
+  setOpenAddReserveClient,
+  selectedClient,
+  setSelectedClient,
+  handleChange,
+  dateStartTime,
+  setDateStartTime,
+  setAppoiment
+}) => {
 
-  const [openModal, setOpenModal] = useState(false);
+ /*  const [openModal, setOpenModal] = useState(false);
   const [openSearchClient, setOpenSearchClient] = useState(false);
   const [openQuickReserve, setOpenQuickReserve] = useState(false);
-  const [openCita, setOpenCita] = useState(false);
-  const [openAddReserveClient, setOpenAddReserveClient] = useState(false);
+ /*  const [openCita, setOpenCita] = useState(false); */
+  /* const [openAddReserveClient, setOpenAddReserveClient] = useState(false); */ 
 
-  const [selectedClient, setSelectedClient] = useState(null);
+  /* const [selectedClient, setSelectedClient] = useState(null); */
 
-    const handleChange = (option) => {
+   /*  const handleChange = (option) => {
     setOpenModal(false);
 
     if (option === '1') {
@@ -28,8 +43,9 @@ const Worker = () => {
     if (option === '2') {
       setOpenQuickReserve(true);
     }
-  };
-
+  }; */
+ console.log("kkkkkkkkkkkkkkkkkkkkkkkkk", dateStartTime);
+ 
     const backModalAddReserve = () => {
       setOpenModal(true);
       setOpenSearchClient(false);
@@ -48,10 +64,11 @@ const Worker = () => {
     }
 
   return (
-    <div className="workerPage">
-      <div className="workerCard">
+    <> 
+    {/* <div className="workerPage">
+      <div className="workerCard"> */}
 
-        <h2 className="workerTitle">Gestión de reservas</h2>
+       {/*  <h2 className="workerTitle">Gestión de reservas</h2>
 
         <div className="workerActions">
           <Button
@@ -67,7 +84,7 @@ const Worker = () => {
           >
             Consultar
           </Button>
-        </div>
+        </div> */}
 
         {openModal && (
           <ModalAddReserve
@@ -94,17 +111,23 @@ const Worker = () => {
           <ModalAddReserveClient
             toBack={backModalAddReserveClient}
             client={selectedClient}
+            dateStartTime={dateStartTime}
+            setDateStartTime={setDateStartTime}
+            setOpenModal={setOpenModal}
+            setOpenSearchClient={setOpenSearchClient}
+            setAppoiment={setAppoiment}
           />
         )}
 
-        {openCita && (
+       {/*  {openCita && (
           <ModalSeeAppointment
             onClose={() => setOpenCita(false)}
           />
-        )}
+        )} */}
 
-      </div>
-    </div>
+   {/*    </div>
+    </div> */}
+    </>
   )
 }
 
