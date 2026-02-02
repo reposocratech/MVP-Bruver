@@ -1,7 +1,7 @@
 import React from 'react';
 import './ModalAppointment.css';
 
-const ModalCancelAppointment = ({ onClose }) => {
+const ModalCancelAppointment = ({ onClose, onDelete, appointment }) => {
   return (
     <section className="addReserveModal">
       <div className="addReserveGridModal">
@@ -44,7 +44,7 @@ const ModalCancelAppointment = ({ onClose }) => {
           </table>
           <div className="appointment-modal-actions">
             <button className="cancel-btn-brown" onClick={onClose}>CANCELAR</button>
-            <button className="cancel-btn-red">CANCELAR CITA</button>
+            <button className="cancel-btn-red" onClick={()=> onDelete(appointment.id)}>CANCELAR CITA</button>
           </div>
         </div>
       </div>

@@ -3,8 +3,9 @@ import { useState } from 'react';
 import ModalCancelAppointment from './ModalCancelAppointment';
 import ModalEditAppointment from './ModalEditAppointment';
 import './ModalAppointment.css';
+import dayjs from 'dayjs'
 
-const ModalSeeAppointment = ({ onClose }) => {
+const ModalSeeAppointment = ({ appointment, onClose, onUpdate, onDelete }) => {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -25,23 +26,27 @@ const ModalSeeAppointment = ({ onClose }) => {
               <tbody>
                 <tr>
                   <td><b>Fecha</b></td>
-                  <td>19/01/2026</td>
+                  <td>
+                    {dayjs(appointment.start).format('DD/MM/YYYY')}
+                  </td>
                 </tr>
                 <tr>
                   <td><b>Hora inicio- hora fin</b></td>
-                  <td>09:00 - 10:30</td>
+                  <td>
+                    {dayjs(appointment.start).format('HH:mm')} - {dayjs(appointment.end).format('HH:mm')}
+                  </td>
                 </tr>
                 <tr>
                   <td><b>Reservado por:</b></td>
-                  <td>usuario/admin/trabajador</td>
+                  <td>{appointment.created_by_name} </td>
                 </tr>
                 <tr>
                   <td><b>Datos del cliente:</b></td>
-                  <td>Nombre cliente</td>
+                  <td>{appointment.client_name} </td>
                 </tr>
                 <tr>
                   <td><b>Trabajador</b></td>
-                  <td>Nombre trabajador</td>
+                  <td>{appointment.employee_name} </td>
                 </tr>
                 <tr>
                   <td><b>Estado/cita</b></td>
@@ -49,19 +54,29 @@ const ModalSeeAppointment = ({ onClose }) => {
                 </tr>
                 <tr>
                   <td><b>Total:</b></td>
-                  <td>52,00€</td>
+                  <td>{appointment.total_price} €</td>
                 </tr>
                 <tr>
                   <td><b>Estado</b></td>
-                  <td>confirm/pagado/pte</td>
+                  <td>{appointment.status} </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </section>
-      {showCancelModal && <ModalCancelAppointment onClose={() => setShowCancelModal(false)} />}
-      {showEditModal && <ModalEditAppointment onClose={() => setShowEditModal(false)} />}
+      
+      {showCancelModal && <ModalCancelAppointment
+        appointment={appointment}
+        onClose={() => setShowCancelModal(false)}
+        onDelete={onDelete} />}
+
+      {showEditModal && <ModalEditAppointment
+        appointment={appointment}
+        onClose={() => setShowEditModal(false)}
+        onSubmit={onUpdate}
+      />}
+
     </>
   );
 };

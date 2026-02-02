@@ -82,24 +82,24 @@ class WorkerDal {
     }
   };
   createClientAppointment = async ({
-  created_by_user_id,
-  employee_user_id,
-  client_user_id,
-  pet_id,
-  appointment_date,
-  start_time,
-  duration_minutes,
-  total_price,
-  service_id,
-  supplement_ids = [],
-  observations,
-}) => {
-  try {
-    // Cambiar formato
-    const st = start_time.length === 5 ? `${start_time}:00` : start_time; 
+    created_by_user_id,
+    employee_user_id,
+    client_user_id,
+    pet_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    service_id,
+    supplement_ids = [],
+    observations,
+  }) => {
+    try {
+      // Cambiar formato
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
 
-    // 1) Insertar la cita
-    const sql = `
+      // 1) Insertar la cita
+      const sql = `
       INSERT INTO appointment (
         created_by_user_id,
         employee_user_id,
@@ -123,44 +123,44 @@ class WorkerDal {
       )
     `;
 
-    const appointmentRes = await executeQuery(sql, [
-      created_by_user_id,
-      employee_user_id,
-      client_user_id,
-      pet_id,
-      total_price,
-      appointment_date,
-      st,
-      st,
-      duration_minutes,
-      observations || null,
-    ]);
+      const appointmentRes = await executeQuery(sql, [
+        created_by_user_id,
+        employee_user_id,
+        client_user_id,
+        pet_id,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
 
-    const appointmentId = appointmentRes.insertId;
+      const appointmentId = appointmentRes.insertId;
 
-    //Insertar relación con servicios (si hay servicio base o suplementos)
-    const ids = [];
+      //Insertar relación con servicios (si hay servicio base o suplementos)
+      const ids = [];
 
-    if (service_id) ids.push(String(service_id));
-    if (Array.isArray(supplement_ids)) {
-      for (const s of supplement_ids) ids.push(String(s));
-    }
+      if (service_id) ids.push(String(service_id));
+      if (Array.isArray(supplement_ids)) {
+        for (const s of supplement_ids) ids.push(String(s));
+      }
 
-    const uniqueIds = [...new Set(ids)].filter(Boolean);
+      const uniqueIds = [...new Set(ids)].filter(Boolean);
 
-    for (const sid of uniqueIds) {
-      const linkSql = `
+      for (const sid of uniqueIds) {
+        const linkSql = `
         INSERT INTO service_appointment (appointment_id, service_id)
         VALUES (?, ?)
       `;
-      await executeQuery(linkSql, [appointmentId, sid]);
-    }
+        await executeQuery(linkSql, [appointmentId, sid]);
+      }
 
-    return { appointment_id: appointmentId };
-  } catch (error) {
-    throw error;
-  }
-};
+      return { appointment_id: appointmentId };
+    } catch (error) {
+      throw error;
+    }
+  };
 
 
   insertServicesForAppointment = async (
@@ -186,25 +186,25 @@ class WorkerDal {
       throw error;
     }
   };
- createQuickAppointment = async ({
-  created_by_user_id,
-  employee_user_id,
-  appointment_date,
-  start_time,
-  duration_minutes,
-  total_price,
-  guest_name,
-  guest_phone,
-  guest_hair,
-  service_id,
-  supplement_ids = [],
-  observations,
-}) => {
-  try {
-    // formato tiempo
-    const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+  createQuickAppointment = async ({
+    created_by_user_id,
+    employee_user_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    guest_name,
+    guest_phone,
+    guest_hair,
+    service_id,
+    supplement_ids = [],
+    observations,
+  }) => {
+    try {
+      // formato tiempo
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
 
-    const sqlAppointment = `
+      const sqlAppointment = `
       INSERT INTO appointment (
         created_by_user_id,
         employee_user_id,
@@ -231,46 +231,59 @@ class WorkerDal {
       )
     `;
 
-    const appointmentRes = await executeQuery(sqlAppointment, [
-      created_by_user_id,
-      employee_user_id,
-      guest_name,
-      guest_phone,
-      guest_hair,
-      total_price,
-      appointment_date,
-      st,
-      st,
-      duration_minutes,
-      observations || null,
-    ]);
+      const appointmentRes = await executeQuery(sqlAppointment, [
+        created_by_user_id,
+        employee_user_id,
+        guest_name,
+        guest_phone,
+        guest_hair,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
 
-    const appointmentId = appointmentRes.insertId;
+      const appointmentId = appointmentRes.insertId;
 
-    // Vincular servicio base + suplementos
-    const ids = [];
+      // Vincular servicio base + suplementos
+      const ids = [];
 
-    if (service_id) ids.push(String(service_id));
-    if (Array.isArray(supplement_ids)) {
-      for (const s of supplement_ids) ids.push(String(s));
-    }
+      if (service_id) ids.push(String(service_id));
+      if (Array.isArray(supplement_ids)) {
+        for (const s of supplement_ids) ids.push(String(s));
+      }
 
-    const uniqueIds = [...new Set(ids)].filter(Boolean);
+      const uniqueIds = [...new Set(ids)].filter(Boolean);
 
 
-    for (const sid of uniqueIds) {
-      const sqlLink = `
+      for (const sid of uniqueIds) {
+        const sqlLink = `
         INSERT INTO service_appointment (appointment_id, service_id)
         VALUES (?, ?)
       `;
-      await executeQuery(sqlLink, [appointmentId, sid]);
-    }
+        await executeQuery(sqlLink, [appointmentId, sid]);
+      }
 
-    return { appointment_id: appointmentId };
-  } catch (error) {
-    throw error;
+      return { appointment_id: appointmentId };
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  getAllWorkers = async () => {
+    try {
+      let sql = `SELECT user_id, name_user, last_name
+                     FROM user
+                     WHERE type IN (1, 2)
+                     AND is_deleted = 0;`
+      let result = executeQuery(sql);
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
-};
 
 }
 
