@@ -177,6 +177,9 @@ createAppointment = async (req, res) => {
       observations
     } = req.body;
 
+    console.log("que llega aquiiiiiiiii", req.body);
+    
+
     //Validaciones
     if (!client_user_id || !pet_id || !appointment_date || !start_time) {
       return res.status(400).json({ message: "Faltan datos obligatorios" });
