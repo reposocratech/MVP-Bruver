@@ -1,48 +1,59 @@
 import { useContext, useState } from 'react';
 import './ModalUserProfileEdit.css';
-
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router'; 
 import { Button } from 'react-bootstrap';
 
 
-const ModalUserProfileEdit = ({ onClose }) => {
+const ModalUserProfileEdit = ({ onClose, user, onUserUpdated }) => {
+
   const navigate = useNavigate(); 
-  const { user, setUser, token, logout } = useContext(AuthContext);
-  const [editUser, setEditUser] = useState(user);
+  const { user: contextUser, setUser, token, logout } = useContext(AuthContext);
+  const [editUser, setEditUser] = useState(user || contextUser || {});
   const [avatar, setAvatar] = useState();
   const [errorMsg, setErrorMsg] = useState('');
 
 
-    const handleChange = (e) =>{
-        const {name, value} = e.target;
-        if(name === "avatar"){
-            setAvatar(e.target.files[0])
-            };
-            setEditUser({...editUser, [name]: value})
+  const handleChange = (e) =>{
+      const {name, value} = e.target;
+      if(name === "avatar"){
+          setAvatar(e.target.files[0])
+          };
+          setEditUser({...editUser, [name]: value})
+      };
+
+  const onSubmit = async () => {
+    try {
+      const newFormdata = new FormData();
+      newFormdata.append("editUser", JSON.stringify(editUser));
+      if (avatar) newFormdata.append("img", avatar);
+      // Si admin edita a otro usuario
+      if (
+        contextUser.type === 1 &&
+        editUser.id &&
+        editUser.id !== contextUser.user_id
+      ) {
+        const res = await fetchData(`admin/user/${editUser.id}`, "PUT", newFormdata, token);
+        if (res?.data?.user && onUserUpdated) {
+          onUserUpdated(res.data.user);
         }
-
-
-   const onSubmit = async() =>{
-        try {
-            const newFormdata = new FormData();
-            newFormdata.append("editUser", JSON.stringify(editUser));
-            if (avatar) newFormdata.append("img", avatar);
-
-            const res = await fetchData("user/profile", "PUT", newFormdata, token);
-
-            if(res?.data?.user) {
-                setUser(res.data.user);
-            }
-
-            onClose();
-
-        } catch (error) {
-            console.log(error);
-            setErrorMsg(error?.response?.data?.message || 'Error al actualizar el perfil');
+      } else {
+        // Si edita el propio
+        const res = await fetchData("user/profile", "PUT", newFormdata, token);
+        if (res?.data?.user) {
+          setUser(res.data.user);
+          if (onUserUpdated) {
+            onUserUpdated(res.data.user);
+          }
         }
+      }
+      onClose();
+    } catch (error) {
+      console.log(error);
+      setErrorMsg(error?.response?.data?.message || 'Error al actualizar el perfil');
     }
+  };
   // 6) Eliminar perfil -> borrado lógico + logout + home
  const handleDeleteProfile = async () => {
     if (!token) return;
@@ -62,8 +73,8 @@ const ModalUserProfileEdit = ({ onClose }) => {
       setErrorMsg(
         error?.response?.data?.message || 'Error al eliminar el perfil',
       );
-  }; 
-}
+    }
+  };
 
   return (
     <section className="userProfileModal">

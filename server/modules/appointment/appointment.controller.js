@@ -52,6 +52,17 @@ class AppointmentController {
     }
   }
 
+  //el creado para cualquier cita por id
+  getByUserId = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const appointments = await appointmentDal.getMine(userId);
+      res.status(200).json({ appointments });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al cargar las citas del usuario" });
+    }
+  };
   updateAppointment = async(req, res) => {
   try {
     const { appointmentId } = req.params;
