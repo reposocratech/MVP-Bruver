@@ -1,61 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
+body {
+  background: #f4efe8;
+  font-family: "Raleway", sans-serif;
+}
+
 .worker-section {
+  min-height: calc(100vh - 160px);
+  padding: 40px 20px 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem;
-  background: #f6ece2;
 }
 
 .title {
-  font-size: 2rem;
-  color: #82b7a1;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  font-family: "Lora", serif;
+  color: #6bb3a7;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 40px;
+  margin-bottom: 40px;
 }
 
 .profile-card {
-  background: #EEDCCC;
-  width: 80%;
+  width: 100%;
   max-width: 900px;
-  border-radius: 15px;
-  padding: 2rem;
+  background: #f3e5d6;
+  border-radius: 18px;
+  padding: 32px;
   display: flex;
-  justify-content: space-between;
+  gap: 40px;
   align-items: center;
 }
 
 .info-block {
-  width: 50%;
-  position: relative;
+  flex: 1;
 }
 
 .info-block h3 {
-  margin-bottom: 1rem;
+  font-family: "Lora", serif;
+  font-size: 22px;
+  color: #3a2f2a;
+  margin: 0;
+}
+
+.info-block h3,
+.edit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
 }
 
 .edit-btn {
   background: none;
   border: none;
-  font-size: 1rem;
+  color: #6bb3a7;
+  font-weight: 600;
   cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.edit-btn:hover {
+  background: rgba(166, 200, 183, 0.35);
+  color: #4A2E24;
 }
 
 table {
   width: 100%;
-  background: #E6D3C2;
-  border-radius: 12px;
-  text-align: center;
-  border: 2px solid #b08f79;
-  border-collapse: separate; 
+  background: #ecd9c8;
+  border-radius: 20px;
+  padding: 18px 20px;
+  border-collapse: collapse;
+  margin-top: 16px;
 }
 
 table td {
-  font-size: 1.1rem;
-  border-bottom: 1px solid #b08f79;
-  padding: 1rem;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #6a5a50;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 table tr:last-child td {
@@ -65,97 +92,154 @@ table tr:last-child td {
 .profile-img {
   width: 260px;
   height: 260px;
-  object-fit: cover;
   border-radius: 18px;
   background: #dedede;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  color: #777;
-  img{
-    width: 250px;
-    height: 250px;
-  }
+  object-fit: cover;
 }
-
 
 .options-wrapper {
+  margin-top: 90px;
+  margin-bottom: 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  gap: 70px;
   width: 100%;
+  align-items: center;
 }
 
-.row-top {
-  display: grid;
-  grid-template-columns: repeat(3, 200px);
-  gap: 1.5rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
+.row-top,
 .row-bottom {
-  display: grid;
-  grid-template-columns: repeat(2, 200px);
-  gap: 1.5rem;
+  display: flex;
+  gap: 28px;
   justify-content: center;
 }
 
 .option-card {
-  background: white;
-  border-radius: 10px;
-  width: 200px;
-  /* padding: 1rem; */
+  width: 220px;
+  height: 160px;
+  background: #ffffff;
+  border-radius: 22px;
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   cursor: pointer;
-}
-
-.option-header {
-  background: #82b7a1;
-  color: white;
-  padding: 0.2rem;
-  border-radius: 8px;
-  /* margin-bottom: 0.8rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding-top: 36px;
+  transition: transform 0.25s ease;
 }
 
 .option-card i {
-  font-size: 120px;
-  font-weight: bold;
-  /* margin-bottom: 1rem; */
+  font-size: 64px;
+  color: #000;
+  margin-bottom: 24px;
+}
+
+.option-header {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #6bb3a7;
+  color: white;
+  padding: 10px 50px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 14px;
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+.option-card::before,
+.option-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  border-radius: 22px;
+  z-index: -1;
+  transition: transform 0.25s ease;
+}
+
+.option-card::before {
+  transform: translateY(-4px) rotate(-2deg);
+}
+
+.option-card::after {
+  transform: translateY(4px) rotate(2deg);
+}
+
+.option-card:hover {
+  transform: rotate(2deg);
+}
+
+.option-card:hover::before {
+  transform: translateY(-8px) rotate(-4deg);
+}
+
+.option-card:hover::after {
+  transform: translateY(8px) rotate(4deg);
 }
 
 .back-btn {
-  margin-top: 2rem;
-  background: #E6D3C2;
-  color: #333;
-  padding: 0.7rem 2.2rem 0.7rem 1.6rem;
+  margin-top: 110px;
+  background: rgba(108, 101, 94, 0.9);
+  color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.1rem;
-  box-shadow: 0 4px 16px rgba(130, 183, 161, 0.15);
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.7rem;
-  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  gap: 8px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
 }
 
 .back-btn:hover {
-  background: #d1bfae;
-  box-shadow: 0 6px 24px rgba(130, 183, 161, 0.25);
-  transform: translateY(-2px) scale(1.04);
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
 
-.back-btn .arrow {
-  font-size: 1.3em;
-  margin-right: 0.2em;
-  transition: transform 0.2s;
-}
 
-.back-btn:hover .arrow {
-  transform: translateX(-4px);
+@media (max-width: 768px) {
+  .profile-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px;
+    gap: 18px;
+  }
+
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+  }
+
+  .info-block {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  table {
+    max-width: 320px;
+    text-align: center;
+  }
+
+  .row-top,
+  .row-bottom {
+    flex-direction: column;
+  }
+
+  .back-btn {
+    margin-top: 80px;
+  }
 }

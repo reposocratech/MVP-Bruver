@@ -6,6 +6,7 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js'
 
 
 
+
 const WorkerProfile = () => {
 
 const [openModal, setOpenModal] = useState(false);
@@ -20,7 +21,7 @@ const navigate = useNavigate()
           <h3>Información</h3>
           <button 
             onClick={() => setOpenModal(true)} 
-            className="edit-btn">✏️ Editar </button>
+            className="edit-btn">✎ Editar </button>
           <table>
             <tbody>
               <tr>
@@ -77,7 +78,7 @@ const navigate = useNavigate()
         </div>
       </div>
 
-      <button onClick={()=>navigate(-1)} className="back-btn"><span className="arrow">←</span>VOLVER</button>
+      <button onClick={()=>navigate(-1)} className="back-btn"><span className="arrow">VOLVER</span></button>
 
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </section>

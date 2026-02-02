@@ -115,7 +115,7 @@ const AdminProfile = () => {
       </div>
 
       <button className="back-btn" type="button" onClick={() => navigate(-1)}>
-        <span className="arrow">←</span>VOLVER
+        <span className="arrow">VOLVER</span>
       </button>
 
       {openModal && (

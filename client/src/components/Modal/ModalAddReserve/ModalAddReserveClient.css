@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+
+.addReserveModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(230, 211, 194, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.25s ease forwards;
+}
+
+.addReserveGridModal {
+  width: 100%;
+  max-width: 640px;
+  padding: 20px;
+}
+
+.addReserveCardModal {
+  background: #e6d3c2;
+  border-radius: 22px;
+  padding: 34px;
+  font-family: "Raleway", sans-serif;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease forwards;
+}
+
+.addReserveCardModal h3 {
+  font-family: "Lora", serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: #4a2e24;
+  margin-bottom: 26px;
+  text-align: center;
+}
+
+.quickReserveForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.quickReserveForm label {
+  font-weight: 600;
+  color: #4a2e24;
+}
+
+.quickReserveForm select,
+.quickReserveForm input {
+  width: 100%;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(74, 46, 36, 0.4);
+  font-family: "Lora", serif;
+  font-size: 15px;
+  color: #4a2e24;
+  outline: none;
+  background: #ffffff;
+}
+
+.quickReserveForm input[type="checkbox"] {
+  width: auto;
+  height: auto;
+}
+
+.quickReserveForm select:focus,
+.quickReserveForm input:focus {
+  border-color: #6bb3a7;
+}
+
+.selectDate {
+  margin-top: 10px;
+}
+
+.selectDateTitle {
+  font-family: "Lora", serif;
+  font-size: 20px;
+  margin-bottom: 14px;
+  color: #4a2e24;
+}
+
+.calendarAndHours {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.calendar-container {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px;
+}
+
+.hourColumn {
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hourLabel {
+  font-weight: 600;
+  color: #4a2e24;
+}
+
+.hourSelectWrap {
+  position: relative;
+}
+
+.hourSelectBtn {
+  width: 100%;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(74, 46, 36, 0.4);
+  background: #ffffff;
+  font-family: "Lora", serif;
+  font-size: 15px;
+  padding: 0 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hourChevron {
+  margin-left: 10px;
+}
+
+.hourDropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.hourOption {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-family: "Raleway", sans-serif;
+}
+
+.hourOption:hover,
+.hourOption.active {
+  background: #6bb3a7;
+  color: #ffffff;
+}
+
+.supplementsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+}
+
+.supplementCheck {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #4a2e24;
+}
+
+.resultLine {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resultValue {
+  font-weight: 600;
+  color: #4a2e24;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 24px;
+}
+
+.close {
+  min-width: 120px;
+  border-radius: 999px;
+  border: none;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-family: "Raleway", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close:first-of-type {
+  background: #6bb3a7;
+  color: #ffffff;
+}
+
+.close:first-of-type:hover {
+  background: #5aa295;
+  transform: translateY(-1px);
+}
+
+.close:last-of-type {
+  background: rgba(74, 46, 36, 0.5);
+  color: #ffffff;
+}
+
+.close:last-of-type:hover {
+  background: rgba(74, 46, 36, 0.7);
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(16px); }
+  to { transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .addReserveCardModal {
+    padding: 24px;
+  }
+
+  .calendarAndHours {
+    flex-direction: column;
+  }
+
+  .modalActions {
+    flex-direction: column;
+    gap: 14px;
+  }
+}

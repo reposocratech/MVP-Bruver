@@ -10,30 +10,31 @@ import { AuthContext } from "../../../contexts/AuthContext/AuthContext.js";
 import { buildDate } from "../../../helpers/buildDateHelper.js";
 import ModalSeeAppointment from "../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment.jsx";
 
-
-
-
-dayjs.extend(isoWeek);
+dayjs.extend(isoWeek)
 
 const AdminAppointments = () => {
-  const [view, setView] = useState('week');
-  const [date, setDate] = useState(new Date());
+  const [view, setView] = useState("week")
+  const [date, setDate] = useState(new Date())
   const [appoiment, setAppoiment] = useState([])
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showSeeModal, setShowSeeModal] = useState(false);
 
   const { token } = useContext(AuthContext)
   const { adminId } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetcAppointments = async () => {
       try {
-        const res = await fetchData(`appointment/getAdminAppoiment/${adminId}`, "get", null, token)
+        const res = await fetchData(
+          `appointment/getAdminAppoiment/${adminId}`,
+          "get",
+          null,
+          token
+        )
         setAppoiment(res.data.result)
-
       } catch (error) {
-        console.log(error);
-
+        console.log(error)
       }
     }
     fetcAppointments();
@@ -134,7 +135,7 @@ const AdminAppointments = () => {
       <CalendarCitas
         view={view}
         date={date}
-        events={allEvents}
+        events={eventsMap}
         setView={setView}
         setDate={setDate}
         onSelectEvent={handleSelectEvent}
@@ -150,11 +151,11 @@ const AdminAppointments = () => {
       )}
       <div className="back-btn-center">
         <button className="back-btn" onClick={() => navigate(-1)}>
-          <span className="arrow">←</span>ATRÁS
+          <span className="arrow">VOLVER</span>
         </button>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default AdminAppointments;
+export default AdminAppointments

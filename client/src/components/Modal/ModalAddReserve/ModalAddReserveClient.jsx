@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import './ModalAddReserve.css';
+import './ModalAddReserveClient.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import Calendar from 'react-calendar';
@@ -278,7 +278,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
   };
 
   return (
-    <section className="addReserveModal">
+    <section className="addReserveModal quickReserveModal">
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <h3>Añadir reserva</h3>
@@ -459,19 +459,20 @@ const ModalAddReserveClient = ({ toBack, client }) => {
               </label>
             </div>
 
-            <div>
-              <Button
-                className="close"
-                type="submit"
-                disabled={!selectedPetId || !startTime || (!isSpecie2 && !selectedServiceId)}
-              >
-                Aceptar
-              </Button>
+            <div className="modalActions">
+  <Button
+    className="close"
+    type="submit"
+    disabled={!selectedPetId || !startTime || (!isSpecie2 && !selectedServiceId)}
+  >
+    Aceptar
+  </Button>
 
-              <Button className="close" onClick={toBack} type="button">
-                Atrás
-              </Button>
-            </div>
+  <Button className="close" onClick={toBack} type="button">
+    Atrás
+  </Button>
+</div>
+
           </form>
         </div>
       </div>
