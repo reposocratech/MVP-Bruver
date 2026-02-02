@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import './ModalAddReserve.css';
+import './ModalAddReserveClient.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 
@@ -236,7 +236,7 @@ const ModalAddReserveClient = ({ toBack, client }) => {
   };
 
   return (
-    <section className="addReserveModal">
+    <section className="addReserveModal quickReserveModal">
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <h3>Añadir reserva</h3>

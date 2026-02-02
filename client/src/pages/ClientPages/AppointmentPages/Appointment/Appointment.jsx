@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import './Appointment.css';
 import { Col, Container, Row } from 'react-bootstrap';
 import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../../helpers/axiosHelper";

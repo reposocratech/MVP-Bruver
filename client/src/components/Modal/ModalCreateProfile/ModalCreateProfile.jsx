@@ -18,7 +18,7 @@ const ModalCreateProfile = ({
           <div className='createProfileGridModal'>
         <Modal
           show={show}
-          onHide={onClose}
+          /* onHide={onClose} */
           centered
           dialogClassName="nc-modal-dialog"
           contentClassName="nc-modal-content"
@@ -48,19 +48,19 @@ const ModalCreateProfile = ({
               <Form.Group className="nc-group">
                 <Form.Label>Nombre*</Form.Label>
                 <Form.Control
-                  name="name"
-                  value={newProfile.name}
+                  name="name_user"
+                  value={newProfile.name_user}
                   onChange={handleProfileChange}
                   type="text"
                 />
-                {valErrors?.name && <div className="error-msg">{valErrors.name}</div>}
+                {valErrors?.name_user && <div className="error-msg">{valErrors.name_user}</div>}
               </Form.Group>
 
               <Form.Group className="nc-group">
                 <Form.Label>Apellidos</Form.Label>
                 <Form.Control
-                  name="lastname"
-                  value={newProfile.lastname}
+                  name="last_name"
+                  value={newProfile.last_name}
                   onChange={handleProfileChange}
                   type="text"
                 />
@@ -100,6 +100,7 @@ const ModalCreateProfile = ({
                 {valErrors?.password && <div className="error-msg">{valErrors.password}</div>}
               </Form.Group> 
 
+
               <Form.Group className="nc-group">
                 <Form.Label>Provincia</Form.Label>
                 <Form.Control
@@ -115,6 +116,16 @@ const ModalCreateProfile = ({
                 <Form.Control
                   name="city"
                   value={newProfile.city}
+                  onChange={handleProfileChange}
+                  type="text"
+                />
+              </Form.Group>
+
+              <Form.Group className="nc-group">
+                <Form.Label>Dirección</Form.Label>
+                <Form.Control
+                  name="address"
+                  value={newProfile.address }
                   onChange={handleProfileChange}
                   type="text"
                 />

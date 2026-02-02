@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Table, Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import "./clientprofilepage.css";
 
 import ModalUserProfileEdit from "../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
@@ -10,7 +10,9 @@ import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../../helpers/axiosHelper";
 
 const ClientProfilePage = () => {
+
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const { user, token } = useContext(AuthContext);
 
@@ -18,6 +20,7 @@ const ClientProfilePage = () => {
   const [openModalEditPet, setOpenModalEditPet] = useState(false);
   const [selectedPet, setSelectedPet] = useState();
   const [appointments, setAppointments] = useState([]);
+  const [showUser, setShowUser] = useState(user);
 
   useEffect(() => {
     document.body.style.overflow = openModal ? "hidden" : "auto";
@@ -29,19 +32,50 @@ const ClientProfilePage = () => {
     return () => (document.body.style.overflow = "auto");
   }, [openModalEditPet]);
 
+  // actualiza y cambia si cambiamos id, token o user.
+  //si hay id en la ruta dinamica muestra ese, si no el logueado
   useEffect(() => {
-    const getMyAppointments = async () => {
+    const fetchUser = async () => {
+      if (id) {
+        try {
+          let res;
+          // Si el usuario autenticado es admin (type === 1), usa el endpoint de admin
+          if (user?.type === 1) {
+            res = await fetchData(`admin/user/${id}`, "GET", null, token);
+          } else {
+            res = await fetchData(`user/${id}`, "GET", null, token);
+          }
+          setShowUser(res?.data?.user || null);
+        } catch (error) {
+          console.log(error);
+          setShowUser(null);
+        }
+      } else {
+        setShowUser(user);
+      }
+    };
+    fetchUser();
+  }, [id, user, token]);
+
+  // mira ruta dinamica, si no hay id, te enseña el logueado
+  useEffect(() => {
+    const getAppointments = async () => {
       try {
-        const res = await fetchData("appointment/mine", "GET", null, token);
+        let res;
+        if (id) {
+          res = await fetchData(`appointment/user/${id}`, "GET", null, token);
+          console.log(res);
+        } else {
+          res = await fetchData("appointment/mine", "GET", null, token);
+        }
         setAppointments(res?.data?.appointments || []);
       } catch (error) {
         console.log(error);
         setAppointments([]);
       }
     };
-
-    if (token) getMyAppointments();
-  }, [token]);
+    if (token) getAppointments();
+  }, [id, token]);
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
@@ -84,16 +118,16 @@ const ClientProfilePage = () => {
                 <tr>
                   <td className="infoKey">Nombre</td>
                   <td className="infoValue">
-                    {user?.name_user} {user?.last_name}
+                    {showUser?.name_user} {showUser?.last_name}
                   </td>
                 </tr>
                 <tr>
                   <td className="infoKey">Correo</td>
-                  <td className="infoValue">{user?.email}</td>
+                  <td className="infoValue">{showUser?.email}</td>
                 </tr>
                 <tr>
                   <td className="infoKey">Teléfono</td>
-                  <td className="infoValue">{user?.phone}</td>
+                  <td className="infoValue">{showUser?.phone}</td>
                 </tr>
               </tbody>
             </Table>
@@ -103,10 +137,10 @@ const ClientProfilePage = () => {
         <div className="infoRight">
           <div className="userPhoto">
             <span>
-              {user && user.picture_user ? (
+              {showUser && showUser.picture_user ? (
                 <img
                   className="userPhoto"
-                  src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user.picture_user}`}
+                  src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${showUser.picture_user}`}
                   alt="Imagen de perfil"
                 />
               ) : (

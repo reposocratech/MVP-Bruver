@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/clients", verifyToken, workerController.searchClients);
 router.get("/pets/:clientId", verifyToken, workerController.getClientPets);
-
+router.get(`/getAllWorkers`, verifyToken, workerController.getAllWorkers)
 
 export default router;

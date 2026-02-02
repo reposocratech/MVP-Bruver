@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Navbar, Container, Nav, NavDropdown, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
-import "./navbar.css";
 import logoNavbar from "../../assets/images/logo-navbar.png";
+import "./navbar.css";
 
 export const NavbarPublic = () => {
   const [expanded, setExpanded] = useState(false);

@@ -8,33 +8,96 @@ import { fetchData } from "../../../helpers/axiosHelper";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext.js";
 import { buildDate } from "../../../helpers/buildDateHelper.js";
+import ModalSeeAppointment from "../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment.jsx";
 
-
-
-
-dayjs.extend(isoWeek);
+dayjs.extend(isoWeek)
 
 const AdminAppointments = () => {
-  const [view, setView] = useState('week');
-  const [date, setDate] = useState(new Date());
+  const [view, setView] = useState("week")
+  const [date, setDate] = useState(new Date())
   const [appoiment, setAppoiment] = useState([])
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [showSeeModal, setShowSeeModal] = useState(false);
 
   const { token } = useContext(AuthContext)
- const {adminId} = useParams()
+  const { adminId } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    const fetcTest = async () => {
+    const fetcAppointments = async () => {
       try {
-        const res = await fetchData(`appointment/getAdminAppoiment/${adminId}`, "get", null, token)
+        const res = await fetchData(
+          `appointment/getAdminAppoiment/${adminId}`,
+          "get",
+          null,
+          token
+        )
         setAppoiment(res.data.result)
-
       } catch (error) {
-        console.log(error);
-
+        console.log(error)
       }
     }
-    fetcTest();
+    fetcAppointments();
   }, [])
+
+   //selec un evento para editar o eliminar
+  const handleSelectEvent = (event) => {
+    setSelectedAppointment(event);
+    setShowSeeModal(true);
+  };
+
+  //editar una cita ya creada
+  const updateAppointment = async (updatedData) => {
+  try {
+    
+    const res = await fetchData(
+      `appointment/updateAppointment/${updatedData.id}`,
+      'put',
+      updatedData,
+      token
+    );
+
+   
+    const updated = res.data.result;
+
+    setAppoiment(prev =>
+      prev.map(app => {
+        if (app.appointment_id !== updated.appointment_id) return app;
+
+       
+        const start = new Date(`${updated.appointment_date}T${updated.start_time}`);
+        const durationMinutes = updated.duration ?? 0;
+        const end = new Date(start.getTime() + durationMinutes * 60 * 1000);
+
+        return {
+          ...app,
+          ...updated,
+          start,
+          end
+        };
+      })
+    );
+
+  } catch (error) {
+    console.error('Error actualizando cita', error);
+  }
+};
+
+  //eliminar una cita ya creada
+  const deleteAppointment = async (appointmentId) => {
+  try {
+    await fetchData(`appointment/deleteAppointment/${appointmentId}`, "DELETE", null, token);
+
+    setAppoiment(prev => prev.filter(app => app.appointment_id !== appointmentId));
+    setShowSeeModal(false);
+  } catch (error) {
+    console.error("Error eliminando cita", error);
+  }
+};
+
+
+
+
 
   //eventos en el calendario mapeados
   const eventsMap = appoiment.map((elem) => ({
@@ -43,10 +106,25 @@ const AdminAppointments = () => {
     start: buildDate(elem.appointment_date, elem.start_time),
     end: buildDate(elem.appointment_date, elem.end_time),
     resourceId: elem.employee_user_id,
-    data: { x: 10 }
+
+    employee_name: elem.employee_name,
+    employee_lastname: elem.employee_lastname,
+
+
+    client_name: elem.client_name,
+    client_lastname: elem.client_lastname,
+
+    created_by_name: elem.created_by_name,
+    created_by_type: elem.created_by_type,
+
+    status: elem.status,
+    total_price: elem.total_price
   }));
 
   const allEvents = [...eventsMap]
+
+
+
 
   const navigate = useNavigate();
 
@@ -57,17 +135,27 @@ const AdminAppointments = () => {
       <CalendarCitas
         view={view}
         date={date}
-        events={allEvents}
+        events={eventsMap}
         setView={setView}
         setDate={setDate}
+        onSelectEvent={handleSelectEvent}
       />
+
+      {showSeeModal && (
+        <ModalSeeAppointment
+          appointment={selectedAppointment}
+          onClose={() => setShowSeeModal(false)}
+          onUpdate={updateAppointment}
+          onDelete={deleteAppointment}
+        />
+      )}
       <div className="back-btn-center">
         <button className="back-btn" onClick={() => navigate(-1)}>
-          <span className="arrow">←</span>ATRÁS
+          <span className="arrow">VOLVER</span>
         </button>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default AdminAppointments;
+export default AdminAppointments

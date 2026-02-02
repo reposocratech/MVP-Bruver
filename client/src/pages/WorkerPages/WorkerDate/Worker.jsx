@@ -5,6 +5,7 @@ import ModalSearchClient from '../../../components/Modal/ModalAddReserve/ModalSe
 import ModalSeeAppointment from '../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment';
 import ModalAddReserveClient from '../../../components/Modal/ModalAddReserve/ModalAddReserveClient';
 import { Button } from 'react-bootstrap';
+import "./Worker.css";
 
 
 const Worker = () => {
@@ -47,34 +48,63 @@ const Worker = () => {
     }
 
   return (
-    <>
-    <Button onClick={() => setOpenModal(true)} 
-    className="Añadir reserva">
-              Añadir una reserva
-            </Button>
-    
+    <div className="workerPage">
+      <div className="workerCard">
 
-    {openModal && (
-      <ModalAddReserve 
-      toBack={backModalAddReserve}
-      onClose={() => setOpenModal(false)} 
-      onAccept  ={handleChange}/>)}
+        <h2 className="workerTitle">Gestión de reservas</h2>
 
-      {openSearchClient && <ModalSearchClient 
-       toBack={backModalAddReserve}
-       onAcceptClient={handleAcceptClient}/>}
+        <div className="workerActions">
+          <Button
+            className="primary"
+            onClick={() => setOpenModal(true)}
+          >
+            Añadir una reserva
+          </Button>
 
-      {openQuickReserve && <ModalQuickReserve 
-       toBack={backModalAddReserve}/>}
+          <Button
+            className="secondary"
+            onClick={() => setOpenCita(true)}
+          >
+            Consultar
+          </Button>
+        </div>
 
-       {openAddReserveClient && <ModalAddReserveClient
-       toBack={backModalAddReserveClient}
-       client={selectedClient}/>}
+        {openModal && (
+          <ModalAddReserve
+            toBack={backModalAddReserve}
+            onClose={() => setOpenModal(false)}
+            onAccept={handleChange}
+          />
+        )}
 
+        {openSearchClient && (
+          <ModalSearchClient
+            toBack={backModalAddReserve}
+            onAcceptClient={handleAcceptClient}
+          />
+        )}
 
-      <Button onClick={() => setOpenCita(true)}>Consultar</Button>
-      {openCita && <ModalSeeAppointment onClose={() => setOpenCita(false)} />}
-    </>
+        {openQuickReserve && (
+          <ModalQuickReserve
+            toBack={backModalAddReserve}
+          />
+        )}
+
+        {openAddReserveClient && (
+          <ModalAddReserveClient
+            toBack={backModalAddReserveClient}
+            client={selectedClient}
+          />
+        )}
+
+        {openCita && (
+          <ModalSeeAppointment
+            onClose={() => setOpenCita(false)}
+          />
+        )}
+
+      </div>
+    </div>
   )
 }
 
