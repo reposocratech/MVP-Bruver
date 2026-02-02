@@ -22,8 +22,5 @@ router.get("/clients", userController.getClients);
 router.get("/admins", userController.getAdmins);
 
 
-
-
-
 export default router;
 

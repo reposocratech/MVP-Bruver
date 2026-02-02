@@ -3,18 +3,20 @@ import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router';
 import { profileSchema } from '../../../schemas/ProfileSchema';
 import { ZodError } from 'zod';
+import './AdminManage.css';
 import { RiUserAddLine } from 'react-icons/ri';
 import ModalCreateProfile from '../../../components/Modal/ModalCreateProfile/ModalCreateProfile';
-import './AdminManage.css';
+import ModalUserProfileEdit from "../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
 
 const initialProfile = {
   type: '',
-  name: '',
-  lastname: '',
+  name_user: '',
+  last_name: '',
   phone: '',
   email: '',
   province: '',
   city: '',
+  address: '',
   password: '',
   repeatPassword: '',
 };
@@ -31,7 +33,6 @@ const AdminManage = () => {
   const [fetchError, setFetchError] = useState('');
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  // Estado para forzar la recarga de datos
 
   // useEffect para cargar los datos de la base de datos al montar el componente y cuando cambie reload
   useEffect(() => {
@@ -47,10 +48,14 @@ const AdminManage = () => {
           ...resAdmins.data
         ].map((w) => ({
           id: w.user_id,
-          name: `${w.name_user} ${w.last_name}`,
+          name_user: w.name_user,
+          last_name: w.last_name,
           phone: w.phone,
           email: w.email,
           type: w.type,
+          province: w.province,
+          city: w.city,
+          address: w.address,
         }));
         setWorkers(workersData);
       } catch (error) {
@@ -65,9 +70,13 @@ const AdminManage = () => {
         // Mapeo de los datos ajustando los nombres
         const clientsData = res.data.map((c) => ({
           id: c.user_id,
-          name: `${c.name_user} ${c.last_name}`,
+          name_user: c.name_user,
+          last_name: c.last_name,
           phone: c.phone,
           email: c.email,
+          province: c.province,
+          city: c.city,
+          address: c.address,
         }));
         setClients(clientsData);
       } catch (error) {
@@ -126,13 +135,14 @@ const AdminManage = () => {
       profileSchema.parse(profile);
       //creamos el body que guarda los datos que introducimos del modal
       const body = {
-        name_user: profile.name,
-        last_name: profile.lastname,
+        name_user: profile.name_user,
+        last_name: profile.last_name,
         phone: profile.phone,
         email: profile.email,
         province: profile.province,
         city: profile.city,
-        password: profile.hashedPass,
+        address: profile.address,
+        password: profile.password || profile.hashedPass,
         type: profile.type === 'worker' ? 2 : 3,
       };
       //enviamos solicitud al backend
@@ -144,18 +154,26 @@ const AdminManage = () => {
       if (profile.type === 'worker') {
         const newWorker = {
           id: workers.length + 1,
-          name: `${profile.name} ${profile.lastname}`,
+          name_user: profile.name_user,
+          last_name: profile.last_name,
           phone: profile.phone,
           email: profile.email,
-          type: profile.type,
+          type: 2,
+          province: profile.province,
+          city: profile.city,
+          address: profile.address,
         };
         setWorkers([...workers, newWorker]);
       } else if (profile.type === 'client') {
         const newClient = {
           id: clients.length + 1,
-          name: `${profile.name} ${profile.lastname}`,
+          name_user: profile.name_user,
+          last_name: profile.last_name,
           phone: profile.phone,
           email: profile.email,
+          province: profile.province,
+          city: profile.city,
+          address: profile.address,
         };
         setClients([...clients, newClient]);
       }
@@ -179,6 +197,18 @@ const AdminManage = () => {
       }
     }
   };
+
+  // Funcion para actualizar la tabla al editar un user
+    const handleUserUpdated = (updatedUser) => {
+      //es user_id o id dependiendo de si viene del back o del front. Porque depende de si lo esta editando el admin o no
+      const userId = updatedUser.user_id || updatedUser.id;
+      // id: userId - da consistencia para forzar a que sea id
+      if (updatedUser.type === 1 || updatedUser.type === 2) {
+        setWorkers(prev => prev.map(u => u.id === userId ? { ...u, ...updatedUser, id: userId } : u));
+      } else {
+        setClients(prev => prev.map(u => u.id === userId ? { ...u, ...updatedUser, id: userId } : u));
+      }
+    };
 
   return (
     <div className="agr-page">
@@ -204,7 +234,7 @@ const AdminManage = () => {
                 .filter(w => !(w.type === 1 && w.id === 1))
                 .map((w) => (
                   <tr key={w.id}>
-                    <td className="agr-bold">{w.name}</td>
+                    <td className="agr-bold">{w.name_user} {w.last_name}</td>
                     <td>{w.phone}</td>
                     <td>{w.email}</td>
                     <td>
@@ -247,15 +277,15 @@ const AdminManage = () => {
             <tbody>
               {clients.map((c) => (
                 <tr key={c.id}>
-                  <td className="agr-bold">{c.name}</td>
+                  <td className="agr-bold">{c.name_user} {c.last_name}</td>
                   <td>{c.phone}</td>
                   <td>{c.email}</td>
                   <td>
                     <div className="agr-actions">
-                      <button className="agr-pill" type="button">
+                      <button className="agr-pill" type="button" onClick={() => { setSelectedUser(c); setShowEditProfileModal(true); }}>
                         EDITAR
                       </button>
-                      <button className="agr-pill" type="button">
+                      <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
                         VER HISTORIAL
                       </button>
                     </div>
@@ -291,8 +321,10 @@ const AdminManage = () => {
       />
       {showEditProfileModal && (
         <ModalUserProfileEdit
+          key={selectedUser?.id}
           onClose={() => setShowEditProfileModal(false)}
           user={selectedUser}
+          onUserUpdated={handleUserUpdated}
         />
       )}
 

@@ -19,6 +19,7 @@ export const CalendarCitas = ({
   events,
   setView,
   setDate,
+  onSelectEvent,
 }) => {
   return (
     <div className="calendar-working-hours">
@@ -29,13 +30,14 @@ export const CalendarCitas = ({
         events={events}
         onView={setView}
         onNavigate={setDate}
+        onSelectEvent={onSelectEvent}
         selectable
         views={['week']}
         startAccessor="start"
         endAccessor="end"
         min={dayjs(date).hour(9).minute(30).toDate()}
         max={dayjs(date).hour(20).minute(30).toDate()}
-        step={30}
+        step={15}
         timeslots={1}
         style={{ height: '95vh' }}
         resizable

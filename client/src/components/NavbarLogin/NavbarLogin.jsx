@@ -12,6 +12,9 @@ export const NavbarLogin = () => {
   const {logout, user} = useContext(AuthContext)
   const navigate = useNavigate()
 
+  const profilePath = user?.type === 1 ? "/admin" : user?.type === 2 ? "/worker/profile" : "/profile";
+  const appointmentPath = user?.type === 1 || user?.type === 2 ? `/worker/WorkerDate/${user?.user_id}` : "/appointment";
+
   return (
     <Navbar expand="lg" className="navbar-custom">
       <Container fluid>
@@ -50,12 +53,12 @@ export const NavbarLogin = () => {
           <div className="btnNavbar d-flex flex-row gap-2">
             <div className="botones d-flex align-items-center gap-2">
               <div className="navbar-actions">
-                <Button className="nav-btn" onClick={()=>navigate('/appointment')}>PEDIR CITA</Button>
+                <Button className="nav-btn" onClick={() => navigate(appointmentPath)}>PEDIR CITA</Button>
               </div>
             </div>
             <div className="profile-icon">
               <span className="profile-tooltip">Perfil</span>
-              <button onClick={()=>navigate('/profile')} className="profile-btn">
+              <button onClick={() => navigate(profilePath)} className="profile-btn">
                 <img src={iconoLogin} alt="Perfil" className="profile-btn-img" />
                 <span className="profile-filled"></span>
               </button>

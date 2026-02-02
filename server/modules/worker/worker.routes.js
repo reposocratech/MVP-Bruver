@@ -9,5 +9,6 @@ router.get("/pets/:clientId", verifyToken, workerController.getClientPets);
 router.get("/services", verifyToken, workerController.getServices)
 router.post("/appointments/quick", verifyToken, workerController.createQuickAppointment);
 router.post("/appointments/client", verifyToken, workerController.createClientAppointment);
+router.get(`/getAllWorkers`, verifyToken, workerController.getAllWorkers)
 
 export default router;
