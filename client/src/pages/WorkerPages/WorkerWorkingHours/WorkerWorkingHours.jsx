@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import '../AdminProfile/AdminProfile.css';
-import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours';
-import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours';
+import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours.jsx';
+import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours.jsx';
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
-import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js';
 import { fetchData } from '../../../helpers/axiosHelper.js';
 import { getDateFromDayId } from '../../../helpers/dateHelper.js';
 

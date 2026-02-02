@@ -14,35 +14,43 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, sumaTotal
           <div className="selectEmployeeGrid">
             {workers.length === 0 && <p>No hay empleados disponibles.</p>}
             {workers?.map((elem) => (
-              <div
-                key={elem.user_id}
-                className={`selectEmployeeCard ${workerId === elem.user_id ? 'selected' : ''}`}
- >
-                <div className="appointmentWorkerImage">
-                  {elem.picture_user ? (
-                    <img
-                      src={`http://localhost:4000/images/generalPictures/${elem.picture_user}`}
-                      alt={elem.name_user}
-                    />
-                  ) : (
-                    <span>IMG</span>
-                  )}
-                </div>
-                <h3>
-                  {elem.name_user}
-                </h3>
-                <button
+          <div className="col-12 col-sm-6 col-lg-4" key={elem.workerId}>
+            <div className="appointmentPetCard">
+
+              <div className="appointmentPetImage">
+                {elem.picture_user ? (
+                  <img
+                    src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${workers.picture_user}`}
+                    alt={elem.name_user}
+                  />
+                ) : (
+                 <img
+                  className="petPhoto"
+                  src={`/img/defaultimg/IconDefect.png`}
+                  alt="Imagen de perfil por defecto"
+                />
+                )}
+              </div>
+
+              <div className="appointmentPetInfo">
+                <h3>{elem.name_pet}</h3>
+
+                <div className="appointmentPetActions">
+                  <button
                   type="button"
-                  onClick={() => {
-                    console.log('Empleado seleccionado:', elem.user_id);
-                    setWorkerId(elem.user_id);
+                  onClick={() =>{
+                    setWorkerId(elem);
                   }}
                   className="selectEmployeeBtn"
                 >
                   SELECCIONAR
                 </button>
+                </div>
               </div>
-            ))}
+
+            </div>
+          </div>
+        ))}
           </div>
         </div>
       </div>
