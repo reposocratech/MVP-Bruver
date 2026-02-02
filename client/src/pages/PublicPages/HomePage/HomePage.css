@@ -1,12 +1,14 @@
 body {
+  margin: 0;
   background-color: #f4efe8;
+  overflow-x: hidden;
+  font-family: "Raleway", sans-serif;
 }
 
 .home {
   min-height: 100vh;
-  background: #f4eee8;
+  background: #fbf0e6be;
   position: relative;
-  font-family: "Raleway", sans-serif;
 }
 
 .serviceLink {
@@ -34,7 +36,6 @@ body {
 
 .heroQuote {
   position: absolute;
-  margin: 10px;
   margin-left: 30%;
   color: #ffffff;
   font-size: 38px;
@@ -75,7 +76,6 @@ body {
     rgba(255, 255, 255, 0) 55%
   );
   background-size: 200% 100%;
-  background-position: 0% 0%;
   opacity: 0;
   pointer-events: none;
 }
@@ -87,8 +87,7 @@ body {
 
 .serviceCardHome:hover {
   transform: translateY(-10px);
-  box-shadow:
-    0 20px 25px rgba(0, 0, 0, 0.12),
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.12),
     0 10px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -102,7 +101,6 @@ body {
   border-radius: 50%;
   overflow: hidden;
   padding: 6px;
-  background: transparent;
   z-index: 2;
   transition: transform 0.4s ease;
 }
@@ -117,30 +115,20 @@ body {
   object-fit: cover;
   border-radius: 50%;
   display: block;
-  cursor: pointer;
 }
 
 .serviceText {
   display: inline-block;
-  text-decoration: none;
   color: #ffffff;
   font-size: 26px;
   font-weight: 600;
   line-height: 1.3;
   margin-top: 12px;
   transition: color 0.3s ease;
-  background: transparent !important;
-  padding: 0 !important;
 }
 
 .serviceCard:hover .serviceText {
   color: #1F1F1F;
-}
-
-.serviceText:hover,
-.serviceText:focus,
-.serviceText:active {
-  background: transparent !important;
 }
 
 .dogCorner {
@@ -153,43 +141,36 @@ body {
 }
 
 @keyframes shine {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 200% 0%;
-  }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
 }
 
 @media (max-width: 520px) {
   .services {
     flex-direction: column;
-    gap: 160px;
-    padding: 160px 16px 70px;
-  }
-
-  .dogCorner {
-    display: none !important;
+    align-items: center;
+    gap: 240px;
+    padding: 300px 16px 180px;
   }
 
   .serviceCard {
-    width: 100%;
-    max-width: 370px;
-    height: auto;
-    min-height: 240px;
-    padding: 110px 18px 28px;
+    width: 300px;
+    height: 300px;
+    padding: 160px 16px 32px;
   }
 
   .serviceImgWrap {
-    width: 200px;
-    height: 200px;
-    top: -100px;
+    width: 260px;
+    height: 260px;
+    top: -130px;
   }
 
   .serviceText {
     font-size: 22px;
-    line-height: 1.25;
-    margin-top: 0;
+  }
+
+  .dogCorner {
+    display: none;
   }
 }
 
@@ -197,28 +178,24 @@ body {
   .services {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 100px;
-    padding: 220px 24px 220px;
+    gap: 120px;
+    padding: 300px 24px 260px;
   }
 
   .heroQuote {
     margin-left: 40%;
   }
 
-  .serviceCard:nth-child(3) {
-    margin-top: 80px;
-  }
-
   .serviceCard {
     width: 300px;
-    height: 280px;
-    padding: 140px 20px 32px;
+    height: 300px;
+    padding: 160px 20px 36px;
   }
 
   .serviceImgWrap {
-    width: 240px;
-    height: 240px;
-    top: -120px;
+    width: 260px;
+    height: 260px;
+    top: -130px;
   }
 
   .serviceText {
