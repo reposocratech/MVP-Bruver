@@ -20,7 +20,7 @@ export const UsersDateAppointment = ({
           <div className="selectEmployeeGrid">
             {workers.length === 0 && <p>No hay empleados disponibles.</p>}
             {workers?.map((elem) => (
-              <div className=" cardEmployee col-12 col-sm-6 col-lg-4" key={elem.workerId}>
+              <div className="cardEmployee col-12 col-sm-6 col-lg-4" key={elem.workerId}>
                 <div className="appointmentEmployeeCard">
                   {elem.picture_user ? (
                     <img
@@ -56,7 +56,6 @@ export const UsersDateAppointment = ({
               </div>
             ))}
           </div>
-
       </div>
 
       <div className="selectDate">
