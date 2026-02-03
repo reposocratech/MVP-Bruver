@@ -1,4 +1,4 @@
-body {
+body { 
   margin: 0;
   background-color: #f4efe8;
   overflow-x: hidden;
@@ -105,7 +105,7 @@ body {
   transition: transform 0.4s ease;
 }
 
-.serviceCard:hover .serviceImgWrap {
+.serviceCardHome:hover .serviceImgWrap {
   transform: translateX(-50%) translateY(-6px) scale(1.04);
 }
 
@@ -127,7 +127,7 @@ body {
   transition: color 0.3s ease;
 }
 
-.serviceCard:hover .serviceText {
+.serviceCardHome:hover .serviceText {
   color: #1F1F1F;
 }
 
@@ -146,14 +146,26 @@ body {
 }
 
 @media (max-width: 520px) {
-  .services {
+  .hero {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .heroQuote {
+    margin-left: 0;
+    font-size: 26px;
+    text-align: center;
+    position: static;
+  }
+
+  .servicesHome {
     flex-direction: column;
     align-items: center;
     gap: 240px;
     padding: 300px 16px 180px;
   }
 
-  .serviceCard {
+  .serviceCardHome {
     width: 300px;
     height: 300px;
     padding: 160px 16px 32px;
@@ -175,18 +187,19 @@ body {
 }
 
 @media (min-width: 521px) and (max-width: 900px) {
-  .services {
+  .heroQuote {
+    margin-left: 40%;
+    font-size: 32px;
+  }
+
+  .servicesHome {
     flex-wrap: wrap;
     justify-content: center;
     gap: 120px;
     padding: 300px 24px 260px;
   }
 
-  .heroQuote {
-    margin-left: 40%;
-  }
-
-  .serviceCard {
+  .serviceCardHome {
     width: 300px;
     height: 300px;
     padding: 160px 20px 36px;
