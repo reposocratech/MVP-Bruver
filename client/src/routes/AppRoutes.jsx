@@ -79,7 +79,6 @@ export const AppRoutes = () => {
           {/* Rutas privadas trabajador */}
           <Route element={<PrivateRoutes user={user} requiredType={2}/>}>
                 <Route element={<WorkerLayout/>}>
-                   <Route path="/worker/WorkerDate/:workerId" element={<Worker />} /> 
                    <Route path="/worker/profile" element={<WorkerProfile />} />
                     <Route path="/worker/appointments/:workerId" element={<WorkerAppointments />} />
               <Route path="/worker/workinghours/:workerId" element={<WorkerWorkingHours />} />
