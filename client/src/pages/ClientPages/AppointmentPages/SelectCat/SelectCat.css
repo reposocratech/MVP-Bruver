@@ -66,10 +66,7 @@ h3 {
 
 
 
-@media (max-width: 520px) {
- body {
-    padding: 22px;
-  }
+@media (max-width: 768px) {
 
   h2 {
     font-size: 26px;

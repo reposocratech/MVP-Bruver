@@ -160,6 +160,14 @@ body {
   .mb-3 input {
     max-width: 100%;
   }
+   .buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .button_register {
+    width: 100%;
+  }
 }
 
 @keyframes cardIn {

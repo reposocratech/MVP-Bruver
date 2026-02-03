@@ -92,7 +92,11 @@ body {
   display: flex;
   justify-content: center;
   margin-top: 2.4em;
+  gap: 12px;
+  flex-wrap: nowrap;
 }
+
+
 
 .button_forgot {
   border-radius: 14px;
@@ -103,6 +107,20 @@ body {
   letter-spacing: 0.12em;
   color: white;
   background-color: #6bb3a7;
+  cursor: pointer;
+  transition: 0.35s ease-in-out;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.button_back {
+   border-radius: 14px;
+  border: none;
+  padding: 1em 2.6em;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  color: #6bb3a7;
+  background-color: white;
   cursor: pointer;
   transition: 0.35s ease-in-out;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
@@ -125,13 +143,20 @@ body {
 
   .forgotpass-card {
     width: 90%;
-    padding: 2.6rem 2.2rem;
+    padding: 2.2rem 1.2rem;
+  }
+
+  .forgotpass-card h2 {
+    font-size: 1.6rem;
+    letter-spacing: 0.18em;
+    padding: 0.4em 0 0.8em; 
   }
 
   .mb-3 input {
     width: 100%;
   }
 }
+
 
 @keyframes cardIn {
   from {

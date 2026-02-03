@@ -20,9 +20,10 @@ export const CalendarCitas = ({
   setView,
   setDate,
   onSelectEvent,
+  openNewAppointment
 }) => {
   return (
-    <div className="calendar-working-hours">
+    <div className="calendar-working-hours calendar-citas">
       <DnDCalendar
         localizer={localizer}
         view={view}
@@ -31,6 +32,7 @@ export const CalendarCitas = ({
         onView={setView}
         onNavigate={setDate}
         onSelectEvent={onSelectEvent}
+        onSelectSlot={(event)=>openNewAppointment(event.start)}
         selectable
         views={['week']}
         startAccessor="start"

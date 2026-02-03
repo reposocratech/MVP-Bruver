@@ -18,5 +18,6 @@ router.delete("/deleteAppointment/:appointmentId", verifyToken, appointmentContr
 
 router.post("/quick", verifyToken, appointmentController.createQuickAppointment);
 router.post("/client", verifyToken, appointmentController.createClientAppointment);
+router.post("/create", verifyToken, appointmentController.createClientAppointment);
 
 export default router;

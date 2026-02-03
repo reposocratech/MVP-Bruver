@@ -72,7 +72,7 @@ body {
   outline: none;
 }
 
-table {
+.admin-section table {
   width: 100%;
   background: #ecd9c8;
   border-radius: 20px;
@@ -81,7 +81,7 @@ table {
   margin-top: 16px;
 }
 
-table td {
+.admin-section table td {
   padding: 14px 20px;
   font-size: 16px;
   font-weight: 500;
@@ -256,12 +256,22 @@ table tr:last-child td {
     font-size: 14px;
   }
 
+
+  .options-wrapper {
+    gap: 48px; 
+  }
+
   .row-top,
   .row-bottom {
     flex-direction: column;
+    gap: 48px;
   }
 
   .back-btn {
-    margin-top: 80px;
+    margin-top: 60px;
+    padding: 8px 18px;
+    font-size: 13px;
+    letter-spacing: 0.2px;
+    align-self: center;
   }
 }

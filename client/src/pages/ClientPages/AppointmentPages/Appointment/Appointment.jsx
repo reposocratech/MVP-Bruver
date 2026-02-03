@@ -24,13 +24,13 @@ const Appointment = () => {
   const [workers, setWorkers] = useState([]);
   const navigate = useNavigate();
   const [sumaTotalPrecio, setSumaTotalPrecio] = useState(0);
-    const [sumaTotalMinutos, setSumaTotalMinutos] = useState(0);
+  const [sumaTotalMinutos, setSumaTotalMinutos] = useState(0);
   
-    const [baseServicePrice, setBaseServicePrice] = useState(0);
-    const [baseServiceMinutes, setBaseServiceMinutes] = useState(0);
+  const [baseServicePrice, setBaseServicePrice] = useState(0);
+  const [baseServiceMinutes, setBaseServiceMinutes] = useState(0);
   
-    const [baseServiceId, setBaseServiceId] = useState(null);
-    const [extrasIds, setExtrasIds] = useState([]);
+  const [baseServiceId, setBaseServiceId] = useState(null);
+  const [extrasIds, setExtrasIds] = useState([]);
 
 /*   const submit = (e) => {
     e.preventDefault();
@@ -149,6 +149,9 @@ const Appointment = () => {
                 <UsersDateAppointment 
                   setCurrentAppointment={setCurrentAppointment}
                   workers={workers}
+                  selectedPet={selectedPet}
+                  baseServiceId={baseServiceId}
+                  extrasIds={extrasIds}
                   sumaTotalPrecio={sumaTotalPrecio}
                   sumaTotalMinutos={sumaTotalMinutos}
                   minutesToHour={minutesToHour}

@@ -11,6 +11,7 @@ router.post("/createUser", adminController.createUser)
 
 // Endpoint para pillar el id para los historiales
 router.get("/user/:id", verifyToken, adminController.getUserById)
+
 // Endpoint para editar usuario segun el id
 router.put("/user/:id", verifyToken, uploadImage("picturesGeneral"), adminController.editUserById)
 
@@ -24,5 +25,12 @@ router.put("/makeAdmin/:id", adminController.makeAdmin);
 
 // Endpoint para cambiar el tipo de usuario a 2 (hacer trabajador)
 router.put("/makeWorker/:id", adminController.makeWorker);
+
+// Endpoint para cambiar is_deleted (baja/alta) 
+router.put("/user/:id/status/:status", adminController.updateUserStatus);
+
+// Endpoint para ver historial de citas de un cliente
+router.get("/clienthistory/:id", verifyToken, adminController.getClientHistory);
+
 
 export default router;

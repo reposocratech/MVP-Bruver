@@ -70,6 +70,7 @@ const AdminManage = () => {
         // Mapeo de los datos ajustando los nombres
         const clientsData = res.data.map((c) => ({
           id: c.user_id,
+          client_code: c.client_code,
           name_user: c.name_user,
           last_name: c.last_name,
           phone: c.phone,
@@ -77,6 +78,7 @@ const AdminManage = () => {
           province: c.province,
           city: c.city,
           address: c.address,
+          type: c.type,
         }));
         setClients(clientsData);
       } catch (error) {
@@ -115,6 +117,17 @@ const AdminManage = () => {
         console.error('Error al hacer trabajador:', error);
       }
     };
+    //cambia el is_deleted a 1 o a 0
+  const handleIsDeleted = async (userId, isDeleted) => {
+    try {
+      const newStatus = isDeleted ? 0 : 1;
+      await fetchData(`admin/user/${userId}/status/${newStatus}`, 'PUT');
+      setClients(prev => prev.map(c => c.id === userId ? { ...c, is_deleted: newStatus } : c));
+      setWorkers(prev => prev.map(w => w.id === userId ? { ...w, is_deleted: newStatus } : w));
+    } catch (error) {
+      console.error('Error al cambiar el estado:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -251,6 +264,9 @@ const AdminManage = () => {
                             HACER TRABAJADOR
                           </button>
                         ) : null}
+                        <button className="agr-pill" type="button" onClick={() => handleIsDeleted(w.id, w.is_deleted)}>
+                          {w.is_deleted ? 'DAR ALTA' : 'DAR BAJA'}
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -268,6 +284,7 @@ const AdminManage = () => {
           <table className="agr-table">
             <thead>
               <tr>
+                <th>CODIGO CLIENTE</th>
                 <th>CLIENTE</th>
                 <th>TELEFONO</th>
                 <th>E-MAIL</th>
@@ -277,16 +294,24 @@ const AdminManage = () => {
             <tbody>
               {clients.map((c) => (
                 <tr key={c.id}>
+                  <td>{c.client_code}</td>
                   <td className="agr-bold">{c.name_user} {c.last_name}</td>
                   <td>{c.phone}</td>
                   <td>{c.email}</td>
                   <td>
                     <div className="agr-actions">
-                      <button className="agr-pill" type="button" onClick={() => { setSelectedUser(c); setShowEditProfileModal(true); }}>
+                      <button className="agr-pill" type="button" onClick={() => { console.log('Cliente seleccionado:', c);
+                        setSelectedUser(c); setShowEditProfileModal(true); }}>
                         EDITAR
                       </button>
-                      <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
+                      {/* <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
+                        VER PERFIL
+                      </button> */}
+                      <button className="agr-pill" type="button" onClick={() => navigate(`/admin/clienthistory/${c.id}`)}>
                         VER HISTORIAL
+                      </button>
+                      <button className="agr-pill" type="button" onClick={() => handleIsDeleted(c.id, c.is_deleted)}>
+                        {c.is_deleted ? 'DAR ALTA' : 'DAR BAJA'}
                       </button>
                     </div>
                   </td>
@@ -325,6 +350,7 @@ const AdminManage = () => {
           onClose={() => setShowEditProfileModal(false)}
           user={selectedUser}
           onUserUpdated={handleUserUpdated}
+          editClientCode={selectedUser?.type === 3}
         />
       )}
 

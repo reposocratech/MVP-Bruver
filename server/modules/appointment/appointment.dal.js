@@ -73,37 +73,37 @@ class AppointmentDal {
   getAdminAppoiment = async (employeeId) => {
     try {
       const sql = `
-      SELECT
-  a.appointment_id,
-  a.appointment_date,
-  a.start_time,
-  a.end_time,
-  a.status,
-  a.employee_user_id,
-  a.total_price,
+            SELECT
+        a.appointment_id,
+        a.appointment_date,
+        a.start_time,
+        a.end_time,
+        a.status,
+        a.employee_user_id,
+        a.total_price,
 
-  emp.user_id        AS employee_id,
-  emp.name_user      AS employee_name,
-  emp.last_name      AS employee_lastname,
+        emp.user_id        AS employee_id,
+        emp.name_user      AS employee_name,
+        emp.last_name      AS employee_lastname,
 
-  cli.user_id        AS client_id,
-  cli.name_user      AS client_name,
-  cli.last_name      AS client_lastname,
+        cli.user_id        AS client_id,
+        cli.name_user      AS client_name,
+        cli.last_name      AS client_lastname,
 
-  creator.user_id   AS created_by_id,
-  creator.name_user AS created_by_name,
-  creator.type      AS created_by_type
+        creator.user_id   AS created_by_id,
+        creator.name_user AS created_by_name,
+        creator.type      AS created_by_type
 
-FROM appointment a
-JOIN user emp 
-  ON emp.user_id = a.employee_user_id
-LEFT JOIN user cli 
-  ON cli.user_id = a.client_user_id
-JOIN user creator 
-  ON creator.user_id = a.created_by_user_id
+        FROM appointment a
+        JOIN user emp 
+          ON emp.user_id = a.employee_user_id
+        LEFT JOIN user cli 
+          ON cli.user_id = a.client_user_id
+        JOIN user creator 
+          ON creator.user_id = a.created_by_user_id
 
-WHERE a.status != 3
-AND a.employee_user_id = ?;
+        WHERE a.status != 3
+        AND a.employee_user_id = ?;
       `;
       let result = await executeQuery(sql, [employeeId]);
       return result
@@ -143,14 +143,16 @@ WHERE appointment_id = ?;`
 
      insertServicesForAppointment = async (appointmentId, service_id, supplement_ids = []) => {
     try {
+      const cleaningId = Number(process.env.CLEANING_SERVICE_ID);
       const ids = [];
 
-      if (service_id) ids.push(String(service_id));
+      if (service_id) ids.push(service_id);
       if (Array.isArray(supplement_ids)) {
-        for (const s of supplement_ids) ids.push(String(s));
+        for (const s of supplement_ids) ids.push(s);
       }
+      if (!Number.isNaN(cleaningId)) ids.push(cleaningId);
 
-      const uniqueIds = [...new Set(ids)].filter(Boolean);
+      const uniqueIds = [...new Set(ids.map(id => Number(id)))].filter(id => !Number.isNaN(id));
 
       for (const sid of uniqueIds) {
         const sql = `
@@ -178,6 +180,7 @@ WHERE appointment_id = ?;`
     observations,
   }) => {
     try {
+
       const st = start_time.length === 5 ? `${start_time}:00` : start_time;
 
       const sql = `
@@ -222,6 +225,34 @@ WHERE appointment_id = ?;`
       throw error;
     }
   };
+
+  //funcion sacar a utils 
+  checkOverlap = async (employeeId, appointment_date, start_time, duration_minutes) => {
+    try {
+      const sql = `
+        SELECT appointment_id
+        FROM appointment
+        WHERE employee_user_id = ?
+          AND appointment_date = ?
+          AND status IN (1,2)
+          AND NOT (end_time <= ? OR start_time >= ADDTIME(?, SEC_TO_TIME(? * 60)))
+        LIMIT 1
+      `;
+ 
+      const result = await executeQuery(sql, [
+        employeeId,
+        appointment_date,
+        start_time,
+        start_time,
+        duration_minutes,
+      ]);
+ 
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+ 
 
   createQuickAppointment = async ({
     created_by_user_id,
@@ -284,6 +315,33 @@ WHERE appointment_id = ?;`
       throw error;
     }
   };
+
+  checkOverlap = async (employeeId, appointment_date, start_time, duration_minutes) => {
+    try {
+      const sql = `
+        SELECT appointment_id
+        FROM appointment
+        WHERE employee_user_id = ?
+          AND appointment_date = ?
+          AND status IN (1,2)
+          AND NOT (end_time <= ? OR start_time >= ADDTIME(?, SEC_TO_TIME(? * 60)))
+        LIMIT 1
+      `;
+
+      const result = await executeQuery(sql, [
+        employeeId,
+        appointment_date,
+        start_time,
+        start_time,
+        duration_minutes,
+      ]);
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
 
 }
 

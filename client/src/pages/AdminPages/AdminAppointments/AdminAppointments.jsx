@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../AdminProfile/AdminProfile.css";
-import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas";
+import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas.jsx";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
-import { fetchData } from "../../../helpers/axiosHelper";
+import { fetchData } from "../../../helpers/axiosHelper.js";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext.js";
 import { buildDate } from "../../../helpers/buildDateHelper.js";
 import ModalSeeAppointment from "../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment.jsx";
+import Worker from "../../WorkerPages/WorkerDate/Worker.jsx";
 
 dayjs.extend(isoWeek)
 
@@ -18,6 +19,16 @@ const AdminAppointments = () => {
   const [appoiment, setAppoiment] = useState([])
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [showSeeModal, setShowSeeModal] = useState(false);
+
+   const [openModal, setOpenModal] = useState(false);
+  const [openSearchClient, setOpenSearchClient] = useState(false);
+  const [openQuickReserve, setOpenQuickReserve] = useState(false);
+ /*  const [openCita, setOpenCita] = useState(false); */
+  const [openAddReserveClient, setOpenAddReserveClient] = useState(false);
+
+  const [selectedClient, setSelectedClient] = useState(null);
+
+  const [dateStartTime, setDateStartTime] = useState(null)
 
   const { token } = useContext(AuthContext)
   const { adminId } = useParams()
@@ -39,6 +50,25 @@ const AdminAppointments = () => {
     }
     fetcAppointments();
   }, [])
+
+   const handleChange = (option) => {
+    setOpenModal(false);
+
+    if (option === '1') {
+      setOpenSearchClient(true);
+    }
+
+    if (option === '2') {
+      setOpenQuickReserve(true);
+    }
+  };
+
+  const openNewAppointment =(dateStart)=>{
+    setOpenModal(true);
+     setDateStartTime(dateStart); 
+   
+   
+  }
 
    //selec un evento para editar o eliminar
   const handleSelectEvent = (event) => {
@@ -134,6 +164,7 @@ const AdminAppointments = () => {
         setView={setView}
         setDate={setDate}
         onSelectEvent={handleSelectEvent}
+        openNewAppointment={openNewAppointment}
       />
 
       {showSeeModal && (
@@ -149,6 +180,23 @@ const AdminAppointments = () => {
           <span className="arrow">VOLVER</span>
         </button>
       </div>
+
+      <Worker 
+      openModal={openModal}
+      openSearchClient={openSearchClient}
+      openQuickReserve={openQuickReserve}
+      openAddReserveClient={openAddReserveClient}
+      setOpenModal={setOpenModal}
+      setOpenSearchClient={setOpenSearchClient}
+      setOpenQuickReserve={setOpenQuickReserve}
+      setOpenAddReserveClient={setOpenAddReserveClient}
+      selectedClient={selectedClient}
+      setSelectedClient={setSelectedClient}
+      handleChange={handleChange}
+      dateStartTime={dateStartTime}
+      setDateStartTime={setDateStartTime}
+      setAppoiment={setAppoiment}
+      />
     </section>
   )
 }
