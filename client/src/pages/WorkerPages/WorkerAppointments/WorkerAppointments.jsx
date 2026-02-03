@@ -31,7 +31,7 @@ const WorkerAppointments = () => {
   
     const [dateStartTime, setDateStartTime] = useState(null)
   
-    const { token } = useContext(AuthContext)
+    const { token, user } = useContext(AuthContext)
     const { workerId } = useParams()
     const navigate = useNavigate()
   
@@ -158,7 +158,7 @@ const WorkerAppointments = () => {
 
   return (
       <section className="admin-section">
-      <h2 className="title">Mis citas (Admin)</h2>
+      <h2 className="title">Mis citas {user.name_user} </h2>
       <CalendarCitas
         view={view}
         date={date}

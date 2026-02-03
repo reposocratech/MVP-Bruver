@@ -3,6 +3,7 @@ import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { formatDate } from '../../../helpers/buildDateHelper';
 import './ModalQuickReserve.css';
+import { Button } from 'react-bootstrap';
 
 
 const LS_KEY = 'reserve_quick';
