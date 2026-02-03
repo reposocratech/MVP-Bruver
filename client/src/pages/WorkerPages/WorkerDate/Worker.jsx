@@ -1,3 +1,4 @@
+
 import ModalAddReserve from '../../../components/Modal/ModalAddReserve/ModalAddReserve';
 import ModalQuickReserve from '../../../components/Modal/ModalAddReserve/ModalQuickReserve';
 import ModalSearchClient from '../../../components/Modal/ModalAddReserve/ModalSearchClient';
@@ -22,27 +23,6 @@ const Worker = ({
   setAppoiment
 }) => {
 
- /*  const [openModal, setOpenModal] = useState(false);
-  const [openSearchClient, setOpenSearchClient] = useState(false);
-  const [openQuickReserve, setOpenQuickReserve] = useState(false);
- /*  const [openCita, setOpenCita] = useState(false); */
-  /* const [openAddReserveClient, setOpenAddReserveClient] = useState(false); */ 
-
-  /* const [selectedClient, setSelectedClient] = useState(null); */
-
-   /*  const handleChange = (option) => {
-    setOpenModal(false);
-
-    if (option === '1') {
-      setOpenSearchClient(true);
-    }
-
-    if (option === '2') {
-      setOpenQuickReserve(true);
-    }
-  }; */
- console.log("kkkkkkkkkkkkkkkkkkkkkkkkk", dateStartTime);
- 
     const backModalAddReserve = () => {
       setOpenModal(true);
       setOpenSearchClient(false);
@@ -62,26 +42,7 @@ const Worker = ({
 
   return (
     <> 
-    {/* <div className="workerPage">
-      <div className="workerCard"> */}
-
-       {/*  <h2 className="workerTitle">Gestión de reservas</h2>
-
-        <div className="workerActions">
-          <Button
-            className="primary"
-            onClick={() => setOpenModal(true)}
-          >
-            Añadir una reserva
-          </Button>
-
-          <Button
-            className="secondary"
-            onClick={() => setOpenCita(true)}
-          >
-            Consultar
-          </Button>
-        </div> */}
+  
 
         {openModal && (
           <ModalAddReserve
@@ -101,6 +62,13 @@ const Worker = ({
         {openQuickReserve && (
           <ModalQuickReserve
             toBack={backModalAddReserve}
+            dateStartTime={dateStartTime}
+            setAppoiment={setAppoiment}
+            onCloseAll={() => {
+              setOpenModal(false);
+              setOpenQuickReserve(false);
+              setOpenSearchClient(false);
+            }}
           />
         )}
 
@@ -116,14 +84,6 @@ const Worker = ({
           />
         )}
 
-       {/*  {openCita && (
-          <ModalSeeAppointment
-            onClose={() => setOpenCita(false)}
-          />
-        )} */}
-
-   {/*    </div>
-    </div> */}
     </>
   )
 }

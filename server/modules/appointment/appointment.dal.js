@@ -178,6 +178,7 @@ WHERE appointment_id = ?;`
     observations,
   }) => {
     try {
+
       const st = start_time.length === 5 ? `${start_time}:00` : start_time;
 
       const sql = `
@@ -222,6 +223,34 @@ WHERE appointment_id = ?;`
       throw error;
     }
   };
+
+  //funcion sacar a utils 
+  checkOverlap = async (employeeId, appointment_date, start_time, duration_minutes) => {
+    try {
+      const sql = `
+        SELECT appointment_id
+        FROM appointment
+        WHERE employee_user_id = ?
+          AND appointment_date = ?
+          AND status IN (1,2)
+          AND NOT (end_time <= ? OR start_time >= ADDTIME(?, SEC_TO_TIME(? * 60)))
+        LIMIT 1
+      `;
+ 
+      const result = await executeQuery(sql, [
+        employeeId,
+        appointment_date,
+        start_time,
+        start_time,
+        duration_minutes,
+      ]);
+ 
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+ 
 
   createQuickAppointment = async ({
     created_by_user_id,
