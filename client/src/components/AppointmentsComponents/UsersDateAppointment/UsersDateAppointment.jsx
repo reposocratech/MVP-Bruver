@@ -3,7 +3,6 @@ import './UsersDateAppointment.css';
 // Hooks de React (estado, efectos y contexto)
 import { useState, useEffect, useContext } from 'react';
 // Calendario simple para elegir fecha (lado izquierdo)
-import { Button } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 // dayjs para manipular fechas y horas de forma sencilla
 import dayjs from 'dayjs';
@@ -38,6 +37,8 @@ dayjs.extend(isoWeek);
 */
 export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedPet, baseServiceId, extrasIds, sumaTotalPrecio, sumaTotalMinutos, minutesToHour, cleaningServiceId = null, cleaningServiceDuration = 0 }) => {
   // Fecha seleccionada en el mini-calendario (Date)
+  console.log(workers);
+  
   const [date, setDate] = useState(new Date());
   // Id del empleado seleccionado (null = ninguno)
   const [workerId, setWorkerId] = useState(null);
@@ -261,7 +262,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                 className={`cardEmployee col-12 col-sm-6 col-lg-4 ${workerId === elem.user_id ? 'selected' : ''}`}
               >
                 <div className="appointmentEmployeeCard">
-                  {elem.picture_user ? (
+                  {(elem.picture_user && elem.picture_user !== "" && elem.picture_user !== "IconDefect.png") ? (
                     <img
                       src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${elem.picture_user}`}
                       alt={elem.name_user}
