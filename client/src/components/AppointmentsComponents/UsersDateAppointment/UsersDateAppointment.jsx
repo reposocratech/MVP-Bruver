@@ -287,7 +287,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                   className={
                     workerId === elem.user_id ?  
                     "selectEmployeeBtn selected" : "selectedEmployeeBtn"
-                     }
+                  }
                 >
                   SELECCIONAR
                 </button>
