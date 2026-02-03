@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import './ModalAddReserveClient.css';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { formatDate } from '../../../helpers/buildDateHelper';
+import './ModalAddReserveClient.css';
 
 const saveLocalStorage = 'reserve_client';
 
-const ModalAddReserveClient = ({ toBack, client }) => {
-  const { token } = useContext(AuthContext);
+const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchClient, setAppoiment }) => {
+  const { token, user } = useContext(AuthContext);
 
   const [pets, setPets] = useState([]);
   const [services, setServices] = useState([]);
@@ -46,9 +47,8 @@ const ModalAddReserveClient = ({ toBack, client }) => {
       service_id: isCat ? null : serviceId || null,
       supplement_ids: isCat ? [] : extrasIds,
 
-      // AQUÍIII LOS HE DEJADO EN NULL HASTA CONECTAR CON EL CALENDARIO. DARÁ ERROR POR ESTOS 2 CAMPOS!!!!
-      appointment_date: null,
-      start_time: null,
+      appointment_date: formatDate(dateStartTime.toString()),
+      start_time: dateStartTime.toString().split(" ")[4],
 
       duration_minutes: finalMinutes,
       total_price: finalPrice,
@@ -228,8 +228,16 @@ const ModalAddReserveClient = ({ toBack, client }) => {
       const res = await fetchData('appointment/client', 'POST', data, token);
       console.log('Cita creada:', res.data);
 
+      try {
+        const resAppointments = await fetchData(`appointment/getAdminAppoiment/${user?.user_id}`, 'GET', null, token);
+        setAppoiment(resAppointments.data.result || []);
+      } catch (err) {
+        console.log('No se pudo refrescar la lista de citas:', err);
+      }
+
       localStorage.removeItem(saveLocalStorage);
       toBack();
+      setOpenSearchClient(false);
     } catch (error) {
       console.log('error al crear cita:', error);
     }

@@ -1,14 +1,26 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
-html, body, #root {
-  height: 100%;
-  margin: 0;
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: inherit;
+  scrollbar-color: #6BB3A7 #F4EFE8;
 }
 
-main {
-  flex: 1;
+html::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #F4EFE8;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6BB3A7, #8FCFC4);
+  border-radius: 10px;
+  border: 2px solid #F4EFE8;
 }

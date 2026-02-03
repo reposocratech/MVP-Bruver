@@ -178,6 +178,7 @@ WHERE appointment_id = ?;`
     observations,
   }) => {
     try {
+
       const st = start_time.length === 5 ? `${start_time}:00` : start_time;
 
       const sql = `
@@ -222,6 +223,34 @@ WHERE appointment_id = ?;`
       throw error;
     }
   };
+
+  //funcion sacar a utils 
+  checkOverlap = async (employeeId, appointment_date, start_time, duration_minutes) => {
+    try {
+      const sql = `
+        SELECT appointment_id
+        FROM appointment
+        WHERE employee_user_id = ?
+          AND appointment_date = ?
+          AND status IN (1,2)
+          AND NOT (end_time <= ? OR start_time >= ADDTIME(?, SEC_TO_TIME(? * 60)))
+        LIMIT 1
+      `;
+ 
+      const result = await executeQuery(sql, [
+        employeeId,
+        appointment_date,
+        start_time,
+        start_time,
+        duration_minutes,
+      ]);
+ 
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+ 
 
   createQuickAppointment = async ({
     created_by_user_id,
@@ -280,6 +309,84 @@ WHERE appointment_id = ?;`
       ]);
 
       return { appointment_id: result.insertId };
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  createAppointment = async ({
+    created_by_user_id,
+    employee_user_id,
+    client_user_id,
+    pet_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    service_id,
+    supplement_ids = [],
+    observations,
+  }) => {
+    try {
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
+      const sql = `
+        INSERT INTO appointment (
+          created_by_user_id,
+          employee_user_id,
+          client_user_id,
+          pet_id,
+          status,
+          total_price,
+          appointment_date,
+          start_time,
+          end_time,
+          observations
+        )
+        VALUES (
+          ?, ?, ?, ?,
+          1,
+          ?,
+          ?,
+          ?,
+          ADDTIME(?, SEC_TO_TIME(? * 60)),
+          ?
+        )
+      `;
+
+      const appointmentRes = await executeQuery(sql, [
+        created_by_user_id,
+        employee_user_id,
+        client_user_id,
+        pet_id,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
+
+      const appointmentId = appointmentRes.insertId;
+
+      // Vincular servicio base + suplementos + servicio de limpieza (si está en env) - versión simplificada
+      const rawIds = [
+        service_id,
+        ...(Array.isArray(supplement_ids) ? supplement_ids : []),
+        process.env.CLEANING_SERVICE_ID,
+      ].filter(Boolean);
+
+      const uniqueIds = [...new Set(rawIds)];
+
+      if (uniqueIds.length > 0) {
+        // Construimos VALUES directamente: (appointmentId, serviceId),(...)
+        // Convertimos a Number para evitar inyección si los ids vienen alterados
+        const values = uniqueIds.map(id => `(${appointmentId}, ${Number(id)})`).join(', ');
+        const sqlLink = `INSERT INTO service_appointment (appointment_id, service_id) VALUES ${values}`;
+        await executeQuery(sqlLink);
+      }
+
+      return { appointment_id: appointmentId };
     } catch (error) {
       throw error;
     }

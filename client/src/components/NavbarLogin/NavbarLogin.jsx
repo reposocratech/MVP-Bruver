@@ -1,6 +1,6 @@
 import { Navbar, Container, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router';
-import '../Navbar/navbar.css';
+import './NavbarLogin.css';
 import logoNavbar from '../../assets/images/logo-navbar.png';
 import iconoLogin from '../../assets/images/icono-login.png';
 import salidaDePerfil from '../../assets/images/salidaDePerfil.png';
@@ -13,10 +13,10 @@ export const NavbarLogin = () => {
   const navigate = useNavigate()
 
   const profilePath = user?.type === 1 ? "/admin" : user?.type === 2 ? "/worker/profile" : "/profile";
-  const appointmentPath = user?.type === 1 || user?.type === 2 ? `/worker/WorkerDate/${user?.user_id}` : "/appointment";
+  const appointmentPath = user?.type === 1 ? `/admin/appointments/${user?.user_id}`: user?.type === 2 ? `/worker/appointments/${user?.user_id}` : "/appointment";
 
   return (
-    <Navbar expand="lg" className="navbar-custom">
+    <Navbar expand="lg" className="navbar-custom navbar-login">
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="navbar-logo">
           <img src={logoNavbar} alt="Brüver" className="navbar-logo-img" />

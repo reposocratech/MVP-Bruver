@@ -1,54 +1,63 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { ZodError } from "zod";
+import { contactSchema } from "../../../schemas/ContactShema.js";
+
+const initialValue = {
+  nombre: "",
+  telefono: "",
+  email: "",
+  mensaje: "",
+};
 
 const ContactForm = () => {
-  const [form, setForm] = useState({
-    nombre: "",
-    telefono: "",
-    email: "",
-    mensaje: "",
-  });
+  const [form, setForm] = useState(initialValue);
+  const [valErrors, setValErrors] = useState({});
+  const [status, setStatus] = useState("");
 
-  const [status, setStatus] = useState({ message: "" });
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus({ msg: "" });
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    setStatus("");
+    setValErrors({});
 
     try {
+      contactSchema.parse(form);
+
       const res = await fetch("http://localhost:4000/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(form)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       });
 
-      const data = await res.json();
-
-      if (!res.ok) throw new Error();
-
-      setStatus({
-       message: data.message
-      });
-
-      setForm({ nombre: "", telefono: "", email: "", mensaje: "" });
+      if (res.status === 200 || res.status === 201) {
+        setStatus("Mensaje enviado");
+        setForm(initialValue);
+      } else {
+        setStatus("Error al enviar mensaje");
+      }
     } catch (error) {
-      console.log(error)
-      setStatus({
-        message: "Error al enviar el mensaje"
-      });
+      if (error instanceof ZodError) {
+        const fieldsErrors = {};
+        error.issues.forEach((elem) => {
+          fieldsErrors[elem.path[0]] = elem.message;
+        });
+        setValErrors(fieldsErrors);
+        setStatus("Error al enviar mensaje");
+        return;
+      }
+
+      console.log(error);
+      setStatus("Error al enviar mensaje");
     }
   };
 
   return (
-    <form className="contactForm" onSubmit={handleSubmit}>
+    <form className="contactForm" onSubmit={onSubmit}>
       <input
         name="nombre"
         type="text"
@@ -56,6 +65,7 @@ const ContactForm = () => {
         value={form.nombre}
         onChange={handleChange}
       />
+      {valErrors.nombre && <p style={{ color: "red" }}>{valErrors.nombre}</p>}
 
       <input
         name="telefono"
@@ -64,6 +74,7 @@ const ContactForm = () => {
         value={form.telefono}
         onChange={handleChange}
       />
+      {valErrors.telefono && <p style={{ color: "red" }}>{valErrors.telefono}</p>}
 
       <input
         name="email"
@@ -72,6 +83,7 @@ const ContactForm = () => {
         value={form.email}
         onChange={handleChange}
       />
+      {valErrors.email && <p style={{ color: "red" }}>{valErrors.email}</p>}
 
       <textarea
         name="mensaje"
@@ -79,18 +91,19 @@ const ContactForm = () => {
         value={form.mensaje}
         onChange={handleChange}
       />
+      {valErrors.mensaje && <p style={{ color: "red" }}>{valErrors.mensaje}</p>}
 
       <button type="submit">ENVIAR</button>
 
-      {status.msg && (
+      {status && (
         <p
           style={{
-            marginTop: "10px",
-            color: status.ok ? "green" : "red",
-            fontWeight: "600"
+            marginTop: 10,
+            color: status === "Mensaje enviado" ? "green" : "red",
+            fontWeight: 600,
           }}
         >
-          {status.msg}
+          {status}
         </p>
       )}
     </form>

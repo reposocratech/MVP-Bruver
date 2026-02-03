@@ -149,7 +149,7 @@ const AdminWorkingHours = () => {
 
   return (
     <section className="admin-working-hours-page">
-      <h2 className="title">Horario laboral (Admin)</h2>
+      <h2 className="title">Horario laboral</h2>
 
       <CalendarWorkingHours
         view={view}

@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { NavbarPublic } from "../components/Navbar/NavbarPublic";
 import { NavbarLogin } from "../components/NavbarLogin/NavbarLogin";
 import { FooterPublic } from "../components/Footer/FooterPublic/FooterPublic";
+import { FooterPrivate } from "../components/Footer/FooterPrivate/FooterPrivate";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
 
 export const PublicLayout = () => {
@@ -16,7 +17,7 @@ export const PublicLayout = () => {
          <Outlet />
       </main>
       <footer>
-         <FooterPublic/>
+        {user ? <FooterPrivate /> : <FooterPublic />}
       </footer>
     </>
     
