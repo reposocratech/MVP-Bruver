@@ -284,6 +284,12 @@ gap: 15px;
   color: black;
 }
 
+.error {
+  color: #d9534f;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
 
 
 /* RESPONSIVE CALEDARIO */
