@@ -296,8 +296,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
               </div>
               </div>
             ))}
-      </div>
-
+          </div>
       </div>
 
       <div className="selectDate">
