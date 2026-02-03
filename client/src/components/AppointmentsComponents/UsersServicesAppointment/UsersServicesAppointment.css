@@ -75,14 +75,26 @@
 .supplementsCard {
 	display: flex;
 	flex-direction: row;
-	padding: 1rem;
+	padding: 5px;
+	text-align: center;
+}
+.suplDates{
+display: flex;
+flex-direction: column;
+justify-content: center;
+box-sizing: border-box;
+width: 40%;
 }
 
 .supplementsCard .imgAndButton {
-	display: flex;
-	flex-direction: column;
-	margin-right: 15px;
+	button{
+		width: 150px;
+		height: 40px;
+		margin: auto;
+	}
 }
+
+
 
 .supplementsCard .suplementsDates {
 	position: relative;

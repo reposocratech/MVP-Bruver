@@ -37,7 +37,6 @@ dayjs.extend(isoWeek);
 */
 export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedPet, baseServiceId, extrasIds, sumaTotalPrecio, sumaTotalMinutos, minutesToHour, cleaningServiceId = null, cleaningServiceDuration = 0 }) => {
   // Fecha seleccionada en el mini-calendario (Date)
-  console.log(workers);
   
   const [date, setDate] = useState(new Date());
   // Id del empleado seleccionado (null = ninguno)
@@ -287,7 +286,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                   }}
                   className={
                     workerId === elem.user_id ?  
-                    "selectEmployeeBtn selected" : "selectedEmployeeBtn"
+                    "selectEmployeeBtn selected" : "selectEmployeeBtn"
                   }
                 >
                   SELECCIONAR
@@ -302,7 +301,6 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
 
       <div className="selectDate">
         <h2 className="selectDateTitle">Selecciona la fecha</h2>
-        <div className="calendarAndHours">
           <div className="calendar-container">
             <Calendar onChange={setDate} value={date} selectRange={false} />
             <p className="calendar-hint">Selecciona la fecha en el calendario y, a continuación, elige un hueco de la lista de <strong>Huecos disponibles</strong> para reservar.</p>
@@ -325,7 +323,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
 
               <div className="selected-slot">
                 {selectedSlot ? (
-                  <p>Seleccionado: {dayjs(selectedSlot.start).format('DD/MM/YYYY HH:mm')}</p>
+                  <p>Fecha seleccionada: {dayjs(selectedSlot.start).format('DD/MM/YYYY HH:mm')}</p>
                 ) : (
                   <p className="hint">Selecciona un hueco disponible para habilitar el botón de confirmar.</p>
                 )}
@@ -346,7 +344,6 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
             </div>
           </div>
         </div>
-      </div>
 
       <div className="selectEmployeeActions">
         <div className="infoAppoint">
