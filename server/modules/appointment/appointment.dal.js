@@ -1,3 +1,4 @@
+
 import executeQuery from "../../config/db.js";
 
 class AppointmentDal {
@@ -384,6 +385,20 @@ WHERE appointment_id = ?;`
     }
   }
 
+    // Traer todas las citas del usuario (presente, pasadas y futuras)
+  getAllByUserId = async (userId) => {
+    try {
+      const sql = `
+        SELECT appointment_id, start_time, appointment_date, total_price, status
+        FROM appointment
+        WHERE client_user_id = ?
+        ORDER BY appointment_date DESC, start_time DESC
+      `;
+      return await executeQuery(sql, [userId]);
+    } catch (error) {
+      throw error;
+    }
+  };
 
 }
 

@@ -1,70 +1,70 @@
 :root {
-  --bg: #faf7f3;
-  --panel: #f4ede4;
-  --calendar-bg: #fffdf9;
-  --header-bg: #d8ebe6;
-  --line: rgba(47, 111, 104, 0.45);
-  --text: #3f342a;
-  --muted: #8a7c6d;
-  --accent: #9fcfc3;
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 12px 34px rgba(0, 0, 0, 0.14);
+  --citas-bg: #faf7f3;
+  --citas-panel: #f4ede4;
+  --citas-calendar-bg: #fffdf9;
+  --citas-header-bg: #d8ebe6;
+  --citas-line: rgba(47,111,104,0.45);
+  --citas-text: #3f342a;
+  --citas-muted: #8a7c6d;
+  --citas-accent: #9fcfc3;
+  --citas-shadow: 0 8px 30px rgba(0,0,0,0.08);
 }
 
-.calendar-citas .admin-section {
-  background: var(--bg);
-  padding: 32px;
-  width: 100%;
+.calendar-citas-scope {
+  background: var(--citas-bg);
+  padding: 32px 0 64px;
 }
 
-.calendar-citas .admin-section .title {
+.calendar-citas-scope .title {
+  max-width: 1500px;
+  margin: 0 auto 32px;
+  padding: 0 56px;
   text-align: center;
   font-family: Poppins, sans-serif;
   font-size: 40px;
   font-weight: 600;
-  color: var(--accent);
-  margin-bottom: 24px;
+  color: var(--citas-accent);
 }
 
-.calendar-citas .calendar-working-hours {
+.calendar-citas {
+  min-height: 1000px;
   position: relative;
-  overflow: hidden;
-  width: 100%;
-  margin: 0;
-  padding: 32px;
-  border-radius: 32px;
-  background: var(--panel);
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 56px;
+  border-radius: 40px;
+  background: var(--citas-panel);
 }
 
-.calendar-citas .calendar-working-hours::before {
+.calendar-citas::before {
   content: '';
   position: absolute;
   inset: 0;
   background: #e6d3c252;
-  border-radius: 32px;
+  border-radius: 40px;
   z-index: 0;
 }
 
-.calendar-citas .calendar-working-hours > * {
+.calendar-citas > * {
   position: relative;
   z-index: 1;
 }
 
-.calendar-citas .calendar-working-hours .rbc-calendar {
+.calendar-citas .rbc-calendar {
   width: 100%;
   font-family: Poppins, sans-serif;
-  color: var(--text);
+  color: var(--citas-text);
 }
 
-.calendar-citas .calendar-working-hours .rbc-toolbar {
+.calendar-citas .rbc-toolbar {
   position: relative;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  padding-bottom: 24px;
+  padding-bottom: 32px;
 }
 
-.calendar-citas .calendar-working-hours .rbc-toolbar-label {
+.calendar-citas .rbc-toolbar-label {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -75,138 +75,116 @@
   white-space: nowrap;
 }
 
-.calendar-citas .calendar-working-hours .rbc-btn-group {
+.calendar-citas .rbc-btn-group {
   display: flex !important;
   gap: 8px;
 }
 
-.calendar-citas .calendar-working-hours .rbc-btn-group button {
-  background: var(--accent);
+.calendar-citas .rbc-btn-group button {
+  background: var(--citas-accent);
   border: none;
   color: #ffffff;
   border-radius: 14px;
   padding: 8px 16px;
   font-size: 13px;
-  font-family: Poppins, sans-serif;
   font-weight: 600;
-  letter-spacing: 0.3px;
   cursor: pointer;
 }
 
-.calendar-citas .calendar-working-hours .rbc-time-view {
-  background: var(--calendar-bg);
+.calendar-citas .rbc-time-view {
+  background: var(--citas-calendar-bg);
   border-radius: 28px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  box-shadow: var(--citas-shadow);
 }
 
-.calendar-citas .calendar-working-hours .rbc-time-header,
-.calendar-citas .calendar-working-hours .rbc-time-header-content,
-.calendar-citas .calendar-working-hours .rbc-header {
-  background: var(--header-bg);
+.calendar-citas .rbc-time-header,
+.calendar-citas .rbc-time-header-content,
+.calendar-citas .rbc-header {
+  background: var(--citas-header-bg);
 }
 
-.calendar-citas .calendar-working-hours .rbc-time-header-content {
-  box-shadow: inset 0 -1px 0 var(--line);
+.calendar-citas .rbc-time-header-content {
+  box-shadow: inset 0 -1px 0 var(--citas-line);
 }
 
-.calendar-citas .calendar-working-hours .rbc-header {
+.calendar-citas .rbc-header {
   padding: 16px 0;
   font-size: 14px;
   font-weight: 600;
-  box-shadow: inset -1px 0 0 var(--line);
+  box-shadow: inset -1px 0 0 var(--citas-line);
 }
 
-.calendar-citas .calendar-working-hours .rbc-time-gutter {
-  background: var(--calendar-bg);
-  color: var(--muted);
-  box-shadow: inset -1px 0 0 var(--line);
+.calendar-citas .rbc-time-gutter {
+  background: var(--citas-calendar-bg);
+  color: var(--citas-muted);
+  box-shadow: inset -1px 0 0 var(--citas-line);
 }
 
-.calendar-citas .calendar-working-hours .rbc-time-content {
-  background: var(--calendar-bg);
-  margin-top: -1px;
+.calendar-citas .rbc-time-content {
+  background: var(--citas-calendar-bg);
 }
 
-.calendar-citas .calendar-working-hours .rbc-event {
+.calendar-citas .rbc-event {
   border-radius: 16px;
   padding: 10px 14px;
   margin: 4px;
-  box-shadow: var(--shadow);
+  box-shadow: var(--citas-shadow);
   border: none;
+  background: linear-gradient(135deg,#75ccb7,#56ceac);
 }
 
-.calendar-citas .calendar-working-hours .rbc-event-title {
+.calendar-citas .rbc-event-title {
   color: #ffffff;
   font-weight: 700;
 }
 
-.calendar-citas .calendar-working-hours
-.rbc-time-content
-> .rbc-day-slot:nth-child(2)
-.rbc-event {
-  background: linear-gradient(135deg, #daab7f, #d3965d);
+.calendar-citas .rbc-today {
+  background: rgba(143,199,187,0.14) !important;
 }
 
-.calendar-citas .calendar-working-hours
-.rbc-time-content
-> .rbc-day-slot:nth-child(3)
-.rbc-event {
-  background: linear-gradient(135deg, #75ccb7, #56ceac);
-}
-
-.calendar-citas .calendar-working-hours .rbc-today {
-  background: rgba(143, 199, 187, 0.14) !important;
-}
-
-.calendar-citas .calendar-working-hours .rbc-current-time-indicator {
+.calendar-citas .rbc-current-time-indicator {
   display: none;
 }
 
-.calendar-citas .back-btn-center {
-  margin-top: 32px;
+.calendar-citas-scope .back-btn-center {
+  max-width: 1500px;
+  margin: 32px auto 0;
+  padding: 0 56px;
   display: flex;
   justify-content: center;
 }
 
-.calendar-citas .back-btn {
-  background: rgba(108, 101, 94, 0.9);
+.calendar-citas-scope .back-btn {
+  background: rgba(108,101,94,0.9);
   color: #ffffff;
   border: none;
   padding: 10px 22px;
   font-size: 13px;
-  font-family: inherit;
   font-weight: 600;
-  letter-spacing: 0.4px;
   border-radius: 999px;
   cursor: pointer;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   transition: all 0.25s ease;
 }
 
-.calendar-citas .back-btn:hover {
+.calendar-citas-scope .back-btn:hover {
   background: #6bb3a7;
   transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
 
 @media (max-width: 768px) {
-  .calendar-citas .admin-section {
-    padding: 16px;
-  }
-
-  .calendar-citas .admin-section .title {
+  .calendar-citas-scope .title {
+    padding: 0 16px;
     font-size: 24px;
-    margin-bottom: 14px;
   }
 
-  .calendar-citas .calendar-working-hours {
+  .calendar-citas {
     padding: 16px;
     border-radius: 20px;
+    min-height: auto;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-toolbar {
+  .calendar-citas .rbc-toolbar {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -214,48 +192,41 @@
     padding-bottom: 12px;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-toolbar-label {
+  .calendar-citas .rbc-toolbar-label {
     position: static;
     transform: none;
     text-align: center;
     font-size: 14px;
     order: -1;
-    white-space: normal;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-btn-group {
+  .calendar-citas .rbc-btn-group {
     justify-content: center;
     flex-wrap: wrap;
     gap: 8px;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-btn-group button {
+  .calendar-citas .rbc-btn-group button {
     padding: 8px 12px;
     font-size: 12px;
     border-radius: 12px;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-time-view {
+  .calendar-citas .rbc-time-view {
     border-radius: 16px;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-header {
+  .calendar-citas .rbc-header {
     padding: 10px 0;
     font-size: 12px;
   }
 
-  .calendar-citas .calendar-working-hours .rbc-event {
+  .calendar-citas .rbc-event {
     padding: 6px 8px;
     border-radius: 12px;
-    margin: 3px;
   }
 
-  .calendar-citas .back-btn-center {
-    margin-top: 20px;
-  }
-
-  .calendar-citas .back-btn {
-    width: 100%;
-    max-width: 320px;
+  .calendar-citas-scope .back-btn-center {
+    padding: 0 16px;
   }
 }

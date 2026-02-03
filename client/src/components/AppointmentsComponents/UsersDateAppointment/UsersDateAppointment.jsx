@@ -2,8 +2,8 @@
 import './UsersDateAppointment.css';
 // Hooks de React (estado, efectos y contexto)
 import { useState, useEffect, useContext } from 'react';
+import ModalAppointmentConfirmed from '../../Modal/ModalAppointmentConfirmed/ModalAppointmentConfirmed';
 // Calendario simple para elegir fecha (lado izquierdo)
-import { Button } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 // dayjs para manipular fechas y horas de forma sencilla
 import dayjs from 'dayjs';
@@ -38,6 +38,7 @@ dayjs.extend(isoWeek);
 */
 export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedPet, baseServiceId, extrasIds, sumaTotalPrecio, sumaTotalMinutos, minutesToHour, cleaningServiceId = null, cleaningServiceDuration = 0 }) => {
   // Fecha seleccionada en el mini-calendario (Date)
+  
   const [date, setDate] = useState(new Date());
   // Id del empleado seleccionado (null = ninguno)
   const [workerId, setWorkerId] = useState(null);
@@ -53,6 +54,8 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Errores de validación y mensajes de error para mostrar en la UI
   const [errorMsg, setErrorMsg] = useState(null);
+  // Modal de éxito
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Extraemos token del AuthContext para hacer peticiones autenticadas
   const { token } = useContext(AuthContext);
@@ -181,6 +184,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
 
   // Selección mediante click en lista de botones (slots)
   const handleSelectSlot = (slot) => {
+    setErrorMsg(null);
     setSelectedSlot(slot); // marcamos el slot
   }; 
 
@@ -223,13 +227,9 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
       // Actualizamos las citas del empleado para reflejar el nuevo estado
       const appoRes = await fetchData(`appointment/getAdminAppoiment/${workerId}`, 'get', null, token);
       setAppointments(appoRes.data.result || []);
-
-      alert('Cita creada correctamente');
-
-      // Reset de selección y retorno al paso inicial
       setSelectedSlot(null);
       setWorkerId(null);
-      setCurrentAppointment(1);
+      setShowSuccess(true);
     } catch (error) {
       if (error instanceof ZodError) {
         const objTemp = {};
@@ -238,10 +238,8 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
         });
       } else if (error?.response) {
         setErrorMsg(error.response.data.message);
-        alert(error.response.data.message);
       } else {
         setErrorMsg('Error al crear la cita');
-        alert('Error al crear la cita');
       }
       console.error(error);
     } finally {
@@ -261,7 +259,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                 className={`cardEmployee col-12 col-sm-6 col-lg-4 ${workerId === elem.user_id ? 'selected' : ''}`}
               >
                 <div className="appointmentEmployeeCard">
-                  {elem.picture_user ? (
+                  {(elem.picture_user && elem.picture_user !== "" && elem.picture_user !== "IconDefect.png") ? (
                     <img
                       src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${elem.picture_user}`}
                       alt={elem.name_user}
@@ -286,7 +284,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
                   }}
                   className={
                     workerId === elem.user_id ?  
-                    "selectEmployeeBtn selected" : "selectedEmployeeBtn"
+                    "selectEmployeeBtn selected" : "selectEmployeeBtn"
                   }
                 >
                   SELECCIONAR
@@ -301,7 +299,6 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
 
       <div className="selectDate">
         <h2 className="selectDateTitle">Selecciona la fecha</h2>
-        <div className="calendarAndHours">
           <div className="calendar-container">
             <Calendar onChange={setDate} value={date} selectRange={false} />
             <p className="calendar-hint">Selecciona la fecha en el calendario y, a continuación, elige un hueco de la lista de <strong>Huecos disponibles</strong> para reservar.</p>
@@ -324,7 +321,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
 
               <div className="selected-slot">
                 {selectedSlot ? (
-                  <p>Seleccionado: {dayjs(selectedSlot.start).format('DD/MM/YYYY HH:mm')}</p>
+                  <p>Fecha seleccionada: {dayjs(selectedSlot.start).format('DD/MM/YYYY HH:mm')}</p>
                 ) : (
                   <p className="hint">Selecciona un hueco disponible para habilitar el botón de confirmar.</p>
                 )}
@@ -345,7 +342,6 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
             </div>
           </div>
         </div>
-      </div>
 
       <div className="selectEmployeeActions">
         <div className="infoAppoint">
@@ -360,6 +356,10 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
           VOLVER
         </button>
       </div>
+
+      {showSuccess && (
+        <ModalAppointmentConfirmed onClose={() => setShowSuccess(false)} />
+      )}
     </>
   );
 };

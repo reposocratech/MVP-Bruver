@@ -1,6 +1,7 @@
 import executeQuery from "../../config/db.js";
 
 class WorkerDal {
+
   searchClients = async (search) => {
     try {
       if (!search || search.trim() === "") return [];

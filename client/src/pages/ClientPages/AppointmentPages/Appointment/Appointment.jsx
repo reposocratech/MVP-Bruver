@@ -32,6 +32,10 @@ const Appointment = () => {
   const [baseServiceId, setBaseServiceId] = useState(null);
   const [extrasIds, setExtrasIds] = useState([]);
 
+  // Servicio de limpieza oculto para bloquear tiempo extra en agenda
+  const [cleaningServiceId, setCleaningServiceId] = useState(null);
+  const [cleaningServiceDuration, setCleaningServiceDuration] = useState(0);
+
 /*   const submit = (e) => {
     e.preventDefault();
   };  */
@@ -135,6 +139,9 @@ const Appointment = () => {
 
                   extrasIds={extrasIds}
                   setExtrasIds={setExtrasIds}
+
+                  setCleaningServiceId={setCleaningServiceId}
+                  setCleaningServiceDuration={setCleaningServiceDuration}
                 />      
               </Col>
             </Row>
@@ -155,6 +162,8 @@ const Appointment = () => {
                   sumaTotalPrecio={sumaTotalPrecio}
                   sumaTotalMinutos={sumaTotalMinutos}
                   minutesToHour={minutesToHour}
+                  cleaningServiceId={cleaningServiceId}
+                  cleaningServiceDuration={cleaningServiceDuration}
                 />
               </Col>
             </Row>

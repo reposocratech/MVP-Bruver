@@ -1,5 +1,4 @@
 import  { useEffect, useState, useContext } from 'react';
-import { Button } from 'react-bootstrap';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { formatDate } from '../../../helpers/buildDateHelper';
@@ -83,7 +82,7 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
       extraPrice += Number(s.price || 0)
     })
 
-    const totalMinutes = Number(serv?.duration_minutes || 0) + extraMinutes;
+    const totalMinutes = Number(serv?.duration_minutes || 0) + extraMinutes +15; // duración total más los 15 para la
     const totalPrice = Number(serv?.price || 0) + extraPrice;
 
     setDuration(totalMinutes);

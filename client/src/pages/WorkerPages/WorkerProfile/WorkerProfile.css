@@ -11,6 +11,28 @@ body {
   align-items: center;
 }
 
+.worker-section .title {
+  font-family: "Lora", serif;
+  color: #6bb3a7;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 40px;
+  margin-bottom: 60px;
+}
+
+.worker-section table {
+  width: 100%;
+  background: #ecd9c8;
+  border-radius: 20px;
+  padding: 18px 20px;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.worker-section .back-btn {
+  margin-top: 110px;
+}
+
 .title {
   font-family: "Lora", serif;
   color: #6bb3a7;
