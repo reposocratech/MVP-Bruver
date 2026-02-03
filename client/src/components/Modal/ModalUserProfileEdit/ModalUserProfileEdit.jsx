@@ -5,8 +5,7 @@ import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router'; 
 import { Button } from 'react-bootstrap';
 
-
-const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode }) => {
+const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode, hideDeleteButton }) => {
 
   const navigate = useNavigate(); 
   const { user: contextUser, setUser, token, logout } = useContext(AuthContext);
@@ -165,13 +164,15 @@ const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode }) 
               CANCELAR
             </button>
 
-            <button
-              type="button"
-              className="deleteBtn"
-              onClick={handleDeleteProfile}
-            >
-              ELIMINAR PERFIL
-            </button>
+            {!hideDeleteButton && (
+              <button
+                type="button"
+                className="deleteBtn"
+                onClick={handleDeleteProfile}
+              >
+                ELIMINAR PERFIL
+              </button>
+            )}
           </div>
         </form>
       </div>

@@ -229,6 +229,18 @@ class AppointmentController {
     }
   }
 
+  // Historial citas usuario (presente, pasadas y futuras)
+  getAllByUserId = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await appointmentDal.getAllByUserId(id);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al cargar el historial de citas del usuario" });
+    }
+  };
+
 }
 
 export default new AppointmentController();

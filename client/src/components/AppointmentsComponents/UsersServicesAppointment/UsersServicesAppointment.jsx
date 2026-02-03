@@ -1,7 +1,6 @@
 import React, { useContext, useEffect , useState} from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { fetchData } from "../../../helpers/axiosHelper";
-import { Button } from "react-bootstrap";
 import "./UsersServicesAppointment.css"
 
 export const UsersServicesAppointment = ({
@@ -25,7 +24,10 @@ export const UsersServicesAppointment = ({
 
   extrasIds,
   setExtrasIds,
-  minutesToHour
+  minutesToHour,
+
+  setCleaningServiceId,
+  setCleaningServiceDuration
 }) => {
 
   const { token } = useContext(AuthContext);
@@ -51,6 +53,19 @@ export const UsersServicesAppointment = ({
     };
     fetchService();
   }, [token, selectedPet]);
+
+  // Detectar servicio de limpieza (type 3) para reservar tiempo oculto al usuario
+  useEffect(() => {
+    const cleaning = services.find((s) => Number(s.type) === 3);
+
+    if (cleaning) {
+      setCleaningServiceId?.(cleaning.service_id);
+      setCleaningServiceDuration?.(Number(cleaning.duration_minutes || 0));
+    } else {
+      setCleaningServiceId?.(null);
+      setCleaningServiceDuration?.(0);
+    }
+  }, [services, setCleaningServiceDuration, setCleaningServiceId]);
 
   const baseServices = services.filter((s) => Number(s.type) === 1);
   const extras = services.filter((s) => Number(s.type) === 2);
@@ -147,7 +162,7 @@ export const UsersServicesAppointment = ({
                 className={`supplementsCard ${selected ? "selected" : ""}`}
               >
                 <div className="imgAndButton">
-                <img src={supplementImages[idx] || supplementImages[0]} alt={s.title} /> 
+                <div className="imgSuple"><img src={supplementImages[idx] || supplementImages[0]} alt={s.title} /> </div>
                 <button
                   className={selected ? "select-btn selected" : "select-btn"}
                   onClick={() => {toggleExtra(s.service_id);
@@ -180,7 +195,7 @@ export const UsersServicesAppointment = ({
             VOLVER
           </button>
           <button
-            className="next-btn"
+            className="back-btn"
             /* disabled={!baseServiceId} */
              onClick={() => setCurrentAppointment(3)}>
             SIGUIENTE
