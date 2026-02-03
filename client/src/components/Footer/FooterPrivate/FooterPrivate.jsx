@@ -15,7 +15,13 @@ import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
 export const FooterPrivate = () => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext);
-  const appointmentPath = user?.type === 1 || user?.type === 2 ? `/worker/WorkerDate/${user?.user_id}`: user?.type === 3 ? "/appointment" : "/";
+  const appointmentPath = user?.type === 1
+    ? `/admin/appointments/${user?.user_id}`
+    : user?.type === 2
+      ? `/worker/appointments/${user?.user_id}`
+      : user?.type === 3
+        ? "/appointment"
+        : "/";
   return (
     <footer className="footer">
       <div className="footer__content">
