@@ -23,4 +23,6 @@ router.post("/quick", verifyToken, appointmentController.createQuickAppointment)
 router.post("/client", verifyToken, appointmentController.createClientAppointment);
 router.post("/create", verifyToken, appointmentController.createClientAppointment);
 
+router.get("/getWorkerAppoiment/:employeeId", verifyToken, appointmentController.getWorkerAppoiment)
+
 export default router;
