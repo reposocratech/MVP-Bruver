@@ -1,6 +1,6 @@
 import { calculateEndTime } from "../../utils/calcEndTime.js";
 import appointmentDal from "./appointment.dal.js";
-import userDal from "../user/user.dal.js";
+
 
 class AppointmentController {
   //Citas del usuario logueado

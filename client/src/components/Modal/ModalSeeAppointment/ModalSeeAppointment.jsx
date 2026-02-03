@@ -68,12 +68,12 @@ const ModalSeeAppointment = ({ appointment, onClose, onUpdate, onDelete }) => {
       
       {showCancelModal && <ModalCancelAppointment
         appointment={appointment}
-        onClose={() => setShowCancelModal(false)}
+        onClose={onClose}
         onDelete={onDelete} />}
 
       {showEditModal && <ModalEditAppointment
         appointment={appointment}
-        onClose={() => setShowEditModal(false)}
+        onClose={onClose}
         onSubmit={onUpdate}
       />}
 
