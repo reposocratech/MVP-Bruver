@@ -1,79 +1,41 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Table, Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router";
-import "./clientprofilepage.css";
-import ModalUserProfileEdit from "../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
-import ModalPetEdit from "../../../../components/Modal/ModalpetEdit/ModalPetEdit";
-import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
-import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
-import { fetchData } from "../../../../helpers/axiosHelper";
+import React, { useEffect, useState, useContext } from "react";
+import { Table, Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router";
+import "./AdminClientHistory.css";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
+import { fetchData } from "../../../helpers/axiosHelper";
 
-const ClientProfilePage = () => {
-
-  const navigate = useNavigate();
+const AdminClientHistory = () => {
   const { id } = useParams();
-
-  const { user, token } = useContext(AuthContext);
-
-  const [openModal, setOpenModal] = useState(false);
-  const [openModalEditPet, setOpenModalEditPet] = useState(false);
-  const [selectedPet, setSelectedPet] = useState();
+  const navigate = useNavigate();
+  const { token } = useContext(AuthContext);
+  const [client, setClient] = useState(null);
   const [appointments, setAppointments] = useState([]);
-  const [showUser, setShowUser] = useState(user);
 
   useEffect(() => {
-    document.body.style.overflow = openModal ? "hidden" : "auto";
-    return () => (document.body.style.overflow = "auto");
-  }, [openModal]);
-  
-  useEffect(() => {
-    document.body.style.overflow = openModalEditPet ? "hidden" : "auto";
-    return () => (document.body.style.overflow = "auto");
-  }, [openModalEditPet]);
-
-  // actualiza y cambia si cambiamos id, token o user.
-  //si hay id en la ruta dinamica muestra ese, si no el logueado
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (id) {
-        try {
-          let res;
-          // Si el usuario autenticado es admin (type === 1), usa el endpoint de admin
-          if (user?.type === 1) {
-            res = await fetchData(`admin/user/${id}`, "GET", null, token);
-          } else {
-            res = await fetchData(`user/${id}`, "GET", null, token);
-          }
-          setShowUser(res?.data?.user || null);
-        } catch (error) {
-          console.log(error);
-          setShowUser(null);
-        }
-      } else {
-        setShowUser(user);
+    const fetchClient = async () => {
+      try {
+        const res = await fetchData(`admin/user/${id}`, "GET", null, token);
+        setClient(res.data.user);
+      } catch (error) {
+        console.log(error);
+        setClient(null);
       }
     };
-    fetchUser();
-  }, [id, user, token]);
+    fetchClient();
+  }, [id, token]);
 
-  // mira ruta dinamica, si no hay id, te enseña el logueado
   useEffect(() => {
-    const getAppointments = async () => {
+    const fetchAppointments = async () => {
       try {
-        let res;
-        if (id) {
-          res = await fetchData(`appointment/user/${id}`, "GET", null, token);
-          console.log(res);
-        } else {
-          res = await fetchData("appointment/mine", "GET", null, token);
-        }
-        setAppointments(res?.data?.appointments || []);
+        const res = await fetchData(`appointment/user/${id}`, "GET", null, token);
+        setAppointments(res.data.appointments || []);
       } catch (error) {
         console.log(error);
         setAppointments([]);
       }
     };
-    if (token) getAppointments();
+    fetchAppointments();
   }, [id, token]);
 
   const formatDate = (dateStr) => {
@@ -93,53 +55,39 @@ const ClientProfilePage = () => {
   };
 
   return (
-    <div className="clientProfilePage">
-      <h1 className="profileTitle">Perfil usuario</h1>
-
-      {/* INFO */}
+    <div className="adminClientHistoryPage">
+      <h1 className="profileTitle">Historial de cliente</h1>
       <section className="infoCard">
         <div className="infoLeft">
           <div className="infoHeader">
             <h2 className="infoTitle">Información</h2>
-
-            <Button
-              type="button"
-              className="editBtn"
-              onClick={() => setOpenModal(true)}
-            >
-              ✎ Editar
-            </Button>
           </div>
-
           <div className="infoTableWrap">
             <Table className="infoTable" borderless>
               <tbody>
                 <tr>
                   <td className="infoKey">Nombre</td>
-                  <td className="infoValue">
-                    {showUser?.name_user} {showUser?.last_name}
-                  </td>
+                  <td className="infoValue">{client?.name_user} {client?.last_name}</td>
                 </tr>
                 <tr>
                   <td className="infoKey">Correo</td>
-                  <td className="infoValue">{showUser?.email}</td>
+                  <td className="infoValue">{client?.email}</td>
                 </tr>
                 <tr>
                   <td className="infoKey">Teléfono</td>
-                  <td className="infoValue">{showUser?.phone}</td>
+                  <td className="infoValue">{client?.phone}</td>
                 </tr>
               </tbody>
             </Table>
           </div>
         </div>
-
         <div className="infoRight">
           <div className="userPhoto">
             <span>
-              {showUser && showUser.picture_user ? (
+              {client && client.picture_user ? (
                 <img
                   className="userPhoto"
-                  src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${showUser.picture_user}`}
+                  src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${client.picture_user}`}
                   alt="Imagen de perfil"
                 />
               ) : (
@@ -153,81 +101,44 @@ const ClientProfilePage = () => {
           </div>
         </div>
       </section>
-
-      {/* MASCOTAS */}
-      <section className="petsSection">
-        <div className="sectionHeader">
-          <h1 className="sectionTitle">Mis mascotas</h1>
-
-          <Button
-            type="button"
-            className="addLinkBtn"
-            onClick={() => navigate("/addpet")}
-          >
-            🐾 Añadir
-          </Button>
-        </div>
-
-        <div className="petsGrid">
-          <Container>
-            <Row>
-              <Col>
-                <UsersPetsGallery 
-                  setOpenModalEditPet={setOpenModalEditPet}
-                  setSelectedPet={setSelectedPet}
-                />
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      </section>
-
-      {/* CITAS */}
       <section className="appointmentsSection">
-        <h1 className="sectionTitle center">Mis citas</h1>
-
+        <h1 className="sectionTitle center">Citas de {client?.name_user || ''}</h1>
         <div className="appointmentsTableWrap">
           <Table className="appointmentsTable" bordered>
             <thead>
               <tr>
+                <th>ID</th>
                 <th>HORA</th>
                 <th>DÍA DE RESERVA</th>
                 <th>TOTAL</th>
               </tr>
             </thead>
-
             <tbody>
               {appointments.length === 0 ? (
                 <tr>
-                  <td colSpan={3} style={{ textAlign: "center" }}>
-                    No tienes citas todavía
+                  <td colSpan={4} style={{ textAlign: "center" }}>
+                    No hay citas para este cliente
                   </td>
                 </tr>
               ) : (
                 appointments.map((a) => (
                   <tr key={a.appointment_id}>
+                    <td>{a.appointment_id}</td>
                     <td>{formatTime(a.start_time)}</td>
                     <td>{formatDate(a.appointment_date)}</td>
                     <td>{formatPrice(a.total_price)}</td>
                   </tr>
-                )
-              )
-              )
-              }
+                ))
+              )}
             </tbody>
           </Table>
         </div>
       </section>
-
-      {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
-      {openModalEditPet && (
-        <ModalPetEdit
-          onClose={() => setOpenModalEditPet(false)}
-          pet={selectedPet}
-        />
-      )}
+      <Button className="backBtn" type="button" onClick={() => navigate(-1)}>
+        VOLVER
+      </Button>
     </div>
   );
 };
 
-export default ClientProfilePage;
+export default AdminClientHistory;

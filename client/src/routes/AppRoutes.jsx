@@ -40,6 +40,7 @@ const AdminProfile = lazy(()=> import("../pages/AdminPages/AdminProfile/AdminPro
 const AdminAppointments = lazy(() => import("../pages/AdminPages/AdminAppointments/AdminAppointments.jsx"));
 const AdminWorkingHours = lazy(() => import("../pages/AdminPages/AdminWorkingHours/AdminWorkingHours.jsx"))
 const GeneralCalendarPage = lazy(()=>import("../pages/AdminPages/GeneralCalendarPage/GeneralCalendarPage.jsx") )
+const AdminClientHistory = lazy(() => import("../pages/AdminPages/AdminClientHistory/AdminClientHistory.jsx"))
 
 
 
@@ -95,6 +96,7 @@ export const AppRoutes = () => {
               <Route path="/admin/general" element={<GeneralCalendarPage/>} />
               <Route path="/admin/appointments/:adminId" element={<AdminAppointments />} />
               <Route path="/admin/workinghours/:adminId" element={<AdminWorkingHours />} />
+              <Route path="/admin/clienthistory/:id" element={<AdminClientHistory />} />
             </Route>
           </Route>
 

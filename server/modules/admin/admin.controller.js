@@ -5,7 +5,6 @@ import { generarContrasena } from "../../utils/generarPassAle.js";
 import bcrypt from "bcrypt";
 
 
-
 class AdminController {
 
   getAdminProfile = async (req, res) => {
@@ -178,6 +177,17 @@ class AdminController {
     }
   };
 
+    // Obtener historial de citas de un cliente por id
+  getClientHistory = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await adminDal.getClientAppointments(id);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al obtener el historial de citas del cliente" });
+    }
+  };
 }
 
 export default new AdminController();

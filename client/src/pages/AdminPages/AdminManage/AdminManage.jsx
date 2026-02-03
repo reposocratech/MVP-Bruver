@@ -304,10 +304,10 @@ const AdminManage = () => {
                         setSelectedUser(c); setShowEditProfileModal(true); }}>
                         EDITAR
                       </button>
-                      <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
+                      {/* <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
                         VER PERFIL
-                      </button>
-                      <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
+                      </button> */}
+                      <button className="agr-pill" type="button" onClick={() => navigate(`/admin/clienthistory/${c.id}`)}>
                         VER HISTORIAL
                       </button>
                       <button className="agr-pill" type="button" onClick={() => handleIsDeleted(c.id, c.is_deleted)}>
