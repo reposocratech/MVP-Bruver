@@ -87,7 +87,7 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
       0,
     );
 
-    const totalMinutes = Number(baseService?.duration_minutes || 0) + extraMinutes;
+    const totalMinutes = Number(baseService?.duration_minutes || 0) + extraMinutes + 15; // más 15 minutos para la limpieza
     const total = Number(baseService?.price || 0) + extraPrice;
 
     setMinutes(totalMinutes);

@@ -86,7 +86,11 @@ class UserDal {
 
   getUsersByType = async (type) => {
     try {
-      const sql = `SELECT user_id, name_user, last_name, phone, email, address, province, city, type, picture_user FROM user WHERE type = ? AND is_deleted = 0`;
+      const sql = `
+      SELECT user_id, name_user, last_name, phone, email, address, province, city, type, picture_user
+      FROM user 
+      WHERE type = ? AND is_deleted = 0
+      `;
       const result = await executeQuery(sql, [type]);
       return result;
     } catch (error) {

@@ -3,7 +3,6 @@ import './UsersDateAppointment.css';
 // Hooks de React (estado, efectos y contexto)
 import { useState, useEffect, useContext } from 'react';
 // Calendario simple para elegir fecha (lado izquierdo)
-import { Button } from 'react-bootstrap';
 import Calendar from 'react-calendar';
 // dayjs para manipular fechas y horas de forma sencilla
 import dayjs from 'dayjs';
@@ -38,8 +37,7 @@ dayjs.extend(isoWeek);
 */
 export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedPet, baseServiceId, extrasIds, sumaTotalPrecio, sumaTotalMinutos, minutesToHour, cleaningServiceId = null, cleaningServiceDuration = 0 }) => {
   // Fecha seleccionada en el mini-calendario (Date)
-  // DEBUG: Mostrar los valores de workers y picture_user
-  console.log('DEBUG workers:', workers);
+  
   const [date, setDate] = useState(new Date());
   // Id del empleado seleccionado (null = ninguno)
   const [workerId, setWorkerId] = useState(null);
