@@ -23,7 +23,7 @@ export const CalendarCitas = ({
   openNewAppointment
 }) => {
   return (
-    <div className="calendar-working-hours">
+    <div className="calendar-working-hours calendar-citas">
       <DnDCalendar
         localizer={localizer}
         view={view}

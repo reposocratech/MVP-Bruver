@@ -21,7 +21,7 @@
   color: #6bb3a7;
   font-weight: 700;
   letter-spacing: 2px;
-  margin-bottom: 90px;
+  margin-bottom: 70px;
   font-size: 34px;
   text-align: center;
 }
@@ -29,7 +29,7 @@
 .agr-page .agr-section {
   width: 100%;
   max-width: 920px;
-  margin-bottom: 100px;
+  margin-bottom: 90px;
 }
 
 .agr-page .agr-section-title {
@@ -86,15 +86,11 @@
   background: rgba(166, 200, 183, 0.25);
 }
 
-.agr-page .agr-bold {
-  font-weight: 700;
-}
-
 .agr-page .agr-actions {
   display: flex;
-  justify-content: center;
-  gap: 14px;
   flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 12px;
 }
 
 .agr-page .agr-pill {
@@ -102,12 +98,13 @@
   color: #246B64;
   border: 1.5px solid #246B64;
   border-radius: 999px;
-  padding: 9px 22px;
-  font-size: 13px;
+  padding: 8px 16px;
+  font-size: 12.5px;
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
 }
 
 .agr-page .agr-pill:hover {
@@ -119,7 +116,7 @@
   display: flex;
   justify-content: center;
   gap: 24px;
-  margin-top: 60px;
+  margin-top: 50px;
   flex-wrap: wrap;
 }
 
@@ -128,8 +125,7 @@
   color: #ffffff;
   border: none;
   border-radius: 999px;
-  padding: 14px 28px;
-  min-width: 180px;
+  padding: 12px 24px;
   font-weight: 700;
   font-size: 14px;
   cursor: pointer;
@@ -142,18 +138,9 @@
 }
 
 @media (max-width: 768px) {
-  .agr-page .agr-title {
-    font-size: 26px;
-  }
-
-  .agr-page .agr-table {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-  }
 
   .agr-page .agr-table thead {
-    display: none;
+    display: none !important;
   }
 
   .agr-page .agr-table,
@@ -166,58 +153,73 @@
 
   .agr-page .agr-table tr {
     background: #ffffff;
-    border-radius: 20px;
-    padding: 18px 18px 20px;
-    margin-bottom: 22px;
+    border-radius: 18px;
+    padding: 18px 16px 20px;
+    margin: 0 auto 22px;
     border: 1.5px solid #246B64;
-    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
+    text-align: center;
+  }
+
+  .agr-page .agr-table tr::before,
+  .agr-page .agr-table tr::after {
+    display: none !important;
   }
 
   .agr-page .agr-table td {
-    border: none;
+    border: none !important;
     padding: 6px 0;
     display: flex;
     justify-content: center;
-    gap: 8px;
-    font-size: 14px;
-    text-align: center;
+    gap: 6px;
+    font-size: 13px;
   }
 
   .agr-page .agr-table td::before {
     content: attr(data-label);
     font-weight: 700;
     color: #6a5a50;
-    margin-right: 6px;
     white-space: nowrap;
   }
 
   .agr-page .agr-actions {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
     margin-top: 14px;
   }
 
   .agr-page .agr-pill {
-    flex: 1;
-    min-width: 130px;
-    padding: 10px 0;
+    width: auto;
+    min-width: max-content;
+    padding: 10px 18px;
+    font-size: 12.5px;
+  }
+
+  .agr-page .agr-bottom {
+    margin-top: 40px;
   }
 }
 
-@media (min-width: 769px) {
-  .agr-page .agr-table thead th:first-child {
-    border-top-left-radius: 20px;
+@media (max-width: 768px) {
+
+  .agr-page .agr-table {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
   }
 
-  .agr-page .agr-table thead th:last-child {
-    border-top-right-radius: 20px;
+  .agr-page .agr-table-wrap {
+    display: flex;
+    justify-content: center;
   }
 
-  .agr-page .agr-table tbody tr:last-child td:first-child {
-    border-bottom-left-radius: 20px;
+  .agr-page .agr-table tr {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 360px;
   }
 
-  .agr-page .agr-table tbody tr:last-child td:last-child {
-    border-bottom-right-radius: 20px;
-  }
 }

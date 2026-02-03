@@ -23,7 +23,8 @@ export const CalendarWorkingHours = ({
   handleSelectEvent,
 }) => {
   return (
-    <div className="calendar-working-hours">
+    <div className="calendar-working-hours calendar-working-hours-scope">
+
       <DnDCalendar
         localizer={localizer}
         view={view}
