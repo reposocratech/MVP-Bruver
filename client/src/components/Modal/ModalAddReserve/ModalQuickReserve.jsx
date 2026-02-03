@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import  { useEffect, useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { formatDate } from '../../../helpers/buildDateHelper';
 import './ModalQuickReserve.css';
+
 
 const LS_KEY = 'reserve_quick';
 
-const ModalQuickReserve = ({ toBack }) => {
-  const { token } = useContext(AuthContext);
-
+const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) => {
+  const { token, user } = useContext(AuthContext);
+  
   const [services, setServices] = useState([]);
   const [supplements, setSupplements] = useState([]);
 
@@ -49,9 +51,8 @@ const ModalQuickReserve = ({ toBack }) => {
       service_id: isCat ? null : selectedServiceId || null,
       supplement_ids: isCat ? [] : selectedSupplementIds,
 
-      //AQUÍ IGUAL QUE EN EL OTRO MODAL, LOS DEJO EN NULL (DE MOMENTO DARÁ ERROR HASTA QUE TRAIGAMOS LOS DATOS DESDE EL CALENDARIO)
-      appointment_date: null,
-      start_time: null,
+      appointment_date: formatDate(dateStartTime.toString()),
+      start_time: dateStartTime.toString().split(" ")[4],
 
       duration_minutes: isCat ? 0 : finalDuration,
       total_price: isCat ? '0.00' : finalPrice,
@@ -215,8 +216,17 @@ const ModalQuickReserve = ({ toBack }) => {
       const res = await fetchData('appointment/quick', 'POST', data, token);
       console.log('CITA CREADA:', res.data);
 
+      // Refrescar lista de citas del admin/empleado que muestra el calendario
+      try {
+        const resAppointments = await fetchData(`appointment/getAdminAppoiment/${user?.user_id}`, 'GET', null, token);
+        if (setAppoiment) setAppoiment(resAppointments.data.result || []);
+      } catch (err) {
+        console.log('No se pudo refrescar la lista de citas:', err);
+      }
+
       localStorage.removeItem(LS_KEY);
-      toBack();
+      if (onCloseAll) onCloseAll();
+      else toBack();
     } catch (error) {
       console.log('error al crear la cita:', error);
     }

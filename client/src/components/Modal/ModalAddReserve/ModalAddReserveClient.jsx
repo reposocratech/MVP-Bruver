@@ -47,7 +47,6 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
       service_id: isCat ? null : serviceId || null,
       supplement_ids: isCat ? [] : extrasIds,
 
-      // AQUÍIII LOS HE DEJADO EN NULL HASTA CONECTAR CON EL CALENDARIO. DARÁ ERROR POR ESTOS 2 CAMPOS!!!!
       appointment_date: formatDate(dateStartTime.toString()),
       start_time: dateStartTime.toString().split(" ")[4],
 
@@ -229,7 +228,6 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
       const res = await fetchData('appointment/client', 'POST', data, token);
       console.log('Cita creada:', res.data);
 
-      // Refrescar lista de citas del admin/empleado que muestra el calendario
       try {
         const resAppointments = await fetchData(`appointment/getAdminAppoiment/${user?.user_id}`, 'GET', null, token);
         setAppoiment(resAppointments.data.result || []);
