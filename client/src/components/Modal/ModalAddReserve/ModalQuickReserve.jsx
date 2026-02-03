@@ -37,27 +37,27 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
 
   const saveReserve = () => {
     const finalDuration =
-      manualDuration !== '' ? Number(manualDuration || 0) : Number(duration || 0);
+    manualDuration !== '' ? Number(manualDuration || 0) : Number(duration || 0);
 
-    const finalPrice =
-      manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : String(price || '0.00');
+  const finalPrice =
+    manualPrice !== '' ? Number(manualPrice || 0).toFixed(2) : Number(price || 0).toFixed(2);
 
-    const data = {
-      client_name: clientName || null,
-      phone: phone || null,
-      hair: hair || null,
-      specie: specie || null,
+  const data = {
+    client_name: clientName || null,
+    phone: phone || null,
+    hair: hair || null,
+    specie: specie || null,
 
-      service_id: isCat ? null : selectedServiceId || null,
-      supplement_ids: isCat ? [] : selectedSupplementIds,
+    service_id: isCat ? null : selectedServiceId || null,
+    supplement_ids: isCat ? [] : selectedSupplementIds,
 
-      appointment_date: formatDate(dateStartTime.toString()),
-      start_time: dateStartTime.toString().split(" ")[4],
+    appointment_date: formatDate(dateStartTime.toString()),
+    start_time: dateStartTime.toString().split(" ")[4],
 
-      duration_minutes: isCat ? 0 : finalDuration,
-      total_price: isCat ? '0.00' : finalPrice,
-      observations: observations || null,
-    };
+    duration_minutes: finalDuration,
+    total_price: finalPrice,
+    observations: observations || null,
+  };
 
     localStorage.setItem(LS_KEY, JSON.stringify(data));
   };
@@ -101,19 +101,16 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
     calcTotal(selectedServiceId, next);
   };
 
-  // si es gato, limpiamos servicios/suplementos y precios
+  // si es gato, limpiamos servicios/suplementos pero permitimos duración/precio manual
   useEffect(() => {
-  if (String(specie) !== '2') return;
-  setTimeout(() => {
-    setSizeCategory('');
-    setSelectedServiceId('');
-    setSelectedSupplementIds([]);
-    setDuration(0);
-    setPrice('0.00');
-    setManualDuration('');
-    setManualPrice('');
-  }, 0);
-}, [specie]);
+    if (String(specie) !== '2') return;
+    setTimeout(() => {
+      setSizeCategory('');
+      setSelectedServiceId('');
+      setSelectedSupplementIds([]);
+      // No borramos duration/price para permitir introducir valores manuales para gatos
+    }, 0);
+  }, [specie]);
 
 
   // carga servicios y suplementos por categoria
@@ -125,10 +122,13 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
           setSupplements([]);
           setSelectedServiceId('');
           setSelectedSupplementIds([]);
-          setDuration(0);
-          setPrice('0.00');
-          setManualDuration('');
-          setManualPrice('');
+          // Si la especie es gato no borramos duración/precio para permitir reservas manuales
+          if (String(specie) !== '2') {
+            setDuration(0);
+            setPrice('0.00');
+            setManualDuration('');
+            setManualPrice('');
+          }
           return;
         }
 
@@ -160,10 +160,13 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
         setSupplements([]);
         setSelectedServiceId('');
         setSelectedSupplementIds([]);
-        setDuration(0);
-        setPrice('0.00');
-        setManualDuration('');
-        setManualPrice('');
+        // Si la especie es gato no borramos duración/precio para permitir reservas manuales
+        if (String(specie) !== '2') {
+          setDuration(0);
+          setPrice('0.00');
+          setManualDuration('');
+          setManualPrice('');
+        }
       }
     };
 
@@ -396,7 +399,7 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
               <Button
                 className="close"
                 type="submit"
-                disabled={!sizeCategory && !isCat}
+                disabled={!sizeCategory && !isCat} 
               >
                 Aceptar
               </Button>

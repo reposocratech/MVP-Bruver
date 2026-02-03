@@ -76,11 +76,12 @@ class AppointmentController {
 
     const isCat = String(specie) === "2";
 
-    const dur = isCat ? 0 : Number(duration_minutes || 0);
-    const price = isCat ? 0 : Number(total_price || 0);
+    // Permitimos duración y precio enviados incluso para gatos
+    const dur = Number(duration_minutes || 0);
+    const price = Number(total_price || 0);
 
-    const baseServiceId = isCat ? null : (service_id || null);
-    const extrasArray = isCat ? [] : (Array.isArray(supplement_ids) ? supplement_ids : []);
+    const baseServiceId = service_id || null;
+    const extrasArray = Array.isArray(supplement_ids) ? supplement_ids : [];
 
     //Crear cita
     const created = await appointmentDal.createQuickAppointment({
@@ -226,6 +227,20 @@ class AppointmentController {
     } catch (error) {
       console.log(error);
       res.status(500).json(error);
+    }
+  }
+
+   getWorkerAppoiment = async(req, res)=>{
+    const {employeeId} = req.params
+    try {
+      const result = await appointmentDal.getWorkerAppoiment(employeeId)
+      res.status(200).json({
+        message:"oki",
+        result
+      })
+    } catch (error) {
+      console.log(error);
+      
     }
   }
 

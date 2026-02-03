@@ -342,6 +342,48 @@ WHERE appointment_id = ?;`
     }
   };
 
+  getWorkerAppoiment = async (employeeId) => {
+    try {
+      const sql = `
+            SELECT
+        a.appointment_id,
+        a.appointment_date,
+        a.start_time,
+        a.end_time,
+        a.status,
+        a.employee_user_id,
+        a.total_price,
+
+        emp.user_id        AS employee_id,
+        emp.name_user      AS employee_name,
+        emp.last_name      AS employee_lastname,
+
+        cli.user_id        AS client_id,
+        cli.name_user      AS client_name,
+        cli.last_name      AS client_lastname,
+
+        creator.user_id   AS created_by_id,
+        creator.name_user AS created_by_name,
+        creator.type      AS created_by_type
+
+        FROM appointment a
+        JOIN user emp 
+          ON emp.user_id = a.employee_user_id
+        LEFT JOIN user cli 
+          ON cli.user_id = a.client_user_id
+        JOIN user creator 
+          ON creator.user_id = a.created_by_user_id
+
+        WHERE a.status != 3
+        AND a.employee_user_id = ?;
+      `;
+      let result = await executeQuery(sql, [employeeId]);
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
 
 }
 
