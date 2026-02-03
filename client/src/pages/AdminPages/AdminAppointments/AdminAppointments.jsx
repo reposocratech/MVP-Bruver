@@ -155,7 +155,7 @@ const AdminAppointments = () => {
 
 
   return (
-    <section className="admin-section">
+    <section className="calendar-citas-scope">
       <h2 className="title">Mis citas</h2>
       <CalendarCitas
         view={view}

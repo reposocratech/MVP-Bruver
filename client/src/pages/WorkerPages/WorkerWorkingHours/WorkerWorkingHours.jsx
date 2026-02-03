@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import '../AdminProfile/AdminProfile.css';
+/* import '../AdminProfile/AdminProfile.css'; */
 import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours.jsx';
 import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours.jsx';
 import dayjs from "dayjs";
@@ -8,26 +8,27 @@ import isoWeek from "dayjs/plugin/isoWeek";
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js';
 import { fetchData } from '../../../helpers/axiosHelper.js';
 import { getDateFromDayId } from '../../../helpers/dateHelper.js';
+import './WorkerWorkingHours.css'
 
 
 
 dayjs.extend(isoWeek);
 
-const AdminWorkingHours = () => {
+const WorkerWorkingHours = () => {
   const [view, setView] = useState('week')
   const [date, setDate] = useState(new Date())
   const [schedule, setSchedule] = useState([])
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const { adminId } = useParams()
+  const { workerId } = useParams()
   const { token } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
     const fetchSchedule = async () => {
       const res = await fetchData(
-        `availability/getWorkingHours/${adminId}`,
+        `availability/getWorkingHours/${workerId}`,
         'get',
         null,
         token
@@ -35,7 +36,7 @@ const AdminWorkingHours = () => {
       setSchedule(res.data.result)
     }
     fetchSchedule()
-  }, [])
+  }, [workerId])
   
 
   const handleSelectSlot = async ({ start, end }) => {
@@ -45,7 +46,7 @@ const AdminWorkingHours = () => {
     const startDayjs = dayjs(start);
 
     const data = {
-      user_id: adminId,
+      user_id: workerId,
       day_id: startDayjs.isoWeekday(),
       start_time: startDayjs.format('HH:mm:ss'),
       end_time: dayjs(end).format('HH:mm:ss'),
@@ -148,7 +149,8 @@ const AdminWorkingHours = () => {
   
 
   return (
-    <section className="admin-working-hours-page">
+    <section className="worker-calendar-scope">
+
       <h2 className="title">Horario laboral</h2>
 
       <CalendarWorkingHours
@@ -181,4 +183,5 @@ const AdminWorkingHours = () => {
   )
   
 };
-export default AdminWorkingHours
+
+export default WorkerWorkingHours

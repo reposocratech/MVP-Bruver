@@ -4,43 +4,43 @@
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
   z-index: 9999;
 }
 
 .card {
   width: 100%;
   max-width: 720px;
+  padding: 40px 48px 36px;
   background: #e6d3c2;
   border-radius: 28px;
-  padding: 40px 48px 36px;
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
   font-family: "Raleway", sans-serif;
 }
 
 .card h3 {
+  margin-bottom: 26px;
+  text-align: center;
   font-family: "Lora", serif;
   font-size: 32px;
   font-weight: 700;
   color: #4a2e24;
-  text-align: center;
-  margin-bottom: 26px;
 }
 
 .searchInput {
+  display: block;
   width: 100%;
   max-width: 420px;
   height: 46px;
   margin: 0 auto 26px;
-  display: block;
   padding: 0 18px;
   border-radius: 999px;
   border: 1.5px solid rgba(74, 46, 36, 0.35);
-  font-family: "Lora", serif;
   outline: none;
+  font-family: "Lora", serif;
 }
 
 .searchInput:focus {
@@ -48,76 +48,78 @@
 }
 
 .tableWrapper {
-  max-height: 300px;
-  overflow-y: auto;
-  border-radius: 18px;
+  margin-bottom: 34px;
   background: #fcf2e9;
-  margin: 0 auto 34px;
+  border-radius: 22px;
+  overflow: hidden;
 }
 
 .table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-family: "Lora", serif;
 }
 
-.table th {
+.table thead {
   background: #6bb3a7;
-  color: white;
+}
+
+.table thead th {
   padding: 14px 18px;
   font-size: 14px;
   font-weight: 700;
+  color: #ffffff;
   text-align: center;
 }
 
-
-.table th:first-child {
-  border-top-left-radius: 18px;
+.table thead th:first-child {
+  border-top-left-radius: 22px;
 }
 
-.table th:last-child {
-  border-top-right-radius: 18px;
+.table thead th:last-child {
+  border-top-right-radius: 22px;
 }
 
 .table td {
   padding: 14px 18px;
   font-size: 15px;
   color: #4a2e24;
+  text-align: center;
+  background: #fcf2e9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .row {
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
-.row:hover {
+.row:hover td {
   background: rgba(107, 179, 167, 0.18);
 }
 
-.activeRow {
+.activeRow td {
   background: rgba(107, 179, 167, 0.35);
 }
 
 .empty {
-  text-align: center;
   padding: 20px;
+  text-align: center;
   color: #4a2e24;
 }
 
 .actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+  justify-content: center;
+  gap: 24px;
 }
 
 .actions button {
   min-width: 140px;
   height: 46px;
   border-radius: 999px;
-  font-weight: 600;
   border: none;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -129,10 +131,8 @@
 
 .actions button:last-child {
   background: #6bb3a7;
-  color: white;
+  color: #ffffff;
 }
-
-
 
 @media (max-width: 600px) {
   .card {
@@ -144,4 +144,3 @@
     gap: 14px;
   }
 }
-
