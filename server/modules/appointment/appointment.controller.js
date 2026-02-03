@@ -52,6 +52,7 @@ class AppointmentController {
       
     }
   }
+
   createQuickAppointment = async (req, res) => {
   try {
     const { user_id } = req;
