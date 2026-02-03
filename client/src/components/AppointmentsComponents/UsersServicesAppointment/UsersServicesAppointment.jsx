@@ -162,7 +162,7 @@ export const UsersServicesAppointment = ({
                 className={`supplementsCard ${selected ? "selected" : ""}`}
               >
                 <div className="imgAndButton">
-                <img src={supplementImages[idx] || supplementImages[0]} alt={s.title} /> 
+                <div className="imgSuple"><img src={supplementImages[idx] || supplementImages[0]} alt={s.title} /> </div>
                 <button
                   className={selected ? "select-btn selected" : "select-btn"}
                   onClick={() => {toggleExtra(s.service_id);
@@ -195,7 +195,7 @@ export const UsersServicesAppointment = ({
             VOLVER
           </button>
           <button
-            className="next-btn"
+            className="back-btn"
             /* disabled={!baseServiceId} */
              onClick={() => setCurrentAppointment(3)}>
             SIGUIENTE
