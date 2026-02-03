@@ -7,7 +7,7 @@ const ModalCancelAppointment = ({ onClose, onDelete, appointment }) => {
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <div className="appointment-modal-header">
-            <span className="appointment-modal-bid">BID 56544</span>
+            <span className="appointment-modal-bid">Cancelar reserva</span>
             <div>
               <span className="appointment-modal-edit">✏️</span>
               <span className="appointment-modal-delete">🗑️</span>

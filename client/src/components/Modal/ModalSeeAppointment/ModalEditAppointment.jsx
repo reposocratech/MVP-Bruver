@@ -71,7 +71,7 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <div className="appointment-modal-header">
-            <span className="appointment-modal-bid">BID 56544</span>
+            <span className="appointment-modal-bid">Editar reserva</span>
             <span className="appointment-modal-close" onClick={onClose}>✕</span>
           </div>
           <form className="appointment-modal-form">

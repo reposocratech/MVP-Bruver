@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import './AdminWorkingHours.css';
+import './WorkerWorkingHours.css';
 import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours';
 import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours';
 import dayjs from "dayjs";
@@ -22,7 +22,7 @@ const WorkerWorkingHours = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
   
     const { workerId } = useParams()
-    const { token } = useContext(AuthContext)
+    const { token, user } = useContext(AuthContext)
     const navigate = useNavigate()
   
     useEffect(() => {
@@ -152,7 +152,7 @@ const WorkerWorkingHours = () => {
   return (
     
      <section className="admin-working-hours-page">
-      <h2 className="title">Horario laboral (Admin)</h2>
+      <h2 className="title">Horario laboral {user.name_user} </h2>
 
       <CalendarWorkingHours
         view={view}

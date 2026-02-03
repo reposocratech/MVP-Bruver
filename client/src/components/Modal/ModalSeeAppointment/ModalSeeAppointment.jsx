@@ -15,7 +15,7 @@ const ModalSeeAppointment = ({ appointment, onClose, onUpdate, onDelete }) => {
         <div className="addReserveGridModal">
           <div className="addReserveCardModal">
             <div className="appointment-modal-header">
-              <span className="appointment-modal-bid">BID 56544</span>
+              <span className="appointment-modal-bid">Datos de la reserva</span>
               <div>
                 <span className="appointment-modal-edit" onClick={() => setShowEditModal(true)}>✏️</span>
                 <span className="appointment-modal-delete" onClick={() => setShowCancelModal(true)}>🗑️</span>
