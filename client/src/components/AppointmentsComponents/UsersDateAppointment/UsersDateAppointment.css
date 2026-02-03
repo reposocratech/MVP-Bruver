@@ -268,7 +268,12 @@ gap: 15px;
   background-color: #b79c81;
 }
 
-/* RESPONSIVE TRABAJADORES */
+.error {
+  color: #d9534f;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
 
 @media (max-width: 1024px) {
   

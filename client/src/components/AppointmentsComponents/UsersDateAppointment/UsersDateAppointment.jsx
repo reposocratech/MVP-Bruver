@@ -2,6 +2,7 @@
 import './UsersDateAppointment.css';
 // Hooks de React (estado, efectos y contexto)
 import { useState, useEffect, useContext } from 'react';
+import ModalAppointmentConfirmed from '../../Modal/ModalAppointmentConfirmed/ModalAppointmentConfirmed';
 // Calendario simple para elegir fecha (lado izquierdo)
 import Calendar from 'react-calendar';
 // dayjs para manipular fechas y horas de forma sencilla
@@ -53,6 +54,8 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Errores de validación y mensajes de error para mostrar en la UI
   const [errorMsg, setErrorMsg] = useState(null);
+  // Modal de éxito
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Extraemos token del AuthContext para hacer peticiones autenticadas
   const { token } = useContext(AuthContext);
@@ -181,6 +184,7 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
 
   // Selección mediante click en lista de botones (slots)
   const handleSelectSlot = (slot) => {
+    setErrorMsg(null);
     setSelectedSlot(slot); // marcamos el slot
   }; 
 
@@ -223,13 +227,9 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
       // Actualizamos las citas del empleado para reflejar el nuevo estado
       const appoRes = await fetchData(`appointment/getAdminAppoiment/${workerId}`, 'get', null, token);
       setAppointments(appoRes.data.result || []);
-
-      alert('Cita creada correctamente');
-
-      // Reset de selección y retorno al paso inicial
       setSelectedSlot(null);
       setWorkerId(null);
-      setCurrentAppointment(1);
+      setShowSuccess(true);
     } catch (error) {
       if (error instanceof ZodError) {
         const objTemp = {};
@@ -238,10 +238,8 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
         });
       } else if (error?.response) {
         setErrorMsg(error.response.data.message);
-        alert(error.response.data.message);
       } else {
         setErrorMsg('Error al crear la cita');
-        alert('Error al crear la cita');
       }
       console.error(error);
     } finally {
@@ -358,6 +356,10 @@ export const UsersDateAppointment = ({ setCurrentAppointment, workers, selectedP
           VOLVER
         </button>
       </div>
+
+      {showSuccess && (
+        <ModalAppointmentConfirmed onClose={() => setShowSuccess(false)} />
+      )}
     </>
   );
 };
