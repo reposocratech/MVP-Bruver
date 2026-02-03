@@ -351,6 +351,7 @@ const AdminManage = () => {
           user={selectedUser}
           onUserUpdated={handleUserUpdated}
           editClientCode={selectedUser?.type === 3}
+          hideDeleteButton={true}
         />
       )}
 
