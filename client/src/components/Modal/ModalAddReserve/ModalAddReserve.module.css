@@ -5,7 +5,6 @@
   position: fixed;
   inset: 0;
   background: rgba(240,214,192,0.5);
-  border-radius:21px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,86 +21,63 @@
   background: #e6d3c2;
   border-radius: 22px;
   padding: 36px 34px;
-  text-align: center;
-  font-family: Raleway, sans-serif;
+  font-family: "Raleway", sans-serif;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .addReserveCardModal h3 {
-  font-family: Lora, serif;
+  font-family: "Lora", serif;
   font-size: 30px;
   color: #4a2e24;
   margin-bottom: 22px;
+  text-align: center;
 }
 
-select {
+.addReserveCardModal select {
   width: 100%;
   max-width: 360px;
   height: 42px;
-  margin: 0 auto 30px;
+  margin-bottom: 30px;
   padding: 0 14px;
   border-radius: 12px;
   border: 1px solid rgba(74,46,36,0.4);
-  font-family: Lora, serif;
+  font-family: "Lora", serif;
+  background: #fff;
 }
 
 .modalActions {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 26px;
+  width: 100%;
 }
-
-.primary {
-  background: #6bb3a7;
-  color: white;
-  border-radius: 999px;
-  padding: 10px 22px;
-  border: none;
-}
-
-.secondary {
-  background: rgba(74,46,36,0.5);
-  color: white;
-  border-radius: 999px;
-  padding: 10px 22px;
-  border: none;
-}
-
 
 .primary,
 .secondary {
+  min-width: 140px;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-.primary:focus,
-.primary:active,
-.primary:focus-visible,
-.secondary:focus,
-.secondary:active,
-.secondary:focus-visible {
-  outline: none;
-  box-shadow: none;
+.primary {
+  background: #6bb3a7;
+  color: #ffffff;
 }
 
-.primary:active {
-  background: #5aa79c;
-}
-
-.secondary:active {
-  background: rgba(74,46,36,0.65);
-}
-
-.primary:hover,
-.primary:focus,
-.primary:active,
-.secondary:hover,
-.secondary:focus,
-.secondary:active {
-  background-color: inherit;
-  outline: none;
-  box-shadow: none;
+.secondary {
+  background: rgba(74,46,36,0.5);
+  color: #ffffff;
 }
 
 .primary:hover {
@@ -112,12 +88,14 @@ select {
   background: rgba(74,46,36,0.65);
 }
 
-select:hover,
-select:focus,
-select:active {
+.primary:focus,
+.secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(106,179,167,0.35);
+}
+
+.addReserveCardModal select:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(106,179,167,0.35);
   border-color: #6bb3a7;
 }
-
-

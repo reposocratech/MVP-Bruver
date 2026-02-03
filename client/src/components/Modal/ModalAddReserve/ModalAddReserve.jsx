@@ -1,4 +1,3 @@
-import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import styles from './ModalAddReserve.module.css';
 
@@ -26,13 +25,14 @@ const ModalAddReserve = ({ onClose, onAccept }) => {
           </select>
 
           <div className={styles.modalActions}>
-            <Button className={styles.primary} onClick={handleAccept}>
-              Aceptar
-            </Button>
-            <Button className={styles.secondary} onClick={onClose}>
-              Cerrar
-            </Button>
-          </div>
+  <button className="close" type="button" onClick={handleAccept}>
+    Aceptar
+  </button>
+
+  <button className="close" type="button" onClick={onClose}>
+    Cerrar
+  </button>
+</div>
         </div>
       </div>
     </section>

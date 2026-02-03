@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Button } from 'react-bootstrap';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { formatDate } from '../../../helpers/buildDateHelper';
@@ -377,19 +376,24 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
               </label>
             </div>
 
-            <div>
-              <Button
-                className="close"
-                type="submit"
-                disabled={!petId || (!isCat && !serviceId)}
-              >
-                Aceptar
-              </Button>
+            <div className="modalActions">
+  <button
+    className="close"
+    type="submit"
+    disabled={!petId || (!isCat && !serviceId)}
+  >
+    Aceptar
+  </button>
 
-              <Button className="close" onClick={toBack} type="button">
-                Atrás
-              </Button>
-            </div>
+  <button
+    className="close"
+    type="button"
+    onClick={toBack}
+  >
+    Atrás
+  </button>
+</div>
+
           </form>
         </div>
       </div>

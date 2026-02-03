@@ -1,5 +1,4 @@
 import  { useEffect, useState, useContext } from 'react';
-import { Button } from 'react-bootstrap';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { formatDate } from '../../../helpers/buildDateHelper';
@@ -393,18 +392,19 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
             </div>
 
             <div>
-              <Button
-                className="close"
-                type="submit"
-                disabled={!sizeCategory && !isCat}
-              >
-                Aceptar
-              </Button>
+  <Button
+    className="close"
+    type="submit"
+    disabled={!sizeCategory && !isCat}
+  >
+    Aceptar
+  </Button>
 
-              <Button className="close" onClick={toBack} type="button">
-                Atrás
-              </Button>
-            </div>
+  <Button className="close" onClick={toBack} type="button">
+    Atrás
+  </Button>
+</div>
+
           </form>
         </div>
       </div>

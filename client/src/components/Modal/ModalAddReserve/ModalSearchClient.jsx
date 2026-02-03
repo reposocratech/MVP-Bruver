@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-import { Button } from 'react-bootstrap';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import styles from './ModalSearchClient.module.css';
@@ -80,11 +79,23 @@ const ModalSearchClient = ({ toBack, onAcceptClient }) => {
         </div>
 
         <div className={styles.actions}>
-          <Button onClick={toBack}>Atrás</Button>
-          <Button onClick={() => selected && onAcceptClient(selected)}>
-            Aceptar
-          </Button>
-        </div>
+  <button
+    type="button"
+    className={styles.button}
+    onClick={toBack}
+  >
+    Atrás
+  </button>
+
+  <button
+    type="button"
+    className={styles.buttonPrimary}
+    onClick={() => selected && onAcceptClient(selected)}
+    disabled={!selected}
+  >
+    Aceptar
+  </button>
+</div>
       </div>
     </section>
   );
