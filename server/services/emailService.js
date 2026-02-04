@@ -22,7 +22,7 @@ export const sendContactEmail = async ({ nombre, telefono, email, mensaje }) => 
   try {
     const result = await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: "riki30lel@gmail.com", // correo fijo donde se reciben
+      to: process.env.EMAIL_USER, // correo fijo donde se reciben
       subject: "Nuevo mensaje desde formulario de contacto",
       text: `
         Nombre: ${nombre}

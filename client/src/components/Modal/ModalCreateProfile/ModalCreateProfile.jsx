@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { Modal, Form } from 'react-bootstrap';
 import './ModalCreateProfile.css';
+import ModalProfileAdded from '../ModalProfileAdded/ModalProfileAdded';
 
 const ModalCreateProfile = ({
   show,
@@ -9,7 +12,17 @@ const ModalCreateProfile = ({
   valErrors,
   fetchError,
 }) => {
-  if (!show) return null;
+  const [showProfileAdded, setShowProfileAdded] = useState(false);
+
+  const handleSubmit = async (e) => {
+    const ok = await submitProfile(e);
+    if (ok) setShowProfileAdded(true);
+  };
+
+  const handleSuccessClose = () => {
+    setShowProfileAdded(false);
+    onClose(false);
+  };
 
   return (
     <>
@@ -28,7 +41,7 @@ const ModalCreateProfile = ({
 
             {fetchError && <div className="error-msg">{fetchError}</div>}
 
-            <Form className="nc-form formNewProfile" onSubmit={submitProfile}>
+            <Form className="nc-form formNewProfile" onSubmit={handleSubmit}>
               <Form.Group className="nc-group">
                 <Form.Label>Tipo de perfil</Form.Label>
                 <Form.Select
@@ -174,6 +187,10 @@ const ModalCreateProfile = ({
             </Form>
           </Modal.Body>
         </Modal>
+      )}
+
+      {showProfileAdded && (
+        <ModalProfileAdded onClose={handleSuccessClose} />
       )}
     </>
   );

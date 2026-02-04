@@ -31,10 +31,21 @@ export const mergeIntervals = (arr) => {
 
 export const parseDateTime = (d, t) => {
   if (!d || !t) return null; // faltan datos
-  // Probamos con y sin segundos (HH:mm y HH:mm:ss)
-  const p1 = dayjs(`${d} ${t}`);
-  if (p1.isValid()) return p1;
-  const tWithSec = t.length === 5 ? `${t}:00` : t;
-  const p2 = dayjs(`${d} ${tWithSec}`);
-  return p2.isValid() ? p2 : null;
+
+  // Normalizamos la fecha (puede venir como Date, YYYY-MM-DD o ISO con hora)
+  const baseDate = dayjs(d);
+  const datePart = baseDate.isValid()
+    ? baseDate.format('YYYY-MM-DD')
+    : String(d).split('T')[0];
+
+  // Normalizamos la hora (acepta HH:mm o HH:mm:ss)
+  const timePart =
+    typeof t === 'string'
+      ? t.length === 5
+        ? `${t}:00`
+        : t
+      : dayjs(t).format('HH:mm:ss');
+
+  const combined = dayjs(`${datePart} ${timePart}`);
+  return combined.isValid() ? combined : null;
 };
