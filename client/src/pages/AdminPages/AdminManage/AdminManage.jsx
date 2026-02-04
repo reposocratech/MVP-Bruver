@@ -191,8 +191,8 @@ const AdminManage = () => {
         setClients([...clients, newClient]);
       }
       //cerramos el formulario y seteamos los campos a vacío
-      setShowCreateProfileModal(false);
       setProfile(initialProfile);
+      return true;
     } catch (error) {
       if (error instanceof ZodError) {
         const fieldsErrors = {};
@@ -208,6 +208,7 @@ const AdminManage = () => {
           setFetchError('Upss, hay algún error chungo');
         }
       }
+      return false;
     }
   };
 
@@ -344,6 +345,7 @@ const AdminManage = () => {
         valErrors={valErrors}
         fetchError={fetchError}
       />
+
       {showEditProfileModal && (
         <ModalUserProfileEdit
           key={selectedUser?.id}
