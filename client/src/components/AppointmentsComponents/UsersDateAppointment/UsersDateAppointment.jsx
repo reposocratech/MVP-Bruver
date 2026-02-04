@@ -53,6 +53,8 @@ export const UsersDateAppointment = ({
   const [date, setDate] = useState(new Date());
   // Id del empleado seleccionado (null = ninguno)
   const [workerId, setWorkerId] = useState(null);
+  // Booleano para mostrar el calendario solo si hay trabajador seleccionado
+  const showCalendar = !!workerId;
   // Franjas de disponibilidad traídas del backend (array de objetos availability)
   const [schedule, setSchedule] = useState([]);
   // Citas existentes del empleado (array)
@@ -387,77 +389,80 @@ export const UsersDateAppointment = ({
         </div>
       </div>
 
-      <div className="selectDatePage">
-        <h2 className="selectDateTitle">Selecciona la fecha</h2>
-        <div className="calendar-container">
-          <Calendar
-            onChange={setDate}
-            value={date}
-            selectRange={false}
-            /* Para no poder seleccionar un día ya pasado */
-            minDate={today}
-            /* Para no poder elegir domingos */
-            tileDisabled={({ date }) => date.getDay() === 0}
-            /* Para no poder cambiar de año */
-            prev2Label={null}
-            next2Label={null}
-            /* La cita será como máximo en dos meses */
-            maxDate={maxDate}
-          />
-          <p className="calendar-hint">
-            Selecciona la fecha en el calendario y, a continuación, elige un
-            hueco de la lista de <strong>Huecos disponibles</strong> para
-            reservar.
-          </p>
+      {/* Mostrar el calendario solo si hay trabajador seleccionado */}
+      {showCalendar && (
+        <div className="selectDatePage">
+          <h2 className="selectDateTitle">Selecciona la fecha</h2>
+          <div className="calendar-container">
+            <Calendar
+              onChange={setDate}
+              value={date}
+              selectRange={false}
+              /* Para no poder seleccionar un día ya pasado */
+              minDate={today}
+              /* Para no poder elegir domingos */
+              tileDisabled={({ date }) => date.getDay() === 0}
+              /* Para no poder cambiar de año */
+              prev2Label={null}
+              next2Label={null}
+              /* La cita será como máximo en dos meses */
+              maxDate={maxDate}
+            />
+            <p className="calendar-hint">
+              Selecciona la fecha en el calendario y, a continuación, elige un
+              hueco de la lista de <strong>Huecos disponibles</strong> para
+              reservar.
+            </p>
 
-          <div className="dateSelected">
-            <h4>Huecos disponibles para esa fecha:</h4>
-            {availableSlots.length === 0 && (
-              <p>No hay huecos disponibles para la duración seleccionada.</p>
-            )}
-            <div className="availableSlots">
-              {availableSlots.map((slot) => (
-                <button
-                  key={`${dayjs(slot.start).valueOf()}-${slot.label}`}
-                  type="button"
-                  className={`selectHourBtn ${selectedSlot?.label === slot.label ? 'selected' : ''}`}
-                  onClick={() => handleSelectSlot(slot)}
-                >
-                  {slot.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="selected-slot">
-              {selectedSlot ? (
-                <p>
-                  Fecha seleccionada:{' '}
-                  {dayjs(selectedSlot.start).format('DD/MM/YYYY HH:mm')}
-                </p>
-              ) : (
-                <p className="hint">
-                  Selecciona un hueco disponible para habilitar el botón de
-                  confirmar.
-                </p>
+            <div className="dateSelected">
+              <h4>Huecos disponibles para esa fecha:</h4>
+              {availableSlots.length === 0 && (
+                <p>No hay huecos disponibles para la duración seleccionada.</p>
               )}
+              <div className="availableSlots">
+                {availableSlots.map((slot) => (
+                  <button
+                    key={`${dayjs(slot.start).valueOf()}-${slot.label}`}
+                    type="button"
+                    className={`selectHourBtn ${selectedSlot?.label === slot.label ? 'selected' : ''}`}
+                    onClick={() => handleSelectSlot(slot)}
+                  >
+                    {slot.label}
+                  </button>
+                ))}
+              </div>
 
-              <div className="confirm-actions">
-                {errorMsg && <p className="error">{errorMsg}</p>}
-                <button
-                  type="button"
-                  className="confirmBtn"
-                  disabled={
-                    isSubmitting || !selectedSlot || !workerId || !selectedPet
-                  }
-                  onClick={handleConfirm}
-                >
-                  CONFIRMAR
-                </button>
+              <div className="selected-slot">
+                {selectedSlot ? (
+                  <p>
+                    Fecha seleccionada:{' '}
+                    {dayjs(selectedSlot.start).format('DD/MM/YYYY HH:mm')}
+                  </p>
+                ) : (
+                  <p className="hint">
+                    Selecciona un hueco disponible para habilitar el botón de
+                    confirmar.
+                  </p>
+                )}
+
+                <div className="confirm-actions">
+                  {errorMsg && <p className="error">{errorMsg}</p>}
+                  <button
+                    type="button"
+                    className="confirmBtn"
+                    disabled={
+                      isSubmitting || !selectedSlot || !workerId || !selectedPet
+                    }
+                    onClick={handleConfirm}
+                  >
+                    CONFIRMAR
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="selectEmployeeActions">
         <div className="infoAppoint">

@@ -9,6 +9,7 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext.js';
 import { buildDate } from '../../../helpers/buildDateHelper.js';
 import ModalSeeAppointment from '../../../components/Modal/ModalSeeAppointment/ModalSeeAppointment.jsx';
 import Worker from '../../WorkerPages/WorkerDate/Worker.jsx';
+import './WorkerAppointments.css'
 
 dayjs.extend(isoWeek);
 
