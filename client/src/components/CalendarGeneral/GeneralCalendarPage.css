@@ -150,6 +150,18 @@
   background: linear-gradient(135deg,#75ccb7,#56ceac);
 }
 
+.calendar-general .rbc-time-content > .rbc-day-slot:nth-child(4) .rbc-event {
+  background: linear-gradient(135deg, #6fa6c1, #4f8fa8);
+}
+
+.calendar-general .rbc-time-content > .rbc-day-slot:nth-child(5) .rbc-event {
+  background: linear-gradient(135deg, #b6a8d6, #9c8fc4);
+}
+
+.calendar-general .rbc-time-content > .rbc-day-slot:nth-child(6) .rbc-event {
+  background: linear-gradient(135deg, #e0a37a, #c97c4f);
+}
+
 .rbc-today {
   background: rgba(143,199,187,0.18) !important;
 }

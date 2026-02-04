@@ -48,10 +48,18 @@ const GeneralCalendarPage = () => {
   const allEvents = [...eventsMap]
 
    //trabajadores que aparecen en la tabla 
-  const workers = [
-    { id: 2, title: 'Juan' },
-    { id: 3, title: 'Maria' },
-  ]
+ const workers = Array.from(
+  new Map(
+    appoiment.map(elem => [
+      elem.employee_user_id,
+      {
+        id: elem.employee_user_id,
+        title: elem.employee_name
+      }
+    ])
+  ).values()
+)
+
 
   
 
