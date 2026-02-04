@@ -42,11 +42,23 @@ const ModalSeeAppointment = ({ appointment, onClose, onUpdate, onDelete }) => {
                 </tr>
                 <tr>
                   <td><b>Datos del cliente:</b></td>
-                  <td>{appointment.client_name} </td>
+                  <td>{appointment.client_name} {appointment.guest_name} </td>
                 </tr>
+                
+                {appointment.guest_phone && 
+                   <tr>
+                  <td><b>Teléfono</b></td>
+                  <td>{appointment.guest_phone}  </td>
+                </tr>
+                }
+
                 <tr>
                   <td><b>Trabajador</b></td>
-                  <td>{appointment.employee_name} </td>
+                  <td>{appointment.employee_name}  </td>
+                </tr>
+                 <tr>
+                  <td><b>Observaciones</b></td>
+                  <td>{appointment.observations}  </td>
                 </tr>
                 <tr>
                   <td><b>Estado/cita</b></td>
@@ -56,10 +68,20 @@ const ModalSeeAppointment = ({ appointment, onClose, onUpdate, onDelete }) => {
                   <td><b>Total:</b></td>
                   <td>{appointment.total_price} €</td>
                 </tr>
-                <tr>
-                  <td><b>Estado</b></td>
-                  <td>{appointment.status} </td>
-                </tr>
+<tr>
+  <td><b>Estado</b></td>
+  <td>
+    {appointment.status === 1
+      ? 'Pendiente'
+      : appointment.status === 2
+      ? 'Confirmada'
+      : appointment.status === 4
+      ? 'No presentado'
+      : appointment.status === 5
+      ? 'Completada'
+      : '—'}
+  </td>
+</tr>
               </tbody>
             </table>
           </div>
