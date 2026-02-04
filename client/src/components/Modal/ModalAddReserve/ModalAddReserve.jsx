@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import styles from './ModalAddReserve.module.css';
+import { useState } from "react";
+import styles from "./ModalAddReserve.module.css";
 
 const ModalAddReserve = ({ onClose, onAccept }) => {
-  const [option, setOption] = useState('');
+  const [option, setOption] = useState("");
 
   const handleAccept = () => {
     if (!option) return;
@@ -19,20 +19,31 @@ const ModalAddReserve = ({ onClose, onAccept }) => {
             value={option}
             onChange={(e) => setOption(e.target.value)}
           >
-            <option value="" disabled>Reserva para un nuevo cliente</option>
+            <option value="" disabled>
+              Reserva para un nuevo cliente
+            </option>
             <option value="1">Buscar cliente</option>
             <option value="2">Reserva rápida</option>
           </select>
 
           <div className={styles.modalActions}>
-  <button className="close" type="button" onClick={handleAccept}>
-    Aceptar
-  </button>
+            <button
+              type="button"
+              className={styles.primary}
+              onClick={handleAccept}
+              disabled={!option}
+            >
+              Aceptar
+            </button>
 
-  <button className="close" type="button" onClick={onClose}>
-    Cerrar
-  </button>
-</div>
+            <button
+              type="button"
+              className={styles.secondary}
+              onClick={onClose}
+            >
+              Cerrar
+            </button>
+          </div>
         </div>
       </div>
     </section>
