@@ -1,0 +1,59 @@
+:root {
+  --bg: #faf7f3;
+  --panel: #f4ede4;
+  --line: #2f6f68;
+  --text: #3f342a;
+  --muted: #8a7c6d;
+  --shadow: 0 6px 20px rgba(0,0,0,0.06);
+  --shadow-hover: 0 10px 26px rgba(0,0,0,0.12);
+}
+
+.admin-appointments-page {
+  background: var(--bg);
+  min-height: calc(100vh - 160px);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-appointments-page .title {
+  font-family: Poppins, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 20px 0 18px;
+  text-align: center;
+  width: 100%;
+}
+
+.admin-appointments-page .calendar-wrapper {
+  padding: 24px;
+  background: var(--bg);
+}
+
+.admin-appointments-page .back-btn-center {
+  margin-top: 40px;
+  margin-bottom: 45px;
+  padding-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-appointments-page .back-btn {
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.admin-appointments-page .back-btn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}
