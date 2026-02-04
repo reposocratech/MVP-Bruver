@@ -330,6 +330,10 @@ export const UsersDateAppointment = ({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  /* Función para pedir cita máximo en dos meses */
+  const maxDate = new Date();
+  maxDate.setMonth(maxDate.getMonth() + 2)
+
   return (
     <>
       <div className="selectDatePage">
@@ -341,7 +345,7 @@ export const UsersDateAppointment = ({
           {workers?.map((elem) => (
             <div
               key={elem.user_id}
-              className={`cardEmployee col-12 col-sm-6 col-lg-4 ${workerId === elem.user_id ? 'selected' : ''}`}
+              className={`cardEmployee ${workerId === elem.user_id ? 'selected' : ''}`}
             >
               <div className="appointmentEmployeeCard">
                 {elem.picture_user &&
@@ -390,8 +394,15 @@ export const UsersDateAppointment = ({
             onChange={setDate}
             value={date}
             selectRange={false}
+            /* Para no poder seleccionar un día ya pasado */
             minDate={today}
+            /* Para no poder elegir domingos */
             tileDisabled={({ date }) => date.getDay() === 0}
+            /* Para no poder cambiar de año */
+            prev2Label={null}
+            next2Label={null}
+            /* La cita será como máximo en dos meses */
+            maxDate={maxDate}
           />
           <p className="calendar-hint">
             Selecciona la fecha en el calendario y, a continuación, elige un

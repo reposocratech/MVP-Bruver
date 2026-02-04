@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "../AdminProfile/AdminProfile.css";
+import "../../AdminPages/AdminProfile/AdminProfile.css";
 import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas.jsx";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
