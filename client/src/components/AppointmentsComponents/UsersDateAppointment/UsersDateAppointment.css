@@ -1,20 +1,19 @@
 .selectDatePage{
 	background: #f4efe8;
-	padding: 50px 40px;
 	min-height: auto;
 	text-align: center;
 	font-family: "Raleway", sans-serif;
+  gap: 30px;
+  justify-items: center;
+  h2{
+    margin-block: 2rem;
+  }
 }
-
 
 .selectEmployeeGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-  justify-items: center;
-  .cardEmployee{
-  justify-items: center;
-  }
+  gap: 3rem;
 }
 
 .appointmentEmployeeCard {
@@ -59,7 +58,8 @@
 
 /* Botones base */
 .selectEmployeeBtn,
-.selectEmployeeBackBtn {
+.selectEmployeeBackBtn,
+.confirmBtn {
   border: none;
   color: #fff;
   padding: 8px 18px;
@@ -71,7 +71,8 @@
 }
 
 /* Botón seleccionar */
-.selectEmployeeBtn {
+.selectEmployeeBtn,
+.confirmBtn {
 	background: #ffffff;
   color: #246b64;
 	border: 1px solid #246b64;
@@ -86,10 +87,11 @@
 }
 
 .selectEmployeeBtn:hover{
-  background: #eaf4f2;
+background: #eaf4f2;
 }
 
-.selectEmployeeBtn.selected {
+.selectEmployeeBtn.selected,
+.confirmBtn:hover{
 	background: #246b64;
 	color: #ffffff;
 	transform: translateY(-2px);
@@ -136,41 +138,24 @@ gap: 15px;
 	}
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .selectDatePage {
-    padding: 22px;
-  }
-
-  .selectEmployeeGrid {
-    grid-template-columns: 1fr;
-    gap: 22px;
-    max-width: 520px;
-    justify-content: center;
-        margin: 0 auto;
-  }
-
-  .appointmentEmployeeCard img {
-    height: 180px;
-  }
-  .appointmentEmployeeCard h3 {
-    font-size: 18px;
-  }
-}
 
 
 
+/* --------------------------- */
 /* CALENDARIO */
+/* --------------------------- */
 
 .calendarAndHours{
   display: flex;
   gap: 40px;
   justify-content: center;
+  padding-bottom: 15px;
 }
 
 .calendar-container {
   flex: 0 0 70%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -179,20 +164,18 @@ gap: 15px;
 /* Contenedor principal */
 .react-calendar {
   background: #e9d9c8;
+  width: 500px;
   border: none;
   border-radius: 20px;
   padding: 10px;
   margin: 20px;
   font-family: "Raleway", sans-serif;
-  width: 70%;
-  max-width: 50%;
-  min-height: 300px;
 }
 
 /* Navegación (mes y año) */
 .react-calendar__navigation {
   display: flex;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .react-calendar__navigation button {
@@ -260,8 +243,7 @@ gap: 15px;
   background: #e9d9c8;
   border: none;
   font-family: "Raleway", sans-serif;
-  width: 100%;
-  max-width: 50%;
+  width: 500px;
   height: fit-content;
   flex: 0 0 30%;
   border-radius: 16px;
@@ -283,74 +265,75 @@ gap: 15px;
   background: rgba(255, 255, 255, 0.5);
   color: black;
 }
+.selectHourBtn:enabled:focus{
+  background-color: #b79c81;
+}
 
+.error {
+  color: #d9534f;
+  font-weight: 600;
+  margin: 8px 0;
+}
 
 
 /* RESPONSIVE CALEDARIO */
 
-/* Tablets */
+/* Tablets y móvil */
 @media (max-width: 1024px) {
-  .calendarAndHours {
-    gap: 20px;
-  }
-
-  .calendar-container {
-    flex: 0 0 80%;
-  }
-
-  .react-calendar {
-    width: 90%;
-    max-width: 80%;
-    padding: 8px;
-  }
-
-  .react-calendar__navigation button {
-    font-size: 20px;
-  }
-
-  .react-calendar__month-view__weekdays {
-    font-size: 12px;
-  }
-
-  .react-calendar__tile {
-    font-size: 20px;
-    width: 35px;
-    height: 35px;
-  }
-}
-
-/* Móviles */
-@media (max-width: 768px) {
-  .calendarAndHours {
-    gap: 15px;
-    margin: 1rem;
-  }
-
-  .calendar-container {
-    flex: 0 0 95%;
-    gap: 1rem;
+  .selectEmployeeGrid {
+    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+  }
+  .cardEmployee{
+    width: 100%;
+    justify-items: center;
+    padding: 0;
   }
 
-  .react-calendar {
-    width: 95%;
-    max-width: 100%;
-    padding: 5px;
-    margin: 10px 0;
-  }
-
-  .react-calendar__navigation button {
+  .appointmentEmployeeCard{ 
+    height: max-content;
+    width: 100%;
     font-size: 18px;
+    .appointmentEmployeeCard img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}}
+  
+  .dateSelected{
+    text-align: center;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .react-calendar__month-view__weekdays {
-    font-size: 11px;
+  .calendar-container {
+    font-size: 18px;
+    text-align: center;
+    width: 90%;
   }
-
+  
+  .react-calendar {
+    width: 100%;
+    max-width: 95%;
+  }
+  
+  .react-calendar__navigation button {
+    font-size: 20px;
+  }
+  
+  .react-calendar__month-view__weekdays,
   .react-calendar__tile {
     font-size: 18px;
-    width: 30px;
-    height: 30px;
+  }
+  
+  .avaiableSlots{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   }
 }
-

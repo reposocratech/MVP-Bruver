@@ -43,6 +43,9 @@ export const CalendarCitas = ({
         timeslots={1}
         style={{ height: '95vh' }}
         resizable
+         eventPropGetter={(event) => ({
+    className: `status-${event.status}`
+  })}
       />
     </div>
   )

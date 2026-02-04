@@ -147,6 +147,10 @@ const AdminAppointments = () => {
     created_by_name: elem.created_by_name,
     created_by_type: elem.created_by_type,
 
+    guest_name: elem.guest_name,
+    guest_phone: elem.guest_phone,
+    observations: elem.observations,
+
     status: elem.status,
     total_price: elem.total_price
   }));
@@ -156,7 +160,7 @@ const AdminAppointments = () => {
 
   return (
     <section className="calendar-citas-scope">
-      <h2 className="title">Mis citas (Admin)</h2>
+      <h2 className="title">Mis citas</h2>
       <CalendarCitas
         view={view}
         date={date}

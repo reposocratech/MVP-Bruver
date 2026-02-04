@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Table, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router";
 import "./AdminClientHistory.css";
@@ -28,8 +28,8 @@ const AdminClientHistory = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await fetchData(`appointment/user/${id}`, "GET", null, token);
-        setAppointments(res.data.appointments || []);
+        const res = await fetchData(`appointment/allbyuser/${id}`, "GET", null, token);
+        setAppointments(res.data || []);
       } catch (error) {
         console.log(error);
         setAppointments([]);
@@ -54,6 +54,31 @@ const AdminClientHistory = () => {
     return numMoney.toFixed(2).replace(".", ",") + " €";
   };
 
+  const formatStatus = (value) => {
+    let showStatus = "";
+    if(value === 1){
+      showStatus = "Pendiente ⏳";
+    }
+    else if(value === 2){
+      showStatus = "Confirmada ✅";
+    }
+    else if(value === 3){
+      showStatus = "Cancelada ❌";
+    }
+    else if(value === 4){
+      showStatus = "No presentada 🚫";
+    }
+    else if(value === 5){
+      showStatus = "Completada 🎉";
+    }
+    else{
+      showStatus = "Error ❓";
+    }
+    return showStatus;
+  }
+
+  // Debug: ver los appointments y sus status
+  console.log('appointments:', appointments);
   return (
     <div className="adminClientHistoryPage">
       <h1 className="profileTitle">Historial de cliente</h1>
@@ -107,10 +132,10 @@ const AdminClientHistory = () => {
           <Table className="appointmentsTable" bordered>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>HORA</th>
                 <th>DÍA DE RESERVA</th>
                 <th>TOTAL</th>
+                <th>Estado</th>
               </tr>
             </thead>
             <tbody>
@@ -123,10 +148,10 @@ const AdminClientHistory = () => {
               ) : (
                 appointments.map((a) => (
                   <tr key={a.appointment_id}>
-                    <td>{a.appointment_id}</td>
                     <td>{formatTime(a.start_time)}</td>
                     <td>{formatDate(a.appointment_date)}</td>
                     <td>{formatPrice(a.total_price)}</td>
+                    <td>{formatStatus(a.status)}</td>
                   </tr>
                 ))
               )}
@@ -134,9 +159,9 @@ const AdminClientHistory = () => {
           </Table>
         </div>
       </section>
-      <Button className="backBtn" type="button" onClick={() => navigate(-1)}>
+      <button className="backBtn" type="button" onClick={() => navigate(-1)}>
         VOLVER
-      </Button>
+      </button>
     </div>
   );
 };

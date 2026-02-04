@@ -21,7 +21,7 @@ const AdminWorkingHours = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const { adminId } = useParams()
-  const { token } = useContext(AuthContext)
+  const { token, user } = useContext(AuthContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -149,7 +149,7 @@ const AdminWorkingHours = () => {
 
   return (
     <section className="admin-working-hours-page">
-      <h2 className="title">Horario laboral (Admin)</h2>
+      <h2 className="title">Horario laboral {user.name_user} </h2>
 
       <CalendarWorkingHours
         view={view}

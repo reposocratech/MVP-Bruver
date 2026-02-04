@@ -10,6 +10,9 @@ router.get("/mine", verifyToken, appointmentController.getMine);
 // Citas de cualquier usuario por id
 router.get("/user/:id", verifyToken, appointmentController.getByUserId);
 
+// Historial citas usuario (presente, pasadas y futuras)
+router.get("/allbyuser/:id", verifyToken, appointmentController.getAllByUserId);
+
 // Citas generales
 router.get("/getGeneralAppoiment",verifyToken, appointmentController.getGeneralAppoiment);
 router.get("/getAdminAppoiment/:employeeId", verifyToken, appointmentController.getAdminAppoiment)
@@ -19,5 +22,7 @@ router.delete("/deleteAppointment/:appointmentId", verifyToken, appointmentContr
 router.post("/quick", verifyToken, appointmentController.createQuickAppointment);
 router.post("/client", verifyToken, appointmentController.createClientAppointment);
 router.post("/create", verifyToken, appointmentController.createClientAppointment);
+
+router.get("/getWorkerAppoiment/:employeeId", verifyToken, appointmentController.getWorkerAppoiment)
 
 export default router;

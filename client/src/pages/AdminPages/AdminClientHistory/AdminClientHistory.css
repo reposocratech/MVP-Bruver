@@ -170,6 +170,30 @@
   background: rgba(166, 200, 183, 0.25);
 }
 
+/* Botón volver */
+.backBtn {
+  margin-top: 32px;
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.backBtn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}
+
 @media (max-width: 768px) {
   .infoCard {
     flex-direction: column;

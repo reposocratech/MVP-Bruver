@@ -13,8 +13,10 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
     start_time: dayjs(appointment.start).format('HH:mm'),
     duration: dayjs(appointment.end).diff(dayjs(appointment.start), 'minute'),
     employee_user_id: appointment.resourceId,
-    total_price: appointment.total_price ?? 0
+    total_price: appointment.total_price ?? 0,
+    status: appointment.status ?? 1
   });
+
 
 
 
@@ -42,7 +44,10 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
   setAppointmentEdit(prev => ({
     ...prev,
     [name]:
-      name === 'duration' || name === 'total_price' || name === 'employee_user_id'
+      name === 'duration' ||
+      name === 'total_price' ||
+      name === 'employee_user_id' ||
+      name === 'status'
         ? Number(value)
         : value
   }));
@@ -50,18 +55,17 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
 
 
 
-
   //enviar cambios juntos
- const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  onSubmit({
-    id: appointment.id,
-    ...appointmentEdit
-  });
+    onSubmit({
+      id: appointment.id,
+      ...appointmentEdit
+    });
 
-  onClose();
-};
+    onClose();
+  };
 
 
 
@@ -71,7 +75,7 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
       <div className="addReserveGridModal">
         <div className="addReserveCardModal">
           <div className="appointment-modal-header">
-            <span className="appointment-modal-bid">BID 56544</span>
+            <span className="appointment-modal-bid">Editar reserva</span>
             <span className="appointment-modal-close" onClick={onClose}>✕</span>
           </div>
           <form className="appointment-modal-form">
@@ -80,59 +84,59 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
                 <tr>
                   <td><b>Fecha</b></td>
                   <td>
-                 <input
-  type="date"
-  name="appointment_date"
-  className="appointment-input"
-  value={appointmentEdit.appointment_date}
-  onChange={handleChange}
-/>
+                    <input
+                      type="date"
+                      name="appointment_date"
+                      className="appointment-input"
+                      value={appointmentEdit.appointment_date}
+                      onChange={handleChange}
+                    />
 
                   </td>
                 </tr>
                 <tr>
                   <td><b>Hora inicio</b></td>
                   <td>
-               <input
-  type="time"
-  name="start_time"
-  className="appointment-input"
-  value={appointmentEdit.start_time}
-  onChange={handleChange}
-/>
+                    <input
+                      type="time"
+                      name="start_time"
+                      className="appointment-input"
+                      value={appointmentEdit.start_time}
+                      onChange={handleChange}
+                    />
 
                   </td>
                 </tr>
                 <tr>
                   <td><b>Duración</b></td>
                   <td>
-                   <input
-  type="number"
-  name="duration"
-  className="appointment-input"
-  min="0"
-  step="5"
-  value={appointmentEdit.duration}
-  onChange={handleChange}
-/>
+                    <input
+                      type="number"
+                      name="duration"
+                      className="appointment-input"
+                      min="0"
+                      step="5"
+                      value={appointmentEdit.duration}
+                      onChange={handleChange}
+                    />
 
                   </td>
                 </tr>
                 <tr>
                   <td><b>Trabajador</b></td>
                   <td>
-                  <select
-  name="employee_user_id"
-  className="appointment-input"
-  value={appointmentEdit.employee_user_id}
-  onChange={handleChange}
->
-  {employees?.map(emp => (
-    <option key={emp.user_id} value={emp.user_id}>
-      {emp.name_user} {emp.last_name}
-    </option>
-  ))}
-</select>
+                    <select
+                      name="employee_user_id"
+                      className="appointment-input"
+                      value={appointmentEdit.employee_user_id}
+                      onChange={handleChange}
+                    >
+                      {employees?.map(emp => (
+                        <option key={emp.user_id} value={emp.user_id}>
+                          {emp.name_user} {emp.last_name}
+                        </option>
+                      ))}
+                    </select>
 
 
                   </td>
@@ -140,19 +144,36 @@ const ModalEditAppointment = ({ appointment, onClose, onSubmit }) => {
                 <tr>
                   <td><b>Precio</b></td>
                   <td className="appointment-price-cell">
-                   <input
-  type="number"
-  name="total_price"
-  className="appointment-input"
-  min="0"
-  step="0.01"
-  value={appointmentEdit.total_price}
-  onChange={handleChange}
-/>
+                    <input
+                      type="number"
+                      name="total_price"
+                      className="appointment-input"
+                      min="0"
+                      step="0.01"
+                      value={appointmentEdit.total_price}
+                      onChange={handleChange}
+                    />
 
 
                     <span className="appointment-euro">€</span>
                   </td>
+                </tr>
+                <tr>
+                  <th>Estado de la cita</th>
+                  <td>
+                    <select
+                      name="status"
+                      className="appointment-input"
+                      value={appointmentEdit.status}
+                      onChange={handleChange}
+                    >
+                     <option value={1}>Pendiente</option>
+                      <option value={2}>Confirmada</option>
+                      <option value={4}>No presentado</option>
+                      <option value={5}>Completada</option>
+                    </select>
+                  </td>
+
                 </tr>
               </tbody>
             </table>

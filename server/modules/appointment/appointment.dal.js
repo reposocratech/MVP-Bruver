@@ -1,3 +1,4 @@
+
 import executeQuery from "../../config/db.js";
 
 class AppointmentDal {
@@ -81,6 +82,9 @@ class AppointmentDal {
         a.status,
         a.employee_user_id,
         a.total_price,
+        a.guest_name,
+        a.guest_phone,
+        a.observations,
 
         emp.user_id        AS employee_id,
         emp.name_user      AS employee_name,
@@ -115,12 +119,13 @@ class AppointmentDal {
   updateAppointment = async (values) => {
     try {
       let sql = `UPDATE appointment
-SET 
+                 SET 
     appointment_date = ?,
     start_time = ?,
     end_time = ?,
     employee_user_id = ?,
-    total_price = ?
+    total_price = ?,
+    status = ?
 WHERE appointment_id = ?;`
 
       let result = executeQuery(sql, values)
@@ -131,17 +136,17 @@ WHERE appointment_id = ?;`
     }
   }
 
-  deleteAppointment = async(appointmentId)=>{
+  deleteAppointment = async (appointmentId) => {
     try {
       const sql = `DELETE FROM appointment WHERE appointment_id = ?`;
-    let result = await  executeQuery(sql, [appointmentId])
-    return result
+      let result = await executeQuery(sql, [appointmentId])
+      return result
     } catch (error) {
       throw error
     }
   }
 
-     insertServicesForAppointment = async (appointmentId, service_id, supplement_ids = []) => {
+  insertServicesForAppointment = async (appointmentId, service_id, supplement_ids = []) => {
     try {
       const cleaningId = Number(process.env.CLEANING_SERVICE_ID);
       const ids = [];
@@ -238,7 +243,7 @@ WHERE appointment_id = ?;`
           AND NOT (end_time <= ? OR start_time >= ADDTIME(?, SEC_TO_TIME(? * 60)))
         LIMIT 1
       `;
- 
+
       const result = await executeQuery(sql, [
         employeeId,
         appointment_date,
@@ -246,13 +251,13 @@ WHERE appointment_id = ?;`
         start_time,
         duration_minutes,
       ]);
- 
+
       return result;
     } catch (error) {
       throw error;
     }
   };
- 
+
 
   createQuickAppointment = async ({
     created_by_user_id,
@@ -342,6 +347,62 @@ WHERE appointment_id = ?;`
     }
   };
 
+  getWorkerAppoiment = async (employeeId) => {
+    try {
+      const sql = `
+            SELECT
+        a.appointment_id,
+        a.appointment_date,
+        a.start_time,
+        a.end_time,
+        a.status,
+        a.employee_user_id,
+        a.total_price,
+
+        emp.user_id        AS employee_id,
+        emp.name_user      AS employee_name,
+        emp.last_name      AS employee_lastname,
+
+        cli.user_id        AS client_id,
+        cli.name_user      AS client_name,
+        cli.last_name      AS client_lastname,
+
+        creator.user_id   AS created_by_id,
+        creator.name_user AS created_by_name,
+        creator.type      AS created_by_type
+
+        FROM appointment a
+        JOIN user emp 
+          ON emp.user_id = a.employee_user_id
+        LEFT JOIN user cli 
+          ON cli.user_id = a.client_user_id
+        JOIN user creator 
+          ON creator.user_id = a.created_by_user_id
+
+        WHERE a.status != 3
+        AND a.employee_user_id = ?;
+      `;
+      let result = await executeQuery(sql, [employeeId]);
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  // Traer todas las citas del usuario (presente, pasadas y futuras)
+  getAllByUserId = async (userId) => {
+    try {
+      const sql = `
+        SELECT appointment_id, start_time, appointment_date, total_price, status
+        FROM appointment
+        WHERE client_user_id = ?
+        ORDER BY appointment_date DESC, start_time DESC
+      `;
+      return await executeQuery(sql, [userId]);
+    } catch (error) {
+      throw error;
+    }
+  };
 
 }
 

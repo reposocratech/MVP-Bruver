@@ -78,8 +78,6 @@ const navigate = useNavigate()
         </div>
       </div>
 
-      <button onClick={()=>navigate(-1)} className="back-btn"><span className="arrow">VOLVER</span></button>
-
       {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
     </section>
   )

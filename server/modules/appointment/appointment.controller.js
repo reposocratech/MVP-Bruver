@@ -52,6 +52,7 @@ class AppointmentController {
       
     }
   }
+
   createQuickAppointment = async (req, res) => {
   try {
     const { user_id } = req;
@@ -76,11 +77,12 @@ class AppointmentController {
 
     const isCat = String(specie) === "2";
 
-    const dur = isCat ? 0 : Number(duration_minutes || 0);
-    const price = isCat ? 0 : Number(total_price || 0);
+    // Permitimos duración y precio enviados incluso para gatos
+    const dur = Number(duration_minutes || 0);
+    const price = Number(total_price || 0);
 
-    const baseServiceId = isCat ? null : (service_id || null);
-    const extrasArray = isCat ? [] : (Array.isArray(supplement_ids) ? supplement_ids : []);
+    const baseServiceId = service_id || null;
+    const extrasArray = Array.isArray(supplement_ids) ? supplement_ids : [];
 
     //Crear cita
     const created = await appointmentDal.createQuickAppointment({
@@ -191,13 +193,15 @@ class AppointmentController {
       res.status(500).json({ message: "Error al cargar las citas del usuario" });
     }
   };
+
   updateAppointment = async(req, res) => {
   try {
     const { appointmentId } = req.params;
-    const { appointment_date, start_time, duration, total_price, employee_user_id } = req.body;
+    const { appointment_date, start_time, duration, total_price, status, employee_user_id } = req.body;
     const end_time = calculateEndTime(start_time, duration);
-
-    const values = [appointment_date, start_time, end_time, employee_user_id, total_price, appointmentId];
+    
+    
+    const values = [appointment_date, start_time, end_time, employee_user_id, total_price, status, appointmentId];
 
     await appointmentDal.updateAppointment(values);
 
@@ -213,7 +217,7 @@ class AppointmentController {
     console.log(error);
     res.status(500).json(error);
   }
-}
+} 
 
   deleteAppointment = async(req, res)=>{
     try {
@@ -228,6 +232,31 @@ class AppointmentController {
       res.status(500).json(error);
     }
   }
+
+   getWorkerAppoiment = async(req, res)=>{
+    const {employeeId} = req.params
+    try {
+      const result = await appointmentDal.getWorkerAppoiment(employeeId)
+      res.status(200).json({
+        message:"oki",
+        result
+      })
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+  // Historial citas usuario (presente, pasadas y futuras)
+  getAllByUserId = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await appointmentDal.getAllByUserId(id);
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error al cargar el historial de citas del usuario" });
+    }
+  };
 
 }
 

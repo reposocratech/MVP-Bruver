@@ -324,7 +324,7 @@ const AdminManage = () => {
 
       <div className="agr-bottom">
         <button
-          className="agr-back"
+          className="agr-create"
           type="button"
           onClick={() => setShowCreateProfileModal(true)}
         >
@@ -332,7 +332,7 @@ const AdminManage = () => {
           <span>Añadir perfil</span>
         </button>
         <button className="agr-back" type="button" onClick={() => navigate(-1)}>
-          ATRÁS
+          VOLVER
         </button>
       </div>
       <ModalCreateProfile
@@ -351,6 +351,7 @@ const AdminManage = () => {
           user={selectedUser}
           onUserUpdated={handleUserUpdated}
           editClientCode={selectedUser?.type === 3}
+          hideDeleteButton={true}
         />
       )}
 
