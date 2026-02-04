@@ -1,0 +1,66 @@
+.admin-working-hours-page {
+  background: #faf7f3;
+  min-height: calc(100vh - 160px);
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-working-hours-page .title {
+  font-family: Poppins, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: #3f342a;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.admin-working-hours-page .rbc-calendar {
+  width: 100%;
+  max-width: 1500px;
+  background: #fffdf9;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.admin-working-hours-page .back-btn-center {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-working-hours-page .back-btn {
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.admin-working-hours-page .back-btn:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
+}
+
+@media (max-width: 768px) {
+  .admin-working-hours-page {
+    padding: 24px 12px 48px;
+  }
+
+  .admin-working-hours-page .title {
+    font-size: 22px;
+  }
+
+  .admin-working-hours-page .rbc-calendar {
+    padding: 12px;
+    border-radius: 18px;
+  }
+}

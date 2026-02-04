@@ -1,12 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
-
-body {
-  background: #f4efe8;
-  font-family: "Raleway", sans-serif;
-}
-
 .admin-section {
+  background: #f4efe8;
   min-height: calc(100vh - 160px);
   padding: 40px 20px 80px;
   display: flex;
@@ -14,7 +7,7 @@ body {
   align-items: center;
 }
 
-.title {
+.admin-section .title {
   font-family: "Lora", serif;
   color: #6bb3a7;
   font-weight: 700;
@@ -23,7 +16,7 @@ body {
   margin-bottom: 40px;
 }
 
-.profile-card {
+.admin-section .profile-card {
   width: 100%;
   max-width: 900px;
   background: #f3e5d6;
@@ -34,25 +27,25 @@ body {
   align-items: center;
 }
 
-.info-block {
+.admin-section .info-block {
   flex: 1;
 }
 
-.info-block h3 {
+.admin-section .info-block h3 {
   font-family: "Lora", serif;
   font-size: 22px;
   color: #3a2f2a;
   margin: 0;
 }
 
-.info-block h3,
-.info-block .edit-btn {
+.admin-section .info-block h3,
+.admin-section .info-block .edit-btn {
   display: inline-flex;
   align-items: center;
   gap: 15px;
 }
 
-.edit-btn {
+.admin-section .edit-btn {
   background: none;
   border: none;
   color: #6bb3a7;
@@ -65,8 +58,8 @@ body {
   transition: all 0.2s ease;
 }
 
-.edit-btn:hover,
-.edit-btn:focus {
+.admin-section .edit-btn:hover,
+.admin-section .edit-btn:focus {
   background: rgba(166, 200, 183, 0.35);
   color: #4A2E24;
   outline: none;
@@ -89,11 +82,11 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-table tr:last-child td {
+.admin-section table tr:last-child td {
   border-bottom: none;
 }
 
-.profile-img {
+.admin-section .profile-img {
   width: 260px;
   height: 260px;
   border-radius: 18px;
@@ -103,13 +96,13 @@ table tr:last-child td {
   justify-content: center;
 }
 
-.profile-img img {
+.admin-section .profile-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.options-wrapper {
+.admin-section .options-wrapper {
   margin-top: 90px;
   margin-bottom: 40px;
   display: flex;
@@ -119,14 +112,14 @@ table tr:last-child td {
   align-items: center;
 }
 
-.row-top,
-.row-bottom {
+.admin-section .row-top,
+.admin-section .row-bottom {
   display: flex;
   gap: 28px;
   justify-content: center;
 }
 
-.option-card {
+.admin-section .option-card {
   width: 220px;
   height: 160px;
   background: #ffffff;
@@ -144,13 +137,13 @@ table tr:last-child td {
   transition: transform 0.25s ease;
 }
 
-.option-card i {
+.admin-section .option-card i {
   font-size: 64px;
   color: #000000;
   margin-bottom: 24px;
 }
 
-.option-header {
+.admin-section .option-header {
   position: absolute;
   top: -18px;
   left: 50%;
@@ -165,8 +158,8 @@ table tr:last-child td {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 }
 
-.option-card::before,
-.option-card::after {
+.admin-section .option-card::before,
+.admin-section .option-card::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -177,27 +170,27 @@ table tr:last-child td {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-.option-card::before {
+.admin-section .option-card::before {
   transform: translateY(-4px) rotate(-2deg);
 }
 
-.option-card::after {
+.admin-section .option-card::after {
   transform: translateY(4px) rotate(2deg);
 }
 
-.option-card:hover {
+.admin-section .option-card:hover {
   transform: rotate(2deg);
 }
 
-.option-card:hover::before {
+.admin-section .option-card:hover::before {
   transform: translateY(-8px) rotate(-4deg);
 }
 
-.option-card:hover::after {
+.admin-section .option-card:hover::after {
   transform: translateY(8px) rotate(4deg);
 }
 
-.back-btn {
+.admin-section .back-btn {
   margin-top: 110px;
   margin-bottom: 10px;
   background: rgba(108, 101, 94, 0.9);
@@ -216,58 +209,57 @@ table tr:last-child td {
   transition: all 0.25s ease;
 }
 
-.back-btn:hover {
+.admin-section .back-btn:hover {
   background: #6bb3a7;
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
 
 @media (max-width: 768px) {
-  .profile-card {
+  .admin-section .profile-card {
     flex-direction: column;
     align-items: center;
     padding: 28px 20px;
     gap: 18px;
   }
 
-  .profile-img {
+  .admin-section .profile-img {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     margin-bottom: 10px;
   }
 
-  .info-block {
+  .admin-section .info-block {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  table {
+  .admin-section table {
     width: 100%;
     max-width: 320px;
     box-sizing: border-box;
     text-align: center;
   }
 
-  table td {
+  .admin-section table td {
     padding: 14px 18px;
     font-size: 14px;
   }
 
-
-  .options-wrapper {
-    gap: 48px; 
+  .admin-section .options-wrapper {
+    gap: 48px;
   }
 
-  .row-top,
-  .row-bottom {
+  .admin-section .row-top,
+  .admin-section .row-bottom {
     flex-direction: column;
     gap: 48px;
   }
 
-  .back-btn {
+  .admin-section .back-btn {
     margin-top: 60px;
     padding: 8px 18px;
     font-size: 13px;

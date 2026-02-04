@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "../../AdminPages/AdminProfile/AdminProfile.css";
+import "./AdminAppointments.css";
 import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas.jsx";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
@@ -164,8 +164,10 @@ const AdminAppointments = () => {
 
 
   return (
-    <section className="calendar-citas-scope">
-      <h2 className="title">Mis citas</h2>
+  <section className="admin-appointments-page">
+    <h2 className="title">Mis citas</h2>
+
+    <div className="calendar-wrapper">
       <CalendarCitas
         view={view}
         date={date}
@@ -175,22 +177,24 @@ const AdminAppointments = () => {
         onSelectEvent={handleSelectEvent}
         openNewAppointment={openNewAppointment}
       />
+    </div>
 
-      {showSeeModal && (
-        <ModalSeeAppointment
-          appointment={selectedAppointment}
-          onClose={() => setShowSeeModal(false)}
-          onUpdate={updateAppointment}
-          onDelete={deleteAppointment}
-        />
-      )}
-      <div className="back-btn-center">
-        <button className="back-btn" onClick={() => navigate(-1)}>
-          <span className="arrow">VOLVER</span>
-        </button>
-      </div>
+    {showSeeModal && (
+      <ModalSeeAppointment
+        appointment={selectedAppointment}
+        onClose={() => setShowSeeModal(false)}
+        onUpdate={updateAppointment}
+        onDelete={deleteAppointment}
+      />
+    )}
 
-      <Worker 
+    <div className="back-btn-center">
+      <button className="back-btn" onClick={() => navigate(-1)}>
+        VOLVER
+      </button>
+    </div>
+
+    <Worker
       openModal={openModal}
       openSearchClient={openSearchClient}
       openQuickReserve={openQuickReserve}
@@ -205,9 +209,9 @@ const AdminAppointments = () => {
       dateStartTime={dateStartTime}
       setDateStartTime={setDateStartTime}
       setAppoiment={setAppoiment}
-      />
-    </section>
-  )
+    />
+  </section>
+);
 }
 
 export default AdminAppointments

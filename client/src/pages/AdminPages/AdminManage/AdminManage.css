@@ -58,7 +58,6 @@
   overflow: hidden;
 }
 
-
 .agr-page .agr-table thead th {
   background: #A6C8B7;
   color: #4A2E24;
@@ -140,8 +139,8 @@
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   transition: all 0.25s ease;
 }
-/* Botón volver */
-.agr-back {
+
+.agr-page .agr-back {
   margin-top: 32px;
   background: rgba(108, 101, 94, 0.9);
   color: #ffffff;
@@ -158,15 +157,14 @@
   transition: all 0.25s ease;
 }
 
-.agr-back:hover,
-.agr-create:hover {
+.agr-page .agr-back:hover,
+.agr-page .agr-create:hover {
   background: #6bb3a7;
   transform: translateY(-2px);
   box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
 
 @media (max-width: 768px) {
-
   .agr-page .agr-table thead {
     display: none !important;
   }
@@ -187,11 +185,6 @@
     border: 1.5px solid #246B64;
     box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
     text-align: center;
-  }
-
-  .agr-page .agr-table tr::before,
-  .agr-page .agr-table tr::after {
-    display: none !important;
   }
 
   .agr-page .agr-table td {
@@ -228,9 +221,6 @@
   .agr-page .agr-bottom {
     margin-top: 40px;
   }
-}
-
-@media (max-width: 768px) {
 
   .agr-page .agr-table {
     background: transparent !important;
@@ -249,5 +239,4 @@
     margin-right: auto;
     max-width: 360px;
   }
-
 }

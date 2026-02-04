@@ -155,8 +155,9 @@ const WorkerAppointments = () => {
   const allEvents = [...eventsMap];
 
   return (
-    <section className="admin-section">
+    <section className="worker-calendar-scope">
       <h2 className="title">Mis citas {user.name_user} </h2>
+      <div className="calendar-wrapper">
       <CalendarCitas
         view={view}
         date={date}
@@ -166,6 +167,7 @@ const WorkerAppointments = () => {
         onSelectEvent={handleSelectEvent}
         openNewAppointment={openNewAppointment}
       />
+      </div>
 
       {showSeeModal && (
         <ModalSeeAppointment
