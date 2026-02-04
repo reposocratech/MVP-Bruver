@@ -7,7 +7,7 @@ class PetController {
     try {
 
       let result = await petDal.getMine(user_id);
-      res.status(200).json({ pets: result });
+      res.status(200).json(result);
 
     } catch (error) {
       console.log(error);
