@@ -57,23 +57,20 @@ const navigate = useNavigate()
       <div className="options-wrapper">
         <div className="options-row row-top">
           
-          <div className="option-card">
-            <span onClick={() => navigate(`/worker/workinghours/${user.user_id}`)} >
+          <div className="option-card"
+          onClick={() => navigate(`/worker/workinghours/${user.user_id}`)}>
               <div className="option-header">HORARIO LABORAL</div>
               <i className="bi bi-calendar3"></i>
-            </span>
           </div>
-          <div className="option-card">
-            <span onClick={() => navigate(`/worker/appointments/${user.user_id}`)} >
+          <div className="option-card"
+          onClick={() => navigate(`/worker/appointments/${user.user_id}`)}>
               <div className="option-header">MIS CITAS</div>
               <i className="bi bi-pencil-square"></i>
-            </span>
           </div>
-          <div className="option-card">
-             <span onClick={() => navigate(`/worker/general`)} >
+          <div className="option-card"
+          onClick={() => navigate(`/worker/general`)}>
             <div className="option-header">AGENDA</div>
             <i className="bi bi-journal-richtext"></i>
-            </span>
           </div>
         </div>
       </div>

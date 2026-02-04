@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import './WorkerWorkingHours.css';
+import '../../AdminPages/AdminWorkingHours/AdminWorkingHours.css';
 import { CalendarWorkingHours } from '../../../components/CalendarWorkingHours/CalendarWorkingHours';
 import { ModalWorkingHours } from '../../../components/Modal/ModalWorkingHours/ModalWorkingHours';
 import dayjs from "dayjs";

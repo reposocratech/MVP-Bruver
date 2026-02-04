@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
-import './ModalPetEdit.css';
 
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router'; 
 import { Button } from 'react-bootstrap';
+import './ModalPetEdit.css';
 
 
 const ModalPetEdit = ({ onClose, pet }) => {
@@ -131,9 +131,9 @@ const ModalPetEdit = ({ onClose, pet }) => {
           />
 
           <div className="modalButtons">
-            <Button className="confirmBtn" onClick={onSubmit}>
+            <button className="confirmBtn" onClick={onSubmit}>
               CONFIRMAR
-            </Button>
+            </button>
 
             <button
               type="button"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "../AdminProfile/AdminProfile.css";
+import "../../AdminPages/AdminProfile/AdminProfile.css";
 import { CalendarCitas } from "../../../components/CalendarCitas/CalendarCitas.jsx";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
@@ -130,30 +130,35 @@ const AdminAppointments = () => {
 
 
   //eventos en el calendario mapeados
+
   const eventsMap = appoiment.map((elem) => ({
-    id: elem.appointment_id,
-    title: elem.employee_name,
-    start: buildDate(elem.appointment_date, elem.start_time),
-    end: buildDate(elem.appointment_date, elem.end_time),
-    resourceId: elem.employee_user_id,
+  id: elem.appointment_id,
 
-    employee_name: elem.employee_name,
-    employee_lastname: elem.employee_lastname,
+  title: elem.client_name
+    ? `${elem.client_name} ${elem.client_lastname ?? ''}`.trim()
+    : elem.guest_name,
 
+  start: buildDate(elem.appointment_date, elem.start_time),
+  end: buildDate(elem.appointment_date, elem.end_time),
+  resourceId: elem.employee_user_id,
 
-    client_name: elem.client_name,
-    client_lastname: elem.client_lastname,
+  employee_name: elem.employee_name,
+  employee_lastname: elem.employee_lastname,
 
-    created_by_name: elem.created_by_name,
-    created_by_type: elem.created_by_type,
+  client_name: elem.client_name,
+  client_lastname: elem.client_lastname,
 
-    guest_name: elem.guest_name,
-    guest_phone: elem.guest_phone,
-    observations: elem.observations,
+  created_by_name: elem.created_by_name,
+  created_by_type: elem.created_by_type,
 
-    status: elem.status,
-    total_price: elem.total_price
-  }));
+  guest_name: elem.guest_name,
+  guest_phone: elem.guest_phone,
+  observations: elem.observations,
+
+  status: elem.status,
+  total_price: elem.total_price
+}))
+
 
   const allEvents = [...eventsMap]
 
