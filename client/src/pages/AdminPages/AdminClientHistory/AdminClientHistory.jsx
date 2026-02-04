@@ -159,9 +159,9 @@ const AdminClientHistory = () => {
           </Table>
         </div>
       </section>
-      <Button className="backBtn" type="button" onClick={() => navigate(-1)}>
+      <button className="backBtn" type="button" onClick={() => navigate(-1)}>
         VOLVER
-      </Button>
+      </button>
     </div>
   );
 };

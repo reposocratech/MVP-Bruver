@@ -120,21 +120,45 @@
   flex-wrap: wrap;
 }
 
-.agr-page .agr-back {
+.agr-page .agr-create {
   background: #6bb3a7;
+  margin-top: 32px;
   color: #ffffff;
   border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
   border-radius: 999px;
-  padding: 12px 24px;
-  font-weight: 700;
-  font-size: 14px;
   cursor: pointer;
-  box-shadow: rgba(58, 47, 42, 0.25) 0px 10px 20px -10px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+/* Botón volver */
+.agr-back {
+  margin-top: 32px;
+  background: rgba(108, 101, 94, 0.9);
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  font-size: 13px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   transition: all 0.25s ease;
 }
 
-.agr-page .agr-back:hover {
-  background: #246B64;
+.agr-back:hover,
+.agr-create:hover {
+  background: #6bb3a7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(107, 179, 167, 0.35);
 }
 
 @media (max-width: 768px) {
