@@ -14,8 +14,6 @@ const ModalCreateProfile = ({
   return (
     <>
       {show && (
-        <section>
-          <div className='createProfileGridModal'>
         <Modal
           show={show}
           /* onHide={onClose} */
@@ -23,6 +21,7 @@ const ModalCreateProfile = ({
           dialogClassName="nc-modal-dialog"
           contentClassName="nc-modal-content"
           backdropClassName="nc-backdrop"
+          className='modalTotal'
         >
           <Modal.Body className="createProfileCardModal">
             <h3 className="nc-title">Nuevo perfil</h3>
@@ -37,7 +36,7 @@ const ModalCreateProfile = ({
                   value={newProfile.type}
                   onChange={handleProfileChange}
                 >
-                  <option value="">Elige</option>
+                  <option value="" disabled selected>Selecciona</option>
                   <option value="worker">Trabajador</option>
                   <option value="client">Cliente</option>
                 </Form.Select>
@@ -167,16 +166,14 @@ const ModalCreateProfile = ({
 
               <p className="nc-slogan">Patitas limpias, corazones felices</p>
 
-              <img
+{/*               <img
                 className="nc-dog"
                 src="/img/adminAddUser/dog1.png"
                 alt="dog"
-              />
+              /> */}
             </Form>
           </Modal.Body>
         </Modal>
-        </div>
-        </section>
       )}
     </>
   );
