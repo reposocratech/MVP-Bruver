@@ -28,7 +28,7 @@
 
 .agr-page .agr-section {
   width: 100%;
-  max-width: 920px;
+  max-width: 1200px;
   margin-bottom: 90px;
 }
 
@@ -51,6 +51,7 @@
 
 .agr-page .agr-table {
   width: 100%;
+  table-layout: auto;
   border-collapse: separate;
   border-spacing: 0;
   background: #ffffff;
@@ -59,6 +60,7 @@
   box-shadow: rgba(58, 47, 42, 0.18) 0px 30px 30px -20px;
   overflow: hidden;
 }
+
 
 .agr-page .agr-table thead th {
   background: #A6C8B7;
@@ -86,11 +88,16 @@
   background: rgba(166, 200, 183, 0.25);
 }
 
+.agr-page .agr-table th:last-child,
+.agr-page .agr-table td:last-child {
+  width: 340px;
+}
+
 .agr-page .agr-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 10px 12px;
+  gap: 12px;
 }
 
 .agr-page .agr-pill {
