@@ -42,7 +42,7 @@ const ModalSearchClient = ({ toBack, onAcceptClient }) => {
         />
 
         <div className={styles.tableWrapper}>
-          <table className={styles.table}>
+          <table className={styles.searchTable}>
             <thead>
               <tr>
                 <th>Nombre</th>

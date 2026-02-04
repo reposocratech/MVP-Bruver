@@ -45,7 +45,7 @@
 .quickReserveForm {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   gap: 14px;
 }
 
@@ -94,6 +94,7 @@
   gap: 8px;
   font-size: 14px;
   color: #4a2e24;
+
 }
 
 .resultLine {
@@ -152,3 +153,40 @@
     gap: 14px;
   }
 }
+
+.supplementCheck input {
+  display: none;
+}
+ 
+.supplementCheck {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+ 
+.supplementCheck span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 46, 36, 0.4);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  color: #4a2e24;
+  transition: all 0.2s ease;
+}
+ 
+.supplementCheck:hover span {
+  background: rgba(107, 179, 167, 0.2);
+}
+ 
+.supplementCheck input:checked + span {
+  background: #6bb3a7;
+  color: #ffffff;
+  border-color: #6bb3a7;
+}
+ 
+.supplementsBox {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+

@@ -1,6 +1,5 @@
 import React from "react";
 import "./ModalComfirmDeletePet.css";
-import { Button } from "react-bootstrap";
 
 const ModalComfirmDeletePet = ({ show, petName, onCancel, onConfirm }) => {
   if (!show) return null;
