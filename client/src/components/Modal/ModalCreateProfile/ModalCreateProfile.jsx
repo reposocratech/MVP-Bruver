@@ -1,6 +1,4 @@
-import { Modal, Form } from 'react-bootstrap';
 import './ModalCreateProfile.css';
-
 
 const ModalCreateProfile = ({
   show,
@@ -11,6 +9,8 @@ const ModalCreateProfile = ({
   valErrors,
   fetchError,
 }) => {
+  if (!show) return null;
+
   return (
     <>
       {show && (

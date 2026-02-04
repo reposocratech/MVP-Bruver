@@ -249,3 +249,30 @@ html {
   height: 100%;
 }
 
+
+@media (max-width: 991.98px) {
+  
+  .navbar-nav-center {
+    margin: 0;
+    gap: 14px;
+    padding-top: 10px;
+  }
+
+  
+  .navbar-actions {
+    margin-top: 4px;     
+    padding-top: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+
+  .navbar-actions .nav-btn {
+    width: 100%;
+    max-width: 240px;
+  }
+
+  .navbar-custom .navbar-collapse {
+    padding-bottom: 14px;
+  }
+}

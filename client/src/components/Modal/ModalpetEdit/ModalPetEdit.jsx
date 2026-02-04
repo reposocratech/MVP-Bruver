@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
-import './ModalPetEdit.css';
 
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router'; 
 import { Button } from 'react-bootstrap';
+import './ModalPetEdit.css';
 
 
 const ModalPetEdit = ({ onClose, pet }) => {
