@@ -57,22 +57,22 @@ const AdminClientHistory = () => {
   const formatStatus = (value) => {
     let showStatus = "";
     if(value === 1){
-      showStatus = "Pendiente"
+      showStatus = "Pendiente ⏳";
     }
     else if(value === 2){
-      showStatus = "Confirmada"
+      showStatus = "Confirmada ✅";
     }
     else if(value === 3){
-      showStatus = "Cancelada"
+      showStatus = "Cancelada ❌";
     }
     else if(value === 4){
-      showStatus = "No presentada"
+      showStatus = "No presentada 🚫";
     }
     else if(value === 5){
-      showStatus = "Completada"
+      showStatus = "Completada 🎉";
     }
     else{
-      showStatus = "Error, no es ninguno de los tipos"
+      showStatus = "Error ❓";
     }
     return showStatus;
   }
