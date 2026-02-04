@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Table, Col, Container, Row } from "react-bootstrap";
+import { Table, Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router";
 import "./clientprofilepage.css";
 
@@ -103,13 +103,14 @@ const ClientProfilePage = () => {
           <div className="infoHeader">
             <h2 className="infoTitle">Información</h2>
 
-            <Button
-              type="button"
-              className="editBtn"
-              onClick={() => setOpenModal(true)}
-            >
-              ✎ Editar
-            </Button>
+            <button
+  type="button"
+  className="editBtn"
+  onClick={() => setOpenModal(true)}
+>
+  ✎ Editar
+</button>
+
           </div>
 
           <div className="infoTableWrap">
@@ -160,13 +161,14 @@ const ClientProfilePage = () => {
         <div className="sectionHeader">
           <h1 className="sectionTitle">Mis mascotas</h1>
 
-          <Button
-            type="button"
-            className="addLinkBtn"
-            onClick={() => navigate("/addpet")}
-          >
-            🐾 Añadir
-          </Button>
+          <button
+  type="button"
+  className="addLinkBtn"
+  onClick={() => navigate("/addpet")}
+>
+  🐾 Añadir
+</button>
+
         </div>
 
         <div className="petsGrid">

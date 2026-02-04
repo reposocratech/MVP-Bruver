@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import ModalCancelAppointment from './ModalCancelAppointment';
 import ModalEditAppointment from './ModalEditAppointment';

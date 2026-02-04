@@ -57,7 +57,7 @@ const GeneralCalendarPage = () => {
 
   return (
     <>
-      <section>
+      <section className="calendar-general">
         <CalendarGeneral
           events={allEvents}
           workers={workers}

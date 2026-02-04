@@ -137,6 +137,7 @@
   display: none;
 }
 
+
 @media (max-width: 768px) {
   .calendar-citas {
     padding: 16px;
@@ -186,3 +187,4 @@
     border-radius: 12px;
   }
 }
+
