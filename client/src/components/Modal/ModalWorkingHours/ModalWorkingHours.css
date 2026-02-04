@@ -2,7 +2,7 @@
   font-family: "Raleway", sans-serif;
 }
 
-.userProfileModal {
+/* .modal-content{
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
@@ -11,6 +11,17 @@
   align-items: center;
   z-index: 999;
   backdrop-filter: blur(2px);
+} */
+
+.modal-backdrop.userProfileModal {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+}
+
+.userProfileModalDialog {
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .userProfileModalContent {
@@ -57,6 +68,27 @@
   text-align: center;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transition: all 0.25s ease;
+}
+
+/* ✅ AÑADIDO: Estilos para el SELECT (esto es lo que hace que "Pelo" baje abajo) */
+.userProfileForm select {
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 6px;
+  border-radius: 14px;
+  border: 1px solid #6bb3a7;
+  background: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+/* ✅ AÑADIDO: focus del select para que quede igual que input */
+.userProfileForm select:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(107, 179, 167, 0.35);
+  transform: translateY(-1px);
 }
 
 .userProfileForm input::placeholder {
@@ -125,8 +157,7 @@
   transition: background-color 0.25s ease;
 }
 
-.confirmBtn,
-.cancelBtn {
+.confirmBtn {
   background: #6bb3a7;
   color: white;
 }
@@ -158,11 +189,6 @@
     width: 92%;
     padding: 2.4rem 2rem;
   }
-  .modalButtons {
-    flex-wrap: wrap;
-    gap: 10px
-  }
-  
 }
 
 @keyframes modalIn {

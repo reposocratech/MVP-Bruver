@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import './ModalCreateProfile.css';
-
+import ModalProfileAdded from '../ModalProfileAdded/ModalProfileAdded';
 
 const ModalCreateProfile = ({
   show,
@@ -11,11 +12,21 @@ const ModalCreateProfile = ({
   valErrors,
   fetchError,
 }) => {
+  const [showProfileAdded, setShowProfileAdded] = useState(false);
+
+  const handleSubmit = async (e) => {
+    const ok = await submitProfile(e);
+    if (ok) setShowProfileAdded(true);
+  };
+
+  const handleSuccessClose = () => {
+    setShowProfileAdded(false);
+    onClose(false);
+  };
+
   return (
     <>
       {show && (
-        <section>
-          <div className='createProfileGridModal'>
         <Modal
           show={show}
           /* onHide={onClose} */
@@ -23,13 +34,14 @@ const ModalCreateProfile = ({
           dialogClassName="nc-modal-dialog"
           contentClassName="nc-modal-content"
           backdropClassName="nc-backdrop"
+          className='modalTotal'
         >
           <Modal.Body className="createProfileCardModal">
             <h3 className="nc-title">Nuevo perfil</h3>
 
             {fetchError && <div className="error-msg">{fetchError}</div>}
 
-            <Form className="nc-form formNewProfile" onSubmit={submitProfile}>
+            <Form className="nc-form formNewProfile" onSubmit={handleSubmit}>
               <Form.Group className="nc-group">
                 <Form.Label>Tipo de perfil</Form.Label>
                 <Form.Select
@@ -37,7 +49,7 @@ const ModalCreateProfile = ({
                   value={newProfile.type}
                   onChange={handleProfileChange}
                 >
-                  <option value="">Elige</option>
+                  <option value="" disabled selected>Selecciona</option>
                   <option value="worker">Trabajador</option>
                   <option value="client">Cliente</option>
                 </Form.Select>
@@ -167,16 +179,18 @@ const ModalCreateProfile = ({
 
               <p className="nc-slogan">Patitas limpias, corazones felices</p>
 
-              <img
+{/*               <img
                 className="nc-dog"
                 src="/img/adminAddUser/dog1.png"
                 alt="dog"
-              />
+              /> */}
             </Form>
           </Modal.Body>
         </Modal>
-        </div>
-        </section>
+      )}
+
+      {showProfileAdded && (
+        <ModalProfileAdded onClose={handleSuccessClose} />
       )}
     </>
   );

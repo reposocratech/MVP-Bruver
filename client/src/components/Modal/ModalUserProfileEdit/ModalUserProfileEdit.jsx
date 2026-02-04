@@ -3,7 +3,6 @@ import './ModalUserProfileEdit.css';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { fetchData } from '../../../helpers/axiosHelper';
 import { useNavigate } from 'react-router'; 
-import { Button } from 'react-bootstrap';
 
 const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode, hideDeleteButton }) => {
 
@@ -149,12 +148,12 @@ const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode, hi
           />
 
           <div className="modalButtons">
-            <Button
+            <button
               className="confirmBtn"
               onClick={onSubmit}
             >
               CONFIRMAR
-            </Button>
+            </button>
 
             <button
               type="button"

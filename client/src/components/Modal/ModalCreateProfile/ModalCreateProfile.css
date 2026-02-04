@@ -1,87 +1,205 @@
+/* Fondo general y tipografía */
+body {
+  background-color: #f4efe8;
+  font-family: "Raleway", sans-serif;
+}
+.nc-modal-content{
+  background-color: transparent;
+}
+/* Tarjeta del modal */
+.createProfileCardModal {
+  background-color: #E6D3C2;
+  width: 680px;
+  max-height: 80vh;
+  padding: 3.2rem 3rem 2.6rem;
+  border-radius: 32px;
+  border: 2px dashed #6bb3a7;
+  box-shadow:
+    0 0 0 4px #E6D3C2,
+    4px 4px 14px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: modalIn 0.7s ease-out both;
+}
 
-/* Mensajes de error para el modal de crear perfil */
-.error-msg {
-  color: red;
+.createProfileCardModal:hover {
+  box-shadow:
+    0 0 0 4px #E6D3C2,
+    6px 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Título del modal */
+.nc-title {
+  text-align: center;
+  margin-bottom: 2.6rem;
+  color: #6aafa5;
+  font-family: "Raleway", sans-serif;
   font-weight: bold;
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
-  font-size: 0.95em;
+  font-size: 2.4rem;
+  letter-spacing: 0.45em;
+  line-height: 1.3;
 }
 
-
-.createProfileModal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+/* Grupos de inputs */
+.nc-group {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: fadeIn 0.3s ease forwards;
+  font-weight: bold;
+  margin-bottom: 1.1rem;
+  gap: 6px;
 }
 
+.nc-group:first-of-type {
+  margin-top: 0.6rem;
+}
 
-/* CONTENEDOR */
-.createProfileGridModal {
-  display: flex;
-  justify-content: center;
+.nc-group select option {
   width: 100%;
-  padding: 1rem;
+  padding: 12px 16px;
+  margin-top: 6px;
+  border-radius: 14px;
+  border: 1px solid #6bb3a7;
+  background: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
-.createProfileCardModal h3 {
-  margin-bottom: 0.8rem;
+.nc-group input,
+.nc-group select {
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 14px;
+  border: 1px solid #6bb3a7;
+  border-radius: 12px;
+  background: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  transition: all 0.25s ease;
 }
 
-.nc-group{
-  label{
-    font-size: 16px !important;
-  }
-  input{
-    height: 30px !important
-  };
+.nc-group input::placeholder{
+  color: #6bb3a789;
 }
 
-img{
-  margin-right: 3rem;
-}
-
-
-.close {
-  background-color: #6AAFA5;
-  border: none;
-  color: #FFFFFF;
-  padding: 5px 18px;
-  margin: 1rem;
-  font-size: 13px;
-  border-radius: 18px;
-  transition: background-color 0.2s ease, transform 0.15s ease;
-}
-
-.close:hover {
-  background-color: #5a9f96;
+.nc-group input:focus,
+.nc-group select:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(107, 179, 167, 0.25);
   transform: translateY(-1px);
 }
 
-.close:active {
-  background-color: #246B64 !important;
-  transform: translateY(0);
+.nc-group input:hover,
+.nc-group select:hover {
+  box-shadow: 0 6px 18px rgba(107, 179, 167, 0.2);
+
 }
 
+/* Mensajes de error */
+.error-msg {
+  font-size: 0.85rem;
+  margin-top: 4px;
+  text-align: center;
+  color: #dc3545;
+}
 
-/* ANIMACIONES */
-@keyframes fadeIn {
+/* Botones del modal */
+.nc-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  margin: 2.4rem 0 1.4rem;
+}
+
+.nc-buttons .close {
+  border: none;
+  padding: 12px 34px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  transition: all 0.3s ease;
+}
+
+.nc-buttons .close:first-of-type {
+  background: #6bb3a7;
+  color: white;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.nc-buttons .close:first-of-type:hover {
+  transform: translateY(-2px) scale(1.03);
+  opacity: 0.9;
+}
+
+.nc-buttons .close:first-of-type:active {
+  transform: translateX(2px) translateY(2px);
+  box-shadow: none;
+}
+
+.nc-buttons .close:last-of-type {
+  background: #ffffff;
+  color: #6bb3a7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.nc-buttons .close:last-of-type:hover {
+  transform: translateY(-2px);
+}
+
+/* Frase slogan */
+.nc-slogan {
+  text-align: center;
+  margin-top: 0.8rem;
+  color: #4a2e24;
+  font-family: "Lora", serif;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Imagen del perrito */
+/* .nc-dog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+} */
+
+/* Animación y responsive */
+@media (max-width: 768px) {
+  .createProfileCardModal {
+    width: 90%;
+    padding: 2.4rem 2.2rem;
+  }
+
+  .nc-group input,
+  .nc-group select {
+    max-width: 100%;
+  }
+
+  .nc-slogan {
+    font-size: 1.1rem;
+  }
+
+  .nc-dog {
+    display: none;
+  }
+}
+
+@keyframes cardIn {
   from {
-    background: rgba(0, 0, 0, 0);
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
   }
   to {
-    background: rgba(0, 0, 0, 0.55);
-  }
-}
-
-@keyframes slideUp {
-  to {
-    transform: scale(1) translateY(0);
     opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

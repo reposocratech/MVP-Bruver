@@ -1,6 +1,7 @@
 import {  useState } from 'react';
 import { Button, Modal } from 'react-bootstrap'
 import dayjs from 'dayjs'
+import "./ModalWorkingHours.css"
 
 
 export const ModalWorkingHours = ({
@@ -45,46 +46,57 @@ export const ModalWorkingHours = ({
 
 
   return (
-    <div>
+    
 
-      <Modal show={show} onHide={handleClose} onShow={handleShow}>
-        <Modal.Header closeButton>
-          <Modal.Title>Seleccionar horario</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-          <div>
-            <label htmlFor="">Hora inicio</label>
-            <input type="datetime-local"
-              name="start"
-              value={start}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="">Hora fin</label>
-            <input type="datetime-local"
-              name="end"
-              value={end}
-              onChange={handleChange}
-            />
-          </div>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-
-          <Button variant="secondary" onClick={()=>handleDelete(selectedEvent.availability_id || selectedEvent.id)}>
-            Eliminar
-          </Button>
-          <Button variant="primary" onClick={()=>handleSave(selectedEvent.id, start, end)}>
-            Aceptar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+       
+          
+            <Modal
+              show={show}
+              onHide={handleClose}
+              onShow={handleShow}
+              centered
+              dialogClassName="userProfileModalDialog"
+              contentClassName="userProfileModalContent"
+              backdropClassName="userProfileModal"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title className='modalTitle' >Seleccionar horario</Modal.Title>
+              </Modal.Header>
+              <Modal.Body className="userProfileForm">
+                <div>
+                  <label className='fs-5'>Hora inicio:</label>
+                  <input className='fs-4' type="datetime-local"
+                    name="start"
+                    value={start}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                  <label className='fs-5'>Hora fin:</label>
+                  <input className='fs-4' type="datetime-local"
+                    name="end"
+                    value={end}
+                    onChange={handleChange}
+                  />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <div className='modalButtons'>
+                  <Button className="cancelBtn" variant="secondary" onClick={handleClose}>
+                    Cancelar
+                  </Button>
+                  <Button className="deleteBtn" variant="secondary" onClick={()=>handleDelete(selectedEvent.availability_id || selectedEvent.id)}>
+                    Eliminar
+                  </Button>
+                  <Button className="confirmBtn" variant="primary" onClick={()=>handleSave(selectedEvent.id, start, end)}>
+                    Aceptar
+                  </Button>
+                </div>
+              </Modal.Footer>
+            </Modal>
+       
+     
+    
+   
   )
 }

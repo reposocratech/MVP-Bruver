@@ -49,7 +49,7 @@ export const NavbarLogin = () => {
               Contacto
             </Nav.Link>
           </Nav>
-
+          <br />
           <div className="btnNavbar d-flex flex-row gap-2">
             <div className="botones d-flex align-items-center gap-2">
               <div className="navbar-actions">
