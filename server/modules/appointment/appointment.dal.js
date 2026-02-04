@@ -231,6 +231,64 @@ WHERE appointment_id = ?;`
     }
   };
 
+  clientCreateAppointment = async ({
+    created_by_user_id,
+    employee_user_id,
+    client_user_id,
+    pet_id,
+    appointment_date,
+    start_time,
+    duration_minutes,
+    total_price,
+    observations,
+  }) => {
+    try {
+
+      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+
+      const sql = `
+        INSERT INTO appointment (
+          created_by_user_id,
+          employee_user_id,
+          client_user_id,
+          pet_id,
+          status,
+          total_price,
+          appointment_date,
+          start_time,
+          end_time,
+          observations
+        )
+        VALUES (
+          ?, ?, ?, ?,
+          2,
+          ?,
+          ?,
+          ?,
+          ADDTIME(?, SEC_TO_TIME(? * 60)),
+          ?
+        )
+      `;
+
+      const result = await executeQuery(sql, [
+        created_by_user_id,
+        employee_user_id,
+        client_user_id,
+        pet_id,
+        total_price,
+        appointment_date,
+        st,
+        st,
+        duration_minutes,
+        observations || null,
+      ]);
+
+      return { appointment_id: result.insertId };
+    } catch (error) {
+      throw error;
+    }
+  };
+
   //funcion sacar a utils 
   checkOverlap = async (employeeId, appointment_date, start_time, duration_minutes) => {
     try {

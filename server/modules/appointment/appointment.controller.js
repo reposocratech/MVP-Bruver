@@ -181,6 +181,74 @@ class AppointmentController {
   }
 };
 
+clientCreateAppointment = async (req, res) => {
+  try {
+    const { user_id } = req;
+
+    // Datos
+    const {
+      client_user_id,
+      pet_id,
+      service_id,
+      supplement_ids,
+      employee_user_id,
+      appointment_date,
+      start_time,
+      duration_minutes,
+      total_price,
+      observations
+    } = req.body;
+
+    const clientId = client_user_id || user_id;
+
+    console.log("que llega aquiiiiiiiii", req.body);
+    
+
+    //Validaciones
+    if (!clientId || !pet_id || !appointment_date || !start_time) {
+      return res.status(400).json({ message: "Faltan datos obligatorios" });
+    }
+
+    //Normalizar
+    const dur = Number(duration_minutes || 0);
+    const price = Number(total_price || 0);
+    const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+    const employeeId = employee_user_id || user_id;
+
+    const overlap = await appointmentDal.checkOverlap(employeeId, appointment_date, st, dur);
+    if (overlap && overlap.length > 0) {
+      return res.status(409).json({ message: 'El empleado ya tiene una cita en ese horario' });
+    }
+
+    const extrasArray = Array.isArray(supplement_ids) ? supplement_ids : [];
+
+    //Crear cita
+    const created = await appointmentDal.clientCreateAppointment({
+      created_by_user_id: user_id,
+      employee_user_id: employeeId,
+      client_user_id: clientId,
+      pet_id,
+      appointment_date,
+      start_time: st,
+      duration_minutes: dur,
+      total_price: price,
+      observations: observations || null,
+    });
+
+    //Vincular servicios si vienen
+    await appointmentDal.insertServicesForAppointment(
+      created.appointment_id,
+      service_id || null,
+      extrasArray
+    );
+
+    return res.status(201).json({ message: "Cita creada", result: created });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error al crear cita de cliente" });
+  }
+};
+
 
   //el creado para cualquier cita por id
   getByUserId = async (req, res) => {
