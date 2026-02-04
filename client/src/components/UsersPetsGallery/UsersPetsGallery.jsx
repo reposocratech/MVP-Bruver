@@ -18,7 +18,7 @@ export const UsersPetsGallery = ({ setOpenModalEditPet, setSelectedPet }) => {
  
       try {
         const res = await fetchData("pet/mine", "GET", null, token);
-        setPets(res.data);
+        setPets(res.data.pets);
       } catch (error) {
         console.log(error);
       }
