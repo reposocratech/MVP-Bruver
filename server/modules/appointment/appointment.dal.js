@@ -82,6 +82,9 @@ class AppointmentDal {
         a.status,
         a.employee_user_id,
         a.total_price,
+        a.guest_name,
+        a.guest_phone,
+        a.observations,
 
         emp.user_id        AS employee_id,
         emp.name_user      AS employee_name,
@@ -116,12 +119,13 @@ class AppointmentDal {
   updateAppointment = async (values) => {
     try {
       let sql = `UPDATE appointment
-SET 
+                 SET 
     appointment_date = ?,
     start_time = ?,
     end_time = ?,
     employee_user_id = ?,
-    total_price = ?
+    total_price = ?,
+    status = ?
 WHERE appointment_id = ?;`
 
       let result = executeQuery(sql, values)
@@ -132,17 +136,17 @@ WHERE appointment_id = ?;`
     }
   }
 
-  deleteAppointment = async(appointmentId)=>{
+  deleteAppointment = async (appointmentId) => {
     try {
       const sql = `DELETE FROM appointment WHERE appointment_id = ?`;
-    let result = await  executeQuery(sql, [appointmentId])
-    return result
+      let result = await executeQuery(sql, [appointmentId])
+      return result
     } catch (error) {
       throw error
     }
   }
 
-     insertServicesForAppointment = async (appointmentId, service_id, supplement_ids = []) => {
+  insertServicesForAppointment = async (appointmentId, service_id, supplement_ids = []) => {
     try {
       const cleaningId = Number(process.env.CLEANING_SERVICE_ID);
       const ids = [];
@@ -239,7 +243,7 @@ WHERE appointment_id = ?;`
           AND NOT (end_time <= ? OR start_time >= ADDTIME(?, SEC_TO_TIME(? * 60)))
         LIMIT 1
       `;
- 
+
       const result = await executeQuery(sql, [
         employeeId,
         appointment_date,
@@ -247,13 +251,13 @@ WHERE appointment_id = ?;`
         start_time,
         duration_minutes,
       ]);
- 
+
       return result;
     } catch (error) {
       throw error;
     }
   };
- 
+
 
   createQuickAppointment = async ({
     created_by_user_id,
@@ -385,7 +389,7 @@ WHERE appointment_id = ?;`
     }
   }
 
-    // Traer todas las citas del usuario (presente, pasadas y futuras)
+  // Traer todas las citas del usuario (presente, pasadas y futuras)
   getAllByUserId = async (userId) => {
     try {
       const sql = `

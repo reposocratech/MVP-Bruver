@@ -230,3 +230,24 @@
     padding: 0 16px;
   }
 }
+
+/* implementacion cambio de colores x estado prueba */
+.calendar-citas .status-1 {
+  background: linear-gradient(135deg, #fde68a, #facc15) !important;
+  color: #3f342a;
+}
+
+.calendar-citas .status-2 {
+  background: linear-gradient(135deg, #86efac, #22c55e) !important;
+  color: #ffffff;
+}
+
+.calendar-citas .status-4 {
+  background: linear-gradient(135deg, #fca5a5, #ef4444) !important;
+  color: #ffffff;
+}
+
+.calendar-citas .status-5 {
+  background: linear-gradient(135deg, #93c5fd, #3b82f6) !important;
+  color: #ffffff;
+}
