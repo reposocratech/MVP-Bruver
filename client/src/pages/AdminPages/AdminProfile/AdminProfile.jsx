@@ -57,9 +57,8 @@ const AdminProfile = () => {
           </table>
         </div>
 
-         <div className="userPhoto">
-            <span>
-              {user && user.picture_user ? (
+         <div className="userPhoto">              
+          {user && user.picture_user ? (
                 <img
                   className="profile-img"
                   src={`${import.meta.env.VITE_SERVER_IMAGES}/picturesGeneral/${user.picture_user}`}
@@ -72,7 +71,6 @@ const AdminProfile = () => {
                   alt="Imagen de perfil por defecto"
                 />
               )}
-            </span>
           </div>
       </div>
 
