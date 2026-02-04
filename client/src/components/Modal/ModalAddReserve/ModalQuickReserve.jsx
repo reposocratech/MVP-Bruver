@@ -395,7 +395,6 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
               </label>
             </div>
 
-<<<<<<< HEAD
             <div className="modalActions">
   <button
     className="close"
@@ -415,21 +414,6 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
 </div>
 
 
-=======
-            <div>
-              <Button
-                className="close"
-                type="submit"
-                disabled={!sizeCategory && !isCat} 
-              >
-                Aceptar
-              </Button>
-
-              <Button className="close" onClick={toBack} type="button">
-                Atrás
-              </Button>
-            </div>
->>>>>>> 1b1184705b8c86ac12865022ea464f1a73ad694e
           </form>
         </div>
       </div>
