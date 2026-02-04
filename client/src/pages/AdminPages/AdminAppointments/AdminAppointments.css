@@ -2,6 +2,7 @@
   --bg: #faf7f3;
   --panel: #f4ede4;
   --line: #2f6f68;
+  --title: #6bb3a7;
   --text: #3f342a;
   --muted: #8a7c6d;
   --shadow: 0 6px 20px rgba(0,0,0,0.06);
@@ -19,7 +20,7 @@
   font-family: Poppins, sans-serif;
   font-size: 28px;
   font-weight: 600;
-  color: var(--text);
+  color: var(--title);
   margin: 20px 0 18px;
   text-align: center;
   width: 100%;

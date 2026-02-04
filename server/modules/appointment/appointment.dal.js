@@ -203,7 +203,7 @@ WHERE appointment_id = ?;`
         )
         VALUES (
           ?, ?, ?, ?,
-          2,
+          1,
           ?,
           ?,
           ?,
