@@ -14,7 +14,7 @@ import './WorkerAppointments.css'
 dayjs.extend(isoWeek);
 
 const WorkerAppointments = () => {
-  const [view, setView] = useState('week');
+  const [view, setView] = useState(window.innerWidth <= 768 ? "day":"week")
   const [date, setDate] = useState(new Date());
   const [appoiment, setAppoiment] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -29,6 +29,8 @@ const WorkerAppointments = () => {
   const [selectedClient, setSelectedClient] = useState(null);
 
   const [dateStartTime, setDateStartTime] = useState(null);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const { token, user } = useContext(AuthContext);
   const { workerId } = useParams();
@@ -49,6 +51,18 @@ const WorkerAppointments = () => {
       }
     };
     fetcAppointments();
+  }, []);
+
+   //para conservar responsive al girar el movil
+    useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      setView(mobile ? "day" : "week");
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleChange = (option) => {
@@ -163,6 +177,7 @@ const WorkerAppointments = () => {
         view={view}
         date={date}
         events={allEvents}
+        isMobile={isMobile}
         setView={setView}
         setDate={setDate}
         onSelectEvent={handleSelectEvent}

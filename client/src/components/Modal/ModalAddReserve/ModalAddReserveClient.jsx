@@ -249,8 +249,7 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
           <h3>Añadir reserva</h3>
 
           <form className="quickReserveForm" onSubmit={handleSubmit}>
-            {/* Aquí se pintará la fecha y la hora!!!! */}
-            <label>Aquí irá la fecha y la hora</label>
+          
             <label>
               Cliente: {client.name_user} {client.last_name}
             </label>
