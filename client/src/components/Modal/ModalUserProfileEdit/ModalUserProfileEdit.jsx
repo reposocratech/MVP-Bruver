@@ -149,6 +149,7 @@ const ModalUserProfileEdit = ({ onClose, user, onUserUpdated, editClientCode, hi
 
           <div className="modalButtons">
             <button
+              type='button'
               className="confirmBtn"
               onClick={onSubmit}
             >

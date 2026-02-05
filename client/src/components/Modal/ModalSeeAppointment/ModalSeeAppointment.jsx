@@ -60,10 +60,6 @@ const ModalSeeAppointment = ({ appointment, onClose, onUpdate, onDelete }) => {
                   <td>{appointment.observations}  </td>
                 </tr>
                 <tr>
-                  <td><b>Estado/cita</b></td>
-                  <td>pte/confi/can/€/no p</td>
-                </tr>
-                <tr>
                   <td><b>Total:</b></td>
                   <td>{appointment.total_price} €</td>
                 </tr>
