@@ -108,7 +108,6 @@ const AdminAppointments = () => {
       prev.map(app => {
         if (app.appointment_id !== updated.appointment_id) return app;
 
-       
         const start = new Date(`${updated.appointment_date}T${updated.start_time}`);
         const durationMinutes = updated.duration ?? 0;
         const end = new Date(start.getTime() + durationMinutes * 60 * 1000);
@@ -138,10 +137,6 @@ const AdminAppointments = () => {
     console.error("Error eliminando cita", error);
   }
 };
-
-
-
-
 
   //eventos en el calendario mapeados
 

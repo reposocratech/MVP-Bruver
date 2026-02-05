@@ -12,7 +12,9 @@ export const CalendarGeneral = ({ events,
   view,
   date,
   onViewChange,
-  onDateChange }) => {
+  onDateChange,
+  onSelectEvent
+ }) => {
 
   //controlar las horas diarias en el calendario
   const minTime = new Date()
@@ -31,6 +33,7 @@ export const CalendarGeneral = ({ events,
         date={date}
         onView={onViewChange}
         onNavigate={onDateChange}
+        onSelectEvent={onSelectEvent}
         views={['day']}
         min={minTime}
         max={maxTime}

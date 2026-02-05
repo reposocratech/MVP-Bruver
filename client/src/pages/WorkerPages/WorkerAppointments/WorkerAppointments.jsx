@@ -145,7 +145,11 @@ const WorkerAppointments = () => {
   //eventos en el calendario mapeados
   const eventsMap = appoiment.map((elem) => ({
     id: elem.appointment_id,
-    title: elem.employee_name,
+    
+    title: elem.client_name
+    ? `${elem.client_name} ${elem.client_lastname ?? ''}`.trim()
+    : elem.guest_name,
+
     start: buildDate(elem.appointment_date, elem.start_time),
     end: buildDate(elem.appointment_date, elem.end_time),
     resourceId: elem.employee_user_id,
