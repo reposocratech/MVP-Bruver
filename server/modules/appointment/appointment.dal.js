@@ -52,15 +52,38 @@ class AppointmentDal {
   getGenaralAppoiment = async () => {
     try {
       const sql = `
-        SELECT
-          a.appointment_id,
-          a.appointment_date,
-          a.start_time,
-          a.end_time,
-          a.employee_user_id,
-          u.name_user AS employee_name
+           SELECT
+        a.appointment_id,
+        a.appointment_date,
+        a.start_time,
+        a.end_time,
+        a.status,
+        a.employee_user_id,
+        a.total_price,
+         a.guest_name,
+        a.guest_phone,
+        a.observations,
+
+        emp.user_id        AS employee_id,
+        emp.name_user      AS employee_name,
+        emp.last_name      AS employee_lastname,
+
+        cli.user_id        AS client_id,
+        cli.name_user      AS client_name,
+        cli.last_name      AS client_lastname,
+
+        creator.user_id   AS created_by_id,
+        creator.name_user AS created_by_name,
+        creator.type      AS created_by_type
+
         FROM appointment a
-        JOIN user u ON u.user_id = a.employee_user_id
+        JOIN user emp 
+          ON emp.user_id = a.employee_user_id
+        LEFT JOIN user cli 
+          ON cli.user_id = a.client_user_id
+        JOIN user creator 
+          ON creator.user_id = a.created_by_user_id
+
         WHERE a.status != 3
       `;
       let result = await executeQuery(sql);
@@ -416,6 +439,9 @@ WHERE appointment_id = ?;`
         a.status,
         a.employee_user_id,
         a.total_price,
+        a.guest_name,
+        a.guest_phone,
+        a.observations,
 
         emp.user_id        AS employee_id,
         emp.name_user      AS employee_name,
