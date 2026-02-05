@@ -9,7 +9,7 @@ export const contactSchema = z.object({
   telefono: z
     .string()
     .min(1, "El teléfono es obligatorio")
-    .regex(/^[0-9]+$/, "El teléfono solo puede contener números"),
+    .regex(/^\+?[0-9\s-]{9,15}$/, 'Solo +, números, espacios, guiones'),
 
   email: z.string().email("Email no válido"),
 

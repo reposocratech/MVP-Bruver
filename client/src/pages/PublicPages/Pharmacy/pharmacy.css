@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
 
 .farmaciaPage {
+  
   min-height: 100vh;
   background: #f4efe8;
   display: flex;
@@ -12,6 +13,7 @@
 }
 
 .farmaciaContent {
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
   width: 100%;
