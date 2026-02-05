@@ -360,6 +360,11 @@
 
 
 @media (max-width: 768px) {
+  .clientProfilePage {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
   .infoCard {
     flex-direction: column;
     align-items: center;
@@ -388,7 +393,6 @@
   .editBtn {
     font-size: 14px;
     padding: 4px 10px;
-    border-radius: 999px;
   }
 
   .infoLeft {
@@ -409,13 +413,16 @@
     font-size: 14px;
   }
 
-  .infoKey {
-    font-weight: 700;
+  .petsSection {
+    width: 100%;
   }
 
-  .infoValue {
-    font-weight: 500;
+  .petsGrid {
+    width: 100%;
+  }
+
+  .petCard {
+    margin: 0 auto 24px;
+    
   }
 }
-
-

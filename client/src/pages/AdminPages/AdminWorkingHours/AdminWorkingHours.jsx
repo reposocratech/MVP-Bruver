@@ -152,6 +152,7 @@ const AdminWorkingHours = () => {
       <h2 className="title">Horario laboral {user.name_user} </h2>
 
       <CalendarWorkingHours
+        toolbar={false}
         view={view}
         date={date}
         events={allEvents}
@@ -159,7 +160,7 @@ const AdminWorkingHours = () => {
         setDate={setDate}
         handleSelectSlot={handleSelectSlot}
         handleSelectEvent={handleSelectEvent}
-        toolbar={false}
+        
       />
 
       {isModalOpen && selectedEvent && (
