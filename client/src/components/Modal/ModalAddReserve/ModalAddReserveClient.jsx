@@ -56,7 +56,6 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
 
       ...extra,
     };
-
     localStorage.setItem(saveLocalStorage, JSON.stringify(payload));
   };
 

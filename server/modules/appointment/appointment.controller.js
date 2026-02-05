@@ -147,6 +147,7 @@ class AppointmentController {
     const st = start_time.length === 5 ? `${start_time}:00` : start_time;
     const employeeId = employee_user_id || user_id;
 
+
     const overlap = await appointmentDal.checkOverlap(employeeId, appointment_date, st, dur);
     if (overlap && overlap.length > 0) {
       return res.status(409).json({ message: 'El empleado ya tiene una cita en ese horario' });

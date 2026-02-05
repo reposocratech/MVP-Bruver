@@ -253,6 +253,9 @@ const AdminManage = () => {
                     <td>{w.email}</td>
                     <td>
                       <div className="agr-actions">
+                        <button className="agr-pill" type="button" onClick={() => navigate(`/admin/profile/${w.id}`)}>
+                          VER PERFIL
+                        </button>
                         <button className="agr-pill" type="button" onClick={() => { setSelectedUser(w); setShowEditProfileModal(true); }}>
                           EDITAR
                         </button>
@@ -301,13 +304,13 @@ const AdminManage = () => {
                   <td>{c.email}</td>
                   <td>
                     <div className="agr-actions">
+                      <button className="agr-pill" type="button" onClick={() => navigate(`/admin/profile/${c.id}`)}>
+                        VER PERFIL
+                      </button>
                       <button className="agr-pill" type="button" onClick={() => { console.log('Cliente seleccionado:', c);
                         setSelectedUser(c); setShowEditProfileModal(true); }}>
                         EDITAR
                       </button>
-                      {/* <button className="agr-pill" type="button" onClick={() => navigate(`/profile/${c.id}`)}>
-                        VER PERFIL
-                      </button> */}
                       <button className="agr-pill" type="button" onClick={() => navigate(`/admin/clienthistory/${c.id}`)}>
                         VER HISTORIAL
                       </button>
