@@ -245,7 +245,7 @@ class UserController {
    // Obtener trabajadores (type = 2)
   getWorkers = async (req, res) => {
     try {
-      const result = await userDal.getUsersByType(2);
+      const result = await userDal.getUsersByType(2, 1);
       res.status(200).json({ workers: result });
     } catch (error) {
       console.log(error);
@@ -267,7 +267,7 @@ class UserController {
   // Obtener admins (type = 1)
   getAdmins = async (req, res) => {
     try {
-      const result = await userDal.getUsersByType(1);
+      const result = await userDal.getUsersByType(1, 1);
       res.status(200).json({ admins: result });
     } catch (error) {
       console.log(error);
