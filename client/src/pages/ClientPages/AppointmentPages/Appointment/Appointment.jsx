@@ -85,7 +85,7 @@ const Appointment = () => {
         const allWorkers = [
           ...(adminsRes.data.admins || []),
           ...(workersRes.data.workers || [])
-        ];
+        ].filter((worker) => worker.user_id !== 1);
         setWorkers(allWorkers);
       } catch (error) {
         console.log(error);
