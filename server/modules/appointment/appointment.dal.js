@@ -23,14 +23,22 @@ class AppointmentDal {
       curtime es una funcion de sql que te dice la hora */
 
       const sql = `
-        SELECT appointment_id, start_time, appointment_date, total_price
-        FROM appointment
-        WHERE client_user_id = ?
+        SELECT 
+          a.appointment_id, 
+          a.start_time, 
+          a.appointment_date, 
+          a.total_price,
+          GROUP_CONCAT(s.title SEPARATOR ', ') AS servicios
+        FROM appointment a
+        LEFT JOIN service_appointment sa ON a.appointment_id = sa.appointment_id
+        LEFT JOIN service s ON sa.service_id = s.service_id
+        WHERE a.client_user_id = ?
           AND (
-            appointment_date > CURDATE()
-            OR (appointment_date = CURDATE() AND start_time > CURTIME())
+            a.appointment_date > CURDATE()
+            OR (a.appointment_date = CURDATE() AND a.start_time > CURTIME())
           )
-        ORDER BY appointment_date ASC, start_time ASC
+        GROUP BY a.appointment_id
+        ORDER BY a.appointment_date ASC, a.start_time ASC
       `;
 
 
@@ -52,15 +60,38 @@ class AppointmentDal {
   getGenaralAppoiment = async () => {
     try {
       const sql = `
-        SELECT
-          a.appointment_id,
-          a.appointment_date,
-          a.start_time,
-          a.end_time,
-          a.employee_user_id,
-          u.name_user AS employee_name
+           SELECT
+        a.appointment_id,
+        a.appointment_date,
+        a.start_time,
+        a.end_time,
+        a.status,
+        a.employee_user_id,
+        a.total_price,
+         a.guest_name,
+        a.guest_phone,
+        a.observations,
+
+        emp.user_id        AS employee_id,
+        emp.name_user      AS employee_name,
+        emp.last_name      AS employee_lastname,
+
+        cli.user_id        AS client_id,
+        cli.name_user      AS client_name,
+        cli.last_name      AS client_lastname,
+
+        creator.user_id   AS created_by_id,
+        creator.name_user AS created_by_name,
+        creator.type      AS created_by_type
+
         FROM appointment a
-        JOIN user u ON u.user_id = a.employee_user_id
+        JOIN user emp 
+          ON emp.user_id = a.employee_user_id
+        LEFT JOIN user cli 
+          ON cli.user_id = a.client_user_id
+        JOIN user creator 
+          ON creator.user_id = a.created_by_user_id
+
         WHERE a.status != 3
       `;
       let result = await executeQuery(sql);
@@ -138,11 +169,19 @@ WHERE appointment_id = ?;`
 
   deleteAppointment = async (appointmentId) => {
     try {
-      const sql = `DELETE FROM appointment WHERE appointment_id = ?`;
-      let result = await executeQuery(sql, [appointmentId])
-      return result
+      // 1. Obtener los datos de la cita antes de borrarla
+      const selectSql = `SELECT * FROM appointment WHERE appointment_id = ?`;
+      const appointmentRows = await executeQuery(selectSql, [appointmentId]);
+      const appointmentData = appointmentRows && appointmentRows.length > 0 ? appointmentRows[0] : null;
+
+      // 2. Borrar la cita
+      const deleteSql = `DELETE FROM appointment WHERE appointment_id = ?`;
+      let result = await executeQuery(deleteSql, [appointmentId]);
+
+      // 3. Devolver el resultado del borrado y los datos de la cita
+      return { deleteResult: result, appointmentData };
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
@@ -185,8 +224,14 @@ WHERE appointment_id = ?;`
     observations,
   }) => {
     try {
-
-      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+console.log("############", start_time)
+let st = `${start_time}:00`;
+if(start_time.length>5){
+  let temporal = start_time.split(":")
+  st = `${temporal[0]}:${temporal[1]}:00` 
+}
+console.log("NOOOOOOOOOOOOOOOOOOOO", st)
+      /* const st = start_time.length === 5 ? start_time.split : `${start_time}:00`; */
 
       const sql = `
         INSERT INTO appointment (
@@ -416,6 +461,9 @@ WHERE appointment_id = ?;`
         a.status,
         a.employee_user_id,
         a.total_price,
+        a.guest_name,
+        a.guest_phone,
+        a.observations,
 
         emp.user_id        AS employee_id,
         emp.name_user      AS employee_name,
