@@ -242,8 +242,6 @@ const ModalQuickReserve = ({ toBack, dateStartTime, setAppoiment, onCloseAll }) 
           <h3>Añadir una reserva rápida</h3>
 
           <form className="quickReserveForm" onSubmit={handleSubmit}>
-            {/* AQUÍ SE MOSTRARÁ LA FECHA Y LA HORA */}
-            <label>fecha y hora </label>
             <label>Añadir cliente</label>
             <input
               name="client"

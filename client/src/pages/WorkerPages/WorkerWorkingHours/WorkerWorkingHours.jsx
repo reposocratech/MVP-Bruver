@@ -14,13 +14,15 @@ import { getDateFromDayId } from '../../../helpers/dateHelper.js';
 dayjs.extend(isoWeek);
  
 const WorkerWorkingHours = () => {
- 
-  const [view, setView] = useState('week')
+
+    const [view, setView] = useState(window.innerWidth <= 768 ? "day":"week")  
     const [date, setDate] = useState(new Date())
     const [schedule, setSchedule] = useState([])
     const [selectedEvent, setSelectedEvent] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
- 
+
+     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  
     const { workerId } = useParams()
     const { token, user } = useContext(AuthContext)
     const navigate = useNavigate()
@@ -37,8 +39,20 @@ const WorkerWorkingHours = () => {
       }
       fetchSchedule()
     }, [])
-   
- 
+
+       //para conservar responsive al girar el movil
+    useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      setView(mobile ? "day" : "week");
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+    
+  
     const handleSelectSlot = async ({ start, end }) => {
       console.log(start, end);
      
@@ -158,6 +172,7 @@ const WorkerWorkingHours = () => {
         view={view}
         date={date}
         events={allEvents}
+        isMobile={isMobile}
         setView={setView}
         setDate={setDate}
         handleSelectSlot={handleSelectSlot}

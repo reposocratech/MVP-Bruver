@@ -1,6 +1,5 @@
 import "./RegisterPage.css";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { registerSchema } from "../../../schemas/RegisterSchema";
 import { ZodError } from "zod";
@@ -62,127 +61,148 @@ const RegisterPage = () => {
       <div className="register-card">
         <h2>Registro</h2>
 
-        <Form onSubmit={onSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Nombre*</Form.Label>
-            <Form.Control
+        <form onSubmit={onSubmit} className="register-form" noValidate>
+          <div className="field">
+            <label htmlFor="name_user">Nombre*</label>
+            <input
+              id="name_user"
               name="name_user"
               value={register.name_user}
               onChange={handleChange}
               placeholder="Introduce tu nombre"
+              autoComplete="given-name"
             />
             {valErrors.name_user && (
               <p className="text-danger">{valErrors.name_user}</p>
             )}
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Apellidos</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="last_name">Apellidos</label>
+            <input
+              id="last_name"
               name="last_name"
               value={register.last_name}
               onChange={handleChange}
               placeholder="Introduce tus apellidos"
+              autoComplete="family-name"
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Teléfono*</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="phone">Teléfono*</label>
+            <input
+              id="phone"
               name="phone"
               value={register.phone}
               onChange={handleChange}
               placeholder="Introduce tu teléfono"
+              autoComplete="tel"
             />
             {valErrors.phone && <p className="text-danger">{valErrors.phone}</p>}
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Email*</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="email">Email*</label>
+            <input
+              id="email"
               name="email"
               value={register.email}
               onChange={handleChange}
               placeholder="Introduce tu e-mail"
+              autoComplete="email"
             />
             {valErrors.email && <p className="text-danger">{valErrors.email}</p>}
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Dirección</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="address">Dirección</label>
+            <input
+              id="address"
               name="address"
               value={register.address}
               onChange={handleChange}
               placeholder="Introduce tu dirección"
+              autoComplete="street-address"
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Provincia</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="province">Provincia</label>
+            <input
+              id="province"
               name="province"
               value={register.province}
               onChange={handleChange}
               placeholder="Introduce tu provincia"
+              autoComplete="address-level1"
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Ciudad</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="city">Ciudad</label>
+            <input
+              id="city"
               name="city"
               value={register.city}
               onChange={handleChange}
               placeholder="Introduce tu ciudad"
+              autoComplete="address-level2"
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Contraseña*</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="password">Contraseña*</label>
+            <input
+              id="password"
               type="password"
               name="password"
               value={register.password}
               onChange={handleChange}
               placeholder="Introduce tu contraseña"
+              autoComplete="new-password"
             />
             {valErrors.password && (
               <p className="text-danger">{valErrors.password}</p>
             )}
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Repetir contraseña*</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="rep_password">Repetir contraseña*</label>
+            <input
+              id="rep_password"
               type="password"
               name="rep_password"
               value={register.rep_password}
               onChange={handleChange}
               placeholder="Repite tu contraseña"
+              autoComplete="new-password"
             />
             {valErrors.rep_password && (
               <p className="text-danger">{valErrors.rep_password}</p>
             )}
-          </Form.Group>
+          </div>
 
           <div className="buttons">
-            <Button type="submit" className="button_register acept">
+            <button type="submit" className="button_register acept">
               Aceptar
-            </Button>
-            <Button
+            </button>
+
+            <button
               type="button"
               className="button_register cancel"
               onClick={() => navigate("/")}
             >
               Cancelar
-            </Button>
+            </button>
           </div>
 
-          {fetchError && <p className="text-danger text-center">{fetchError}</p>}
+          {fetchError && (
+            <p className="text-danger text-center">{fetchError}</p>
+          )}
 
           <p className="register-phrase">Patitas limpias, corazones felices</p>
-        </Form>
+        </form>
 
         {openModal && (
           <ModalVerifyEmail

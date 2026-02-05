@@ -17,6 +17,7 @@ export const CalendarCitas = ({
   view,
   date,
   events,
+  isMobile,
   setView,
   setDate,
   onSelectEvent,
@@ -29,12 +30,17 @@ export const CalendarCitas = ({
         view={view}
         date={date}
         events={events}
-        onView={setView}
         onNavigate={setDate}
         onSelectEvent={onSelectEvent}
         onSelectSlot={(event)=>openNewAppointment(event.start)}
-        selectable
-        views={['week']}
+        selectable={isMobile ? "ignoreEvents" : true}
+         longPressThreshold={200}
+        views={isMobile ? ["day"] : ["week"]}
+        onView={(newView) => {
+          if (isMobile && newView !== "day") return;
+          if (!isMobile && newView !== "week") return;
+          setView(newView);
+        }}
         startAccessor="start"
         endAccessor="end"
         min={dayjs(date).hour(9).minute(30).toDate()}

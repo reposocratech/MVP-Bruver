@@ -56,7 +56,6 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
 
       ...extra,
     };
-
     localStorage.setItem(saveLocalStorage, JSON.stringify(payload));
   };
 
@@ -224,6 +223,7 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
 
 
     try {
+      console.log("---------------------", data)
       const res = await fetchData('appointment/client', 'POST', data, token);
       console.log('Cita creada:', res.data);
 
@@ -249,8 +249,7 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
           <h3>Añadir reserva</h3>
 
           <form className="quickReserveForm" onSubmit={handleSubmit}>
-            {/* Aquí se pintará la fecha y la hora!!!! */}
-            <label>Aquí irá la fecha y la hora</label>
+          
             <label>
               Cliente: {client.name_user} {client.last_name}
             </label>

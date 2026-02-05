@@ -1,7 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
-
-
 .clientProfilePage {
   background: #f4efe8;
   min-height: calc(100vh - 160px);
@@ -319,6 +315,8 @@
   width: 100%;
   margin-top: 24px;
   background: transparent;
+    overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .appointmentsTable {
@@ -424,5 +422,9 @@
   .petCard {
     margin: 0 auto 24px;
     
+  }
+
+  .appointmentsTableWrap {
+    font-size: 12px;
   }
 }

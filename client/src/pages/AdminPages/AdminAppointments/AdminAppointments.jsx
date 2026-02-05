@@ -14,7 +14,7 @@ import Worker from "../../WorkerPages/WorkerDate/Worker.jsx";
 dayjs.extend(isoWeek)
 
 const AdminAppointments = () => {
-  const [view, setView] = useState("week")
+  const [view, setView] = useState(window.innerWidth <= 768 ? "day":"week")
   const [date, setDate] = useState(new Date())
   const [appoiment, setAppoiment] = useState([])
   const [selectedAppointment, setSelectedAppointment] = useState(null);
@@ -28,7 +28,9 @@ const AdminAppointments = () => {
 
   const [selectedClient, setSelectedClient] = useState(null);
 
-  const [dateStartTime, setDateStartTime] = useState(null)
+  const [dateStartTime, setDateStartTime] = useState(null);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const { token } = useContext(AuthContext)
   const { adminId } = useParams()
@@ -50,6 +52,18 @@ const AdminAppointments = () => {
     }
     fetcAppointments();
   }, [])
+
+  //para conservar responsive al girar el movil
+  useEffect(() => {
+  const handleResize = () => {
+    const mobile = window.innerWidth <= 768;
+    setIsMobile(mobile);
+    setView(mobile ? "day" : "week");
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
    const handleChange = (option) => {
     setOpenModal(false);
@@ -94,7 +108,6 @@ const AdminAppointments = () => {
       prev.map(app => {
         if (app.appointment_id !== updated.appointment_id) return app;
 
-       
         const start = new Date(`${updated.appointment_date}T${updated.start_time}`);
         const durationMinutes = updated.duration ?? 0;
         const end = new Date(start.getTime() + durationMinutes * 60 * 1000);
@@ -124,10 +137,6 @@ const AdminAppointments = () => {
     console.error("Error eliminando cita", error);
   }
 };
-
-
-
-
 
   //eventos en el calendario mapeados
 
@@ -172,6 +181,7 @@ const AdminAppointments = () => {
         view={view}
         date={date}
         events={allEvents}
+        isMobile={isMobile}
         setView={setView}
         setDate={setDate}
         onSelectEvent={handleSelectEvent}

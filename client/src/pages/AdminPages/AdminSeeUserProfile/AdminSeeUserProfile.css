@@ -1,0 +1,36 @@
+.admin-profile-page {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #f8eadf;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  padding: 32px 28px;
+  font-family: 'Raleway', sans-serif;
+}
+.admin-profile-card {
+  margin-bottom: 24px;
+}
+.admin-profile-card p {
+  margin: 8px 0;
+  font-size: 17px;
+  color: #4a2e24;
+}
+.admin-profile-page h1 {
+  font-size: 28px;
+  color: #6bb3a7;
+  margin-bottom: 18px;
+}
+.admin-profile-page .back-btn {
+  background: #6bb3a7;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 32px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.admin-profile-page.error {
+  color: #c0392b;
+  text-align: center;
+}

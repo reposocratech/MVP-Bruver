@@ -69,3 +69,41 @@ export const sendEmail = async (email, html) => {
     throw error;
   }
 }
+
+export const sendConfirmAppointment = async (email, html) => {
+
+  
+  try {
+    const result = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Cita confirmada",
+      text: "Su cita ha sido confirmada con éxito.",
+      html: html
+    });
+    console.log("Email enviado:", result);
+    return result;
+  } catch (error) {
+    console.error("Error al enviar email:", error);
+    throw error;
+  }
+}
+
+
+export const sendCancelAppointment = async (email, html) => {
+    
+  try {
+    const result = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Cita cancelada",
+      text: "Su cita ha sido cancelada con éxito.",
+      html: html
+    });
+    console.log("Email enviado:", result);
+    return result;
+  } catch (error) {
+    console.error("Error al enviar email:", error);
+    throw error;
+  }
+}

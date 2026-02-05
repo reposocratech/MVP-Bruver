@@ -84,14 +84,21 @@ class UserDal {
     }
   };
 
-  getUsersByType = async (type) => {
+  getUsersByType = async (type, excludeUserId = null) => {
     try {
-      const sql = `
+      let sql = `
       SELECT user_id, name_user, last_name, phone, email, address, province, city, type, picture_user
       FROM user 
       WHERE type = ? AND is_deleted = 0
       `;
-      const result = await executeQuery(sql, [type]);
+      const values = [type];
+
+      if (excludeUserId !== null && excludeUserId !== undefined) {
+        sql += " AND user_id <> ?";
+        values.push(excludeUserId);
+      }
+
+      const result = await executeQuery(sql, values);
       return result;
     } catch (error) {
       throw error;

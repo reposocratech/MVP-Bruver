@@ -17,6 +17,7 @@ export const CalendarWorkingHours = ({
   view,
   date,
   events,
+  isMobile,
   setView,
   setDate,
   handleSelectSlot,
@@ -30,12 +31,16 @@ export const CalendarWorkingHours = ({
           view={view}
           date={date}
           events={events}
-          onView={setView}
           onNavigate={setDate}
           onSelectSlot={handleSelectSlot}
           onSelectEvent={handleSelectEvent}
           selectable={handleSelectSlot ? "ignoreEvents" : false}
-          views={['week']}
+          views={isMobile ? ["day"] : ["week"]}
+            onView={(newView) => {
+          if (isMobile && newView !== "day") return;
+          if (!isMobile && newView !== "week") return;
+          setView(newView);
+        }}
           startAccessor="start"
           endAccessor="end"
           min={dayjs(date).hour(9).minute(30).toDate()}
