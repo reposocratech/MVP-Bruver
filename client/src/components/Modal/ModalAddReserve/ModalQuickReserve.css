@@ -143,12 +143,54 @@
 }
 
 @media (max-width: 600px) {
+  .addReserveModal {
+    align-items: flex-start;
+  }
+
+  .addReserveGridModal {
+    padding: 8px;
+    height: 100vh;
+  }
+
   .addReserveCardModal {
-    padding: 24px;
+    max-height: calc(100vh - 24px);
+    overflow-y: auto;
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+
+  .addReserveCardModal h3 {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  .addReserveCardModal p {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .quickReserveForm {
+    gap: 10px;
+  }
+
+  .quickReserveForm label {
+    font-size: 13px;
+  }
+
+  .quickReserveForm select,
+  .quickReserveForm input {
+    height: 38px;
+    font-size: 14px;
   }
 
   .modalActions {
+    margin-top: 14px;
+    gap: 10px;
     flex-direction: column;
-    gap: 14px;
+  }
+
+  .close {
+    height: 44px;
+    font-size: 14px;
   }
 }

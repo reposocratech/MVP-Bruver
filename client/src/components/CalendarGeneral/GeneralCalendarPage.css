@@ -199,54 +199,36 @@
 }
 
 @media (max-width: 768px) {
-  .calendar-wrapper {
-    padding: 12px;
-  }
-
   .rbc-toolbar {
+    display: grid;
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "label"
+      "buttons";
     gap: 10px;
-  }
-
-  .rbc-btn-group {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    padding: 14px;
+    text-align: center;
   }
 
   .rbc-toolbar-label {
-    font-size: 14px;
+    grid-area: label;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
   }
 
-  .rbc-header,
-  .rbc-resource-header {
-    font-size: 13px;
-    padding: 10px 0;
+  .rbc-btn-group {
+    grid-area: buttons;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: nowrap;
   }
 
-  .rbc-time-gutter,
-  .rbc-time-header-gutter {
+  .rbc-toolbar button {
     font-size: 12px;
-    padding-right: 6px;
-  }
-
-  .rbc-event {
-    padding: 6px 8px;
-    border-radius: 12px;
-    margin: 3px;
-  }
-
-  .rbc-event-title,
-  .rbc-event-content strong {
-    font-size: 13px;
-  }
-
-  .rbc-event-content span {
-    font-size: 12px;
-  }
-
-  .rbc-time-view {
-    border-radius: 14px;
+    padding: 6px 12px;
+    border-radius: 999px;
   }
 }
+

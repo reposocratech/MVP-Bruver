@@ -8,11 +8,11 @@ import isoWeek from "dayjs/plugin/isoWeek";
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 import { fetchData } from '../../../helpers/axiosHelper.js';
 import { getDateFromDayId } from '../../../helpers/dateHelper.js';
-
-
-
+ 
+ 
+ 
 dayjs.extend(isoWeek);
-
+ 
 const WorkerWorkingHours = () => {
 
     const [view, setView] = useState(window.innerWidth <= 768 ? "day":"week")  
@@ -26,7 +26,7 @@ const WorkerWorkingHours = () => {
     const { workerId } = useParams()
     const { token, user } = useContext(AuthContext)
     const navigate = useNavigate()
-  
+ 
     useEffect(() => {
       const fetchSchedule = async () => {
         const res = await fetchData(
@@ -55,24 +55,24 @@ const WorkerWorkingHours = () => {
   
     const handleSelectSlot = async ({ start, end }) => {
       console.log(start, end);
-      
+     
     try {
       const startDayjs = dayjs(start);
-  
+ 
       const data = {
         user_id: workerId,
         day_id: startDayjs.isoWeekday(),
         start_time: startDayjs.format('HH:mm:ss'),
         end_time: dayjs(end).format('HH:mm:ss'),
       }
-  
+ 
       const res = await fetchData(
         'availability/newAvailability',
         'POST',
         data,
         token
       )
-  
+ 
       setSchedule(prev => [
         ...prev,
         {
@@ -90,30 +90,30 @@ const WorkerWorkingHours = () => {
       setSelectedEvent(event);
       setIsModalOpen(true);
       console.log(event);
-      
+     
     };
-  
-  
-  
+ 
+ 
+ 
     // Guardar cambios
-  
+ 
     const handleSaveEvent = async (availability_id, start, end) => {
       const startDayjs = dayjs(start)
       const endDayjs = dayjs(end)
-  
+ 
       const data = {
         day_id: startDayjs.isoWeekday(),
         start_time: startDayjs.format('HH:mm:ss'),
         end_time: endDayjs.format('HH:mm:ss'),
       }
-  
+ 
       await fetchData(
         `availability/editAvailability/${availability_id}`,
         'PUT',
         data,
         token
       )
-  
+ 
       setSchedule(prev =>
         prev.map(e =>
           e.availability_id === availability_id
@@ -121,10 +121,10 @@ const WorkerWorkingHours = () => {
             : e
         )
       )
-  
+ 
       setIsModalOpen(false)
     }
-  
+ 
     const handleDeleteEvent = async availability_id => {
       await fetchData(
         `availability/delAvailability/${availability_id}`,
@@ -132,14 +132,14 @@ const WorkerWorkingHours = () => {
         null,
         token
       )
-  
+ 
       setSchedule(prev =>
         prev.filter(e => e.availability_id !== availability_id)
       )
-  
+ 
       setIsModalOpen(false)
     }
-  
+ 
     const buildDateTime = (dayId, time) => {
       const [h, m, s] = time.split(':')
       return getDateFromDayId(dayId, date)
@@ -148,7 +148,7 @@ const WorkerWorkingHours = () => {
         .second(+s || 0)
         .toDate()
     }
-  
+ 
     //mapeo de horario disponible
     const eventsMap = schedule?.map((item) => ({
       id: item.availability_id,
@@ -157,17 +157,17 @@ const WorkerWorkingHours = () => {
       end: buildDateTime(item.day_id, item.end_time),
      
     }));
-  
+ 
     const allEvents = [...eventsMap]
-  
-    
-  
-
+ 
+   
+ 
+ 
   return (
-    
+   
      <section className="admin-working-hours-page">
       <h2 className="title">Horario laboral {user.name_user} </h2>
-
+ 
       <CalendarWorkingHours
         view={view}
         date={date}
@@ -179,7 +179,7 @@ const WorkerWorkingHours = () => {
         handleSelectEvent={handleSelectEvent}
         toolbar={false}
       />
-
+ 
       {isModalOpen && selectedEvent && (
         <ModalWorkingHours
           show={isModalOpen}
@@ -189,15 +189,15 @@ const WorkerWorkingHours = () => {
           handleDelete={handleDeleteEvent}
         />
       )}
-
+ 
       <div className="back-btn-center">
         <button className="back-btn" onClick={() => navigate(-1)}>
           VOLVER
         </button>
       </div>
     </section>
-
+ 
   )
 }
-
+ 
 export default WorkerWorkingHours
