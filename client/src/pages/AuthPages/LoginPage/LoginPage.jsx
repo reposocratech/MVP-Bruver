@@ -1,103 +1,113 @@
-import "./LoginPage.css"
-import { useNavigate } from "react-router"
-import { Button, Form } from "react-bootstrap"
-import { useState, useContext } from "react"
-import { fetchData } from "../../../helpers/axiosHelper"
-import { loginSchema } from "../../../schemas/LoginSchema"
-import { AuthContext } from "../../../contexts/AuthContext/AuthContext"
-import { ZodError } from "zod"
+import "./LoginPage.css";
+import { useNavigate } from "react-router";
+import { useState, useContext } from "react";
+import { fetchData } from "../../../helpers/axiosHelper";
+import { loginSchema } from "../../../schemas/LoginSchema";
+import { AuthContext } from "../../../contexts/AuthContext/AuthContext";
+import { ZodError } from "zod";
 
 const initialValue = {
   email: "",
-  password: ""
-}
+  password: "",
+};
 
 const LoginPage = () => {
-  const [login, setLogin] = useState(initialValue)
-  const [errorMsg, setErrorMsg] = useState("")
-  const [valErrors, setValErrors] = useState({})
-  const { setUser, setToken } = useContext(AuthContext)
-  const navigate = useNavigate()
+  const [login, setLogin] = useState(initialValue);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [valErrors, setValErrors] = useState({});
+  const { setUser, setToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setLogin({ ...login, [name]: value })
-  }
+    const { name, value } = e.target;
+    setLogin({ ...login, [name]: value });
+  };
 
-  const onSubmit = async () => {
-  try {
-    loginSchema.parse(login)
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-    const res = await fetchData("user/login", "POST", login)
-    const token = res.data.token
+    try {
+      loginSchema.parse(login);
 
-    const resUser = await fetchData("user/userByToken", "GET", null, token)
+      const res = await fetchData("user/login", "POST", login);
+      const token = res.data.token;
 
-    localStorage.setItem("token", token)
-    setUser(resUser.data.user)
-    setToken(token)
+      const resUser = await fetchData("user/userByToken", "GET", null, token);
 
-    const type = Number(resUser.data.user?.type)
+      localStorage.setItem("token", token);
+      setUser(resUser.data.user);
+      setToken(token);
 
-    if (type === 1) navigate("/admin")
-    else if (type === 2) navigate("/worker/profile")
-    else navigate("/profile")
+      const type = Number(resUser.data.user?.type);
 
-  } catch (error) {
-    if (error instanceof ZodError) {
-      const fieldsErrors = {}
-      error.issues.forEach((elem) => {
-        fieldsErrors[elem.path[0]] = elem.message
-      })
-      setValErrors(fieldsErrors)
-      setErrorMsg("")
-    } else {
-      setErrorMsg(error.response?.data?.message)
-      setValErrors({})
+      if (type === 1) navigate("/admin");
+      else if (type === 2) navigate("/worker/profile");
+      else navigate("/profile");
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const fieldsErrors = {};
+        error.issues.forEach((elem) => {
+          fieldsErrors[elem.path[0]] = elem.message;
+        });
+        setValErrors(fieldsErrors);
+        setErrorMsg("");
+      } else {
+        setErrorMsg(error.response?.data?.message);
+        setValErrors({});
+      }
     }
-  }
-}
+  };
 
   return (
     <div className="login-page">
       <div className="login-card">
         <h2>Entra en tu perfil</h2>
 
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>E-mail</Form.Label>
-            <Form.Control
+        <form onSubmit={onSubmit} className="login-form" noValidate>
+          <div className="field">
+            <label htmlFor="email">E-mail</label>
+            <input
+              id="email"
               name="email"
               value={login.email}
               placeholder="Introduce tu e-mail"
               onChange={handleChange}
               type="email"
+              autoComplete="email"
             />
             {valErrors.email && <p className="text-danger">{valErrors.email}</p>}
-          </Form.Group>
+          </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control
+          <div className="field">
+            <label htmlFor="password">Contraseña</label>
+            <input
+              id="password"
               placeholder="Introduce tu contraseña"
               onChange={handleChange}
               value={login.password}
               name="password"
               type="password"
+              autoComplete="current-password"
             />
-            <p className="text-danger">{errorMsg}</p>
+
+            {errorMsg && <p className="text-danger">{errorMsg}</p>}
             {valErrors.password && (
               <p className="text-danger">{valErrors.password}</p>
             )}
-          </Form.Group>
+          </div>
 
           <div className="buttons">
-            <Button onClick={onSubmit} className="button_register acept">
+            <button type="submit" className="button_register acept">
               ACEPTAR
-            </Button>
-            <Button onClick={() => navigate(-1)} className="button_register cancel">
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="button_register cancel"
+            >
               CANCELAR
-            </Button>
+            </button>
           </div>
 
           <p className="not-registered">
@@ -116,10 +126,10 @@ const LoginPage = () => {
               Pincha aquí
             </span>
           </p>
-        </Form>
+        </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
