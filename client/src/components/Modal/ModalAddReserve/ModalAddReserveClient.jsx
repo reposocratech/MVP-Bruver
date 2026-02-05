@@ -224,6 +224,7 @@ const ModalAddReserveClient = ({ toBack, client, dateStartTime, setOpenSearchCli
 
 
     try {
+      console.log("---------------------", data)
       const res = await fetchData('appointment/client', 'POST', data, token);
       console.log('Cita creada:', res.data);
 

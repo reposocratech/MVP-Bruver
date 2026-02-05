@@ -23,14 +23,22 @@ class AppointmentDal {
       curtime es una funcion de sql que te dice la hora */
 
       const sql = `
-        SELECT appointment_id, start_time, appointment_date, total_price
-        FROM appointment
-        WHERE client_user_id = ?
+        SELECT 
+          a.appointment_id, 
+          a.start_time, 
+          a.appointment_date, 
+          a.total_price,
+          GROUP_CONCAT(s.title SEPARATOR ', ') AS servicios
+        FROM appointment a
+        LEFT JOIN service_appointment sa ON a.appointment_id = sa.appointment_id
+        LEFT JOIN service s ON sa.service_id = s.service_id
+        WHERE a.client_user_id = ?
           AND (
-            appointment_date > CURDATE()
-            OR (appointment_date = CURDATE() AND start_time > CURTIME())
+            a.appointment_date > CURDATE()
+            OR (a.appointment_date = CURDATE() AND a.start_time > CURTIME())
           )
-        ORDER BY appointment_date ASC, start_time ASC
+        GROUP BY a.appointment_id
+        ORDER BY a.appointment_date ASC, a.start_time ASC
       `;
 
 
@@ -138,11 +146,19 @@ WHERE appointment_id = ?;`
 
   deleteAppointment = async (appointmentId) => {
     try {
-      const sql = `DELETE FROM appointment WHERE appointment_id = ?`;
-      let result = await executeQuery(sql, [appointmentId])
-      return result
+      // 1. Obtener los datos de la cita antes de borrarla
+      const selectSql = `SELECT * FROM appointment WHERE appointment_id = ?`;
+      const appointmentRows = await executeQuery(selectSql, [appointmentId]);
+      const appointmentData = appointmentRows && appointmentRows.length > 0 ? appointmentRows[0] : null;
+
+      // 2. Borrar la cita
+      const deleteSql = `DELETE FROM appointment WHERE appointment_id = ?`;
+      let result = await executeQuery(deleteSql, [appointmentId]);
+
+      // 3. Devolver el resultado del borrado y los datos de la cita
+      return { deleteResult: result, appointmentData };
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
@@ -185,8 +201,14 @@ WHERE appointment_id = ?;`
     observations,
   }) => {
     try {
-
-      const st = start_time.length === 5 ? `${start_time}:00` : start_time;
+console.log("############", start_time)
+let st = `${start_time}:00`;
+if(start_time.length>5){
+  let temporal = start_time.split(":")
+  st = `${temporal[0]}:${temporal[1]}:00` 
+}
+console.log("NOOOOOOOOOOOOOOOOOOOO", st)
+      /* const st = start_time.length === 5 ? start_time.split : `${start_time}:00`; */
 
       const sql = `
         INSERT INTO appointment (

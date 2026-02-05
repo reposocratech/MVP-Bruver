@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Table, Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate, useParams } from "react-router";
-import "./clientprofilepage.css";
+import React, { useContext, useEffect, useState } from 'react';
+import { Table, Col, Container, Row } from 'react-bootstrap';
+import { Link, useNavigate, useParams } from 'react-router';
+import './clientprofilepage.css';
 
-import ModalUserProfileEdit from "../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit";
-import ModalPetEdit from "../../../../components/Modal/ModalpetEdit/ModalPetEdit";
-import { UsersPetsGallery } from "../../../../components/UsersPetsGallery/UsersPetsGallery";
-import { AuthContext } from "../../../../contexts/AuthContext/AuthContext";
-import { fetchData } from "../../../../helpers/axiosHelper";
+import ModalUserProfileEdit from '../../../../components/Modal/ModalUserProfileEdit/ModalUserProfileEdit';
+import ModalPetEdit from '../../../../components/Modal/ModalpetEdit/ModalPetEdit';
+import { UsersPetsGallery } from '../../../../components/UsersPetsGallery/UsersPetsGallery';
+import { AuthContext } from '../../../../contexts/AuthContext/AuthContext';
+import { fetchData } from '../../../../helpers/axiosHelper';
 
 const ClientProfilePage = () => {
-
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -23,13 +22,13 @@ const ClientProfilePage = () => {
   const [showUser, setShowUser] = useState(user);
 
   useEffect(() => {
-    document.body.style.overflow = openModal ? "hidden" : "auto";
-    return () => (document.body.style.overflow = "auto");
+    document.body.style.overflow = openModal ? 'hidden' : 'auto';
+    return () => (document.body.style.overflow = 'auto');
   }, [openModal]);
-  
+
   useEffect(() => {
-    document.body.style.overflow = openModalEditPet ? "hidden" : "auto";
-    return () => (document.body.style.overflow = "auto");
+    document.body.style.overflow = openModalEditPet ? 'hidden' : 'auto';
+    return () => (document.body.style.overflow = 'auto');
   }, [openModalEditPet]);
 
   // actualiza y cambia si cambiamos id, token o user.
@@ -41,9 +40,9 @@ const ClientProfilePage = () => {
           let res;
           // Si el usuario autenticado es admin (type === 1), usa el endpoint de admin
           if (user?.type === 1) {
-            res = await fetchData(`admin/user/${id}`, "GET", null, token);
+            res = await fetchData(`admin/user/${id}`, 'GET', null, token);
           } else {
-            res = await fetchData(`user/${id}`, "GET", null, token);
+            res = await fetchData(`user/${id}`, 'GET', null, token);
           }
           setShowUser(res?.data?.user || null);
         } catch (error) {
@@ -63,10 +62,10 @@ const ClientProfilePage = () => {
       try {
         let res;
         if (id) {
-          res = await fetchData(`appointment/user/${id}`, "GET", null, token);
+          res = await fetchData(`appointment/user/${id}`, 'GET', null, token);
           console.log(res);
         } else {
-          res = await fetchData("appointment/mine", "GET", null, token);
+          res = await fetchData('appointment/mine', 'GET', null, token);
         }
         setAppointments(res?.data?.appointments || []);
       } catch (error) {
@@ -78,19 +77,19 @@ const ClientProfilePage = () => {
   }, [id, token]);
 
   const formatDate = (dateStr) => {
-    if (!dateStr) return "";
+    if (!dateStr) return '';
     const dateSelect = new Date(dateStr);
-    return dateSelect.toLocaleDateString("es-ES");
+    return dateSelect.toLocaleDateString('es-ES');
   };
 
   const formatTime = (timeStr) => {
-    if (!timeStr) return "";
+    if (!timeStr) return '';
     return timeStr.slice(0, 5);
   };
 
   const formatPrice = (value) => {
     const numMoney = Number(value || 0);
-    return numMoney.toFixed(2).replace(".", ",") + " €";
+    return numMoney.toFixed(2).replace('.', ',') + ' €';
   };
 
   return (
@@ -104,13 +103,12 @@ const ClientProfilePage = () => {
             <h2 className="infoTitle">Información</h2>
 
             <button
-  type="button"
-  className="editBtn"
-  onClick={() => setOpenModal(true)}
->
-  ✎ Editar
-</button>
-
+              type="button"
+              className="editBtn"
+              onClick={() => setOpenModal(true)}
+            >
+              ✎ Editar
+            </button>
           </div>
 
           <div className="infoTableWrap">
@@ -162,20 +160,19 @@ const ClientProfilePage = () => {
           <h1 className="sectionTitle">Mis mascotas</h1>
 
           <button
-  type="button"
-  className="addLinkBtn"
-  onClick={() => navigate("/addpet")}
->
-  🐾 Añadir
-</button>
-
+            type="button"
+            className="addLinkBtn"
+            onClick={() => navigate('/addpet')}
+          >
+            🐾 Añadir
+          </button>
         </div>
 
         <div className="petsGrid">
           <Container>
             <Row>
               <Col>
-                <UsersPetsGallery 
+                <UsersPetsGallery
                   setOpenModalEditPet={setOpenModalEditPet}
                   setSelectedPet={setSelectedPet}
                 />
@@ -195,6 +192,7 @@ const ClientProfilePage = () => {
               <tr>
                 <th>HORA</th>
                 <th>DÍA DE RESERVA</th>
+                <th>SERVICIO</th>
                 <th>TOTAL</th>
               </tr>
             </thead>
@@ -202,7 +200,7 @@ const ClientProfilePage = () => {
             <tbody>
               {appointments.length === 0 ? (
                 <tr>
-                  <td colSpan={3} style={{ textAlign: "center" }}>
+                  <td colSpan={3} style={{ textAlign: 'center' }}>
                     No tienes citas todavía
                   </td>
                 </tr>
@@ -211,18 +209,19 @@ const ClientProfilePage = () => {
                   <tr key={a.appointment_id}>
                     <td>{formatTime(a.start_time)}</td>
                     <td>{formatDate(a.appointment_date)}</td>
+                    <td>{a.servicios || "-"}</td>
                     <td>{formatPrice(a.total_price)}</td>
                   </tr>
-                )
-              )
-              )
-              }
+                ))
+              )}
             </tbody>
           </Table>
         </div>
       </section>
 
-      {openModal && <ModalUserProfileEdit onClose={() => setOpenModal(false)} />}
+      {openModal && (
+        <ModalUserProfileEdit onClose={() => setOpenModal(false)} />
+      )}
       {openModalEditPet && (
         <ModalPetEdit
           onClose={() => setOpenModalEditPet(false)}
