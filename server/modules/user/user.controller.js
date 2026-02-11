@@ -16,6 +16,12 @@ class UserController {
         if (type === null || type === undefined) {
           type = 3;
         }
+
+        const existingUser = await userDal.findUserByEmail(email);
+        if (existingUser.length > 0) {
+          return res.status(409).json({ message: 'El email ya está registrado' });
+        }
+
         let hashedPass = await bcrypt.hash(password, 10);
         await userDal.register([
           name_user,
@@ -93,6 +99,9 @@ class UserController {
       res.status(201).json({ message: "Registro completado. Revisa tu correo para verificar la cuenta." });
 
     } catch (error) {
+      if (error?.code === 'ER_DUP_ENTRY') {
+        return res.status(409).json({ message: 'El email ya está registrado' });
+      }
       console.log(error);
       res.status(500).json({ message: 'Error al registrar el usuario' });
     }

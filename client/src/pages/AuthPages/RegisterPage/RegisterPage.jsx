@@ -47,11 +47,15 @@ const RegisterPage = () => {
         setFetchError("");
       } else {
         setValErrors({});
-        setFetchError(
-          error.response?.data?.errno === 1062
-            ? "Email ya existe"
-            : "Error al crear usuario"
-        );
+        const status = error.response?.status;
+        const apiMessage = error.response?.data?.message;
+        if (status === 409) {
+          setFetchError(apiMessage || "El email ya existe");
+        } else if (error.response?.data?.errno === 1062) {
+          setFetchError("El email ya existe");
+        } else {
+          setFetchError("Error al crear usuario");
+        }
       }
     }
   };
