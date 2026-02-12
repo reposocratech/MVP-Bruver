@@ -5,6 +5,10 @@ export function generarContrasena(
   incluirNumeros = true,
   incluirSimbolos = true
 ) {
+
+  // Asegurar un mínimo de 8 caracteres
+  longitud = Math.max(8, longitud);
+
   // Definir los conjuntos de caracteres
   const mayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const minusculas = "abcdefghijklmnopqrstuvwxyz";
