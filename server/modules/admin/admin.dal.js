@@ -26,7 +26,7 @@ class AdminDal {
    // Obtener usuarios por tipo (2=worker, 3=client)
   getUsersByType = async (type) => {
     try {
-      const sql = `SELECT user_id, client_code, name_user, last_name, phone, email, address, province, city, type FROM user WHERE type = ? AND is_deleted = 0`;
+      const sql = `SELECT user_id, client_code, name_user, last_name, phone, email, address, province, city, type FROM user WHERE type = ?`;
       const result = await executeQuery(sql, [type]);
       return result;
     } catch (error) {
